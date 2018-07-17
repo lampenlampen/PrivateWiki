@@ -25,6 +25,8 @@ namespace PrivateWiki
         public MainPage()
         {
             this.InitializeComponent();
+
+            EditorFrame.Navigate(typeof(Editor));
         }
     }
 }
