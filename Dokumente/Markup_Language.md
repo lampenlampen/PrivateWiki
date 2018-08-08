@@ -62,6 +62,9 @@ Ein newline-Charakter wird ignoriert. 2 oder mehr beenden den Listenblock.
 ```
 
 
+### Checkboxen
+
+
 Grundsätzlich können Listen und Aufzählungen ineinander verschachtelt werden.
 
 
