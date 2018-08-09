@@ -1,19 +1,20 @@
 using System;
 using System.Collections.Generic;
+using Parser.Blocks;
 
 namespace Parser
 {
     /// <summary>
     /// This class represents a Markdown Document.
     /// </summary>
-    public class MarkdownDocument
+    public class Document
     {
-        public List<MarkdownElement> Dom { get; } = new List<MarkdownElement>();
+        public List<Block> Dom { get; } = new List<Block>();
 
 
-        public static MarkdownDocument Parse(string text)
+        public static Document Parse(string text)
         {
-            var doc = new MarkdownDocument();
+            var doc = new Document();
             
             var a = text.Split(new [] { "\n\n", "\r\r"}, StringSplitOptions.None);
 
@@ -24,12 +25,12 @@ namespace Parser
                 if (paragraph.StartsWith("#"))
                 {
                     // Paragraph is a Heading
-                    doc.Dom.Add(MarkdownHeading.Parse(paragraph));
+                    doc.Dom.Add(HeaderBlock.Parse(paragraph));
                 }
                 else
                 {
                     // Paragraph is a text Block
-                    doc.Dom.Add(MarkdownText.Parse(paragraph));
+                    doc.Dom.Add(TextBlock.Parse(paragraph));
                 }
             }
 

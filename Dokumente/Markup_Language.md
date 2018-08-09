@@ -63,6 +63,16 @@ Ein newline-Charakter wird ignoriert. 2 oder mehr beenden den Listenblock.
 
 
 ### Checkboxen
+Checkboxen werden mit einer eckigen offenen Klammer und einer folgenden eckigen geschlossenen Klammer eingeleitet.
+``` markdown
+[] Hallo
+```
+Um eine Checkbox abzuhacken kann zwischen die Klammer ein kleines oder großes x geschrieben werden.
+
+``` markdown
+[x] Hallo
+[X] Huhu
+```
 
 
 Grundsätzlich können Listen und Aufzählungen ineinander verschachtelt werden.
@@ -99,4 +109,4 @@ Grundsätzlich können Listen und Aufzählungen ineinander verschachtelt werden.
 - https://github.com/BoostIO/Boostnote/wiki/Diagram-support
 
 ## Interactive Code
-Python-Code Ausführung.Zum Plotten von Grafiken
+Python-Code Ausführung. Zum Plotten von Grafiken

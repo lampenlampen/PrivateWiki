@@ -2,6 +2,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Parser;
+using Parser.Blocks;
 
 namespace TestProject1
 {
@@ -25,10 +26,10 @@ namespace TestProject1
 
             var testText = headingBuilder.ToString();
 
-            var heading = MarkdownDocument.Parse(testText).Dom.First();
+            var heading = Document.Parse(testText).Dom.First();
             
-            System.Console.WriteLine(((MarkdownHeading) heading).HeadingText);
-            System.Console.WriteLine(((MarkdownHeading) heading).Level);
+            System.Console.WriteLine(((HeaderBlock) heading).HeadingText);
+            System.Console.WriteLine(((HeaderBlock) heading).Level);
 
 
         }
