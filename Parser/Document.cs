@@ -9,12 +9,24 @@ namespace Parser
     /// </summary>
     public class Document
     {
-        public List<Block> Dom { get; } = new List<Block>();
+        public IList<Block> Dom { get; }
+
+        public Document(IList<Block> blocks)
+        {
+            Dom = blocks;
+        }
 
 
         public static Document Parse(string text)
         {
-            var doc = new Document();
+            var blocks = ParseBlocks(text);
+
+            return new Document(blocks);
+        }
+
+        public static IList<Block> ParseBlocks(string text)
+        {
+            IList<Block> Blocks = new List<Block>();
             
             var a = text.Split(new [] { "\n\n", "\r\r"}, StringSplitOptions.None);
 
@@ -25,16 +37,17 @@ namespace Parser
                 if (paragraph.StartsWith("#"))
                 {
                     // Paragraph is a Heading
-                    doc.Dom.Add(HeaderBlock.Parse(paragraph));
+                    Blocks.Add(HeaderBlock.Parse(paragraph));
+                    
                 }
                 else
                 {
                     // Paragraph is a text Block
-                    doc.Dom.Add(TextBlock.Parse(paragraph));
+                    Blocks.Add(TextBlock.Parse(paragraph));
                 }
             }
 
-            return doc;
+            return Blocks;
         }
     }
 }
