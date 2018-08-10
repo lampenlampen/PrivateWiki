@@ -1,3 +1,5 @@
+using System;
+
 namespace Parser.Blocks.Table
 {
     /// <summary>
@@ -13,6 +15,23 @@ namespace Parser.Blocks.Table
         public TableColumnDefinition(ColumnAlignment alignment)
         {
             Alignment = alignment;
+        }
+
+        public override string ToString()
+        {
+            switch (Alignment)
+            {
+                case ColumnAlignment.Unspecified:
+                    return "---";
+                case ColumnAlignment.Left:
+                    return ":---";
+                case ColumnAlignment.Right:
+                    return "---:";
+                case ColumnAlignment.Center:
+                    return ":---:";
+                default:
+                    throw new ArgumentOutOfRangeException($"Alignment ({Alignment}) does not exist.");
+            }
         }
     }
 }

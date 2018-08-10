@@ -11,5 +11,17 @@ namespace Parser.Blocks.Table
         /// Gets or sets the cell contents.
         /// </summary>
         public IList<MarkdownInline> Inlines { get; set; }
+
+        public static TableCell Parse(string cell)
+        {
+            // TODO TableCell Parse
+            throw new System.NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            // TODO TableCell ToString
+            return "";
+        }
     }
 }
