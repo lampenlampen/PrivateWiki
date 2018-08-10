@@ -6,55 +6,45 @@ using System.Text;
 
 namespace Parser.Blocks
 {
-    public class QuoteBlock : Block
+    public class QuoteBlock : Container
     {
-        public IList<Block> Blocks { get; set; }
-        public String Citation { get; set; }
-
-        public QuoteBlock(IList<Block> blocks)
+        public QuoteBlock(IEnumerable<Block> blocks) : base(blocks)
         {
-            Blocks = blocks;
+           
         }
 
-
-        internal QuoteBlock Parse(string markdown)
+        internal static QuoteBlock Parse(List<string> lines)
         {
-            var lines = markdown.Split(new[] {"\n", "\r"}, StringSplitOptions.None);
-
-            var quottedTextBuilder = new StringBuilder();
-
-            
-            for (var i = 0; i < lines.Length-1; i++)
+            for (var i = 0; i < lines.Count; i++)
             {
-                var line = lines[i];
-                if (!line.StartsWith(">"))
+                if (!lines[i].StartsWith(">"))
                 {
-                    throw new ArgumentException("Markdown Text is not a Blockquote!", nameof(markdown));
+                    throw new ArgumentException("Markdown Text is not a Blockquote!", nameof(lines));
                 }
 
-                lines[i] = line.Substring(2);
-                quottedTextBuilder.AppendLine(line.Substring(2));
+                lines[i]= lines[i].Substring(2);
             }
 
             var lastLine = lines.Last();
             if (!lastLine.StartsWith(">"))
             {
-                throw new ArgumentException("Markdown Text is not a Blockquote!", nameof(markdown));
-            } else if (lastLine.StartsWith(">>"))
-
-            {
-                Citation = lastLine.Substring(2).Trim();
-            } else
-            {
-                quottedTextBuilder.AppendLine(lastLine.Substring(2));
+                throw new ArgumentException("Markdown Text is not a Blockquote!", nameof(lines));
             }
 
-            var quottedText = quottedTextBuilder.ToString();
+            return new QuoteBlock(Document.ParseLines(lines));
+        }
+
+        public override string ToString()
+        {
+            var stringBuilder = new StringBuilder();
             
-            // TODO Parse quottedText
+            foreach (var block in Blocks)
+            {
+                stringBuilder.AppendLine(block.ToString());
+                stringBuilder.AppendLine("");
+            }
 
-
-            return new QuoteBlock(Document.ParseBlocks(quottedText));
+            return stringBuilder.ToString();
         }
     }
 }

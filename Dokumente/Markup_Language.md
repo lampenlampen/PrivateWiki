@@ -42,8 +42,8 @@ Ein newline-Charakter wird ignoriert. 2 oder mehr beenden den Listenblock.
 - Hallo
 - Hallo
 - Hallo
--- Huhu
--- Huhu
+- - Huhu
+- - Huhu
 - Hihi
 ```
 
@@ -56,11 +56,12 @@ Ein newline-Charakter wird ignoriert. 2 oder mehr beenden den Listenblock.
 * Hallo
 * Hallo
 * Hallo
-** Huhu
-** Huhu
+* * Huhu
+* * Huhu
 * Hihi
+*  * dsfsdasd
+*  * asdfasd
 ```
-
 
 ### Checkboxen
 Checkboxen werden mit einer eckigen offenen Klammer und einer folgenden eckigen geschlossenen Klammer eingeleitet.
@@ -80,15 +81,56 @@ Grundsätzlich können Listen und Aufzählungen ineinander verschachtelt werden.
 
 ## Codeblock
 
+A Codeblock start with 3 dashes (```).
+After the 3 dashes a language can be specified.
+
+Supported Languages:
+
+Beispiel:
+``` markdown
+    ```
+    public class Codeblock
+    {
+        public String code;
+    }
+    ```
+```
+
 ## Quotation
 
-## Horizontal Rule
+## Horizontal Line
+---
 
 ## Bilder
 
 ## Videos
 
 ## Tabelle
+
+A Tableblock starts with a vertical bar ( | ).
+All rows have to start with a vertical bar.
+Columns are separated with a vertical bar.
+
+After the first line follows a special line.
+The contents of each cell are three dashes (---).
+This indicates the line above is a header line.
+
+Colons on the left, the right or on both sides can be used to align columns left, right or middle.
+Default Alignment is left.
+
+``` markdown
+| Header 1 | Header 2 | Header3 | Header4 |
+|:---|---:|:---:|:---|
+|left | right | middle | left |
+| sadfhk | aspdfkhj | pakdfh | padfhj |
+|sadf|sdf|sdf|sdf|
+```
+> | Header 1 | Header 2 | Header3 | Header4 |
+> |:---|---:|:---:|:---|
+> |left | right | middle | left |
+> | sadfgdfgdfhk | sdfg | pakdfh | padsdfsadfgfhj |
+> |sadf|sdf|sdasdfgasdgf|sdf|
+
 
 ## Matheblock
 
@@ -110,3 +152,28 @@ Grundsätzlich können Listen und Aufzählungen ineinander verschachtelt werden.
 
 ## Interactive Code
 Python-Code Ausführung. Zum Plotten von Grafiken
+
+
+Hallo
+
+> huhuhasdfökajsdfcsdöklcnsaödfjsaöfdhsdfjkglhdfj
+> sdfgklhauewilfnsv
+> fsdfkljghnalkf
+> > sdafjkalhfasjklhf
+> > 
+> > sdfölgkjearv
+> > sdvkhsdfvg
+> > sdlkfndfkdnhfgkdlsjg
+> > > hsdfkjh
+> > > sdkjfhasdf
+> > > sdflkghjdsfjkg  sfgadgafdgadfgadfgs
+> > > sdfglkj
+> 
+> 
+> dfslgknsdflvknfdadkjdsfh
+> sdfvkjnbasdfsdf
+> asdklfjh
+> 1. sdfjkhsjkdfh
+> 2. sdkljfhds
+> 3. sdfkjhsdf
+> [Hallo](https://www.wikipedia.com)

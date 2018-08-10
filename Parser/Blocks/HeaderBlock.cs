@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using Parser.Enums;
 
 namespace Parser.Blocks
@@ -9,9 +10,9 @@ namespace Parser.Blocks
     public class HeaderBlock : Block
     {
         public readonly string HeadingText;
-        public readonly HeadingLevel Level;
+        public readonly int Level;
 
-        private HeaderBlock(string headingText, HeadingLevel level)
+        private HeaderBlock(string headingText, int level)
         {
             HeadingText = headingText;
             Level = level;
@@ -20,29 +21,35 @@ namespace Parser.Blocks
         public static HeaderBlock Parse(string heading)
         {
             var headingLevel = 0;
-            var trimmedText = heading.TrimStart(new char[' ']);
 
-
-            var headingText = trimmedText;
-            while (headingText.StartsWith("#"))
+            // Count the Level of the heading
+            while (heading[headingLevel].Equals('#'))
             {
                 headingLevel++;
-                headingText = headingText.Substring(1);
             }
 
+            // Max supported Header Level is 5
             if (headingLevel > 5)
             {
                 // Error Heading Level not supported.
-                
             }
 
-            return new HeaderBlock(headingText,
-                (HeadingLevel) Enum.Parse(typeof(HeadingLevel), headingLevel.ToString()));
+            return new HeaderBlock(heading.Substring(headingLevel).Trim(), headingLevel);
         }
 
         public override string ToString()
         {
-            return base.ToString();
+            var stringBuilder = new StringBuilder();
+
+            for (var i = 0; i < 3; i++)
+            {
+                stringBuilder.Append("#");
+            }
+
+            stringBuilder.AppendLine(" ");
+            stringBuilder.AppendLine(HeadingText);
+
+            return stringBuilder.ToString();
         }
     }
 }

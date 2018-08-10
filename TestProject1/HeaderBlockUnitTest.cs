@@ -7,13 +7,13 @@ using Parser.Blocks;
 namespace TestProject1
 {
     [TestClass]
-    public class UnitTest1
+    public class HeaderBlockUnitTest
     {
         [TestMethod]
         public void TestMethod1()
         {
             const int headingLevel = 3;
-            const string headingText = "";
+            const string headingText = "Hallo";
 
             var headingBuilder = new StringBuilder();
 
