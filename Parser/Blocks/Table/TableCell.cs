@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net.Mime;
 
 namespace Parser.Blocks.Table
 {
@@ -12,16 +13,31 @@ namespace Parser.Blocks.Table
         /// </summary>
         public IList<MarkdownInline> Inlines { get; set; }
 
+        public string Text;
+
+        public TableCell(string text)
+        {
+            Text = text;
+        }
+
+        public TableCell(IList<MarkdownInline> inlines)
+        {
+            Inlines = inlines;
+        }
+
         public static TableCell Parse(string cell)
         {
             // TODO TableCell Parse
+            return new TableCell(cell);
+            
+            
             throw new System.NotImplementedException();
         }
 
         public override string ToString()
         {
             // TODO TableCell ToString
-            return "";
+            return Text;
         }
     }
 }

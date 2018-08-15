@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Parser.Blocks;
 
 namespace Parser
@@ -125,6 +126,18 @@ namespace Parser
             }
 
             return blocks;
+        }
+
+        public override string ToString()
+        {
+            var textBuilder = new StringBuilder();
+
+            foreach (var block in Dom)
+            {
+                textBuilder.AppendLine(block.ToString());
+            }
+
+            return textBuilder.ToString();
         }
     }
 }

@@ -17,5 +17,10 @@ namespace Parser.Blocks
             }
             throw new ArgumentException("Text represents not a Horizontal Line!", nameof(text));
         }
+
+        public override string ToString()
+        {
+            return "---";
+        }
     }
 }

@@ -32,6 +32,7 @@ namespace Parser.Blocks
             if (headingLevel > 5)
             {
                 // Error Heading Level not supported.
+                throw new ArgumentException($"Heading Level ({headingLevel}) not supported!", nameof(heading));
             }
 
             return new HeaderBlock(heading.Substring(headingLevel).Trim(), headingLevel);
@@ -41,13 +42,13 @@ namespace Parser.Blocks
         {
             var stringBuilder = new StringBuilder();
 
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < Level; i++)
             {
                 stringBuilder.Append("#");
             }
 
-            stringBuilder.AppendLine(" ");
-            stringBuilder.AppendLine(HeadingText);
+            stringBuilder.Append(" ");
+            stringBuilder.Append(HeadingText);
 
             return stringBuilder.ToString();
         }

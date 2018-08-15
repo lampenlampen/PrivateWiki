@@ -1,4 +1,6 @@
-namespace Parser.Blocks
+using Parser.Enums;
+
+namespace Parser
 {
     /// <summary>
     /// An internal class that is the base class for inline elements.
