@@ -47,7 +47,8 @@ namespace Parser.Blocks.Table
             {
                 textBuilder.Append($"{cell} |");
             }
-            
+
+            return textBuilder.ToString();
         }
     }
 }
