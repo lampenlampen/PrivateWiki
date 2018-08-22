@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
+[assembly:InternalsVisibleTo("TestProject1")]
 namespace Parser.Blocks
 {
     public class HorizontalLine : Block

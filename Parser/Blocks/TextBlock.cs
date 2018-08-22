@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
+[assembly:InternalsVisibleTo("TestProject1")]
 namespace Parser.Blocks
 {
     public class TextBlock : Block
@@ -13,24 +15,25 @@ namespace Parser.Blocks
             Text = text ?? throw new ArgumentNullException(nameof(text));
         }
 
-        public static TextBlock Parse(List<string> lines)
+        internal static TextBlock Parse(List<string> lines)
         {
             // TODO Parse Text
             // TODO Trimm two or more whitespaces.
             var textBuilder = new StringBuilder();
 
-            foreach (var line in lines)
+            for (var i = 0; i < lines.Count -1; i++)
             {
-                var trimmedLine = line.Trim();
-                textBuilder.Append(trimmedLine + " ");
-
-                if (line.EndsWith("  "))
-                {
-                    textBuilder.AppendLine("");
-                }
+                textBuilder.AppendLine(lines[i]);
             }
+
+            textBuilder.Append(lines[lines.Count - 1]);
             
             return new TextBlock(textBuilder.ToString());
+        }
+
+        public override string ToString()
+        {
+            return Text;
         }
     }
 }

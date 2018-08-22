@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Net.Mime;
+using System.Runtime.CompilerServices;
 
+[assembly:InternalsVisibleTo("TestProject1")]
 namespace Parser.Blocks.Table
 {
     /// <summary>
@@ -13,7 +15,7 @@ namespace Parser.Blocks.Table
         /// </summary>
         public IList<MarkdownInline> Inlines { get; set; }
 
-        public string Text;
+        public string Text { get; set; }
 
         public TableCell(string text)
         {
@@ -25,13 +27,10 @@ namespace Parser.Blocks.Table
             Inlines = inlines;
         }
 
-        public static TableCell Parse(string cell)
+        internal static TableCell Parse(string text)
         {
             // TODO TableCell Parse
-            return new TableCell(cell);
-            
-            
-            throw new System.NotImplementedException();
+            return new TableCell(text);
         }
 
         public override string ToString()

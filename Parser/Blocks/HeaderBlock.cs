@@ -1,7 +1,9 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Parser.Enums;
 
+[assembly:InternalsVisibleTo("TestProject1")]
 namespace Parser.Blocks
 {
     /// <summary>
@@ -18,7 +20,7 @@ namespace Parser.Blocks
             Level = level;
         }
 
-        public static HeaderBlock Parse(string heading)
+        internal static HeaderBlock Parse(string heading)
         {
             var headingLevel = 0;
 

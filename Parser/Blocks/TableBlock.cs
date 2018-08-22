@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Parser.Blocks.Table;
 
+[assembly:InternalsVisibleTo("TestProject1")]
 namespace Parser.Blocks
 {
     public class TableBlock : Block
@@ -21,7 +23,7 @@ namespace Parser.Blocks
         /// </summary>
         public List<TableColumnDefinition> ColumnDefinitions { get; set; }
 
-        public TableBlock(List<TableRow> rows, List<TableColumnDefinition> columnDefinitions)
+        internal TableBlock(List<TableRow> rows, List<TableColumnDefinition> columnDefinitions)
         {
             Rows = rows;
             ColumnDefinitions = columnDefinitions;
@@ -30,7 +32,7 @@ namespace Parser.Blocks
         internal static TableBlock Parse(List<string> lines)
         {
             // Parse the Header Row.
-            var rows = new List<TableRow> {TableRow.Parse(lines[0])};
+            var rows = new List<TableRow> {TableRow.ParseHeader(lines[0])};
 
             // Parse the second row
             var columnDefinitions = new List<TableColumnDefinition>(rows[0].Cells.Count);
@@ -41,7 +43,7 @@ namespace Parser.Blocks
             // First and second Row must have the same amount of cells.
             if (rows[0].Cells.Count != columnDefinitionsText.Count)
             {
-                throw new ArgumentException("Not a valid TableBlock!", nameof(lines));
+                throw new ArgumentException($"Not a valid TableBlock!\nHeader Count: {rows[0].Cells.Count}, ColumnDefinitions Count: {columnDefinitions.Count}", nameof(lines));
             }
 
             // Parse the second Row for the ColumnDefinitions
@@ -49,10 +51,11 @@ namespace Parser.Blocks
             {
                 if (column.Count(c => c == '-') < 3)
                 {
-                    throw new ArgumentException("ColumnDefinition has to contain 3 or more Dashes");
+                    
+                    throw new ArgumentException($"ColumnDefinition has to contain 3 or more Dashes\nColumn: {column}");
                 }
 
-                if (column.Trim().Count(c => c == '-') + column.Trim().Count(c => c == ':') == column.Length)
+                if (column.Count(c => c == '-') + column.Count(c => c == ':') + column.Count(c => c == ' ') != column.Length)
                 {
                     throw new ArgumentException("ColumnDefinition must only contain colons (:) or dashes (-)");
                 }
@@ -91,7 +94,7 @@ namespace Parser.Blocks
             var textBuilder = new StringBuilder();
 
             // Header
-            textBuilder.Append(Rows[0]);
+            textBuilder.AppendLine(Rows[0].ToString());
 
             // ColumnDefinitions
             textBuilder.Append("|");
@@ -99,12 +102,15 @@ namespace Parser.Blocks
             {
                 textBuilder.Append($"{definition}|");
             }
+
+            textBuilder.AppendLine("");
             
             // Table Data
-            for (var i = 2; i < Rows.Count; i++)
+            for (var i = 1; i < Rows.Count -1; i++)
             {
                 textBuilder.AppendLine(Rows[i].ToString());
             }
+            textBuilder.Append(Rows.Last());
 
             return textBuilder.ToString();
         }

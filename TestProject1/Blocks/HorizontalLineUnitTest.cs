@@ -2,7 +2,7 @@
 using Parser;
 using Parser.Blocks;
 
-namespace TestProject1
+namespace TestProject1.Blocks
 {
     [TestClass]
     public class HorizontalLineUnitTest : ParserTestBase

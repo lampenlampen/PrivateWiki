@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 
+[assembly:InternalsVisibleTo("TestProject1")]
 namespace Parser.Blocks
 {
     public class CodeBlock: Block
@@ -14,7 +17,6 @@ namespace Parser.Blocks
             Text = text;
             CodeLanguage = codeLanguage;
         }
-
 
         internal static CodeBlock Parse(List<string> lines, string codeLanguage)
         {
@@ -30,12 +32,18 @@ namespace Parser.Blocks
 
         public override string ToString()
         {
+            var textBuilder = new StringBuilder();
+            
             if (CodeLanguage != null)
             {
-                return $"``` {CodeLanguage}\n{Text}\n```";
+                textBuilder.AppendLine($"``` {CodeLanguage}");
             }
 
-            return $"```\n{Text}\n```";
+            textBuilder.Append(Text);
+
+            textBuilder.Append("```");
+
+            return textBuilder.ToString();
         }
     }
 }

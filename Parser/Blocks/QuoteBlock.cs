@@ -2,13 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
+[assembly:InternalsVisibleTo("TestProject1")]
 namespace Parser.Blocks
 {
     public class QuoteBlock : Container
     {
-        public QuoteBlock(IEnumerable<Block> blocks) : base(blocks)
+        public QuoteBlock(IList<Block> blocks) : base(blocks)
         {
            
         }
@@ -19,16 +21,10 @@ namespace Parser.Blocks
             {
                 if (!lines[i].StartsWith(">"))
                 {
-                    throw new ArgumentException("Markdown Text is not a Blockquote!", nameof(lines));
+                    throw new ArgumentException($"Markdown Text is not a Blockquote!\n", nameof(lines));
                 }
 
                 lines[i]= lines[i].Substring(2);
-            }
-
-            var lastLine = lines.Last();
-            if (!lastLine.StartsWith(">"))
-            {
-                throw new ArgumentException("Markdown Text is not a Blockquote!", nameof(lines));
             }
 
             return new QuoteBlock(Document.ParseLines(lines));
@@ -37,12 +33,14 @@ namespace Parser.Blocks
         public override string ToString()
         {
             var stringBuilder = new StringBuilder();
-            
-            foreach (var block in Blocks)
+
+            var lines = base.ToString().SplitIntoLines();
+
+            for (var i = 0; i < lines.Count - 1; i++)
             {
-                stringBuilder.AppendLine(block.ToString());
-                stringBuilder.AppendLine("");
+                stringBuilder.AppendLine(lines[i].Insert(0, "> "));
             }
+            stringBuilder.Append(lines[lines.Count -1].Insert(0, "> "));
 
             return stringBuilder.ToString();
         }

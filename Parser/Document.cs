@@ -43,29 +43,30 @@ namespace Parser
                     // Line is QuoteBlock
 
                     var j = i + 1;
-                    while (lines[j][0] == '>')
+                    while ( j < lines.Count && lines[j].StartsWith("> "))
                     {
                         j++;
                     }
-                    
+
                     // Line j is not part of the Quoteblock anymore.
                     // The Quoteblock spans the lines i to (j-i).
-                    
-                    blocks.Add(QuoteBlock.Parse(lines.GetRange(i, j-i)));
+
+                    blocks.Add(QuoteBlock.Parse(lines.GetRange(i, j - i)));
 
                     // Skip lines i to (j-i), because they belong to the Quoteblock.
                     i = j - i;
                     continue;
-                    
-                } else if (line.StartsWith("---"))
+                }
+                else if (line.StartsWith("---"))
                 {
                     // Line is a Horizontal Line.
                     blocks.Add(HorizontalLine.Parse(line));
                     continue;
-                } else if (line.StartsWith("```"))
+                }
+                else if (line.StartsWith("```"))
                 {
                     // Line begins a Codeblock.
-                    
+
                     // Determine CodeLanguage
                     string codeLanguage = null;
 
@@ -77,51 +78,76 @@ namespace Parser
 
                     // Find End of Codeblock
                     var j = i + 1;
-                    while (!lines[j].StartsWith("```"))
+                    while (j < lines.Count && !lines[j].StartsWith("```"))
+                    {
+                        j++;
+                    }
+
+                    // Line j is not part of the Codeblock anymore.
+                    // The Codeblock spans the lines i to (j-i).
+
+                    blocks.Add(CodeBlock.Parse(lines.GetRange(i+1, j - i), codeLanguage));
+                    
+                    // Skip lines i to (j-i), because they belong to the Codeblock.
+                    i = j;
+                    continue;
+                }
+                else if (line.StartsWith("|"))
+                {
+                    // Line is a TableBlock.
+
+                    var j = i + 1;
+                    while (j < lines.Count && lines[j].StartsWith("|"))
+                    {
+                        j++;
+                    }
+
+                    // Line j is not part of the Tableblock anymore.
+                    // The Tableblock spans the lines i to (j-i).
+
+                    blocks.Add(TableBlock.Parse(lines.GetRange(i, j - i)));
+
+                    // Skip lines i to (j-i), because they belong to the Codeblock.
+                    i = j - 1;
+                    continue;
+                }
+                else if (line.StartsWith("[") || line.StartsWith("*") || line.StartsWith("-"))
+                {
+                    // Line is a ListBlock.
+
+                    var j = i + 1;
+                    while (j < lines.Count && (line.StartsWith("[") || line.StartsWith("*") || line.StartsWith("-") ||
+                           line.StartsWith("\n") || line.StartsWith("\r")))
                     {
                         j++;
                     }
                     
-                    // Line j is not part of the Codeblock anymore.
-                    // The Codeblock spans the lines i to (j-i).
+                    // The ListBlock spans the lines i to (j-i).
                     
-                    blocks.Add(CodeBlock.Parse(lines.GetRange(i, j-i), codeLanguage));
+                    blocks.Add(ListBlock.Parse(lines.GetRange(i, j-i)));
                     
                     // Skip lines i to (j-i), because they belong to the Codeblock.
                     i = j - 1;
                     continue;
-                } else if (line.StartsWith("|"))
-                {
-                    // Line is a TableBlock.
-                    // TODO Parse Table
-
-                    var j = i + 1;
-                    while (!lines[j].StartsWith("|"))
-                    {
-                        j++;
-                    }
-                    
-                    // Line j is not part of the Tableblock anymore.
-                    // The Tableblock spans the lines i to (j-i).
-                    
-                    blocks.Add(TableBlock.Parse(lines.GetRange(i, j-i)));
                 }
                 else
                 {
                     // Line is a Textblock
 
                     var j = i + 1;
-                    while (!lines[j].Trim().Equals(""))
+                    while (j < lines.Count && !lines[j].Trim().Equals(""))
                     {
                         j++;
                     }
-                    
+
                     // Line j is a Empty line.
                     // The Textblock spans the lines i to (j-i).
-                    
-                    blocks.Add(TextBlock.Parse(lines.GetRange(i, j-i)));
-                    
-                    // Skip lines i to (j-i), because they belong to the Textblock.
+
+                    blocks.Add(TextBlock.Parse(lines.GetRange(i, j - i)));
+
+                    // Skip lines i to (j-i), because they belong to the TextBlock.
+                    i = j - 1;
+                    continue;
                 }
             }
 
