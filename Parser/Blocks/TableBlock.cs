@@ -5,8 +5,10 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Parser.Blocks.Table;
+using Parser.Exceptions;
 
-[assembly:InternalsVisibleTo("TestProject1")]
+[assembly: InternalsVisibleTo("TestProject1")]
+
 namespace Parser.Blocks
 {
     public class TableBlock : Block
@@ -29,7 +31,7 @@ namespace Parser.Blocks
             ColumnDefinitions = columnDefinitions;
         }
 
-        internal static TableBlock Parse(List<string> lines)
+        internal static TableBlock Parse(List<string> lines, int blockStartLine = -1)
         {
             // Parse the Header Row.
             var rows = new List<TableRow> {TableRow.ParseHeader(lines[0])};
@@ -43,7 +45,12 @@ namespace Parser.Blocks
             // First and second Row must have the same amount of cells.
             if (rows[0].Cells.Count != columnDefinitionsText.Count)
             {
-                throw new ArgumentException($"Not a valid TableBlock!\nHeader Count: {rows[0].Cells.Count}, ColumnDefinitions Count: {columnDefinitions.Count}", nameof(lines));
+                var builder = new StringBuilder();
+                builder.AppendLine("The number of cells of the header and the alignment row must be equal.");
+                builder.AppendLine($"Number of Headers: {rows[0].Cells.Count}");
+                builder.AppendLine($"Number of Alignment Options: {columnDefinitions.Count}");
+
+                throw new TableBlockException(builder.ToString(), lines, 0, blockStartLine);
             }
 
             // Parse the second Row for the ColumnDefinitions
@@ -51,13 +58,21 @@ namespace Parser.Blocks
             {
                 if (column.Count(c => c == '-') < 3)
                 {
+                    var builder = new StringBuilder();
+                    builder.AppendLine("Every Alignment Option must contain 3 or more dashes (-)");
+                    builder.AppendLine($"The Alignment Option Cell ({column}) contains less than 3 dashes.");
                     
-                    throw new ArgumentException($"ColumnDefinition has to contain 3 or more Dashes\nColumn: {column}");
+                    throw new TableBlockException(builder.ToString(), lines, 1, blockStartLine);
                 }
 
-                if (column.Count(c => c == '-') + column.Count(c => c == ':') + column.Count(c => c == ' ') != column.Length)
+                if (column.Count(c => c == '-') + column.Count(c => c == ':') + column.Count(c => c == ' ') !=
+                    column.Length)
                 {
-                    throw new ArgumentException("ColumnDefinition must only contain colons (:) or dashes (-)");
+                    var builder = new StringBuilder();
+                    builder.AppendLine("Every Alignment Option must only contain colons (:) or dashes (-).");
+                    builder.AppendLine($"The Alignment Option Cell ({column}) contains other characters.");
+                    
+                    throw new TableBlockException(builder.ToString(), lines, 1, blockStartLine);
                 }
 
                 if (column.StartsWith(":") && column.EndsWith(":"))
@@ -104,12 +119,13 @@ namespace Parser.Blocks
             }
 
             textBuilder.AppendLine("");
-            
+
             // Table Data
-            for (var i = 1; i < Rows.Count -1; i++)
+            for (var i = 1; i < Rows.Count - 1; i++)
             {
                 textBuilder.AppendLine(Rows[i].ToString());
             }
+
             textBuilder.Append(Rows.Last());
 
             return textBuilder.ToString();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 using Parser.Blocks.List;
 using Parser.Enums;
 
@@ -92,7 +93,36 @@ namespace Parser.Blocks
         public override string ToString()
         {
             // TODO Override ToString()
-            return base.ToString();
+            var builder = new StringBuilder();
+            switch (Style)
+            {
+                case ListStyle.Bulleted:
+
+                    foreach (var item in Items)
+                    {
+                        var itemLines = Items.ToString().SplitIntoLines();
+                        
+                        builder.AppendLine($"- {itemLines[0]}");
+
+                        for (int i = 1; i < itemLines.Count -1; i++)
+                        {
+                            builder.AppendLine($"  {itemLines[i]}");
+                        }
+
+                        builder.Append($"  {itemLines[itemLines.Count]}");
+                    }
+                    
+                    break;
+                case ListStyle.Checkboxed:
+                    break;
+                case ListStyle.Numbered:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            
+            return builder.ToString();
         }
     }
 }

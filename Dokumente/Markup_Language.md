@@ -90,6 +90,8 @@ Grundsätzlich können Listen und Aufzählungen ineinander verschachtelt werden.
 
 ## Tabelle
 
+Eine leere Zelle muss mehr als 2 Leerzeichen enthalten.
+
 ## Matheblock
 
 # Future-Blocks

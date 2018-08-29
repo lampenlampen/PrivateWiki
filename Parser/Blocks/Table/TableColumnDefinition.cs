@@ -1,4 +1,5 @@
 using System;
+using Parser.Exceptions;
 
 namespace Parser.Blocks.Table
 {
@@ -30,7 +31,7 @@ namespace Parser.Blocks.Table
                 case ColumnAlignment.Center:
                     return ":---:";
                 default:
-                    throw new ArgumentOutOfRangeException($"Alignment ({Alignment}) does not exist.");
+                    throw new TableBlockException($"Alignment ({Alignment}) does not exist.");
             }
         }
     }
