@@ -43,13 +43,16 @@ namespace Parser.Blocks
                 style = ListStyle.Checkboxed;
             }
 
+            // Parse lines
             for (var i = 0; i < lines.Count; i++)
             {
                 var line = lines[i];
                 
-                // Parse Bulleted List
+                
                 if (line.StartsWith("-"))
                 {
+                    // Parse Bulleted List
+                    
                     var j = i + 1;
                     while (j < lines.Count && !lines[j].StartsWith("-"))
                     {
@@ -60,9 +63,11 @@ namespace Parser.Blocks
 
                     listElements.Add(ListElement.Parse(lines.GetRange(i, j-i).Select(l => l.Substring(2)).ToList()));
 
-                    i = j;
+                    i = j-1;
                 } else if (line.StartsWith("*"))
                 {
+                    // Parse Numbered List
+                    
                     var j = i + 1;
                     while (j < lines.Count && !lines[j].StartsWith("*"))
                     {
@@ -72,8 +77,12 @@ namespace Parser.Blocks
                     // ListElement spans the lines i to (j-i).
                     
                     listElements.Add(ListElement.Parse(lines.GetRange(i, j-i).Select(l => l.Substring(2)).ToList()));
+
+                    i = j - 1;
                 } else if (line.StartsWith("["))
                 {
+                    // Parse Checkboxed List
+                    
                     var j = i + 1;
                     while (j < lines.Count && !lines[j].StartsWith("["))
                     {
@@ -98,20 +107,35 @@ namespace Parser.Blocks
             {
                 case ListStyle.Bulleted:
 
-                    foreach (var item in Items)
+                    for (var i = 0; i < Items.Count-1; i++)
                     {
-                        var itemLines = Items.ToString().SplitIntoLines();
-                        
+                        var itemLines = Items[i].ToString().SplitIntoLines();
+
                         builder.AppendLine($"- {itemLines[0]}");
 
-                        for (int i = 1; i < itemLines.Count -1; i++)
+                        for (var j = 1; j < itemLines.Count; j++)
                         {
-                            builder.AppendLine($"  {itemLines[i]}");
+                            builder.AppendLine($"  {itemLines[j]}");
                         }
-
-                        builder.Append($"  {itemLines[itemLines.Count]}");
                     }
                     
+                    // Last Line with no newline character at the end
+                    var itemLinesLastLine = Items[Items.Count-1].ToString().SplitIntoLines();
+
+                    builder.Append($"- {itemLinesLastLine[0]}");
+
+                    if (itemLinesLastLine.Count > 1)
+                    {
+                        builder.AppendLine("");
+                        
+                        for (var j = 1; j < itemLinesLastLine.Count -1; j++)
+                        {
+                            builder.AppendLine($"  {itemLinesLastLine[j]}");
+                        }
+                        
+                        builder.Append($"  {itemLinesLastLine[itemLinesLastLine.Count -1]}");    
+                    }
+
                     break;
                 case ListStyle.Checkboxed:
                     break;
