@@ -6,6 +6,7 @@ namespace Parser
     /// </summary>
     public abstract class Block
     {
-        
+        public abstract override string ToString();
+
     }
 }

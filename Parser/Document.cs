@@ -124,13 +124,18 @@ namespace Parser
                     
                     // The ListBlock spans the lines i to (j-i).
                     
-                    blocks.Add(ListBlock.Parse(lines.GetRange(i, j-i)));
+                    blocks.Add(ListBlock.Parse(lines.GetRange(i, j-i), i));
                     
                     // Skip lines i to (j-i), because they belong to the Codeblock.
                     i = j - 1;
                     continue;
-                }
-                else
+                } else if (line.StartsWith("\\[") && line.EndsWith("\\]"))
+                {
+                    // Line is a MathBlock.
+                    blocks.Add(MathBlock.Parse(line.Substring(2, line.Length -3), i));
+                    
+                    continue;
+                } else
                 {
                     // Line is a Textblock
 
@@ -158,10 +163,11 @@ namespace Parser
         {
             var textBuilder = new StringBuilder();
 
-            foreach (var block in Dom)
+            for (var i = 0; i < Dom.Count-1; i++)
             {
-                textBuilder.AppendLine(block.ToString());
+                textBuilder.AppendLine(Dom[i].ToString());
             }
+            textBuilder.Append(Dom[Dom.Count-1]);
 
             return textBuilder.ToString();
         }

@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Parser.Blocks.List;
 using Parser.Enums;
+using Parser.Exceptions;
 
 [assembly:InternalsVisibleTo("TestProject1")]
 namespace Parser.Blocks
@@ -21,15 +22,16 @@ namespace Parser.Blocks
             Items = items;
         }
 
-        internal static ListBlock Parse(List<string> lines)
+        internal static ListBlock Parse(List<string> lines, int blockStartLine)
         {
             List<ListElement> listElements = new List<ListElement>();            
             
             // TODO Standard ListStyle
-            var style = ListStyle.Bulleted;
+            ListStyle style;
             
             
             // Determine ListStyle
+            
             if (lines[0].StartsWith("-"))
             {
                 style = ListStyle.Bulleted;
@@ -42,11 +44,18 @@ namespace Parser.Blocks
             {
                 style = ListStyle.Checkboxed;
             }
+            else
+            {
+                var builder = new StringBuilder();
+                builder.AppendLine("Unkown ListStyle");
+                throw new ListBlockException(builder.ToString(), lines, 0, blockStartLine);
+            }
 
             // Parse lines
             for (var i = 0; i < lines.Count; i++)
             {
                 var line = lines[i];
+
                 
                 
                 if (line.StartsWith("-"))
@@ -120,26 +129,85 @@ namespace Parser.Blocks
                     }
                     
                     // Last Line with no newline character at the end
-                    var itemLinesLastLine = Items[Items.Count-1].ToString().SplitIntoLines();
+                    var itemLinesLastLine1 = Items[Items.Count-1].ToString().SplitIntoLines();
 
-                    builder.Append($"- {itemLinesLastLine[0]}");
+                    builder.Append($"- {itemLinesLastLine1[0]}");
 
-                    if (itemLinesLastLine.Count > 1)
+                    if (itemLinesLastLine1.Count > 1)
                     {
                         builder.AppendLine("");
                         
-                        for (var j = 1; j < itemLinesLastLine.Count -1; j++)
+                        for (var j = 1; j < itemLinesLastLine1.Count -1; j++)
                         {
-                            builder.AppendLine($"  {itemLinesLastLine[j]}");
+                            builder.AppendLine($"  {itemLinesLastLine1[j]}");
                         }
                         
-                        builder.Append($"  {itemLinesLastLine[itemLinesLastLine.Count -1]}");    
+                        builder.Append($"  {itemLinesLastLine1[itemLinesLastLine1.Count -1]}");    
                     }
 
                     break;
-                case ListStyle.Checkboxed:
-                    break;
                 case ListStyle.Numbered:
+                    
+                    for (var i = 0; i < Items.Count-1; i++)
+                    {
+                        var itemLines = Items[i].ToString().SplitIntoLines();
+
+                        builder.AppendLine($"* {itemLines[0]}");
+
+                        for (var j = 1; j < itemLines.Count; j++)
+                        {
+                            builder.AppendLine($"  {itemLines[j]}");
+                        }
+                    }
+                    
+                    // Last Line with no newline character at the end
+                    var itemLinesLastLine2 = Items[Items.Count-1].ToString().SplitIntoLines();
+
+                    builder.Append($"* {itemLinesLastLine2[0]}");
+
+                    if (itemLinesLastLine2.Count > 1)
+                    {
+                        builder.AppendLine("");
+                        
+                        for (var j = 1; j < itemLinesLastLine2.Count -1; j++)
+                        {
+                            builder.AppendLine($"  {itemLinesLastLine2[j]}");
+                        }
+                        
+                        builder.Append($"  {itemLinesLastLine2[itemLinesLastLine2.Count -1]}");    
+                    }
+                    
+                    break;
+                case ListStyle.Checkboxed:
+                    
+                    for (var i = 0; i < Items.Count-1; i++)
+                    {
+                        var itemLines = Items[i].ToString().SplitIntoLines();
+
+                        builder.AppendLine($"[] {itemLines[0]}");
+
+                        for (var j = 1; j < itemLines.Count; j++)
+                        {
+                            builder.AppendLine($"   {itemLines[j]}");
+                        }
+                    }
+                    
+                    // Last Line with no newline character at the end
+                    var itemLinesLastLine3 = Items[Items.Count-1].ToString().SplitIntoLines();
+
+                    builder.Append($"[] {itemLinesLastLine3[0]}");
+
+                    if (itemLinesLastLine3.Count > 1)
+                    {
+                        builder.AppendLine("");
+                        
+                        for (var j = 1; j < itemLinesLastLine3.Count -1; j++)
+                        {
+                            builder.AppendLine($"   {itemLinesLastLine3[j]}");
+                        }
+                        
+                        builder.Append($"   {itemLinesLastLine3[itemLinesLastLine3.Count -1]}");    
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
