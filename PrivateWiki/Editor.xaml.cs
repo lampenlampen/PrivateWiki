@@ -33,21 +33,7 @@ namespace PrivateWiki
         public async void ShowContent()
         {
 
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Downloads;
-            picker.FileTypeFilter.Add(".txt");
-
-            StorageFile file = await picker.PickSingleFileAsync();
-            if (file != null)
-            {
-                // Application now has read/write access to the picked file
-                MarkdownTextBlock.Text = await FileIO.ReadTextAsync(file);
-            }
-            else
-            {
-                MarkdownTextBlock.Text = "Operation cancelled.";
-            }
+            ScrollViewer.Content
         }
     }
 }
