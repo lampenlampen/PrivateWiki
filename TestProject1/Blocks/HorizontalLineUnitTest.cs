@@ -12,7 +12,7 @@ namespace TestProject1.Blocks
         public void HorizontalLine_Dashes_Correct()
         {
             const string markup = "---";
-            var block = new HorizontalLine();
+            var block = new HorizontalRuleBlock();
             
             Assert.AreEqual(markup, block.ToString());
         }
@@ -22,7 +22,7 @@ namespace TestProject1.Blocks
         public void HorizontalLine_Dashes_Correct_2()
         {
             const string markup = "---";
-            var block = new HorizontalLine();
+            var block = new HorizontalRuleBlock();
 
             var document = Document.Parse(markup);
            
@@ -34,7 +34,7 @@ namespace TestProject1.Blocks
         public void HorizontalLine_Dashes_Correct_3()
         {
             const string markup = "---  ";
-            var block = new HorizontalLine();
+            var block = new HorizontalRuleBlock();
 
             var document = Document.Parse(markup);
            
@@ -46,7 +46,7 @@ namespace TestProject1.Blocks
         public void HorizontalLine_Dashes_Correct_4()
         {
             const string markup = "---  ";
-            var block = new HorizontalLine();
+            var block = new HorizontalRuleBlock();
 
             var document = Document.Parse(markup);
            

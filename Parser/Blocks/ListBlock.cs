@@ -18,6 +18,7 @@ namespace Parser.Blocks
 
         public ListBlock(ListStyle style, IList<ListElement> items)
         {
+            Type = BlockType.ListBlock;
             Style = style;
             Items = items;
         }

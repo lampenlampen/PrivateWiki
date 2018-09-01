@@ -5,13 +5,14 @@ using System.Text;
 [assembly:InternalsVisibleTo("TestProject1")]
 namespace Parser.Blocks.List
 {
-    public class ListElement
+    public class ListElement: Block
     {
-        private string text;
+        private string Text { get; }
 
         private ListElement(string text)
         {
-            this.text = text;
+            Type = BlockType.ListItemBlock;
+            Text = text;
         }
 
         internal static ListElement Parse(List<string> lines)
@@ -31,7 +32,7 @@ namespace Parser.Blocks.List
 
         public override string ToString()
         {
-            return text;
+            return Text;
         }
     }
 }

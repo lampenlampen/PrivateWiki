@@ -12,7 +12,7 @@ namespace Parser.Blocks
     {
         public QuoteBlock(IList<Block> blocks) : base(blocks)
         {
-           
+            Type = BlockType.QuoteBlock;
         }
 
         internal static QuoteBlock Parse(List<string> lines)

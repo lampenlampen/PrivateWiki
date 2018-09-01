@@ -14,6 +14,7 @@ namespace Parser.Blocks
 
         public CodeBlock(string text, string codeLanguage)
         {
+            Type = BlockType.CodeBlock;
             Text = text;
             CodeLanguage = codeLanguage;
         }

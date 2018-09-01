@@ -60,7 +60,7 @@ namespace Parser
                 else if (line.StartsWith("---"))
                 {
                     // Line is a Horizontal Line.
-                    blocks.Add(HorizontalLine.Parse(line));
+                    blocks.Add(HorizontalRuleBlock.Parse(line));
                     continue;
                 }
                 else if (line.StartsWith("```"))

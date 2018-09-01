@@ -1,3 +1,5 @@
+using System;
+
 namespace Parser
 {
     /// <summary>
@@ -6,6 +8,8 @@ namespace Parser
     /// </summary>
     public abstract class Block
     {
+        public BlockType Type;
+        
         public abstract override string ToString();
 
     }

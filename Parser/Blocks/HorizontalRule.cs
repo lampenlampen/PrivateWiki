@@ -5,19 +5,20 @@ using System.Runtime.CompilerServices;
 [assembly:InternalsVisibleTo("TestProject1")]
 namespace Parser.Blocks
 {
-    public class HorizontalLine : Block
+    public class HorizontalRuleBlock : Block
     {
-        public HorizontalLine()
+        public HorizontalRuleBlock()
         {
+            Type = BlockType.HorizontalRuleBlock;
         }
 
-        internal static HorizontalLine Parse(string text)
+        internal static HorizontalRuleBlock Parse(string text)
         {
             if (text.StartsWith("---") && text.Count(c => c == '-') == text.Trim().Length)
             {
-                return new HorizontalLine();
+                return new HorizontalRuleBlock();
             }
-            throw new ArgumentException("Text represents not a Horizontal Line!", nameof(text));
+            throw new ArgumentException("Text represents not a Horizontal Rule!", nameof(text));
         }
 
         public override string ToString()

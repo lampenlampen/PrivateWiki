@@ -16,6 +16,7 @@ namespace Parser.Blocks
 
         private HeaderBlock(string headingText, int level)
         {
+            Type = BlockType.HeaderBlock;
             HeadingText = headingText;
             Level = level;
         }

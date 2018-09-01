@@ -2,11 +2,12 @@ namespace Parser.Blocks
 {
     public class MathBlock : Block
     {
-        private string text;
+        private string Text { get; }
 
         public MathBlock(string text)
         {
-            this.text = text;
+            Type = BlockType.MathBlock;
+            Text = text;
         }
 
         internal static MathBlock Parse(string line, int mathBlockStartLine)
@@ -16,7 +17,7 @@ namespace Parser.Blocks
 
         public override string ToString()
         {
-            return $"\\[{text}\\]";
+            return $"\\[{Text}\\]";
         }
     }
 }

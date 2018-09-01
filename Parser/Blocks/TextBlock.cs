@@ -12,7 +12,8 @@ namespace Parser.Blocks
 
         private TextBlock(string text)
         {
-            Text = text ?? throw new ArgumentNullException(nameof(text));
+            Type = BlockType.TextBlock;
+            Text = text;
         }
 
         internal static TextBlock Parse(List<string> lines)
