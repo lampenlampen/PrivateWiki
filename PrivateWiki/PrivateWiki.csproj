@@ -102,6 +102,13 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Render\Handlers\ICodeBlockResolver.cs" />
+    <Compile Include="Render\Handlers\IImageResolver.cs" />
+    <Compile Include="Render\Handlers\ILinkRegister.cs" />
+    <Compile Include="Render\MarkupRenderer.cs" />
+    <Compile Include="Render\RenderContext.cs" />
+    <Compile Include="Render\RenderContextIncorectException.cs" />
+    <Compile Include="Render\UIElementCollectionRenderContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -142,7 +149,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Render" />
+    <ProjectReference Include="..\Parser\Parser.csproj">
+      <Project>{c6e2f66a-0f4d-48cd-9f9c-6def69863b41}</Project>
+      <Name>Parser</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
