@@ -10,7 +10,6 @@ using Parser;
 using Parser.Blocks;
 using Parser.Blocks.List;
 using Parser.Render;
-using Robmikh.CompositionSurfaceFactory;
 using TextBlock = Parser.Blocks.TextBlock;
 
 namespace PrivateWiki.Render
@@ -171,7 +170,7 @@ namespace PrivateWiki.Render
         /// <summary>
         /// Gets or sets the brush used to render a horizontal rule. If this is <c>null</c>, then <see cref="Foreground"/> is used.
         /// </summary>
-        public Brush HorizontalLineBrush { get; set; }
+        public Brush HorizontalRuleBrush { get; set; }
 
         /// <summary>
         /// Gets or sets the brush used to fill the background of a quote block.
@@ -619,6 +618,9 @@ namespace PrivateWiki.Render
                     paragraph.Inlines.Add(underline);
                     break;
             }
+
+            var run = new Run() { Text = block.HeadingText };
+            paragraph.Inlines.Add(run);
             
             richTextBlock.Blocks.Add(paragraph);
             
@@ -648,9 +650,9 @@ namespace PrivateWiki.Render
 
             var foreground = localContext.Foreground;
 
-            if (HorizontalLineBrush != null && !localContext.OverrideForeground)
+            if (HorizontalRuleBrush != null && !localContext.OverrideForeground)
             {
-                foreground = HorizontalLineBrush;
+                foreground = HorizontalRuleBrush;
             }
 
             var rectangle = new Rectangle

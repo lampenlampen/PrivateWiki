@@ -17,7 +17,7 @@
             Margin="20, 20, 20, 20"
             MaxWidth="1000">
 
-            <TextBlock/>
+            
 
         </ScrollViewer>
     </Grid>
