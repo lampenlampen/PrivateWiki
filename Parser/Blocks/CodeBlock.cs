@@ -23,10 +23,13 @@ namespace Parser.Blocks
         {
             var textBuilder = new StringBuilder();
 
-            foreach (var line in lines)
+            for (int i = 0; i < lines.Count-1; i++)
             {
-                textBuilder.AppendLine(line);
+                string line = lines[i];
+                textBuilder.AppendLine(lines[i]);
             }
+            textBuilder.Append(lines[lines.Count - 1]);
+
             
             return new CodeBlock(textBuilder.ToString(), codeLanguage);
         }

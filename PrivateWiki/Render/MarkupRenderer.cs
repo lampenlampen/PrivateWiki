@@ -510,6 +510,7 @@ namespace PrivateWiki.Render
                 Padding = QuotePadding,
                 Child = stackPanel
             };
+            //stackPanel.Background = QuoteBackground;
             blockUIElementCollection.Add(border);
         }
 
@@ -535,29 +536,32 @@ namespace PrivateWiki.Render
             {
                 FontFamily = CodeFontFamily ?? FontFamily,
                 Foreground = foreground,
-                LineHeight = FontSize * 1.4
+                LineHeight = FontSize * 1.4,
             };
-            
+
             var paragraph = new Paragraph();
             richTextBlock.Blocks.Add(paragraph);
-            
-            // Allows external Syntax Highlighting
-            var hasCustomSyntax = CodeBlockResolver.ParseSyntax(paragraph.Inlines, block.Text, block.CodeLanguage);
 
+            // TODO Syntax Highlighting
+            // Allows external Syntax Highlighting
+            //var hasCustomSyntax = CodeBlockResolver.ParseSyntax(paragraph.Inlines, block.Text, block.CodeLanguage);
+            /*
             if (!hasCustomSyntax)
             {
                 paragraph.Inlines.Add(new Run {Text = block.Text});
             }
-            
+            */
+            paragraph.Inlines.Add(new Run { Text = block.Text });
+
             // Ensures that Code has Horizontal Scroll and doesn't wrap.
             var viewer = new ScrollViewer
             {
                 Background = CodeBackground,
                 BorderBrush = CodeBorderBrush,
-                BorderThickness = BorderThickness,
+                BorderThickness = CodeBorderThickness,
                 Padding = CodePadding,
                 Margin = CodeMargin,
-                Content = richTextBlock
+                Content = richTextBlock,
             };
 
             if (!WrapCodeBlock)
