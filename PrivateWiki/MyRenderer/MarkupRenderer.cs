@@ -11,6 +11,7 @@ using Parser.Blocks;
 using Parser.Blocks.List;
 using Parser.Render;
 using TextBlock = Parser.Blocks.TextBlock;
+using Windows.UI;
 
 namespace PrivateWiki.Render
 {
@@ -399,6 +400,84 @@ namespace PrivateWiki.Render
             DefaultEmojiFont = new FontFamily("Segoe UI Emoji");
         }
 
+        public static MarkupRenderer CreateMarkupRenderer(Document doc)
+        {
+            var renderer = new Render.MarkupRenderer(doc, null, null, null)
+            {
+                //Background = Background,
+                //BorderBrush = BorderBrush,
+                //BorderThickness = BorderThickness,
+                //CharacterSpacing = CharacterSpacing,
+                //FontFamily = FontFamily,
+                //FontSize = FontSize,
+                //FontStretch = FontStretch,
+                //FontStyle = FontStyle,
+                //FontWeight = FontWeight,
+                //Foreground = Foreground,
+                IsTextSelectionEnabled = true,
+                //Padding = Padding,
+                //CodeBackground = new SolidColorBrush(convertHexToColor("#FFF6F8FA")),
+                CodeBackground = new SolidColorBrush(Color.FromArgb(250, 246, 248, 250)),
+                CodeBorderBrush = new SolidColorBrush(Color.FromArgb(250, 190, 190, 190)),
+                CodeBorderThickness = new Thickness(1, 1, 1, 1),
+                //InlineCodeBorderThickness = InlineCodeBorderThickness,
+                //InlineCodeBackground = InlineCodeBackground,
+                //InlineCodeBorderBrush = InlineCodeBorderBrush,
+                //InlineCodePadding = InlineCodePadding,
+                //InlineCodeFontFamily = InlineCodeFontFamily,
+                //CodeForeground = CodeForeground,
+                CodeFontFamily = new FontFamily("Consolas"),
+                CodePadding = new Thickness(20, 15, 20, 15),
+                CodeMargin = new Thickness(0, 15, 0, 15),
+                //EmojiFontFamily = new FontFamily("Segoe UI Emoji"),
+                Header1FontSize = 50,
+                Header1FontWeight = FontWeights.Medium,
+                Header1Margin = new Thickness(0, 15, 0, 15),
+                Header1Foreground = new SolidColorBrush(Colors.Black),
+                Header2FontSize = 40,
+                Header2FontWeight = FontWeights.Medium,
+                Header2Margin = new Thickness(0, 15, 0, 15),
+                Header2Foreground = new SolidColorBrush(Colors.Black),
+                Header3FontSize = 35,
+                Header3FontWeight = FontWeights.Normal,
+                Header3Margin = new Thickness(0, 10, 0, 10),
+                Header3Foreground = new SolidColorBrush(Colors.Black),
+                Header4FontSize = 25,
+                Header4FontWeight = FontWeights.Normal,
+                Header4Margin = new Thickness(0, 10, 0, 10),
+                Header4Foreground = new SolidColorBrush(Colors.Black),
+                Header5FontSize = 20,
+                Header5FontWeight = FontWeights.Normal,
+                Header5Margin = new Thickness(0, 10, 0, 5),
+                Header5Foreground = new SolidColorBrush(Colors.Black),
+                HorizontalRuleBrush = new SolidColorBrush(Color.FromArgb(250, 190, 190, 190)),
+                HorizontalRuleMargin = new Thickness(0, 20, 0, 20),
+                HorizontalRuleThickness = 2,
+                //ListMargin = ListMargin,
+                //ListGutterWidth = ListGutterWidth,
+                //ListBulletSpacing = ListBulletSpacing,
+                ParagraphMargin = new Thickness(0, 5, 0, 5),
+                QuoteBackground = new SolidColorBrush(Color.FromArgb(10, 0, 0, 0)),
+                QuoteBorderBrush = new SolidColorBrush(Color.FromArgb(250, 190, 190, 190)),
+                QuoteBorderThickness = new Thickness(3, 0, 0, 0),
+                QuoteForeground = new SolidColorBrush(Color.FromArgb(255, 110, 116, 124)),
+                QuoteMargin = new Thickness(0, 15, 0, 15),
+                QuotePadding = new Thickness(15, 10, 15, 10),
+                //TableBorderBrush = TableBorderBrush,
+                //TableBorderThickness = TableBorderThickness,
+                //TableCellPadding = TableCellPadding,
+                //TableMargin = TableMargin,
+                TextWrapping = TextWrapping.WrapWholeWords,
+                //LinkForeground = LinkForeground,
+                //ImageStretch = ImageStretch,
+                //ImageMaxHeight = ImageMaxHeight,
+                //ImageMaxWidth = ImageMaxWidth,
+                //WrapCodeBlock = WrapCodeBlock
+            };
+
+            return renderer;
+        }
+
         /// <summary>
         /// Called externally to render the markupu to a text block.
         /// </summary>
@@ -510,6 +589,7 @@ namespace PrivateWiki.Render
                 Padding = QuotePadding,
                 Child = stackPanel
             };
+            //stackPanel.Background = QuoteBackground;
             blockUIElementCollection.Add(border);
         }
 
@@ -535,29 +615,32 @@ namespace PrivateWiki.Render
             {
                 FontFamily = CodeFontFamily ?? FontFamily,
                 Foreground = foreground,
-                LineHeight = FontSize * 1.4
+                LineHeight = FontSize * 1.4,
             };
-            
+
             var paragraph = new Paragraph();
             richTextBlock.Blocks.Add(paragraph);
-            
-            // Allows external Syntax Highlighting
-            var hasCustomSyntax = CodeBlockResolver.ParseSyntax(paragraph.Inlines, block.Text, block.CodeLanguage);
 
+            // TODO Syntax Highlighting
+            // Allows external Syntax Highlighting
+            //var hasCustomSyntax = CodeBlockResolver.ParseSyntax(paragraph.Inlines, block.Text, block.CodeLanguage);
+            /*
             if (!hasCustomSyntax)
             {
                 paragraph.Inlines.Add(new Run {Text = block.Text});
             }
-            
+            */
+            paragraph.Inlines.Add(new Run { Text = block.Text });
+
             // Ensures that Code has Horizontal Scroll and doesn't wrap.
             var viewer = new ScrollViewer
             {
                 Background = CodeBackground,
                 BorderBrush = CodeBorderBrush,
-                BorderThickness = BorderThickness,
+                BorderThickness = CodeBorderThickness,
                 Padding = CodePadding,
                 Margin = CodeMargin,
-                Content = richTextBlock
+                Content = richTextBlock,
             };
 
             if (!WrapCodeBlock)

@@ -32,7 +32,10 @@ namespace Parser
             {
                 var line = lines[i];
 
-                if (line.StartsWith("#"))
+                if(string.IsNullOrEmpty(line))
+                {
+                    
+                } else if (line.StartsWith("#"))
                 {
                     // Line is a Heading
                     blocks.Add(HeaderBlock.Parse(line));
@@ -86,7 +89,7 @@ namespace Parser
                     // Line j is not part of the Codeblock anymore.
                     // The Codeblock spans the lines i to (j-i).
 
-                    blocks.Add(CodeBlock.Parse(lines.GetRange(i+1, j - i), codeLanguage));
+                    blocks.Add(CodeBlock.Parse(lines.GetRange(i+1, j-i-1), codeLanguage));
                     
                     // Skip lines i to (j-i), because they belong to the Codeblock.
                     i = j;

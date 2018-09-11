@@ -1,8 +1,7 @@
-﻿<Page xmlns:my="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+﻿<Page
     x:Class="PrivateWiki.Editor"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:PrivateWiki"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -10,21 +9,21 @@
 
     <Grid>
 
-        <!--
         <ScrollViewer
-            Name="ScrollViewer"
+                Name="ScrollViewer"
+                Width="Auto"
+                Height="Auto"
+                Margin="20, 20, 20, 20"
+                Padding="20, 20, 20, 20"
+                MaxWidth="1000"
+                BorderBrush="Black"
+                BorderThickness="1"/>
+        
+        <WebView 
+            Name="Webview"
             Width="Auto"
             Height="Auto"
             Margin="20, 20, 20, 20"
-            MaxWidth="1000">
-        </ScrollViewer>
-        -->
-        
-        <WebView 
-            Name="webview"
-            Width="Auto"
-            Height="Auto"
-            MaxWidth="1000"
-            Margin="20, 20, 20, 20"/>
+            MaxWidth="1000"/>
     </Grid>
 </Page>

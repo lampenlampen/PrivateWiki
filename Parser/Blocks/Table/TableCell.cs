@@ -13,7 +13,7 @@ namespace Parser.Blocks.Table
         /// <summary>
         /// Gets or sets the cell contents.
         /// </summary>
-        public IList<MarkdownInline> Inlines { get; set; }
+        public IList<MarkupInline> Inlines { get; set; }
 
         public string Text { get; set; }
 
@@ -22,7 +22,7 @@ namespace Parser.Blocks.Table
             Text = text;
         }
 
-        public TableCell(IList<MarkdownInline> inlines)
+        public TableCell(IList<MarkupInline> inlines)
         {
             Inlines = inlines;
         }
