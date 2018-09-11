@@ -10,15 +10,21 @@
 
     <Grid>
 
+        <!--
         <ScrollViewer
             Name="ScrollViewer"
             Width="Auto"
             Height="Auto"
             Margin="20, 20, 20, 20"
             MaxWidth="1000">
-
-            
-
         </ScrollViewer>
+        -->
+        
+        <WebView 
+            Name="webview"
+            Width="Auto"
+            Height="Auto"
+            MaxWidth="1000"
+            Margin="20, 20, 20, 20"/>
     </Grid>
 </Page>
