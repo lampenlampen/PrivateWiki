@@ -8,18 +8,75 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <!--
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
--->
+    <StackPanel>
 
 
-        <Frame
+
+        <RelativePanel
+                Width="Auto">
+
+            <TextBox Text="Settings"
+                         RelativePanel.AlignRightWithPanel="True"/>
+
+
+
+        </RelativePanel>
+
+
+
+
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="300"/>
+                <ColumnDefinition/>
+                <ColumnDefinition
+                    Width="300"/>
+            </Grid.ColumnDefinitions>
+
+
+
+            <StackPanel
+            Background="LightGray"
+            Grid.Column="0">
+
+                <TextBox
+                Text="Seitenleiste"/>
+            </StackPanel>
+
+            <StackPanel
+            Background="LightGray"
+            Grid.Column="1">
+
+                <TextBox
+                Text="Suche"/>
+
+
+                <Frame
             Name="EditorFrame"
-            Grid.Row="1"/>
+                Width="800"
+                Height="800"
+                BorderThickness="1"
+                Background="Gray"
+                d:DataContext="{d:DesignInstance Type=local:Editor, IsDesignTimeCreatable=True}" 
+            />
+            </StackPanel>
 
-    </Grid>
+            
+
+            <StackPanel
+            Background="LightGray"
+            Grid.Column="2">
+
+                <TextBox
+                Text="Inhaltsverzeichnis"/>
+            </StackPanel>
+
+
+        </Grid>
+
+    </StackPanel>
+
+
 </Page>
