@@ -16,15 +16,66 @@ Ein Newline-Zeichen (\n, \r) wird ignoriert, wenn das nachfolgende Zeichen nicht
 
 ### Inline-Styles
 #### Fett
+
+Fetter Text wird mit Asterixs (*) eingeschlossen.
+```markdown
+Hallo *hallo*
+```
+
 #### Kursiv
+
+Fetter Text wird mit Ticks (´) eingeschlossen.
+```markdown
+Hallo ´hallo´
+```
+
 #### Links
+
+Alle Links sind in runden Klammern eingeschlossen.
+Davor müssen eckige Klammern stehen.
+Der Text in den eckigen Klammern wird als Linktext verwendet.
+Sind die eckigen Klammern leer, wird der Link als Linktext angezeigt.
+
+```markdown
+hallo [Google](www.google.de)
+oder [](www.google.de)
+```
+
+##### Interne Links
+
+Es kann auch auf andere Wiki-Seiten verwiesen werden.
+
+```markdown
+hallo [](:wiki:users#huhu)
+```
+
 #### Unterstrichen
+
+Unterstichener Text wird mit Underscores eingeschlossen.
+
+```markdown
+Hallo _hallo_
+```
+
 #### Durchgestrichen
+
+Durchgestrichener Text wird mit Strichen eingeschlossen.
+
+```markdown
+Hallo -hallo-
+```
+
 #### Farbiger Text
 #### Italic
 #### Superscript
 #### Subscript
 #### Monospaced
+
+Monospaced Inline wird mit Backticks eingeschlossen
+
+``` markdown
+Hallo `huhu`
+```
 #### Footnote
 #### Mathe-Formeln
 Mathe-Formulen müssen in jeweils zwei $-Zeichen eingeschlossen sein.
