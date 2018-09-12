@@ -8,7 +8,10 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel>
+    <StackPanel
+        Height="Auto"
+        Width="Auto"
+        MinHeight="1000">
 
 
 
@@ -22,11 +25,10 @@
 
         </RelativePanel>
 
-
-
-
-
-        <Grid>
+        <Grid
+            Height="Auto"
+            MinHeight="1010"
+            Width="Auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
                     Width="300"/>
@@ -37,35 +39,39 @@
 
 
 
-            <StackPanel
-            Background="LightGray"
-            Grid.Column="0">
+            <StackPanel 
+                x:Name="Seitenleiste"
+                Grid.Column="0">
 
                 <TextBox
-                Text="Seitenleiste"/>
+                    Text="Seitenleiste"/>
+                
             </StackPanel>
 
-            <StackPanel
-            Background="LightGray"
-            Grid.Column="1">
+            <StackPanel 
+                x:Name="Editor"
+                Grid.Column="1"
+                Height="Auto"
+                MinHeight="1000">
 
                 <TextBox
-                Text="Suche"/>
+                    Text="Suche"/>
 
 
                 <Frame
-            Name="EditorFrame"
-                Width="800"
-                Height="800"
-                BorderThickness="1"
-                Background="Gray"
-                d:DataContext="{d:DesignInstance Type=local:Editor, IsDesignTimeCreatable=True}" 
-            />
+                    Name="EditorFrame"
+                    Width="Auto"
+                    Height="Auto"
+                    MinHeight="1000"
+                    BorderThickness="1"
+                    BorderBrush="Black"
+                    d:DataContext="{d:DesignInstance Type=local:PageEditor, IsDesignTimeCreatable=True}"/>
+                
             </StackPanel>
 
-            
 
-            <StackPanel
+
+            <StackPanel x:Name="Inhaltsverzeichnis"
             Background="LightGray"
             Grid.Column="2">
 

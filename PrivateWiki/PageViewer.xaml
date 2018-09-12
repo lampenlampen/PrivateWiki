@@ -9,29 +9,19 @@
 
     <Grid>
 
-        <ScrollViewer
-                Name="ScrollViewer"
-                Width="Auto"
-                Height="Auto"
-                Margin="20, 20, 20, 20"
-                Padding="20, 20, 20, 20"
-                MaxWidth="1000"
-                BorderBrush="Black"
-                BorderThickness="1"/>
-<<<<<<< HEAD
         
-=======
->>>>>>> 1bf4244488e6c86dd9630f4c88a52b23711e34d2
-        <WebView 
+
+        <Border
+            BorderThickness="1">
+            <WebView 
             Name="Webview"
             Width="Auto"
             Height="Auto"
-<<<<<<< HEAD
             Margin="20, 20, 20, 20"
             MaxWidth="1000"/>
-=======
-            Margin="20, 20, 20, 20"/>
-            MaxWidth="1000"
->>>>>>> 1bf4244488e6c86dd9630f4c88a52b23711e34d2
+            
+        </Border>
+        
+
     </Grid>
 </Page>

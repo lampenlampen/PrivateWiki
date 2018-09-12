@@ -1,0 +1,104 @@
+﻿using Microsoft.Data.Sqlite;
+
+namespace PrivateWiki.Data
+{
+    class PageAccess : IPageAccess
+    {
+        const string DATABASE_NAME = "pages.db";
+        const string TABLE_NAME = "Pages";
+
+        const string ID = "id";
+        const string PAGE = "Page";
+
+        public void InitDatabase()
+        {
+            using (var db = new SqliteConnection($"Filename={DATABASE_NAME}"))
+            {
+                db.Open();
+
+                //string tableCommand = "CREATE TABLE IF NOT EXISTS Pages (GUID TEXT PRIMARY KEY, Page BLOB NULL";
+                string tableCommand = $"CREATE TABLE IF NOT EXISTS {TABLE_NAME}({ID} TEXT PRIMARY KEY, {PAGE} TEXT NULL)";
+
+                var createTable = new SqliteCommand(tableCommand, db);
+
+                createTable.ExecuteReader();
+            }
+        }
+
+        public void AddPage(string markdown)
+        {
+            using (var db = new SqliteConnection($"Filename={DATABASE_NAME}"))
+            {
+                db.Open();
+
+                string tableCommand = $"INSERT INTO {TABLE_NAME} VALUES (1, @Page)";
+
+                var addPage = new SqliteCommand()
+                {
+                    CommandText = tableCommand,
+                    Connection = db,
+                };
+                addPage.Parameters.AddWithValue("@Page", markdown);
+
+                try
+                {
+                    addPage.ExecuteReader();
+                }
+                catch (SqliteException e)
+                {
+                    return;
+                }
+                db.Close();
+                
+            }
+        }
+
+        public void UpdatePage(string id, string markdown)
+        {
+
+        }
+
+        public string GetPage(string id)
+        {
+            string markdown = null;
+
+            using (var db = new SqliteConnection($"Filename={DATABASE_NAME}"))
+            {
+                db.Open();
+
+                var tableCommand = new SqliteCommand($"SELECT {PAGE} FROM {TABLE_NAME} WHERE {ID}={id}", db);
+                SqliteDataReader query;
+
+                try
+                {
+                    query = tableCommand.ExecuteReader();
+                }
+                catch (SqliteException e)
+                {
+                    return "Error";
+                }
+                while(query.Read())
+                {
+                    markdown = query.GetString(0);
+                }
+                db.Close();
+            }
+
+            return markdown;
+        }
+
+        public void DropTable()
+        {
+            using (var db = new SqliteConnection($"Filename={DATABASE_NAME}"))
+            {
+                db.Open();
+
+                string tableCommand = $"DROP TABLE IF EXISTS {TABLE_NAME}";
+
+                var dropTable = new SqliteCommand(tableCommand, db);
+
+                dropTable.ExecuteReader();
+            }
+        }
+    }
+}

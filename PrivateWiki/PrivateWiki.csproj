@@ -95,9 +95,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomHtmlRenderer.cs" />
-    <Compile Include="Editor.xaml.cs">
-      <DependentUpon>Editor.xaml</DependentUpon>
+    <Compile Include="Data\DataAccess.cs" />
+    <Compile Include="Data\IPageAccess.cs" />
+    <Compile Include="PageEditor.xaml.cs">
+      <DependentUpon>PageEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageViewer.xaml.cs">
+      <DependentUpon>PageViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -135,7 +139,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Editor.xaml">
+    <Page Include="PageEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,8 +153,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CommonMarkSharp">
-      <Version>0.3.2</Version>
+    <PackageReference Include="Markdig">
+      <Version>0.15.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Data.Sqlite">
+      <Version>2.1.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.0-Preview1-26502-02</Version>
@@ -160,6 +171,9 @@
       <Project>{c6e2f66a-0f4d-48cd-9f9c-6def69863b41}</Project>
       <Name>Parser</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

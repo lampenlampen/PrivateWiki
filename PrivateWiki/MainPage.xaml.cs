@@ -13,7 +13,7 @@ namespace PrivateWiki
         {
             this.InitializeComponent();
 
-            EditorFrame.Navigate(typeof(Editor));
+            EditorFrame.Navigate(typeof(PageEditor), "1");
         }
     }
 }
