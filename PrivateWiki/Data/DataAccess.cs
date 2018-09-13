@@ -9,6 +9,8 @@ namespace PrivateWiki.Data
 
         const string ID = "id";
         const string PAGE = "Page";
+        private const string DATE_OF_CREATION = "CreationDate";
+        private const string DATE_OF_LAST_CHANGE = "ChangeDate";
 
         public void InitDatabase()
         {
@@ -16,7 +18,6 @@ namespace PrivateWiki.Data
             {
                 db.Open();
 
-                //string tableCommand = "CREATE TABLE IF NOT EXISTS Pages (GUID TEXT PRIMARY KEY, Page BLOB NULL";
                 string tableCommand = $"CREATE TABLE IF NOT EXISTS {TABLE_NAME}({ID} TEXT PRIMARY KEY, {PAGE} TEXT NULL)";
 
                 var createTable = new SqliteCommand(tableCommand, db);
@@ -55,7 +56,28 @@ namespace PrivateWiki.Data
 
         public void UpdatePage(string id, string markdown)
         {
+            using (var db = new SqliteConnection($"Filename={DATABASE_NAME}"))
+            {
+                db.Open();
 
+                var tableCommand = $"UPDATE {TABLE_NAME} SET {ID} = {id}, {PAGE} {markdown} WHERE {ID} = {id}";
+
+                var updatePageCommand = new SqliteCommand()
+                {
+                    CommandText = tableCommand,
+                    Connection = db
+                };
+
+                try
+                {
+                    updatePageCommand.ExecuteReader();
+                }
+                catch (SqliteException e)
+                {
+                    return;
+                }
+                db.Close();
+            }
         }
 
         public string GetPage(string id)

@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using PrivateWiki.Parser;
+using Windows.UI.Xaml.Controls;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x407 dokumentiert.
 
@@ -12,8 +13,27 @@ namespace PrivateWiki
         public MainPage()
         {
             this.InitializeComponent();
+            TestClass();
 
             EditorFrame.Navigate(typeof(PageEditor), "1");
+        }
+
+        private void TestClass()
+        {
+            var markdown2 = @"---
+name: testyaml
+---
+
+# Header 1
+
+lorem ipsum";
+
+            var parser = new MarkdigParser();
+
+            var dom = parser.Parse(markdown2);
+
+            System.Console.WriteLine("");
+
         }
     }
 }
