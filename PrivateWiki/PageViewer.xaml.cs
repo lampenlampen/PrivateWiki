@@ -7,6 +7,8 @@ using Windows.UI.Text;
 using Windows.UI;
 using System;
 using Markdig;
+using PrivateWiki.Data;
+using System.Linq;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -15,34 +17,38 @@ namespace PrivateWiki
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
-    public sealed partial class Editor : Page
+    public sealed partial class PageViewer : Page
     {
         Data.PageAccess pageAccess = new Data.PageAccess();
 
-        public Editor()
+        public PageViewer()
         {
-            
+
             InitializeComponent();
 
 
             //pageAccess.DropTable();
             //pageAccess.InitDatabase();
 
-            pageAccess.AddPage(getExampleMarkdownString());
+            //pageAccess.AddPage("test", getExampleMarkdownString());
 
             ShowContent2Async();
         }
 
         public void ShowContent2Async()
         {
+            string markdown = null;
 
             //var cm = new CommonMark();
 
             //var html = cm.RenderAsHtml(getExampleMarkdownString());
 
-            var markdown = pageAccess.GetPage("1");
+            // markdown = pageAccess.GetPage("test");
 
-            
+            using (var db = new PageContext())
+            {
+                markdown = db.Pages.Single(p => p.id == "test").markdown;
+            }
 
             var html = Markdown.ToHtml(markdown);
 
@@ -87,7 +93,7 @@ code {
             return $"{htmlTemplate1}{markdown}{htmlTemplate2}";
         }
 
-      
+
 
         private Render.MarkupRenderer CreateRenderer(Document doc)
         {

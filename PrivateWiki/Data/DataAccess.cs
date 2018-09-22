@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using System.Diagnostics;
 
 namespace PrivateWiki.Data
 {
@@ -22,17 +23,26 @@ namespace PrivateWiki.Data
 
                 var createTable = new SqliteCommand(tableCommand, db);
 
-                createTable.ExecuteReader();
+                try
+                {
+                    createTable.ExecuteReader();
+                }
+                catch (SqliteException e)
+                {
+                    Debug.WriteLine(e);
+                    return;
+                }
+                db.Close();
             }
         }
 
-        public void AddPage(string markdown)
+        public void AddPage(string id, string markdown)
         {
             using (var db = new SqliteConnection($"Filename={DATABASE_NAME}"))
             {
                 db.Open();
 
-                string tableCommand = $"INSERT INTO {TABLE_NAME} VALUES (1, @Page)";
+                string tableCommand = $"INSERT INTO {TABLE_NAME} VALUES (test, @Page)";
 
                 var addPage = new SqliteCommand()
                 {
@@ -40,6 +50,7 @@ namespace PrivateWiki.Data
                     Connection = db,
                 };
                 addPage.Parameters.AddWithValue("@Page", markdown);
+                addPage.Parameters.AddWithValue("@id", id);
 
                 try
                 {
@@ -47,6 +58,7 @@ namespace PrivateWiki.Data
                 }
                 catch (SqliteException e)
                 {
+                    Debug.WriteLine(e);
                     return;
                 }
                 db.Close();
@@ -74,6 +86,7 @@ namespace PrivateWiki.Data
                 }
                 catch (SqliteException e)
                 {
+                    Debug.WriteLine(e);
                     return;
                 }
                 db.Close();
@@ -88,7 +101,7 @@ namespace PrivateWiki.Data
             {
                 db.Open();
 
-                var tableCommand = new SqliteCommand($"SELECT {PAGE} FROM {TABLE_NAME} WHERE {ID}={id}", db);
+                var tableCommand = new SqliteCommand($"SELECT {PAGE} FROM {TABLE_NAME} WHERE id={id}", db);
                 SqliteDataReader query;
 
                 try
@@ -97,6 +110,7 @@ namespace PrivateWiki.Data
                 }
                 catch (SqliteException e)
                 {
+                    Debug.WriteLine(e);
                     return "Error";
                 }
                 while(query.Read())
@@ -119,7 +133,16 @@ namespace PrivateWiki.Data
 
                 var dropTable = new SqliteCommand(tableCommand, db);
 
-                dropTable.ExecuteReader();
+                try
+                {
+                    dropTable.ExecuteReader();
+                }
+                catch (SqliteException e)
+                {
+                    Debug.WriteLine(e);
+                    return;
+                }
+                db.Close();
             }
         }
     }

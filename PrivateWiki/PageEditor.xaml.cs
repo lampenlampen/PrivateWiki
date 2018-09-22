@@ -1,6 +1,7 @@
 ﻿using Markdig;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -36,6 +37,7 @@ namespace PrivateWiki
             base.OnNavigatedTo(e);
 
             pageId = (string)e.Parameter;
+            Debug.WriteLine($"Id: {pageId}");
 
             if (pageId == null) throw new ArgumentNullException("Page id must be nonnull!");
 
@@ -64,11 +66,12 @@ namespace PrivateWiki
         {
             var markdown = PageEditorTextBox.Text;
 
-            pageAccess.UpdatePage("1", markdown);
+            pageAccess.UpdatePage(pageId, markdown);
         }
 
         private void Abort_Click(object sender, RoutedEventArgs e)
         {
+            Debug.WriteLine("GoBack");
             if (this.Frame.CanGoBack)
             {
                 this.Frame.GoBack();
