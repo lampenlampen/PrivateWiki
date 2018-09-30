@@ -30,6 +30,8 @@ namespace PrivateWiki
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            new Data.ContentPageProvider().InitDatabase();
         }
 
         /// <summary>

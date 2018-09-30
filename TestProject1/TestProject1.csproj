@@ -10,6 +10,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Parser\Parser.csproj" />
-    <ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj" />
   </ItemGroup>
 </Project>

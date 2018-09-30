@@ -1,18 +1,9 @@
-﻿using Markdig;
+﻿using PrivateWiki.Data;
+using StorageProvider;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
@@ -24,8 +15,7 @@ namespace PrivateWiki
     /// </summary>
     public sealed partial class PageEditor : Page
     {
-        private string pageId;
-        private Data.PageAccess pageAccess = new Data.PageAccess();
+        private ContentPage Page { get; set; }
 
         public PageEditor()
         {
@@ -36,20 +26,20 @@ namespace PrivateWiki
         {
             base.OnNavigatedTo(e);
 
-            pageId = (string)e.Parameter;
+            var pageId = (string)e.Parameter;
             Debug.WriteLine($"Id: {pageId}");
-
             if (pageId == null) throw new ArgumentNullException("Page id must be nonnull!");
 
+            Page = new ContentPageProvider().GetContentPage(pageId);
+
             Preview_WebView.Visibility = Visibility.Collapsed;
-            showPageInEditor();
+
+            ShowPageInEditor();
         }
 
-        private void showPageInEditor()
+        private void ShowPageInEditor()
         {
-            var markdown = pageAccess.GetPage(pageId);
-
-            PageEditorTextBox.Text = markdown;
+            PageEditorTextBox.Text = Page.Content;
         }
 
         private void Preview_Click(object sender, RoutedEventArgs e)
@@ -57,16 +47,16 @@ namespace PrivateWiki
             Preview_WebView.Visibility = Visibility.Visible;
             var markdown = PageEditorTextBox.Text;
 
-            var html = Markdown.ToHtml(markdown);
+            var html = new Parser.MarkdigParser().ToHtmlString(Page);
 
             Preview_WebView.NavigateToString(html);
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            var markdown = PageEditorTextBox.Text;
+            Page.Content = PageEditorTextBox.Text;
 
-            pageAccess.UpdatePage(pageId, markdown);
+            new ContentPageProvider().UpdateContentPage(Page);
         }
 
         private void Abort_Click(object sender, RoutedEventArgs e)
@@ -76,7 +66,6 @@ namespace PrivateWiki
             {
                 this.Frame.GoBack();
             }
-            
         }
     }
 }

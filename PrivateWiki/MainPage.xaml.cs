@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PrivateWiki.Data;
-using PrivateWiki.Parser;
+﻿using PrivateWiki.Parser;
 using Windows.UI.Xaml.Controls;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x407 dokumentiert.
@@ -16,21 +14,15 @@ namespace PrivateWiki
         {
             this.InitializeComponent();
 
-            initDatabase();
+            
 
 
-            TestClass();
+            //TestClass();
 
-            EditorFrame.Navigate(typeof(PageViewer), "test");
+            EditorFrame.Navigate(typeof(PageEditor), "test");
         }
 
-        private void initDatabase()
-        {
-            using (var db = new PageContext())
-            {
-                db.Database.Migrate();
-            }
-        }
+        
 
         private void TestClass()
         {

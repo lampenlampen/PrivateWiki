@@ -2,13 +2,13 @@
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Parser;
-using PrivateWiki.Render;
 using Windows.UI.Text;
 using Windows.UI;
 using System;
-using Markdig;
 using PrivateWiki.Data;
-using System.Linq;
+using System.Diagnostics;
+using Windows.UI.Xaml.Navigation;
+using StorageProvider;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -19,38 +19,39 @@ namespace PrivateWiki
     /// </summary>
     public sealed partial class PageViewer : Page
     {
-        Data.PageAccess pageAccess = new Data.PageAccess();
+        private string contentPageId { get; set; }
 
         public PageViewer()
         {
-
             InitializeComponent();
 
-
-            //pageAccess.DropTable();
-            //pageAccess.InitDatabase();
-
-            //pageAccess.AddPage("test", getExampleMarkdownString());
-
-            ShowContent2Async();
+            Webview.NavigationStarting += WebViewNavigationStarting;
         }
 
-        public void ShowContent2Async()
+        private void WebViewNavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
         {
-            string markdown = null;
+            var url = args.Uri;
 
-            //var cm = new CommonMark();
+            // TODO Interwiki Urls
+        }
 
-            //var html = cm.RenderAsHtml(getExampleMarkdownString());
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
 
-            // markdown = pageAccess.GetPage("test");
+            contentPageId = (string)e.Parameter;
+            Debug.WriteLine($"Id: {contentPageId}");
 
-            using (var db = new PageContext())
-            {
-                markdown = db.Pages.Single(p => p.id == "test").markdown;
-            }
+            if (contentPageId == null) throw new ArgumentNullException("Page id must be nonnull!");
 
-            var html = Markdown.ToHtml(markdown);
+            ShowContentPage();
+        }
+
+        private void ShowContentPage()
+        {
+            ContentPage page = new ContentPageProvider().GetContentPage(contentPageId);
+
+            var html = new Parser.MarkdigParser().ToHtmlString(page);
 
             Webview.NavigateToString(html);
         }
