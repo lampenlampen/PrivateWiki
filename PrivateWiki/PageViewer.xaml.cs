@@ -32,6 +32,7 @@ namespace PrivateWiki
         {
             var url = args.Uri;
 
+
             // TODO Interwiki Urls
         }
 
@@ -174,7 +175,7 @@ code {
             return renderer;
         }
 
-        private string getExampleMarkdownString()
+        public static string getExampleMarkdownString()
         {
             return @"Markdown: Syntax
 ================

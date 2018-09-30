@@ -47,7 +47,7 @@ namespace PrivateWiki
             Preview_WebView.Visibility = Visibility.Visible;
             var markdown = PageEditorTextBox.Text;
 
-            var html = new Parser.MarkdigParser().ToHtmlString(Page);
+            var html = new Parser.MarkdigParser().ToHtmlString(markdown);
 
             Preview_WebView.NavigateToString(html);
         }

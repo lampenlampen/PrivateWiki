@@ -1,5 +1,7 @@
 ﻿using Markdig;
+using Markdig.Syntax;
 using Markdig.SyntaxHighlighting;
+using PrivateWiki.Markdig;
 using StorageProvider;
 
 namespace PrivateWiki.Parser
@@ -10,14 +12,19 @@ namespace PrivateWiki.Parser
 
         private void Init()
         {
-            if (pipeline == null) pipeline = new MarkdownPipelineBuilder()
+            if (pipeline == null)
+            {
+                var pipeline = new MarkdownPipelineBuilder()
                     .UseAdvancedExtensions()
                     .UseYamlFrontMatter()
-                    .UseSyntaxHighlighting()
-                    .Build();
+                    .UseSyntaxHighlighting();
+                pipeline.Extensions.Add(new WikiLinkExtension());
+
+                this.pipeline = pipeline.Build();
+            }
         }
 
-        public Markdig.Syntax.MarkdownDocument Parse(string markdown)
+        public MarkdownDocument Parse(string markdown)
         {
             Init();
 

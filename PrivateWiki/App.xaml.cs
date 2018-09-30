@@ -32,6 +32,7 @@ namespace PrivateWiki
             this.Suspending += OnSuspending;
 
             new Data.ContentPageProvider().InitDatabase();
+            //new Data.ContentPageProvider().InsertContentPage(new StorageProvider.ContentPage(2, "test", PageViewer.getExampleMarkdownString()));
         }
 
         /// <summary>

@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="Data\ContentPageProvider.cs" />
     <Compile Include="Data\IPageAccess.cs" />
+    <Compile Include="Markdig\WikiLinkParser.cs" />
     <Compile Include="PageEditor.xaml.cs">
       <DependentUpon>PageEditor.xaml</DependentUpon>
     </Compile>
@@ -109,6 +110,7 @@
     <Compile Include="Parser\IPageParser.cs" />
     <Compile Include="Parser\MarkdigParser.cs" />
     <Compile Include="Parser\PageParser.cs" />
+    <Compile Include="Markdig\WikiLinkExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MyRenderer\Handlers\ICodeBlockResolver.cs" />
     <Compile Include="MyRenderer\Handlers\IImageResolver.cs" />

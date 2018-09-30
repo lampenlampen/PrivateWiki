@@ -14,9 +14,6 @@ namespace PrivateWiki
         {
             this.InitializeComponent();
 
-            
-
-
             //TestClass();
 
             EditorFrame.Navigate(typeof(PageEditor), "test");
