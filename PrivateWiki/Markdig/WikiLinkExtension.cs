@@ -31,11 +31,5 @@ namespace PrivateWiki.Markdig
                 normalizeRenderer.ObjectRenderers.InsertBefore<LinkInlineRenderer>(new NormalizeAutoLinkRenderer());
             }
         }
-
-        public static MarkdownPipelineBuilder UseWikiLinks(this MarkdownPipelineBuilder pipeline)
-        {
-            pipeline.Extensions.Add(new WikiLinkExtension());
-            return pipeline;
-        }
     }
 }
