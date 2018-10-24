@@ -3,13 +3,8 @@ using Markdig.Extensions.AutoLinks;
 using Markdig.Renderers;
 using Markdig.Renderers.Normalize;
 using Markdig.Renderers.Normalize.Inlines;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PrivateWiki.Markdig
+namespace PrivateWiki.Parser.Markdig
 {
     class WikiLinkExtension : IMarkdownExtension
     {

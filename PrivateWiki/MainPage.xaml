@@ -8,81 +8,34 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel
-        Height="Auto"
-        Width="Auto"
-        MinHeight="1000">
 
-
-
-        <RelativePanel
-                Width="Auto">
-
-            <TextBox Text="Settings"
-                         RelativePanel.AlignRightWithPanel="True"/>
-
-
-
-        </RelativePanel>
-
-        <Grid
+    <Grid
             Height="Auto"
-            MinHeight="1010"
+            MinHeight="800"
             Width="Auto">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition
-                    Width="300"/>
-                <ColumnDefinition/>
-                <ColumnDefinition
-                    Width="300"/>
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                    Width="300" />
+            <ColumnDefinition />
+
+        </Grid.ColumnDefinitions>
 
 
-
-            <StackPanel 
+        <StackPanel
                 x:Name="Seitenleiste"
                 Grid.Column="0">
 
-                <TextBox
-                    Text="Seitenleiste"/>
-                
-            </StackPanel>
+        </StackPanel>
 
-            <StackPanel 
-                x:Name="Editor"
-                Grid.Column="1"
+
+        <Frame
+                Name="EditorFrame"
+                Width="Auto"
                 Height="Auto"
-                MinHeight="1000">
+                MinHeight="800"
+                Grid.Column="1"
+                d:DataContext="{d:DesignInstance Type=local:PageEditor, IsDesignTimeCreatable=True}" />
 
-                <TextBox
-                    Text="Suche"/>
-
-
-                <Frame
-                    Name="EditorFrame"
-                    Width="Auto"
-                    Height="Auto"
-                    MinHeight="1000"
-                    BorderThickness="1"
-                    BorderBrush="Black"
-                    d:DataContext="{d:DesignInstance Type=local:PageEditor, IsDesignTimeCreatable=True}"/>
-                
-            </StackPanel>
-
-
-
-            <StackPanel x:Name="Inhaltsverzeichnis"
-            Background="LightGray"
-            Grid.Column="2">
-
-                <TextBox
-                Text="Inhaltsverzeichnis"/>
-            </StackPanel>
-
-
-        </Grid>
-
-    </StackPanel>
-
+    </Grid>
 
 </Page>

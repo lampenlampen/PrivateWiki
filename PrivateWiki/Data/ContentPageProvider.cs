@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using StorageProvider;
+using LanguageExt;
+using static LanguageExt.Prelude;
 
 namespace PrivateWiki.Data
 {
-    class ContentPageProvider : IPageAccess
+    internal class ContentPageProvider : IPageAccess
     {
-
         public void InitDatabase()
         {
             using (var db = new PageContext())
@@ -19,7 +22,8 @@ namespace PrivateWiki.Data
             }
         }
 
-        public ContentPage GetContentPage(string id)
+        [NotNull]
+        public ContentPage GetContentPage([NotNull] string id)
         {
             using (var db = new PageContext())
             {
@@ -27,8 +31,20 @@ namespace PrivateWiki.Data
             }
         }
 
-        public bool InsertContentPage(ContentPage page)
+        [NotNull]
+        public List<ContentPage> GetAllContentPages()
         {
+            using (var db = new PageContext())
+            {
+                return db.Pages.ToList();
+            }
+        }
+
+        public bool InsertContentPage([NotNull] ContentPage page)
+        {
+            page.CreationTime = new DateTimeOffset();
+            page.ChangeTime = new DateTimeOffset();
+
             using (var db = new PageContext())
             {
                 db.Pages.Add(page);
@@ -37,14 +53,40 @@ namespace PrivateWiki.Data
             }
         }
 
-        public bool UpdateContentPage(ContentPage page)
+        public bool UpdateContentPage([NotNull] ContentPage page)
         {
+            page.ChangeTime = DateTimeOffset.Now;
+            
+
             using (var db = new PageContext())
             {
                 db.Pages.Update(page);
                 db.SaveChanges();
                 return true;
             }
+        }
+
+        public bool DeleteContentPage([NotNull] ContentPage page)
+        {
+            using (var db = new PageContext())
+            {
+                db.Pages.Remove(page);
+                db.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool ContainsContentPage([NotNull] ContentPage page)
+        {
+            using (var db = new PageContext())
+            {
+                return db.Pages.Contains(page);
+            }
+        }
+
+        public bool ContainsContentPage([NotNull] string id)
+        {
+            return ContainsContentPage(ContentPage.Create(id));
         }
     }
 }

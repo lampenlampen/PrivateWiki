@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using PrivateWiki.Data;
 
 namespace PrivateWiki
 {
@@ -32,6 +33,7 @@ namespace PrivateWiki
             this.Suspending += OnSuspending;
 
             new Data.ContentPageProvider().InitDatabase();
+            InitPages.InitPages2();
             //new Data.ContentPageProvider().InsertContentPage(new StorageProvider.ContentPage(2, "test", PageViewer.getExampleMarkdownString()));
         }
 

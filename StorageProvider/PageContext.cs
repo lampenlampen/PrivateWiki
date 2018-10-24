@@ -8,6 +8,7 @@ namespace StorageProvider
     public class PageContext : DbContext
     {
         public DbSet<ContentPage> Pages { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

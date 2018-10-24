@@ -8,7 +8,9 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    Padding="20, 20, 20, 20">
+    Padding="20, 20, 20, 20"
+    Height="Auto"
+    Width="Auto">
 
     <!--    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
             Height="Auto"
@@ -16,78 +18,99 @@
     
     -->
 
-    
+    <Pivot
+            Name="Pivot"
+        Title="Pivot"
+            SelectionChanged="Pivot_SelectionChanged">
 
-        <Grid
-            Background="LightGreen">
-
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition
-                Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <PivotItem
+            Header="Editor">
 
             <TextBox
                 Name="PageEditorTextBox"
-                Grid.Row="0"
                 Text="Lorem Ipsum"
                 AcceptsReturn="True"
                 TextWrapping="Wrap"
                 MaxHeight="500"
                 Background="White"/>
 
-            <StackPanel
-                Grid.Row="1"
-                Orientation="Horizontal"
-                Margin="20, 20, 20, 20"
-                HorizontalAlignment="Right">
+        </PivotItem>
+
+        <PivotItem
+            Header="Preview">
+
+            <WebView
+                Name="Preview_WebView"
+                Height="Auto"
+                Width="Auto"
+                MaxHeight="500"
+                NavigationStarting="PreviewWebviewNavigationStartedAsync"/>
+
+        </PivotItem>
+
+        <PivotItem
+            Header="Metadaten">
+
+            <StackPanel>
+
+                <TextBlock Text="Tags"
+                           HorizontalAlignment="Left"
+                           FontSize="30"
+                           TextDecorations="Underline"
+                           Padding="20, 0, 0, 20"/>
+
+                <TextBox 
+                    Name="AddTagBox"/>
 
                 <Button
-                    Name="Preview"
-                    Content="Preview"
-                    Margin="20, 0, 20, 0"
-                    Background="WhiteSmoke"
-                    BorderThickness="1"
-                    BorderBrush="LightGray"
-                    MinHeight="50"
-                    MinWidth="100"
-                    FontSize="20"
-                    Click="Preview_Click"/>
+                    Name="AddTagButton"
+                    Content="Add Tag"
+                    Click="AddTag_Click"/>
 
-                <Button
-                    Name="Abort"
-                    Content="Abort"
-                    Background="WhiteSmoke"
-                    BorderThickness="1"
-                    BorderBrush="LightGray"
-                    MinHeight="50"
-                    MinWidth="100"
-                    FontSize="20"
-                    Margin="20, 0, 20, 0"
-                    Click="Abort_Click"/>
-
-                <Button
-                    Name="Save"
-                    Background="White"
-                    BorderThickness="1"
-                    BorderBrush="WhiteSmoke"
-                    MinHeight="50"
-                    MinWidth="100"
-                    FontSize="20"
-                    Margin="20, 0, 20, 0"
-                    Content="Save"
-                    Click="Save_Click"/>
+                <ListView
+                    Name="ListView"
+                    SelectionMode="None"/>
+                
 
             </StackPanel>
 
-            <WebView
-                Grid.Row="2"
-                Name="Preview_WebView"
-                Height="Auto"
-                Width="Auto"/>
 
-        </Grid>
+        </PivotItem>
 
-    
+        <Pivot.RightHeader>
+
+            <CommandBar
+                DefaultLabelPosition="Right"
+                Background="White">
+                <AppBarButton Icon="Save" Label="Save" Click="Save_Click">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator
+                            Modifiers="Control"
+                            Key="S"/>
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+                <AppBarButton Icon="Back" Label="Abort" Click="Abort_Click">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator
+                            Key="Escape"/>
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+                <AppBarButton Icon="Delete" Label="Delete" Click="Delete_Click">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator
+                            Key="Delete"/>
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+                <AppBarButton
+                    Label="VS Code"
+                    Click="VS_Code_Click">
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="Assets/Visual_Studio_Code_1.18_icon.png"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
+        </Pivot.RightHeader>
+
+    </Pivot>
+
 </Page>

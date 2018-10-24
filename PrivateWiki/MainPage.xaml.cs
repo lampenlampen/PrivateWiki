@@ -14,29 +14,7 @@ namespace PrivateWiki
         {
             this.InitializeComponent();
 
-            //TestClass();
-
-            EditorFrame.Navigate(typeof(PageEditor), "test");
-        }
-
-        
-
-        private void TestClass()
-        {
-            var markdown2 = @"---
-name: testyaml
----
-
-# Header 1
-
-lorem ipsum";
-
-            var parser = new MarkdigParser();
-
-            var dom = parser.Parse(markdown2);
-
-            System.Console.WriteLine("");
-
+            EditorFrame.Navigate(typeof(PageViewer), "start");
         }
     }
 }

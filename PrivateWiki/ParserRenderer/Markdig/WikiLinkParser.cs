@@ -1,22 +1,33 @@
-﻿using Markdig.Helpers;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Markdig.Helpers;
 using Markdig.Parsers;
 using Markdig.Syntax.Inlines;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PrivateWiki.Markdig
+namespace PrivateWiki.Parser.Markdig
 {
     public class WikiLinkParser : InlineParser
     {
         public WikiLinkParser()
         {
+            Debug.WriteLine("WikiLinkParser");
             OpeningCharacters = new char[]
             {
                 '['
             };
+        }
+
+        public override bool Match(InlineProcessor processor, ref StringSlice slice)
+        {
+            Debug.WriteLine($"Current Char: ${slice.CurrentChar}");
+
+            // Check if next char is '['
+            var nextChar = slice.NextChar();
+
+            Debug.WriteLine($"Next Char: ${nextChar}");
+
+            return false;
         }
 
         private static bool IsValidPreviousCharacter(char c)
@@ -25,7 +36,7 @@ namespace PrivateWiki.Markdig
             return c.IsWhiteSpaceOrZero() || c == '*' || c == '_' || c == '~' || c == '(';
         }
 
-        public override bool Match(InlineProcessor processor, ref StringSlice slice)
+        public bool Match2(InlineProcessor processor, ref StringSlice slice)
         {
             // Previous char must be a whitespace or a punctuation
             var previousChar = slice.PeekCharExtra(-1);

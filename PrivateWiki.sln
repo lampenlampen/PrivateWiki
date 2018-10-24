@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject1", "TestProject
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser", "Parser\Parser.csproj", "{C6E2F66A-0F4D-48CD-9F9C-6DEF69863B41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageProvider", "StorageProvider\StorageProvider.csproj", "{A89EE218-2EDD-4807-BCBF-35E409A1B7EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageProvider", "StorageProvider\StorageProvider.csproj", "{A89EE218-2EDD-4807-BCBF-35E409A1B7EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageProvide.Migrations", "StorageProvide.Migrations\StorageProvide.Migrations.csproj", "{D198CA83-ADD2-4B5D-A0FB-56F8D4839E21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageProvider.Migrations", "StorageProvide.Migrations\StorageProvider.Migrations.csproj", "{D198CA83-ADD2-4B5D-A0FB-56F8D4839E21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
