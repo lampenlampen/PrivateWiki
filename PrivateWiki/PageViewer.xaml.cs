@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.ViewManagement;
@@ -28,6 +29,8 @@ namespace PrivateWiki
     /// </summary>
     public sealed partial class PageViewer : Page
     {
+        private string CodeButtonCopy = "codeButtonCopy";
+
         private string contentPageId { get; set; }
 
         private ContentPage Page { get; set; }
@@ -49,19 +52,34 @@ namespace PrivateWiki
             if (uri == null || String.IsNullOrEmpty(uri.AbsoluteUri)) return;
 
             // WikiLink
-            if (uri.AbsoluteUri.StartsWith("about::"))
+            var splittedLink = uri.AbsoluteUri.Split(':', StringSplitOptions.RemoveEmptyEntries);
+            if (splittedLink.Length >= 3)
             {
-                var wikiLink = uri.AbsoluteUri.Substring(7);
-                Debug.WriteLine($"WikiLink: {wikiLink}");
+                var builder = new StringBuilder();
+                builder.Append(splittedLink[2]);
+                for (int i = 3; i < splittedLink.Length; i++)
+                {
+                    builder.Append($":{splittedLink[i]}");
+                }
+
+                var wikilink = builder.ToString();
+
+                Debug.WriteLine($"WikiLink: {wikilink}");
                 args.Cancel = true;
 
-                NavigateToPage(wikiLink);
+                NavigateToPage(wikilink);
             }
 
             // Local Link in Document
             if (uri.AbsoluteUri.StartsWith("about:"))
             {
                 Debug.WriteLine($"Local Link: {uri.AbsoluteUri}");
+                return;
+            }
+
+            if (uri.AbsoluteUri.StartsWith("ms-local-stream:"))
+            {
+                Debug.WriteLine($"Local HtmlFile: {uri.AbsoluteUri}");
                 return;
             }
 
@@ -83,7 +101,7 @@ namespace PrivateWiki
             ShowContentPage();
         }
 
-        private void ShowContentPage()
+        private async void ShowContentPage()
         {
             var provider = new ContentPageProvider();
 
@@ -99,6 +117,7 @@ namespace PrivateWiki
             Page = provider.GetContentPage(contentPageId);
             Debug.WriteLine($"Page Some: {contentPageId}");
             var parser = new MarkdigParser();
+            
 
             // Show Page Title
             //PageTitle.Text = Page.Id;
@@ -106,7 +125,7 @@ namespace PrivateWiki
             // Show Last Visited Pages
             NavigationHandler.AddPage(Page);
             Debug.WriteLine($"Last Visited Pages: {NavigationHandler.Pages.Count}");
-            ShowLastVisitedPages();
+            ShowLastVisitedPages2();
 
             // Show TOC
             var doc = parser.Parse(Page);
@@ -115,7 +134,12 @@ namespace PrivateWiki
 
             // Show Page
             var html = parser.ToHtmlString(Page);
-            Webview.NavigateToString(html);
+            var localFolder = ApplicationData.Current.LocalFolder;
+            var mediaFolder = await localFolder.GetFolderAsync("media");
+            var file = await mediaFolder.CreateFileAsync("index.html", CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteTextAsync(file, html);
+
+            Webview.Navigate(new Uri("ms-appdata:///local/media/index.html"));
 
             // Show Tags
             if (Page.Tags != null)
@@ -133,7 +157,7 @@ namespace PrivateWiki
 
             if (stack.Count <= 0) return;
 
-            switch (stack.Count)
+           switch (stack.Count)
             {
                 case 4:
 
@@ -261,125 +285,6 @@ namespace PrivateWiki
             await Webview.InvokeScriptAsync("eval", new[] {@"window.scrollTo(0,0);"});
         }
 
-        /*
-        private string GenerateHtml(string markdown)
-        {
-            var htmlTemplate1 = @"<!DOCTYPE html>
-<html lang = ""de"">
-<head> 
-<style> 
-h1 {
-    border-bottom-color: rgb(162, 169, 177);
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-}
-h2 {
-    border-bottom-color: rgb(162, 169, 177);
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-}
-
-code {
-    background-color: rgb(248, 248, 248);
-    display: block;
-    line-height: 18.11px;
-    padding-bottom: 13.93px;
-    padding-left: 13.93px;
-    padding-right: 13.93px;
-    padding-top: 13.93px;
-}
-</style>
-</head>
-<body>
-";
-
-            var htmlTemplate2 = @"
-</body>
-</html>";
-
-            return $"{htmlTemplate1}{markdown}{htmlTemplate2}";
-        }
-
-
-        
-        private Render.MarkupRenderer CreateRenderer(Document doc)
-        {
-            var renderer = new Render.MarkupRenderer(doc, null, null, null)
-            {
-                Background = Background,
-                //BorderBrush = BorderBrush,
-                //BorderThickness = BorderThickness,
-                CharacterSpacing = CharacterSpacing,
-                FontFamily = FontFamily,
-                FontSize = FontSize,
-                FontStretch = FontStretch,
-                FontStyle = FontStyle,
-                FontWeight = FontWeight,
-                Foreground = Foreground,
-                IsTextSelectionEnabled = true,
-                Padding = Padding,
-                //CodeBackground = new SolidColorBrush(convertHexToColor("#FFF6F8FA")),
-                CodeBackground = new SolidColorBrush(Color.FromArgb(250, 246, 248, 250)),
-                CodeBorderBrush = new SolidColorBrush(Color.FromArgb(250, 190, 190, 190)),
-                CodeBorderThickness = new Thickness(1, 1, 1, 1),
-                //InlineCodeBorderThickness = InlineCodeBorderThickness,
-                //InlineCodeBackground = InlineCodeBackground,
-                //InlineCodeBorderBrush = InlineCodeBorderBrush,
-                //InlineCodePadding = InlineCodePadding,
-                //InlineCodeFontFamily = InlineCodeFontFamily,
-                //CodeForeground = CodeForeground,
-                CodeFontFamily = new FontFamily("Consolas"),
-                CodePadding = new Thickness(20, 15, 20, 15),
-                CodeMargin = new Thickness(0, 15, 0, 15),
-                //EmojiFontFamily = new FontFamily("Segoe UI Emoji"),
-                Header1FontSize = 50,
-                Header1FontWeight = FontWeights.Medium,
-                Header1Margin = new Thickness(0, 15, 0, 15),
-                Header1Foreground = new SolidColorBrush(Colors.Black),
-                Header2FontSize = 40,
-                Header2FontWeight = FontWeights.Medium,
-                Header2Margin = new Thickness(0, 15, 0, 15),
-                Header2Foreground = new SolidColorBrush(Colors.Black),
-                Header3FontSize = 35,
-                Header3FontWeight = FontWeights.Normal,
-                Header3Margin = new Thickness(0, 10, 0, 10),
-                Header3Foreground = new SolidColorBrush(Colors.Black),
-                Header4FontSize = 25,
-                Header4FontWeight = FontWeights.Normal,
-                Header4Margin = new Thickness(0, 10, 0, 10),
-                Header4Foreground = new SolidColorBrush(Colors.Black),
-                Header5FontSize = 20,
-                Header5FontWeight = FontWeights.Normal,
-                Header5Margin = new Thickness(0, 10, 0, 5),
-                Header5Foreground = new SolidColorBrush(Colors.Black),
-                HorizontalRuleBrush = new SolidColorBrush(Color.FromArgb(250, 190, 190, 190)),
-                HorizontalRuleMargin = new Thickness(0, 20, 0, 20),
-                HorizontalRuleThickness = 2,
-                //ListMargin = ListMargin,
-                //ListGutterWidth = ListGutterWidth,
-                //ListBulletSpacing = ListBulletSpacing,
-                ParagraphMargin = new Thickness(0, 5, 0, 5),
-                QuoteBackground = new SolidColorBrush(Color.FromArgb(10, 0, 0, 0)),
-                QuoteBorderBrush = new SolidColorBrush(Color.FromArgb(250, 190, 190, 190)),
-                QuoteBorderThickness = new Thickness(3, 0, 0, 0),
-                QuoteForeground = new SolidColorBrush(Color.FromArgb(255, 110, 116, 124)),
-                QuoteMargin = new Thickness(0, 15, 0, 15),
-                QuotePadding = new Thickness(15, 10, 15, 10),
-                //TableBorderBrush = TableBorderBrush,
-                //TableBorderThickness = TableBorderThickness,
-                //TableCellPadding = TableCellPadding,
-                //TableMargin = TableMargin,
-                TextWrapping = TextWrapping.WrapWholeWords,
-                //LinkForeground = LinkForeground,
-                //ImageStretch = ImageStretch,
-                //ImageMaxHeight = ImageMaxHeight,
-                //ImageMaxWidth = ImageMaxWidth,
-                //WrapCodeBlock = WrapCodeBlock
-            };
-
-            return renderer;
-        }
-        */
         private async void Pdf_Click(object sender, RoutedEventArgs e)
         {
             //Debug.WriteLine("Print");
@@ -437,6 +342,31 @@ code {
         private void Search_Click(object sender, RoutedEventArgs e)
         {
             SearchPopup.IsOpen = true;
+        }
+
+        private void Webview_OnScriptNotify(object sender, NotifyEventArgs e)
+        {
+            Debug.WriteLine("WebView Script");
+            if (e.Value == CodeButtonCopy)
+            {
+                // TODO Code Copy Button Clicked
+                Debug.WriteLine("Copy Button clicked.");
+            }
+        }
+
+        private async void Webview_OnLoadCompleted(object sender, NavigationEventArgs e)
+        {
+            await Webview.InvokeScriptAsync("eval", new[]
+            {
+                "function codeCopyClickFunction(){" +
+                $" window.external.notify('{CodeButtonCopy}');"+
+                "}"
+            });
+        }
+
+        private void MediaManager_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MediaManager));
         }
     }
 }

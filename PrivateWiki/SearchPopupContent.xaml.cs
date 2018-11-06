@@ -44,18 +44,9 @@ namespace PrivateWiki
 
         private void Filter(string text)
         {
-            // TODO Filter Search Results
-            return;
             var pages = _pages.Filter(p => p.Id.Contains(text));
             
-
-            foreach (var page in Pages)
-            {
-                if (!pages.Contains(page))
-                {
-                    
-                }
-            }
+            Pages = new ObservableCollection<ContentPage>(pages);
         }
 
         private void SearchBox_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

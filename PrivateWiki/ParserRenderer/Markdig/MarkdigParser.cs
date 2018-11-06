@@ -1,6 +1,9 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 using JetBrains.Annotations;
 using Markdig;
+using Markdig.Renderers;
+using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Markdig.SyntaxHighlighting;
 using PrivateWiki.Parser.Markdig;
@@ -11,30 +14,42 @@ namespace PrivateWiki.ParserRenderer.Markdig
     public class MarkdigParser : IPageParser, IPageRenderer
     {
         private MarkdownPipeline _pipeline;
+        private HtmlRenderer renderer;
+
 
         private void Init()
         {
             if (_pipeline == null)
             {
                 var builder = new MarkdownPipelineBuilder()
-                    .UseAutoIdentifiers()
-                    .UseAutoLinks()
-                    .UseDiagrams()
-                    //.UseAdvancedExtensions()
-                    .UseSyntaxHighlighting();
+                        .UseAutoIdentifiers()
+                        .UseAutoLinks()
+                        .UsePipeTables()
+                        .UseMyHtmlCodeBlockRenderer()
+                        ;
 
                 builder.Extensions.AddIfNotAlready<MyMathematicsExtension>();
 
+                renderer = new HtmlRenderer(new StringWriter());
+                
                 _pipeline = builder.Build();
-
-                    
-                /*
-                pipeline = new MarkdownPipelineBuilder()
-                    .UseAdvancedExtensions()
-                    .UseSyntaxHighlighting()
-                    .Build();
-                */
             }
+        }
+
+        private string ToHtmlCustom(string markdown)
+        {
+            Init();
+            var writer = renderer.Writer as StringWriter;
+
+            _pipeline.Setup(renderer);
+
+            var document = Parse(markdown);
+            renderer.Render(document);
+            writer.Flush();
+
+            var html = writer.ToString();
+
+            return html;
         }
 
         public MarkdownDocument Parse(string markdown)
@@ -57,7 +72,8 @@ namespace PrivateWiki.ParserRenderer.Markdig
             builder.AppendLine("<html>");
             builder.AppendLine("<head>");
             builder.AppendLine("<script type=\"text/javascript\">");
-            builder.AppendLine("MathJax.Hub.Config({tex2jax: {inlineMath: [['$', '$'], [\"\\(\", \"\\)\"]], processEscapes: true}});");
+            builder.AppendLine(
+                "MathJax.Hub.Config({tex2jax: {inlineMath: [['$', '$'], [\"\\(\", \"\\)\"]], processEscapes: true}});");
             builder.AppendLine("</script>");
             builder.AppendLine(
                 "<script type=\"text/javascript\" async src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML\">");
@@ -67,7 +83,7 @@ namespace PrivateWiki.ParserRenderer.Markdig
             builder.AppendLine("</script>");
             builder.AppendLine("</head>");
             builder.AppendLine("<body>");
-            builder.AppendLine(Markdown.ToHtml(markdown, _pipeline));
+            builder.AppendLine(ToHtmlCustom(markdown));
             builder.AppendLine("</body>");
             builder.AppendLine("</html>");
             return builder.ToString();

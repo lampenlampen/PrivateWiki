@@ -18,8 +18,6 @@
 
             <StackPanel
                 Orientation="Vertical">
-
-
             
 
             <AutoSuggestBox
@@ -37,8 +35,13 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
 
-                        <StackPanel>
-                            <TextBlock></TextBlock>
+                        <StackPanel
+                        Background="LightGray">
+                            <TextBlock
+                            FontSize="30"
+                            />
+                            <TextBlock
+                            FontSize="20"/>
 
                         </StackPanel>
 

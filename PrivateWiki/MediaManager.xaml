@@ -1,0 +1,151 @@
+﻿<Page
+    x:Class="PrivateWiki.MediaManager"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PrivateWiki"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:fa="using:FontAwesome.UWP"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <DataTemplate
+            x:Key="TreeViewItemFolderTemplate">
+            <TreeViewItem Height="44">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon 
+                        FontFamily="Segoe MDL2 Assets" 
+                        Glyph="&#xE838;"
+                        Margin="0,0,10,0"/>
+                    
+                    <TextBlock
+                        Text="{Binding Content.DisplayName}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Style="{ThemeResource BodyTextBlockStyle}" />
+                </StackPanel>
+
+                <TreeViewItem.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem
+                            Text="Create Folder"
+                            Click="MediaTreeView_CreateFolder"
+                            Icon="Add"/>
+                        <MenuFlyoutItem
+                            Text="Delete Folder"
+                            Click="MediaTreeView_DeleteFolder"
+                            Icon="Delete"/>
+                        <MenuFlyoutItem
+                            Text="Rename Folder"
+                            Click="MediaTreeView_RenameFolder"
+                            Icon="Rename"/>
+                        <MenuFlyoutItem
+                            Text="Add Files"
+                            Click="MediaTreeView_AddFiles"
+                            Icon="Add"/>
+                    </MenuFlyout>
+
+                </TreeViewItem.ContextFlyout>
+
+            </TreeViewItem>
+        </DataTemplate>
+
+        <DataTemplate
+            x:Key="TreeViewItemFileTemplate">
+            <TreeViewItem Height="44">
+                <StackPanel Orientation="Horizontal">
+                    <fa:FontAwesome 
+                        Icon="FileImageOutline" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"
+                        Margin="0,0,10,0"/>
+                    <TextBlock
+                        Text="{Binding Content.DisplayName}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Style="{ThemeResource BodyTextBlockStyle}" />
+                </StackPanel>
+                <TreeViewItem.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem
+                            Text="Delete File"
+                            Click="MediaTreeView_DeleteFile"
+                            Icon="Delete"/>
+                        <MenuFlyoutItem
+                            Text="Rename File"
+                            Click="MediaTreeView_RenameFile"
+                            Icon="Rename"/>
+                    </MenuFlyout>
+
+                </TreeViewItem.ContextFlyout>
+            </TreeViewItem>
+        </DataTemplate>
+
+        <Style TargetType="TreeView">
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TreeView">
+                        <TreeViewList
+                            Name="ListControl"
+                            ItemTemplateSelector="{StaticResource MediaManagerTreeViewItemTemplateSelector}"
+                            ItemContainerStyle="{StaticResource TreeViewItemStyle}"
+                            CanDragItems="True"
+                            CanReorderItems="True">
+
+                            <TreeViewList.ItemContainerTransitions>
+                                <TransitionCollection>
+                                    <ContentThemeTransition />
+                                    <ReorderThemeTransition />
+                                    <EntranceThemeTransition IsStaggeringEnabled="False" />
+                                </TransitionCollection>
+                            </TreeViewList.ItemContainerTransitions>
+
+                        </TreeViewList>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <local:MediaManagerTreeViewItemTemplateSelector
+            x:Key="MediaManagerTreeViewItemTemplateSelector"
+            FolderTemplate="{StaticResource TreeViewItemFolderTemplate}"
+            FileTemplate="{StaticResource TreeViewItemFileTemplate}"/>
+
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Text="Media Manager"
+            FontSize="30" />
+
+        <Button
+            Grid.Row="1"
+            Content="Back"
+            Click="BackButton_Click" />
+
+        <TextBlock
+            Grid.Row="3"
+            Name="ClickedItem" />
+
+        <TreeView
+            Grid.Row="4"
+            Name="TreeViewMedia"
+            Expanding="TreeViewMedia_OnExpanding"
+            Collapsed="TreeViewMedia_OnCollapsed"
+            ItemInvoked="TreeViewMedia_OnItemInvoked"
+            SelectionMode="Single"
+            DropCompleted="TreeViewMedia_OnDropCompleted"/>
+
+    </Grid>
+</Page>

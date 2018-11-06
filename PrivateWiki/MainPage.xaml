@@ -11,11 +11,10 @@
 
     <Grid
             Height="Auto"
-            MinHeight="800"
             Width="Auto">
         <Grid.ColumnDefinitions>
             <ColumnDefinition
-                    Width="300" />
+                    Width="Auto" />
             <ColumnDefinition />
 
         </Grid.ColumnDefinitions>

@@ -3,6 +3,7 @@ using StorageProvider;
 using System;
 using System.Diagnostics;
 using Windows.Foundation;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -30,13 +31,12 @@ namespace PrivateWiki
             this.InitializeComponent();
         }
 
-        private void PreviewWebviewNavigationStartedAsync(WebView sender,
-            [NotNull] WebViewNavigationStartingEventArgs args)
+        private void PreviewWebviewNavigationStartedAsync(WebView sender, [NotNull] WebViewNavigationStartingEventArgs args)
         {
             var uri = args.Uri;
 
             // Preview Button Clicked; Do nothing
-            if (uri == null || String.IsNullOrEmpty(uri.AbsoluteUri)) return;
+            if (uri == null || string.IsNullOrEmpty(uri.AbsoluteUri)) return;
 
             // WikiLink
             if (uri.AbsoluteUri.StartsWith("about::"))
@@ -79,8 +79,6 @@ namespace PrivateWiki
                 Page = ContentPage.Create(pageId);
             }
 
-            Preview_WebView.Visibility = Visibility.Collapsed;
-
             ShowPageInEditor();
             if (NewPage)
             {
@@ -95,7 +93,7 @@ namespace PrivateWiki
 
         private void RemoveNewPageFromBackStack()
         {
-           if (Frame.CanGoBack)
+            if (Frame.CanGoBack)
             {
                 var backstack = Frame.BackStack;
                 var lastEntry = backstack[Frame.BackStackDepth - 1];
@@ -186,16 +184,19 @@ namespace PrivateWiki
             }
         }
 
-        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Pivot.SelectedIndex == 1)
             {
-                Preview_WebView.Visibility = Visibility.Visible;
-                var markdown = PageEditorTextBox.Text;
+                var htmlFileName = "index_preview.html";
+                var parser = new MarkdigParser();
+                var html = parser.ToHtmlString(Page);
+                var localFolder = ApplicationData.Current.LocalFolder;
+                var mediaFolder = await localFolder.GetFolderAsync("media");
+                var file = await mediaFolder.CreateFileAsync(htmlFileName, CreationCollisionOption.ReplaceExisting);
+                await FileIO.WriteTextAsync(file, html);
 
-                var html = new MarkdigParser().ToHtmlString(markdown);
-
-                Preview_WebView.NavigateToString(html);
+                Preview_WebView.Navigate(new Uri($"ms-appdata:///local/media/{htmlFileName}"));
             }
 
             if (Pivot.SelectedIndex == 2)

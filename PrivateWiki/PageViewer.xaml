@@ -17,6 +17,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
+            <ColumnDefinition Width="11" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
@@ -26,7 +27,7 @@
             IsLightDismissEnabled="True"
             LightDismissOverlayMode="On">
 
-            <privateWiki:SearchPopupContent/>
+            <privateWiki:SearchPopupContent />
 
         </Popup>
 
@@ -35,12 +36,13 @@
             DefaultLabelPosition="Right"
             Grid.Row="0"
             Grid.Column="0"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             Height="Auto"
             Background="{ThemeResource SystemControlBackgroundAccentBrush}">
 
             <CommandBar.Content>
 
+                <!--
                 <StackPanel
                     Orientation="Horizontal">
 
@@ -102,6 +104,7 @@
                         Content="Page4" />
 
                 </StackPanel>
+                -->
 
             </CommandBar.Content>
 
@@ -152,46 +155,15 @@
                     Label="Toogle"
                     Click="Toggle_Click" />
 
+                <AppBarButton
+                    Label="Media Manager"
+                    Click="MediaManager_Click"/>
+
                 <AppBarButton Label="Settings" Icon="Setting" Click="Setting_Click" />
 
             </CommandBar.SecondaryCommands>
 
         </CommandBar>
-
-
-       
-            <StackPanel
-                Name="RightMenu"
-                Grid.Row="1"
-                Grid.Column="1"
-                Padding="0, 10, 10, 20">
-
-                <TextBlock Text="Table of Contents"
-                           HorizontalAlignment="Left"
-                           FontSize="30"
-                           TextDecorations="Underline"
-                           Padding="20, 0, 0, 20" />
-
-                <TreeView
-                    Name="TreeView"
-                    ItemInvoked="TreeView_ItemInvoked"
-                    MaxHeight="400"
-                    MaxWidth="300"
-                    VerticalAlignment="Top" />
-
-                <TextBlock Text="Tags"
-                           HorizontalAlignment="Left"
-                           FontSize="30"
-                           TextDecorations="Underline"
-                           Padding="20, 20, 0, 20" />
-
-                <ListView
-                    Name="ListView"
-                    VerticalAlignment="Top"
-                    SelectionMode="None" />
-
-            </StackPanel>
-
 
         <Border
             Name="WebViewBorder"
@@ -213,11 +185,69 @@
                     MinWidth="100"
                     Width="Auto"
                     Height="Auto"
-                    NavigationStarting="WebViewNavigationStarting" />
+                    NavigationStarting="WebViewNavigationStarting"
+                    ScriptNotify="Webview_OnScriptNotify"
+                    LoadCompleted="Webview_OnLoadCompleted"/>
             </Border>
 
-
         </Border>
+
+        <controls:GridSplitter
+            Grid.Row="1"
+            Grid.Column="1"
+            Width="11"
+            ResizeBehavior="BasedOnAlignment"
+            ResizeDirection="Auto"
+            Background="Gray"
+            Foreground="White"
+            FontSize="13">
+
+            <controls:GridSplitter.Element>
+                <Grid>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        IsHitTestVisible="False"
+                        VerticalAlignment="Center"
+                        Text="&#xE784;"
+                        Foreground="Black"
+                        FontFamily="Segoe MDL2 Assets"/>
+                </Grid>
+
+            </controls:GridSplitter.Element>
+        </controls:GridSplitter>
+
+
+        <StackPanel
+            Name="RightMenu"
+            Grid.Row="1"
+            Grid.Column="2"
+            Padding="0, 10, 10, 20">
+
+            <TextBlock Text="Table of Contents"
+                       HorizontalAlignment="Left"
+                       FontSize="30"
+                       TextDecorations="Underline"
+                       Padding="20, 0, 0, 20" />
+
+            <TreeView
+                Name="TreeView"
+                ItemInvoked="TreeView_ItemInvoked"
+                MaxHeight="400"
+                MaxWidth="300"
+                VerticalAlignment="Top" />
+
+            <TextBlock Text="Tags"
+                       HorizontalAlignment="Left"
+                       FontSize="30"
+                       TextDecorations="Underline"
+                       Padding="20, 20, 0, 20" />
+
+            <ListView
+                Name="ListView"
+                VerticalAlignment="Top"
+                SelectionMode="None" />
+
+        </StackPanel>
 
     </Grid>
 </Page>

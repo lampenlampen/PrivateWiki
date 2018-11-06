@@ -102,8 +102,15 @@
     <Compile Include="ExternalEditor.xaml.cs">
       <DependentUpon>ExternalEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MediaManager.xaml.cs">
+      <DependentUpon>MediaManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MediaManagerTreeViewItemTemplateSelector.cs" />
     <Compile Include="ParserRenderer\IPageRenderer.cs" />
+    <Compile Include="ParserRenderer\Markdig\CodeBlockExtension.cs" />
     <Compile Include="ParserRenderer\Markdig\HeadersParser.cs" />
+    <Compile Include="ParserRenderer\Markdig\MarkdigStyleSheet.cs" />
+    <Compile Include="ParserRenderer\Markdig\MyHtmlCodeBlockRenderer.cs" />
     <Compile Include="ParserRenderer\Markdig\MyHtmlMathInlineRenderer.cs" />
     <Compile Include="ParserRenderer\Markdig\MyMathematicsExtension.cs" />
     <Compile Include="ParserRenderer\Markdig\WikiLinkParser.cs" />
@@ -156,6 +163,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MediaManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -178,8 +189,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="FontAwesome.UWP">
+      <Version>4.7.0.9</Version>
+    </PackageReference>
     <PackageReference Include="JetBrains.Annotations">
-      <Version>10.2.1</Version>
+      <Version>2018.2.1</Version>
     </PackageReference>
     <PackageReference Include="LanguageExt.Core">
       <Version>3.0.31</Version>
