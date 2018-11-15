@@ -1,0 +1,230 @@
+﻿<Page
+    x:Class="PrivateWiki.Pages.PageEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PrivateWiki"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:texttoolbarbuttons="using:Microsoft.Toolkit.Uwp.UI.Controls.TextToolbarButtons"
+    xmlns:fa="using:FontAwesome.UWP"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Padding="20, 20, 20, 20"
+    Height="Auto"
+    Width="Auto">
+
+    <!--    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            Height="Auto"
+            Width="Auto"
+    
+    -->
+
+    <Pivot
+        Name="Pivot"
+        Title="Pivot"
+        SelectionChanged="Pivot_SelectionChanged">
+
+        <PivotItem
+            Header="Editor">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+
+                    <CommandBar
+                        Name="Toolbar">
+
+                        <CommandBar.Content>
+
+                            <StackPanel
+                                Orientation="Horizontal">
+                                <AppBarButton
+                                    Name="Add_Image"
+                                    Icon="Pictures"
+                                    Click="PageEditor_AddImage"
+                                    Content="Add Image" />
+                                <AppBarButton
+                                    Name="Bold"
+                                    Content="Bold"
+                                    Icon="Bold"
+                                    Click="PageEditorToolbar_Bold" />
+
+                                <AppBarButton
+                                    Name="Underline"
+                                    Content="Underline"
+                                    Icon="Underline"
+                                    Click="PageEditorToolbar_Underline" />
+
+                                <AppBarButton
+                                    Name="Italic"
+                                    Content="Italic"
+                                    Icon="Italic"
+                                    Click="PageEditorToolbar_Italic" />
+
+                                <AppBarButton
+                                    Name="HyperLink"
+                                    Content="HyperLink"
+                                    Icon="Link"
+                                    Click="PageEditorToolbar_HyperLink" />
+
+                                <AppBarButton
+                                    Name="WikiLink"
+                                    Content="WikiLink"
+                                    Icon="Link"
+                                    Click="PageEditorToolbar_Wikilink" />
+
+                                <AppBarButton
+                                    Name="NumberedList"
+                                    Content="Numbered List"
+                                    Icon="List"
+                                    Click="PageEditorToolbar_NumberedList" />
+                                <AppBarButton
+                                    Name="List"
+                                    Content="List"
+                                    Icon="List"
+                                    Click="PageEditorToolbar_List" />
+
+                                <AppBarButton
+                                    Name="Quote"
+                                    Content="Quote"
+                                    Click="PageEditorToolbar_Quote" />
+
+                                <AppBarButton
+                                    Name="HorizontalRule"
+                                    Content="Horizontal Rule"
+                                    Click="PageEditorToolbar_HorizontalRule" />
+
+                                <AppBarButton
+                                    Name="Code"
+                                    Content="Code"
+                                    Click="PageEditorToolbar_Code" />
+
+                                <AppBarButton
+                                    Name="Strikethrough"
+                                    Content="Strikethrough"
+                                    Click="PageEditorToolbar_Strikethrough" />
+
+                                <AppBarButton
+                                    Name="Table"
+                                    Content="Table"
+                                    Click="PageEditorToolbar_Table" />
+
+                            </StackPanel>
+
+                        </CommandBar.Content>
+                    </CommandBar>
+
+
+                    <TextBox
+                        Name="PageEditorTextBox"
+                        Text="Lorem Ipsum"
+                        AcceptsReturn="True"
+                        TextWrapping="Wrap"
+                        MaxHeight="500"
+                        Background="White" />
+
+                </StackPanel>
+
+            </Grid>
+
+        </PivotItem>
+
+        <PivotItem
+            Header="Preview">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+
+                <WebView
+                    Grid.Row="0"
+                    Name="Preview_WebView"
+                    Height="Auto"
+                    Width="Auto"
+                    MaxHeight="500"
+                    NavigationStarting="PreviewWebviewNavigationStartedAsync" />
+
+                <controls:InAppNotification
+                    Grid.Row="1"
+                    Name="InAppNotification"
+                    ShowDismissButton="True" />
+
+
+            </Grid>
+
+        </PivotItem>
+
+        <PivotItem
+            Header="Metadaten">
+
+            <StackPanel>
+
+                <TextBlock Text="Tags"
+                           HorizontalAlignment="Left"
+                           FontSize="30"
+                           TextDecorations="Underline"
+                           Padding="20, 0, 0, 20" />
+
+                <TextBox
+                    Name="AddTagBox" />
+
+                <Button
+                    Name="AddTagButton"
+                    Content="Add Tag"
+                    Click="AddTag_Click" />
+
+                <ListView
+                    Name="ListView"
+                    SelectionMode="None" />
+
+
+            </StackPanel>
+
+
+        </PivotItem>
+
+        <Pivot.RightHeader>
+
+            <CommandBar
+                DefaultLabelPosition="Right"
+                Background="White">
+                <AppBarButton Icon="Save" Label="Save" Click="Save_Click">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator
+                            Modifiers="Control"
+                            Key="S" />
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+                <AppBarButton Icon="Back" Label="Abort" Click="Abort_Click">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator
+                            Key="Escape" />
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+                <AppBarButton Icon="Delete" Label="Delete" Click="Delete_Click">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator
+                            Key="Delete" />
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+                <AppBarButton
+                    Label="VS Code"
+                    Click="VS_Code_Click">
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="Assets/Visual_Studio_Code_1.18_icon.png" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
+        </Pivot.RightHeader>
+
+    </Pivot>
+
+
+</Page>

@@ -99,37 +99,50 @@
     <Compile Include="Data\FileSystemAccess.cs" />
     <Compile Include="Data\InitPages.cs" />
     <Compile Include="Data\IPageAccess.cs" />
-    <Compile Include="ExternalEditor.xaml.cs">
+      <Compile Include="Data\MediaAccess.cs"/>
+      <Compile Include="Dialogs\GridViewDialog.xaml.cs">
+          <DependentUpon>GridViewDialog.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="Dialogs\WikiLinkDialog.xaml.cs">
+          <DependentUpon>WikiLinkDialog.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="Dialogs\DissmissableDialog.cs"/>
+      <Compile Include="Pages\ExternalEditor.xaml.cs">
       <DependentUpon>ExternalEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MediaManager.xaml.cs">
+      <Compile Include="Dialogs\HyperlinkDialog.xaml.cs">
+          <DependentUpon>HyperlinkDialog.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="Markdig\IPageParser.cs"/>
+      <Compile Include="Markdig\IPageRenderer.cs"/>
+      <Compile Include="Pages\MediaManager.xaml.cs">
       <DependentUpon>MediaManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="MediaManagerTreeViewItemTemplateSelector.cs" />
-    <Compile Include="ParserRenderer\IPageRenderer.cs" />
-    <Compile Include="ParserRenderer\Markdig\CodeBlockExtension.cs" />
-    <Compile Include="ParserRenderer\Markdig\HeadersParser.cs" />
-    <Compile Include="ParserRenderer\Markdig\MarkdigStyleSheet.cs" />
-    <Compile Include="ParserRenderer\Markdig\MyHtmlCodeBlockRenderer.cs" />
-    <Compile Include="ParserRenderer\Markdig\MyHtmlMathInlineRenderer.cs" />
-    <Compile Include="ParserRenderer\Markdig\MyMathematicsExtension.cs" />
-    <Compile Include="ParserRenderer\Markdig\WikiLinkParser.cs" />
+      <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockExtension.cs"/>
+      <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockPipelineExtension.cs"/>
+      <Compile Include="Markdig\Extensions\MathExtension\MathePipelineExtension.cs"/>
+      <Compile Include="Markdig\HeadersParser.cs"/>
+      <Compile Include="Markdig\MarkdigStyleSheet.cs"/>
+      <Compile Include="Markdig\Extensions\CodeBlockExtension\MyHtmlCodeBlockRenderer.cs"/>
+      <Compile Include="Markdig\Extensions\MathExtension\MyHtmlMathInlineRenderer.cs"/>
+      <Compile Include="Markdig\Extensions\MathExtension\MyMathematicsExtension.cs"/>
+      <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkParser.cs"/>
     <Compile Include="NavigationHandler.cs" />
-    <Compile Include="NewPage.xaml.cs">
+      <Compile Include="Pages\NewPage.xaml.cs">
       <DependentUpon>NewPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PageEditor.xaml.cs">
+      <Compile Include="Pages\PageEditor.xaml.cs">
       <DependentUpon>PageEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PageViewer.xaml.cs">
+      <Compile Include="Pages\PageViewer.xaml.cs">
       <DependentUpon>PageViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
+      <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ParserRenderer\IPageParser.cs" />
-    <Compile Include="ParserRenderer\Markdig\MarkdigParser.cs" />
-    <Compile Include="ParserRenderer\Markdig\WikiLinkExtension.cs" />
+      <Compile Include="Markdig\MarkdigParser.cs"/>
+      <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkExtension.cs"/>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchPopupContent.xaml.cs">
       <DependentUpon>SearchPopupContent.xaml</DependentUpon>
@@ -159,27 +172,39 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="ExternalEditor.xaml">
+      <Page Include="Dialogs\GridViewDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MediaManager.xaml">
+      <Page Include="Dialogs\WikiLinkDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NewPage.xaml">
+      <Page Include="Pages\ExternalEditor.xaml">
+          <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PageEditor.xaml">
+      </Page>
+      <Page Include="Dialogs\HyperlinkDialog.xaml">
+          <SubType>Designer</SubType>
+          <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Include="Pages\MediaManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PageViewer.xaml">
+      <Page Include="Pages\NewPage.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <SubType>Designer</SubType>
+      </Page>
+      <Page Include="Pages\PageEditor.xaml">
+          <SubType>Designer</SubType>
+          <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Include="Pages\PageViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+      <Page Include="Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -196,7 +221,7 @@
       <Version>2018.2.1</Version>
     </PackageReference>
     <PackageReference Include="LanguageExt.Core">
-      <Version>3.0.31</Version>
+        <Version>3.1.13</Version>
     </PackageReference>
     <PackageReference Include="Markdig">
       <Version>0.15.4</Version>
@@ -211,7 +236,10 @@
       <Version>6.2.0-Preview1-26502-02</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>4.0.0</Version>
+        <Version>5.0.0</Version>
+    </PackageReference>
+      <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
+          <Version>5.0.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.0.181011001</Version>
