@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using JetBrains.Annotations;
 using PrivateWiki.Data;
+using PrivateWiki.Dialogs;
 using PrivateWiki.Markdig;
 using StorageProvider;
 
@@ -17,348 +18,353 @@ using StorageProvider;
 
 namespace PrivateWiki.Pages
 {
-    /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-    /// </summary>
-    public sealed partial class PageViewer : Page
-    {
-        private string CodeButtonCopy = "codeButtonCopy";
+	/// <summary>
+	/// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+	/// </summary>
+	public sealed partial class PageViewer : Page
+	{
+		private string CodeButtonCopy = "codeButtonCopy";
 
-        private string contentPageId { get; set; }
+		public PageViewer()
+		{
+			InitializeComponent();
+		}
 
-        private ContentPage Page { get; set; }
+		private string contentPageId { get; set; }
 
-        private string[] SearchEntries { get; } = {"Andreas", "Laura", "Felix", "Lisa", "Anton", "Markus"};
+		private ContentPage Page { get; set; }
 
-        public PageViewer()
-        {
-            InitializeComponent();
-        }
+		private void WebViewNavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
+		{
+			var uri = args.Uri;
 
-        private void WebViewNavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
-        {
-            var uri = args.Uri;
+			// Preview Button Clicked; Do nothing
+			if (uri == null || string.IsNullOrEmpty(uri.AbsoluteUri)) return;
 
-            // Preview Button Clicked; Do nothing
-            if (uri == null || string.IsNullOrEmpty(uri.AbsoluteUri)) return;
+			// WikiLink
+			var splittedLink = uri.AbsoluteUri.Split(':', StringSplitOptions.RemoveEmptyEntries);
+			if (splittedLink.Length >= 3)
+			{
+				var builder = new StringBuilder();
+				builder.Append(splittedLink[2]);
+				for (int i = 3; i < splittedLink.Length; i++)
+				{
+					builder.Append($":{splittedLink[i]}");
+				}
 
-            // WikiLink
-            var splittedLink = uri.AbsoluteUri.Split(':', StringSplitOptions.RemoveEmptyEntries);
-            if (splittedLink.Length >= 3)
-            {
-                var builder = new StringBuilder();
-                builder.Append(splittedLink[2]);
-                for (int i = 3; i < splittedLink.Length; i++)
-                {
-                    builder.Append($":{splittedLink[i]}");
-                }
+				var wikilink = builder.ToString();
 
-                var wikilink = builder.ToString();
+				Debug.WriteLine($"WikiLink: {wikilink}");
+				args.Cancel = true;
 
-                Debug.WriteLine($"WikiLink: {wikilink}");
-                args.Cancel = true;
+				NavigateToPage(wikilink);
+			}
 
-                NavigateToPage(wikilink);
-            }
+			// Local Link in Document
+			if (uri.AbsoluteUri.StartsWith("about:"))
+			{
+				Debug.WriteLine($"Local Link: {uri.AbsoluteUri}");
+				return;
+			}
 
-            // Local Link in Document
-            if (uri.AbsoluteUri.StartsWith("about:"))
-            {
-                Debug.WriteLine($"Local Link: {uri.AbsoluteUri}");
-                return;
-            }
+			if (uri.AbsoluteUri.StartsWith("ms-local-stream:"))
+			{
+				Debug.WriteLine($"Local HtmlFile: {uri.AbsoluteUri}");
+				return;
+			}
 
-            if (uri.AbsoluteUri.StartsWith("ms-local-stream:"))
-            {
-                Debug.WriteLine($"Local HtmlFile: {uri.AbsoluteUri}");
-                return;
-            }
+			// Normal Link
+			Debug.WriteLine($"Link: {uri.AbsoluteUri}");
+			var success = Windows.System.Launcher.LaunchUriAsync(uri);
+			args.Cancel = true;
+		}
 
-            // Normal Link
-            Debug.WriteLine($"Link: {uri.AbsoluteUri}");
-            var success = Windows.System.Launcher.LaunchUriAsync(uri);
-            args.Cancel = true;
-        }
+		protected override void OnNavigatedTo([NotNull] NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
 
-        protected override void OnNavigatedTo([NotNull] NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
+			contentPageId = (string) e.Parameter;
+			Debug.WriteLine($"Id: {contentPageId}");
 
-            contentPageId = (string) e.Parameter;
-            Debug.WriteLine($"Id: {contentPageId}");
+			if (contentPageId == null) throw new ArgumentNullException("Page id must be nonnull!");
 
-            if (contentPageId == null) throw new ArgumentNullException("Page id must be nonnull!");
+			ShowContentPage();
+		}
 
-            ShowContentPage();
-        }
+		private async void ShowContentPage()
+		{
+			var provider = new ContentPageProvider();
 
-        private async void ShowContentPage()
-        {
-            var provider = new ContentPageProvider();
+			if (!provider.ContainsContentPage(contentPageId))
+			{
+				if (Frame.CanGoBack)
+				{
+					Frame.GoBack();
+					return;
+				}
+			}
 
-            if (!provider.ContainsContentPage(contentPageId))
-            {
-                if (Frame.CanGoBack)
-                {
-                    Frame.GoBack();
-                    return;
-                }
-            }
-
-            Page = provider.GetContentPage(contentPageId);
-            Debug.WriteLine($"Page Some: {contentPageId}");
-            var parser = new MarkdigParser();
-            
-
-            // Show Page Title
-            //PageTitle.Text = Page.Id;
-
-            // Show Last Visited Pages
-            NavigationHandler.AddPage(Page);
-            Debug.WriteLine($"Last Visited Pages: {NavigationHandler.Pages.Count}");
-            ShowLastVisitedPages2();
-
-            // Show TOC
-            var doc = parser.Parse(Page);
-            var toc = new HeadersParser().ParseHeaders(doc);
-            TreeView.RootNodes.Add(toc);
-
-            // Show Page
-
-            var html = parser.ToHtmlString(Page);
-            var localFolder = ApplicationData.Current.LocalFolder;
-            var mediaFolder = await localFolder.CreateFolderAsync("media", CreationCollisionOption.OpenIfExists);
-            var file = await mediaFolder.CreateFileAsync("index.html", CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteTextAsync(file, html);
-
-            Webview.Navigate(new Uri("ms-appdata:///local/media/index.html"));
-
-            // Show Tags
-            if (Page.Tags != null)
-            {
-                foreach (var tag in Page.Tags)
-                {
-                    ListView.Items.Add(tag.Name);
-                }
-            }
-        }
-
-        private void ShowLastVisitedPages()
-        {
-            var stack = NavigationHandler.Pages;
-
-            if (stack.Count <= 0) return;
-
-           switch (stack.Count)
-            {
-                case 4:
+			Page = provider.GetContentPage(contentPageId);
+			Debug.WriteLine($"Page Some: {contentPageId}");
+			var parser = new MarkdigParser();
 
 
-                    break;
-                case 3:
-                    break;
-                case 2:
-                    break;
-                case 1:
-                    break;
-                case 0:
-                    break;
-            }
-        }
+			// Show Page Title
+			//PageTitle.Text = Page.Id;
 
-        private void ShowLastVisitedPages2()
-        {
-            var stackPanel = new StackPanel {Orientation = Orientation.Horizontal};
-            var stack = NavigationHandler.Pages;
+			// Show Last Visited Pages
+			NavigationHandler.AddPage(Page);
+			Debug.WriteLine($"Last Visited Pages: {NavigationHandler.Pages.Count}");
+			ShowLastVisitedPages2();
 
-            if (stack.Count <= 0)
-            {
-                return;
-            }
+			// Show TOC
+			var doc = parser.Parse(Page);
+			var toc = new HeadersParser().ParseHeaders(doc);
+			TreeView.RootNodes.Add(toc);
 
-            for (var index = 0; index < stack.Count - 1; index++)
-            {
-                var page = stack[index];
-                var textBlock = GetTextBlock(page);
-                stackPanel.Children.Add(textBlock);
+			// Show Page
 
-                var delimiterBox = GetDelimiterBlock();
-                stackPanel.Children.Add(delimiterBox);
-            }
+			var html = parser.ToHtmlString(Page);
+			var localFolder = ApplicationData.Current.LocalFolder;
+			var mediaFolder = await localFolder.CreateFolderAsync("media", CreationCollisionOption.OpenIfExists);
+			var file = await mediaFolder.CreateFileAsync("index.html", CreationCollisionOption.ReplaceExisting);
+			await FileIO.WriteTextAsync(file, html);
 
-            var lastTextBox = GetTextBlock(stack.Last());
-            stackPanel.Children.Add(lastTextBox);
+			Webview.Navigate(new Uri("ms-appdata:///local/media/index.html"));
 
-            CommandBar.Content = stackPanel;
+			// Show Tags
+			if (Page.Tags != null)
+			{
+				foreach (var tag in Page.Tags)
+				{
+					ListView.Items.Add(tag.Name);
+				}
+			}
+		}
 
-            Button GetTextBlock(string text)
-            {
-                var button = new Button
-                {
-                    Content = text,
-                    FontSize = 20,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Background = new Windows.UI.Xaml.Media.RevealBackgroundBrush(),
-                    BorderBrush = new Windows.UI.Xaml.Media.RevealBorderBrush(),
-                    FontStyle = FontStyle.Italic
-                };
+		private void ShowLastVisitedPages()
+		{
+			var stack = NavigationHandler.Pages;
 
-                button.Click += Btn_Click;
+			if (stack.Count <= 0) return;
 
-                return button;
-            }
+			switch (stack.Count)
+			{
+				case 4:
 
-            TextBlock GetDelimiterBlock()
-            {
-                return new TextBlock
-                {
-                    Text = ">",
-                    FontSize = 20,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Margin = new Thickness(2, 0, 2, 0)
-                };
-            }
-        }
 
-        private void Btn_Click([NotNull] object sender, RoutedEventArgs e)
-        {
-            var id = (string) ((Button) sender).Content;
-            Debug.WriteLine($"Page Clicked: {id}");
+					break;
+				case 3:
+					break;
+				case 2:
+					break;
+				case 1:
+					break;
+				case 0:
+					break;
+			}
+		}
 
-            NavigateToPage(id);
-        }
+		private void ShowLastVisitedPages2()
+		{
+			var stackPanel = new StackPanel {Orientation = Orientation.Horizontal};
+			var stack = NavigationHandler.Pages;
 
-        private void NavigateToPage([NotNull] string id)
-        {
-            if (Page.Id.Equals(id)) return;
+			if (stack.Count <= 0)
+			{
+				return;
+			}
 
-            if (new ContentPageProvider().ContainsContentPage(id))
-            {
-                Frame.Navigate(typeof(PageViewer), id);
-            }
-            else
-            {
-                Frame.Navigate(typeof(NewPage), id);
-            }
-        }
+			for (var index = 0; index < stack.Count - 1; index++)
+			{
+				var page = stack[index];
+				var textBlock = GetTextBlock(page);
+				stackPanel.Children.Add(textBlock);
 
-        private void Edit_Click(object sender, RoutedEventArgs e)
-        {
-            Debug.WriteLine("Edit Page");
-            this.Frame.Navigate(typeof(PageEditor), contentPageId);
-        }
+				var delimiterBox = GetDelimiterBlock();
+				stackPanel.Children.Add(delimiterBox);
+			}
 
-        private void Revision_Click(object sender, RoutedEventArgs e)
-        {
-            Debug.WriteLine("Show Revision");
-        }
+			var lastTextBox = GetTextBlock(stack.Last());
+			stackPanel.Children.Add(lastTextBox);
 
-        private async void TreeView_ItemInvoked(TreeView sender,
-            [NotNull] TreeViewItemInvokedEventArgs args)
-        {
-            var headerId = (string) ((TreeViewNode) args.InvokedItem).Content;
-            Debug.WriteLine($"Header Clicked: {headerId}");
+			CommandBar.Content = stackPanel;
 
-            var scrollTo = $"document.getElementById(\"{headerId}\").scrollIntoView();";
+			Button GetTextBlock(string text)
+			{
+				var button = new Button
+				{
+					Content = text,
+					FontSize = 20,
+					VerticalAlignment = VerticalAlignment.Center,
+					Background = new Windows.UI.Xaml.Media.RevealBackgroundBrush(),
+					BorderBrush = new Windows.UI.Xaml.Media.RevealBorderBrush(),
+					FontStyle = FontStyle.Italic
+				};
 
-            await Webview.InvokeScriptAsync("eval", new[] {scrollTo});
+				button.Click += Btn_Click;
 
-            Debug.WriteLine("Scrolled");
-        }
+				return button;
+			}
 
-        private void Print_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO Print Page
-            Debug.WriteLine("Print Page");
-        }
+			TextBlock GetDelimiterBlock()
+			{
+				return new TextBlock
+				{
+					Text = ">",
+					FontSize = 20,
+					VerticalAlignment = VerticalAlignment.Center,
+					Margin = new Thickness(2, 0, 2, 0)
+				};
+			}
+		}
 
-        private async void Top_Click(object sender, RoutedEventArgs e)
-        {
-            await Webview.InvokeScriptAsync("eval", new[] {@"window.scrollTo(0,0);"});
-        }
+		private void Btn_Click([NotNull] object sender, RoutedEventArgs e)
+		{
+			var id = (string) ((Button) sender).Content;
+			Debug.WriteLine($"Page Clicked: {id}");
 
-        private async void Pdf_Click(object sender, RoutedEventArgs e)
-        {
-            //Debug.WriteLine("Print");
-            await FileSystemAccess.SaveToFolder();
-        }
+			NavigateToPage(id);
+		}
 
-        private void Favorite_Click(object sender, RoutedEventArgs e)
-        {
-            Page.IsFavorite = true;
-            new ContentPageProvider().UpdateContentPage(Page);
-        }
+		private void NavigateToPage([NotNull] string id)
+		{
+			if (Page.Id.Equals(id)) return;
 
-        private void Fullscreen_Click(object sender, RoutedEventArgs e)
-        {
-            var view = ApplicationView.GetForCurrentView();
-            if (view.IsFullScreenMode)
-            {
-                view.ExitFullScreenMode();
-                RightMenu.Visibility = Visibility.Visible;
-                RightMenu.MinWidth = 300;
-            }
-            else
-            {
-                view.TryEnterFullScreenMode();
-                if (view.IsFullScreenMode)
-                {
-                    RightMenu.Visibility = Visibility.Collapsed;
-                    RightMenu.MinWidth = 0;
-                }
-            }
-        }
+			if (new ContentPageProvider().ContainsContentPage(id))
+			{
+				Frame.Navigate(typeof(PageViewer), id);
+			}
+			else
+			{
+				Frame.Navigate(typeof(NewPage), id);
+			}
+		}
 
-        private void Toggle_Click(object sender, RoutedEventArgs e)
-        {
-            switch (RightMenu.Visibility)
-            {
-                case Visibility.Visible:
-                    RightMenu.Visibility = Visibility.Collapsed;
-                    RightMenu.MinWidth = 0;
-                    break;
-                case Visibility.Collapsed:
-                    RightMenu.Visibility = Visibility.Visible;
-                    RightMenu.MinWidth = 300;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+		private void Edit_Click(object sender, RoutedEventArgs e)
+		{
+			Debug.WriteLine("Edit Page");
+			this.Frame.Navigate(typeof(PageEditor), contentPageId);
+		}
 
-        private void Setting_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO Settings
-        }
+		private void Revision_Click(object sender, RoutedEventArgs e)
+		{
+			Debug.WriteLine("Show Revision");
+		}
 
-        private void Search_Click(object sender, RoutedEventArgs e)
-        {
-            SearchPopup.IsOpen = true;
-        }
+		private async void TreeView_ItemInvoked(TreeView sender,
+			[NotNull] TreeViewItemInvokedEventArgs args)
+		{
+			var headerId = (string) ((TreeViewNode) args.InvokedItem).Content;
+			Debug.WriteLine($"Header Clicked: {headerId}");
 
-        private void Webview_OnScriptNotify(object sender, NotifyEventArgs e)
-        {
-            Debug.WriteLine("WebView Script");
-            if (e.Value == CodeButtonCopy)
-            {
-                // TODO Code Copy Button Clicked
-                Debug.WriteLine("Copy Button clicked.");
-            }
-        }
+			var scrollTo = $"document.getElementById(\"{headerId}\").scrollIntoView();";
 
-        private async void Webview_OnLoadCompleted(object sender, NavigationEventArgs e)
-        {
-            await Webview.InvokeScriptAsync("eval", new[]
-            {
-                "function codeCopyClickFunction(){" +
-                $" window.external.notify('{CodeButtonCopy}');"+
-                "}"
-            });
-        }
+			await Webview.InvokeScriptAsync("eval", new[] {scrollTo});
 
-        private void MediaManager_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(MediaManager));
-        }
-    }
+			Debug.WriteLine("Scrolled");
+		}
+
+		private void Print_Click(object sender, RoutedEventArgs e)
+		{
+			// TODO Print Page
+			Debug.WriteLine("Print Page");
+		}
+
+		private async void Top_Click(object sender, RoutedEventArgs e)
+		{
+			await Webview.InvokeScriptAsync("eval", new[] {@"window.scrollTo(0,0);"});
+		}
+
+		private async void Pdf_Click(object sender, RoutedEventArgs e)
+		{
+			//Debug.WriteLine("Print");
+			await FileSystemAccess.SaveToFolder();
+		}
+
+		private void Favorite_Click(object sender, RoutedEventArgs e)
+		{
+			Page.IsFavorite = true;
+			new ContentPageProvider().UpdateContentPage(Page);
+		}
+
+		private void Fullscreen_Click(object sender, RoutedEventArgs e)
+		{
+			var view = ApplicationView.GetForCurrentView();
+			if (view.IsFullScreenMode)
+			{
+				view.ExitFullScreenMode();
+				RightMenu.Visibility = Visibility.Visible;
+				RightMenu.MinWidth = 300;
+			}
+			else
+			{
+				view.TryEnterFullScreenMode();
+				if (view.IsFullScreenMode)
+				{
+					RightMenu.Visibility = Visibility.Collapsed;
+					RightMenu.MinWidth = 0;
+				}
+			}
+		}
+
+		private void Toggle_Click(object sender, RoutedEventArgs e)
+		{
+			switch (RightMenu.Visibility)
+			{
+				case Visibility.Visible:
+					RightMenu.Visibility = Visibility.Collapsed;
+					RightMenu.MinWidth = 0;
+					break;
+				case Visibility.Collapsed:
+					RightMenu.Visibility = Visibility.Visible;
+					RightMenu.MinWidth = 300;
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
+
+		private void Setting_Click(object sender, RoutedEventArgs e)
+		{
+			// TODO Settings
+		}
+
+		private void Search_Click(object sender, RoutedEventArgs e)
+		{
+			SearchPopup.IsOpen = true;
+		}
+
+		private void Webview_OnScriptNotify(object sender, NotifyEventArgs e)
+		{
+			Debug.WriteLine("WebView Script");
+			if (e.Value == CodeButtonCopy)
+			{
+				// TODO Code Copy Button Clicked
+				Debug.WriteLine("Copy Button clicked.");
+			}
+		}
+
+		private async void Webview_OnLoadCompleted(object sender, NavigationEventArgs e)
+		{
+			await Webview.InvokeScriptAsync("eval", new[]
+			{
+				"function codeCopyClickFunction(){" +
+				$" window.external.notify('{CodeButtonCopy}');" +
+				"}"
+			});
+		}
+
+		private void MediaManager_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(MediaManager));
+		}
+
+		private async void Export_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = new ExportDialog(Page.Id);
+
+			var result = await dialog.ShowAsync();
+		}
+	}
 }

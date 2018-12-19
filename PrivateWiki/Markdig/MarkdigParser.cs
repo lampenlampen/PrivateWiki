@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Net;
 using System.Text;
 using JetBrains.Annotations;
 using Markdig;
@@ -11,94 +10,91 @@ using StorageProvider;
 
 namespace PrivateWiki.Markdig
 {
-    public class MarkdigParser : IPageParser, IPageRenderer
-    {
-        [NotNull] private readonly MarkdownPipeline _pipeline;
-        [NotNull] private readonly HtmlRenderer _renderer;
+	public class MarkdigParser : IPageParser, IPageRenderer
+	{
+		[NotNull] private readonly MarkdownPipeline _pipeline;
+		[NotNull] private readonly HtmlRenderer _renderer;
 
-        public MarkdigParser()
-        {
-            _pipeline = new MarkdownPipelineBuilder()
-                .UseAutoIdentifiers()
-                .UseAutoLinks()
-                .UsePipeTables()
-                .UseMediaLinks()
-                .UseDiagrams()
-                .UseEmphasisExtras()
-                .UseMyHtmlCodeBlockRenderer()
-                .UseMyMathExtension()
-                .Build();
+		public MarkdigParser()
+		{
+			_pipeline = new MarkdownPipelineBuilder()
+				.UseAutoIdentifiers()
+				.UseAutoLinks()
+				.UsePipeTables()
+				.UseMediaLinks()
+				.UseDiagrams()
+				.UseEmphasisExtras()
+				.UseMyHtmlCodeBlockRenderer()
+				.UseMyMathExtension()
+				.Build();
 
-            _renderer = new HtmlRenderer(new StringWriter());
-        }
+			_renderer = new HtmlRenderer(new StringWriter());
+		}
 
-        private string ToHtmlCustom(string markdown)
-        {
-            var writer = _renderer.Writer as StringWriter;
+		private string ToHtmlCustom(string markdown)
+		{
+			var writer = _renderer.Writer as StringWriter;
 
-            _pipeline.Setup(_renderer);
+			_pipeline.Setup(_renderer);
 
-            var document = Parse(markdown);
-            _renderer.Render(document);
-            writer.Flush();
+			var document = Parse(markdown);
+			_renderer.Render(document);
+			writer.Flush();
 
-            var html = writer.ToString();
+			var html = writer.ToString();
 
-            // Fix Umlaute
-            //return WebUtility.HtmlEncode(html);
+			return html;
+		}
 
-            return html;
-        }
+		public MarkdownDocument Parse(string markdown)
+		{
+			var dom = Markdown.Parse(markdown, _pipeline);
+			return dom;
+		}
 
-        public MarkdownDocument Parse(string markdown)
-        {
-            var dom = Markdown.Parse(markdown, _pipeline);
-            return dom;
-        }
+		public MarkdownDocument Parse(ContentPage page)
+		{
+			return Parse(page.Content);
+		}
 
-        public MarkdownDocument Parse(ContentPage page)
-        {
-            return Parse(page.Content);
-        }
+		public string ToHtmlString(string markdown)
+		{
+			var builder = new StringBuilder();
+			builder.AppendLine("<!DOCTYPE html>");
+			builder.AppendLine("<html>");
+			builder.AppendLine("<head>");
 
-        public string ToHtmlString(string markdown)
-        {
-            var builder = new StringBuilder();
-            builder.AppendLine("<!DOCTYPE html>");
-            builder.AppendLine("<html>");
-            builder.AppendLine("<head>");
+			// Charset = UTF-8
+			builder.AppendLine("<meta charset=\"UTF-8\">");
 
-            // Charset = UTF-8
-            builder.AppendLine("<meta charset=\"UTF-8\">");
+			// MathJax Script
+			builder.AppendLine("<script type=\"text/javascript\">");
+			builder.AppendLine(
+				"MathJax.Hub.Config({tex2jax: {inlineMath: [['$', '$'], [\"\\(\", \"\\)\"]], processEscapes: true}});");
+			builder.AppendLine("</script>");
+			builder.AppendLine(
+				"<script type=\"text/javascript\" async src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML\">");
+			builder.AppendLine("MathJax.Hub.Register.StartupHook(\"onLoad\",function () {");
+			builder.AppendLine("MathJax.Hub.Config({elements: document.querySelectorAll(\".math\")});");
+			builder.AppendLine("});");
+			builder.AppendLine("</script>");
 
-            // MathJax Script
-            builder.AppendLine("<script type=\"text/javascript\">");
-            builder.AppendLine(
-                "MathJax.Hub.Config({tex2jax: {inlineMath: [['$', '$'], [\"\\(\", \"\\)\"]], processEscapes: true}});");
-            builder.AppendLine("</script>");
-            builder.AppendLine(
-                "<script type=\"text/javascript\" async src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML\">");
-            builder.AppendLine("MathJax.Hub.Register.StartupHook(\"onLoad\",function () {");
-            builder.AppendLine("MathJax.Hub.Config({elements: document.querySelectorAll(\".math\")});");
-            builder.AppendLine("});");
-            builder.AppendLine("</script>");
+			// Mermaid Script
+			builder.AppendLine(
+				"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/7.1.2/mermaid.min.js\"></script>");
+			builder.AppendLine("<script>mermaid.initialize({startOnLoad:true});</script>");
 
-            // Mermaid Script
-            builder.AppendLine(
-                "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/7.1.2/mermaid.min.js\"></script>");
-            builder.AppendLine("<script>mermaid.initialize({startOnLoad:true});</script>");
+			builder.AppendLine("</head>");
+			builder.AppendLine("<body>");
+			builder.AppendLine(ToHtmlCustom(markdown));
+			builder.AppendLine("</body>");
+			builder.AppendLine("</html>");
+			return builder.ToString();
+		}
 
-            builder.AppendLine("</head>");
-            builder.AppendLine("<body>");
-            builder.AppendLine(ToHtmlCustom(markdown));
-            builder.AppendLine("</body>");
-            builder.AppendLine("</html>");
-            return builder.ToString();
-        }
-
-        public string ToHtmlString(ContentPage page)
-        {
-            return ToHtmlString(page.Content);
-        }
-    }
+		public string ToHtmlString(ContentPage page)
+		{
+			return ToHtmlString(page.Content);
+		}
+	}
 }

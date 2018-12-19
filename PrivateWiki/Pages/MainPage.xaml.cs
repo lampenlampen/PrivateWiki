@@ -6,30 +6,35 @@ using Windows.UI.Xaml.Controls;
 
 namespace PrivateWiki.Pages
 {
-    /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-    /// </summary>
-    public sealed partial class MainPage : Page
-    {
-        public MainPage()
-        {
-            this.InitializeComponent();
+	/// <summary>
+	/// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+	/// </summary>
+	public sealed partial class MainPage : Page
+	{
+		public MainPage()
+		{
+			this.InitializeComponent();
 
-            // TODO Acrylic
-            //ExtendAcrylicIntoTitleBar();
-            Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
+			// TODO Acrylic
+			//ExtendAcrylicIntoTitleBar();
 
-            EditorFrame.Navigate(typeof(PageViewer), "start");
-            
-        }
+			// Reverse Acrylic Titlebar
+			Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
+			// Default TitleBar Button Background Color
+			ApplicationView.GetForCurrentView().TitleBar.ButtonBackgroundColor =
+				new UISettings().GetColorValue(UIColorType.Accent);
 
-        /// Extend acrylic into the title bar. 
-        private void ExtendAcrylicIntoTitleBar()
-        {
-            Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;       
-        }
-    }
+
+			EditorFrame.Navigate(typeof(PageViewer), "start");
+		}
+
+		/// Extend acrylic into the title bar. 
+		private void ExtendAcrylicIntoTitleBar()
+		{
+			Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+			ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+			titleBar.ButtonBackgroundColor = Colors.Transparent;
+			titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+		}
+	}
 }

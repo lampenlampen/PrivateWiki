@@ -88,8 +88,12 @@
                     Click="Toggle_Click" />
 
                 <AppBarButton
+                    Label="Export"
+                    Click="Export_Click" />
+
+                <AppBarButton
                     Label="Media Manager"
-                    Click="MediaManager_Click"/>
+                    Click="MediaManager_Click" />
 
                 <AppBarButton Label="Settings" Icon="Setting" Click="Setting_Click" />
 
@@ -119,7 +123,7 @@
                     Height="Auto"
                     NavigationStarting="WebViewNavigationStarting"
                     ScriptNotify="Webview_OnScriptNotify"
-                    LoadCompleted="Webview_OnLoadCompleted"/>
+                    LoadCompleted="Webview_OnLoadCompleted" />
             </Border>
 
         </Border>
@@ -142,7 +146,7 @@
                         VerticalAlignment="Center"
                         Text="&#xE784;"
                         Foreground="Black"
-                        FontFamily="Segoe MDL2 Assets"/>
+                        FontFamily="Segoe MDL2 Assets" />
                 </Grid>
 
             </controls:GridSplitter.Element>
