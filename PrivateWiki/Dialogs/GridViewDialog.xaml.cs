@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 
@@ -7,34 +6,32 @@ using Microsoft.Toolkit.Uwp.UI.Controls;
 
 namespace PrivateWiki.Dialogs
 {
-    public sealed partial class GridViewDialog : DissmissableDialog
-    {
-        public GridViewDialog()
-        {
-            this.InitializeComponent();
+	public sealed partial class GridViewDialog : DissmissableDialog
+	{
+		public GridViewDialog()
+		{
+			this.InitializeComponent();
 
-            var list = new[] {"hallo", "huhu", "hihi"};
+			var list = new[] {"hallo", "huhu", "hihi"};
 
-            DataGrid.ItemsSource = list;
-        }
+			DataGrid.ItemsSource = list;
+		}
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-        }
+		private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+		{
+		}
 
-        private void AddColumn_Click(object sender, RoutedEventArgs e)
-        {
-            DataGrid.Columns.Add(new DataGridTextColumn());
-        }
+		private void AddColumn_Click(object sender, RoutedEventArgs e)
+		{
+			DataGrid.Columns.Add(new DataGridTextColumn());
+		}
 
-        private void DataGrid_OnCellEditEnded(object sender, DataGridCellEditEndedEventArgs e)
-        {
-            
-        }
+		private void DataGrid_OnCellEditEnded(object sender, DataGridCellEditEndedEventArgs e)
+		{
+		}
 
-        private void DataGrid_OnCellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            
-        }
-    }
+		private void DataGrid_OnCellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+		{
+		}
+	}
 }

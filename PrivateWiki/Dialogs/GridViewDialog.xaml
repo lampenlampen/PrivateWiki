@@ -31,9 +31,7 @@
             AutoGenerateColumns="True"
             IsReadOnly="False"
             CellEditEnded="DataGrid_OnCellEditEnded"
-            CellEditEnding="DataGrid_OnCellEditEnding">
+            CellEditEnding="DataGrid_OnCellEditEnding" />
 
-        </controls:DataGrid>
-        
     </Grid>
 </local:DissmissableDialog>

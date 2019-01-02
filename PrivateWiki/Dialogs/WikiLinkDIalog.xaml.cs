@@ -1,43 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using PrivateWiki.Data;
 
 // Die Elementvorlage "Inhaltsdialogfeld" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
 namespace PrivateWiki.Dialogs
 {
-    public sealed partial class WikiLinkDialog : DissmissableDialog
-    {
-        private List<string> Pages { get; set; }
+	public sealed partial class WikiLinkDialog : DissmissableDialog
+	{
+		public WikiLinkDialog()
+		{
+			this.InitializeComponent();
 
-        public string WikiLink {get; private set; }
+			Pages = new ContentPageProvider().GetAllContentPages().Map(p => p.Id).ToList();
 
-        public WikiLinkDialog()
-        {
-            this.InitializeComponent();
+			WikiLinkComboBox.ItemsSource = Pages;
+		}
 
-            Pages = new ContentPageProvider().GetAllContentPages().Map(p => p.Id).ToList();
+		private List<string> Pages { get; set; }
 
-            WikiLinkComboBox.ItemsSource = Pages;
-        }
+		public string WikiLink { get; private set; }
 
-        private void InsertHyperlink_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            WikiLink = WikiLinkComboBox.SelectionBoxItem as string;
-        }
-
-
-    }
+		private void InsertHyperlink_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+		{
+			WikiLink = WikiLinkComboBox.SelectionBoxItem as string;
+		}
+	}
 }

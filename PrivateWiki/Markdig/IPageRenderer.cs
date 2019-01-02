@@ -1,6 +1,6 @@
 ﻿namespace PrivateWiki.Markdig
 {
-    internal interface IPageRenderer
-    {
-    }
+	internal interface IPageRenderer
+	{
+	}
 }

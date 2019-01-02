@@ -1,6 +1,6 @@
 ﻿namespace PrivateWiki.Markdig
 {
-    public interface IPageParser
-    {
-    }
+	public interface IPageParser
+	{
+	}
 }

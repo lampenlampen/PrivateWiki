@@ -23,9 +23,7 @@
 
         <StackPanel
                 x:Name="Seitenleiste"
-                Grid.Column="0">
-
-        </StackPanel>
+                Grid.Column="0" />
 
 
         <Frame

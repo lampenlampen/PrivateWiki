@@ -3,38 +3,38 @@ using StorageProvider;
 
 namespace PrivateWiki.Data
 {
-    internal static class InitPages
-    {
-        public static void InitPages2()
-        {
-            var provider = new ContentPageProvider();
+	internal static class InitPages
+	{
+		public static void InitPages2()
+		{
+			var provider = new ContentPageProvider();
 
-            if (!provider.ContainsContentPage("syntax"))
-            {
-                InitSyntaxPage(provider);
-            }
+			if (!provider.ContainsContentPage("syntax"))
+			{
+				InitSyntaxPage(provider);
+			}
 
-            if (!provider.ContainsContentPage("start"))
-            {
-                InitStartPage(provider);
-            }
+			if (!provider.ContainsContentPage("start"))
+			{
+				InitStartPage(provider);
+			}
 
-            if (!provider.ContainsContentPage("test"))
-            {
-                InitTestPage(provider);
-            }
-        }
+			if (!provider.ContainsContentPage("test"))
+			{
+				InitTestPage(provider);
+			}
+		}
 
-        private static void InitSyntaxPage([NotNull] ContentPageProvider provider)
-        {
-            var syntaxPage = new ContentPage("syntax", GetSyntaxPageString());
+		private static void InitSyntaxPage([NotNull] ContentPageProvider provider)
+		{
+			var syntaxPage = new ContentPage("syntax", GetSyntaxPageString());
 
-            provider.InsertContentPage(syntaxPage);
-        }
+			provider.InsertContentPage(syntaxPage);
+		}
 
-        private static string GetSyntaxPageString()
-        {
-            return @"# Syntax
+		private static string GetSyntaxPageString()
+		{
+			return @"# Syntax
 
 ## Headings
 ## Codeblock
@@ -44,34 +44,34 @@ namespace PrivateWiki.Data
 ### InlineMath
 ### Links
 ";
-        }
+		}
 
-        private static void InitStartPage([NotNull] ContentPageProvider provider)
-        {
-            var startPage = new ContentPage("start", GetStartPageString());
-            provider.InsertContentPage(startPage);
-        }
+		private static void InitStartPage([NotNull] ContentPageProvider provider)
+		{
+			var startPage = new ContentPage("start", GetStartPageString());
+			provider.InsertContentPage(startPage);
+		}
 
-        private static string GetStartPageString()
-        {
-            return @"# Welcome to your Private Wiki
+		private static string GetStartPageString()
+		{
+			return @"# Welcome to your Private Wiki
 
 ## Get Started
 
 To learn more about the syntax have a lock in the [Syntax](:syntax) page.
 
 To view a preview article follow this [link](:test)";
-        }
+		}
 
-        private static void InitTestPage([NotNull] ContentPageProvider provider)
-        {
-            var testPage = new ContentPage("test", GetTestPageString());
-            provider.InsertContentPage(testPage);
-        }
+		private static void InitTestPage([NotNull] ContentPageProvider provider)
+		{
+			var testPage = new ContentPage("test", GetTestPageString());
+			provider.InsertContentPage(testPage);
+		}
 
-        private static string GetTestPageString()
-        {
-            return @"Markdown: Syntax
+		private static string GetTestPageString()
+		{
+			return @"Markdown: Syntax
 ================
 
 <ul id=""ProjectSubmenu"">
@@ -983,6 +983,6 @@ Markdown provides backslash escapes for the following characters:
   - minus sign(hyphen)
 .dot
     !exclamation mark";
-        }
-    }
+		}
+	}
 }
