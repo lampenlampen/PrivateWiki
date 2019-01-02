@@ -1,23 +1,23 @@
 namespace Parser.Blocks
 {
-    public class MathBlock : Block
-    {
-        private string Text { get; }
+	public class MathBlock : Block
+	{
+		public MathBlock(string text)
+		{
+			Type = BlockType.MathBlock;
+			Text = text;
+		}
 
-        public MathBlock(string text)
-        {
-            Type = BlockType.MathBlock;
-            Text = text;
-        }
+		private string Text { get; }
 
-        internal static MathBlock Parse(string line, int mathBlockStartLine)
-        {
-           return new MathBlock(line);
-        }
+		internal static MathBlock Parse(string line, int mathBlockStartLine)
+		{
+			return new MathBlock(line);
+		}
 
-        public override string ToString()
-        {
-            return $"\\[{Text}\\]";
-        }
-    }
+		public override string ToString()
+		{
+			return $"\\[{Text}\\]";
+		}
+	}
 }

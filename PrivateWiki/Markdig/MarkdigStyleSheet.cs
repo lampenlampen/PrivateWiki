@@ -25,9 +25,9 @@ namespace PrivateWiki.Markdig
 			{
 				var builder = new StringBuilder();
 				builder.Append($"background-color:{BackgroundColor};");
-				builder.Append($"border-bottom-color:rgba(0,0,0,1);");
-				builder.Append($"border-bottom-style:none;");
-				builder.Append($"border-bottom-width:0px;");
+				builder.Append("border-bottom-color:rgba(0,0,0,1);");
+				builder.Append("border-bottom-style:none;");
+				builder.Append("border-bottom-width:0px;");
 				builder.Append($"border-left-color:{BorderColor};");
 				builder.Append($"border-left-style:{BorderStyle};");
 				builder.Append($"border-left-width:{BorderWidth};");
@@ -37,10 +37,10 @@ namespace PrivateWiki.Markdig
 				builder.Append($"border-top-color:{BorderColor};");
 				builder.Append($"border-top-style:{BorderStyle};");
 				builder.Append($"border-top-width:{BorderWidth};");
-				builder.Append($"box-sizing:content-box;");
-				builder.Append($"color:rgba(0,0,0,1);");
-				builder.Append($"display:flex;");
-				builder.Append($"flex-direction:row;");
+				builder.Append("box-sizing:content-box;");
+				builder.Append("color:rgba(0,0,0,1);");
+				builder.Append("display:flex;");
+				builder.Append("flex-direction:row;");
 				builder.Append($"font-size:{FontSize};");
 				builder.Append($"font-weight:{FontWeight};");
 				builder.Append($"line-height:{LineHeight};");
@@ -71,16 +71,16 @@ namespace PrivateWiki.Markdig
 			public static string GetCodeBlockButtonStyle()
 			{
 				var builder = new StringBuilder();
-				builder.Append($"align-items:center;");
-				builder.Append($"background-color:transparent;");
+				builder.Append("align-items:center;");
+				builder.Append("background-color:transparent;");
 				builder.Append($"border:0px none {BorderColor};");
 				builder.Append($"border-left-color:{BorderColor};");
 				builder.Append($"border-left-style:{BorderStyle};");
 				builder.Append($"border-left-width:{BorderWidth};");
-				builder.Append($"box-sizing:content-box;");
+				builder.Append("box-sizing:content-box;");
 				builder.Append($"color:{Color};");
-				builder.Append($"cursor:pointer;");
-				builder.Append($"display:flex;");
+				builder.Append("cursor:pointer;");
+				builder.Append("display:flex;");
 				builder.Append($"padding-bottom:{PaddingBottom};");
 				builder.Append($"padding-left:{PaddingLeft};");
 				builder.Append($"padding-right:{PaddingRight};");
@@ -128,21 +128,21 @@ namespace PrivateWiki.Markdig
 				builder.Append($"border-top-color:{BorderColor};");
 				builder.Append($"border-top-style:{BorderStyle};");
 				builder.Append($"border-top-width:{BorderWidth};");
-				builder.Append($"box-sizing:content-box;");
-				builder.Append($"color:rgb(0,0,0);");
+				builder.Append("box-sizing:content-box;");
+				builder.Append("color:rgb(0,0,0);");
 				builder.Append("direction:ltr;");
 				builder.Append("display:block;");
 				builder.Append($"font-size:{FontSize};");
 				builder.Append($"font-weight:{FontWeight};");
 				builder.Append($"line-height:{LineHeight};");
 				builder.Append($"margin:{Margin};");
-				builder.Append($"overflow:auto;");
+				builder.Append("overflow:auto;");
 				builder.Append($"padding:{Padding};");
-				builder.Append($"text-align:left;");
-				builder.Append($"white-space:pre;");
-				builder.Append($"word-break:normal;");
-				builder.Append($"word-spacing:0px;");
-				builder.Append($"word-wrap:normal;");
+				builder.Append("text-align:left;");
+				builder.Append("white-space:pre;");
+				builder.Append("word-break:normal;");
+				builder.Append("word-spacing:0px;");
+				builder.Append("word-wrap:normal;");
 
 				return builder.ToString();
 			}
@@ -154,12 +154,12 @@ namespace PrivateWiki.Markdig
 				builder.Append($"font-size:{FontSize};");
 				builder.Append($"font-weight:{FontWeight};");
 				builder.Append($"line-height:{LineHeight};");
-				builder.Append($"padding:0px;");
-				builder.Append($"text-align:left;");
-				builder.Append($"white-space:pre;");
-				builder.Append($"word-break:normal;");
-				builder.Append($"word-spacing:0px;");
-				builder.Append($"word-wrap:normal;");
+				builder.Append("padding:0px;");
+				builder.Append("text-align:left;");
+				builder.Append("white-space:pre;");
+				builder.Append("word-break:normal;");
+				builder.Append("word-spacing:0px;");
+				builder.Append("word-wrap:normal;");
 
 				return builder.ToString();
 			}

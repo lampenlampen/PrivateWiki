@@ -2,37 +2,38 @@
 using System.Runtime.CompilerServices;
 using System.Text;
 
-[assembly:InternalsVisibleTo("TestProject1")]
+[assembly: InternalsVisibleTo("TestProject1")]
+
 namespace Parser.Blocks.List
 {
-    public class ListElement: Block
-    {
-        private string Text { get; }
+	public class ListElement : Block
+	{
+		private ListElement(string text)
+		{
+			Type = BlockType.ListItemBlock;
+			Text = text;
+		}
 
-        private ListElement(string text)
-        {
-            Type = BlockType.ListItemBlock;
-            Text = text;
-        }
+		private string Text { get; }
 
-        internal static ListElement Parse(List<string> lines)
-        {
-            var builder = new StringBuilder();
+		internal static ListElement Parse(List<string> lines)
+		{
+			var builder = new StringBuilder();
 
-            for (var i = 0; i < lines.Count -1; i++)
-            {
-                var line = lines[i];
-                builder.AppendLine(line);
-            }
+			for (var i = 0; i < lines.Count - 1; i++)
+			{
+				var line = lines[i];
+				builder.AppendLine(line);
+			}
 
-            builder.Append(lines[lines.Count - 1]);
+			builder.Append(lines[lines.Count - 1]);
 
-            return new ListElement(builder.ToString());
-        }
+			return new ListElement(builder.ToString());
+		}
 
-        public override string ToString()
-        {
-            return Text;
-        }
-    }
+		public override string ToString()
+		{
+			return Text;
+		}
+	}
 }

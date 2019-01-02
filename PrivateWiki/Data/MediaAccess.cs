@@ -5,7 +5,7 @@ using Windows.Storage.Pickers;
 
 namespace PrivateWiki.Data
 {
-	class MediaAccess
+	internal class MediaAccess
 	{
 		public static async Task<StorageFolder> GetImageFolder()
 		{
@@ -24,10 +24,10 @@ namespace PrivateWiki.Data
 			};
 
 			picker.FileTypeFilter.Add(".jpg");
-			picker.FileTypeFilter.Add((".png"));
-			picker.FileTypeFilter.Add((".gif"));
-			picker.FileTypeFilter.Add((".svg"));
-			picker.FileTypeFilter.Add((".ico"));
+			picker.FileTypeFilter.Add(".png");
+			picker.FileTypeFilter.Add(".gif");
+			picker.FileTypeFilter.Add(".svg");
+			picker.FileTypeFilter.Add(".ico");
 
 			return await picker.PickSingleFileAsync();
 		}

@@ -1,4 +1,5 @@
-﻿using Windows.UI;
+﻿using Windows.ApplicationModel.Core;
+using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 
@@ -6,20 +7,20 @@ using Windows.UI.Xaml.Controls;
 
 namespace PrivateWiki.Pages
 {
-	/// <summary>
-	/// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-	/// </summary>
-	public sealed partial class MainPage : Page
+    /// <summary>
+    ///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+    /// </summary>
+    public sealed partial class MainPage : Page
 	{
 		public MainPage()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 
 			// TODO Acrylic
 			//ExtendAcrylicIntoTitleBar();
 
 			// Reverse Acrylic Titlebar
-			Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
+			CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
 			// Default TitleBar Button Background Color
 			ApplicationView.GetForCurrentView().TitleBar.ButtonBackgroundColor =
 				new UISettings().GetColorValue(UIColorType.Accent);
@@ -28,11 +29,11 @@ namespace PrivateWiki.Pages
 			EditorFrame.Navigate(typeof(PageViewer), "start");
 		}
 
-		/// Extend acrylic into the title bar. 
-		private void ExtendAcrylicIntoTitleBar()
+        /// Extend acrylic into the title bar.
+        private void ExtendAcrylicIntoTitleBar()
 		{
-			Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-			ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+			CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+			var titleBar = ApplicationView.GetForCurrentView().TitleBar;
 			titleBar.ButtonBackgroundColor = Colors.Transparent;
 			titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 		}

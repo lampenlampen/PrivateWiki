@@ -10,7 +10,7 @@ namespace PrivateWiki.Dialogs
 	{
 		public GridViewDialog()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 
 			var list = new[] {"hallo", "huhu", "hihi"};
 

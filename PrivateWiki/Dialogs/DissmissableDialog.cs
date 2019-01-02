@@ -8,10 +8,10 @@ namespace PrivateWiki.Dialogs
 {
 	public class DissmissableDialog : ContentDialog
 	{
-		/// <summary>
-		/// Reference to the rectangle behind the dialog
-		/// </summary>
-		private Rectangle _rectangle;
+        /// <summary>
+        ///     Reference to the rectangle behind the dialog
+        /// </summary>
+        private Rectangle _rectangle;
 
 		protected override void OnApplyTemplate()
 		{
@@ -21,14 +21,12 @@ namespace PrivateWiki.Dialogs
 			// Normally there are 2 - one for the dialog and one for the rectangle
 			var popups = VisualTreeHelper.GetOpenPopups(Window.Current);
 			foreach (var popup in popups)
-			{
 				if (popup.Child is Rectangle rectangle)
 				{
 					// Store a reference to unregister the event handler later
 					_rectangle = rectangle;
 					_rectangle.Tapped += OnLockRectangleTapped;
 				}
-			}
 		}
 
 		private void OnLockRectangleTapped(object sender, TappedRoutedEventArgs e)

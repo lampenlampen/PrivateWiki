@@ -11,28 +11,28 @@
 
 
     <Grid
-            Height="Auto"
-            Width="Auto">
+        Height="Auto"
+        Width="Auto">
         <Grid.ColumnDefinitions>
             <ColumnDefinition
-                    Width="Auto" />
+                Width="Auto" />
             <ColumnDefinition />
 
         </Grid.ColumnDefinitions>
 
 
         <StackPanel
-                x:Name="Seitenleiste"
-                Grid.Column="0" />
+            x:Name="Seitenleiste"
+            Grid.Column="0" />
 
 
         <Frame
-                Name="EditorFrame"
-                Width="Auto"
-                Height="Auto"
-                MinHeight="800"
-                Grid.Column="1"
-                d:DataContext="{d:DesignInstance Type=pages:PageEditor, IsDesignTimeCreatable=True}" />
+            Name="EditorFrame"
+            Width="Auto"
+            Height="Auto"
+            MinHeight="800"
+            Grid.Column="1"
+            d:DataContext="{d:DesignInstance Type=pages:PageEditor, IsDesignTimeCreatable=True}" />
 
     </Grid>
 

@@ -10,22 +10,22 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <RichTextBlock
             Grid.Row="0"
             Height="Auto"
             Name="DiffBlock"
-            MaxHeight="1000"/>
+            MaxHeight="1000" />
 
         <Button
             Grid.Row="1"
             Name="DiffBtn"
             Content="Okay"
             Click="DiffBtn_Click"
-            HorizontalAlignment="Center"/>
+            HorizontalAlignment="Center" />
 
     </Grid>
 </Page>

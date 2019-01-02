@@ -7,7 +7,7 @@ using Markdig.SyntaxHighlighting;
 
 namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 {
-	class CodeBlockExtension : IMarkdownExtension
+	internal class CodeBlockExtension : IMarkdownExtension
 	{
 		private readonly IStyleSheet _customCss;
 

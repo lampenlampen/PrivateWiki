@@ -1,53 +1,51 @@
 using System.Collections.Generic;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-[assembly:InternalsVisibleTo("TestProject1")]
+[assembly: InternalsVisibleTo("TestProject1")]
+
 namespace Parser.Blocks
 {
-    public class CodeBlock: Block
-    {
-        public string Text { get; set; }
-        
-        public string CodeLanguage { get; set; }
+	public class CodeBlock : Block
+	{
+		public CodeBlock(string text, string codeLanguage)
+		{
+			Type = BlockType.CodeBlock;
+			Text = text;
+			CodeLanguage = codeLanguage;
+		}
 
-        public CodeBlock(string text, string codeLanguage)
-        {
-            Type = BlockType.CodeBlock;
-            Text = text;
-            CodeLanguage = codeLanguage;
-        }
+		public string Text { get; set; }
 
-        internal static CodeBlock Parse(List<string> lines, string codeLanguage)
-        {
-            var textBuilder = new StringBuilder();
+		public string CodeLanguage { get; set; }
 
-            for (int i = 0; i < lines.Count-1; i++)
-            {
-                string line = lines[i];
-                textBuilder.AppendLine(lines[i]);
-            }
-            textBuilder.Append(lines[lines.Count - 1]);
+		internal static CodeBlock Parse(List<string> lines, string codeLanguage)
+		{
+			var textBuilder = new StringBuilder();
 
-            
-            return new CodeBlock(textBuilder.ToString(), codeLanguage);
-        }
+			for (var i = 0; i < lines.Count - 1; i++)
+			{
+				var line = lines[i];
+				textBuilder.AppendLine(lines[i]);
+			}
 
-        public override string ToString()
-        {
-            var textBuilder = new StringBuilder();
-            
-            if (CodeLanguage != null)
-            {
-                textBuilder.AppendLine($"``` {CodeLanguage}");
-            }
+			textBuilder.Append(lines[lines.Count - 1]);
 
-            textBuilder.Append(Text);
 
-            textBuilder.Append("```");
+			return new CodeBlock(textBuilder.ToString(), codeLanguage);
+		}
 
-            return textBuilder.ToString();
-        }
-    }
+		public override string ToString()
+		{
+			var textBuilder = new StringBuilder();
+
+			if (CodeLanguage != null) textBuilder.AppendLine($"``` {CodeLanguage}");
+
+			textBuilder.Append(Text);
+
+			textBuilder.Append("```");
+
+			return textBuilder.ToString();
+		}
+	}
 }

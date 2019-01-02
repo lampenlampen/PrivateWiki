@@ -8,15 +8,15 @@ namespace PrivateWiki.Markdig
 {
 	internal class HeadersParser
 	{
-		private TreeViewNode headerLevel1 = null;
-		private TreeViewNode headerLevel2 = null;
-		private TreeViewNode headerLevel3 = null;
-		private TreeViewNode headerLevel4 = null;
-		private TreeViewNode headerLevel5 = null;
-		private TreeViewNode headerLevel6 = null;
+		private TreeViewNode headerLevel1;
+		private TreeViewNode headerLevel2;
+		private TreeViewNode headerLevel3;
+		private TreeViewNode headerLevel4;
+		private TreeViewNode headerLevel5;
+		private TreeViewNode headerLevel6;
 
-		private HtmlRenderer renderer = new HtmlRenderer(new StringWriter());
-		private TreeViewNode rootHeader = null;
+		private readonly HtmlRenderer renderer = new HtmlRenderer(new StringWriter());
+		private TreeViewNode rootHeader;
 
 
 		public TreeViewNode ParseHeaders(MarkdownDocument doc)
@@ -82,10 +82,7 @@ namespace PrivateWiki.Markdig
 
 		private void AddHeaderLevel2(TreeViewNode header)
 		{
-			if (headerLevel1 == null)
-			{
-				AddHeaderLevel1(new TreeViewNode());
-			}
+			if (headerLevel1 == null) AddHeaderLevel1(new TreeViewNode());
 
 			headerLevel1.Children.Add(header);
 			headerLevel2 = header;
@@ -102,10 +99,7 @@ namespace PrivateWiki.Markdig
 
 		private void AddHeaderLevel3(TreeViewNode header)
 		{
-			if (headerLevel2 == null)
-			{
-				AddHeaderLevel2(new TreeViewNode());
-			}
+			if (headerLevel2 == null) AddHeaderLevel2(new TreeViewNode());
 
 			headerLevel2.Children.Add(header);
 			headerLevel3 = header;
@@ -121,10 +115,7 @@ namespace PrivateWiki.Markdig
 
 		private void AddHeaderLevel4(TreeViewNode header)
 		{
-			if (headerLevel3 == null)
-			{
-				AddHeaderLevel3(new TreeViewNode());
-			}
+			if (headerLevel3 == null) AddHeaderLevel3(new TreeViewNode());
 
 			headerLevel3.Children.Add(header);
 			headerLevel4 = header;
@@ -139,10 +130,7 @@ namespace PrivateWiki.Markdig
 
 		private void AddHeaderLevel5(TreeViewNode header)
 		{
-			if (headerLevel4 == null)
-			{
-				AddHeaderLevel4(new TreeViewNode());
-			}
+			if (headerLevel4 == null) AddHeaderLevel4(new TreeViewNode());
 
 			headerLevel4.Children.Add(header);
 			headerLevel5 = header;
@@ -156,10 +144,7 @@ namespace PrivateWiki.Markdig
 
 		private void AddHeaderLevel6(TreeViewNode header)
 		{
-			if (headerLevel5 == null)
-			{
-				AddHeaderLevel5(new TreeViewNode());
-			}
+			if (headerLevel5 == null) AddHeaderLevel5(new TreeViewNode());
 
 			headerLevel5.Children.Add(header);
 			headerLevel6 = header;

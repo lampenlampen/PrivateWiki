@@ -14,11 +14,11 @@
             x:Key="TreeViewItemFolderTemplate">
             <TreeViewItem Height="44">
                 <StackPanel Orientation="Horizontal">
-                    <FontIcon 
-                        FontFamily="Segoe MDL2 Assets" 
+                    <FontIcon
+                        FontFamily="Segoe MDL2 Assets"
                         Glyph="&#xE838;"
-                        Margin="0,0,10,0"/>
-                    
+                        Margin="0,0,10,0" />
+
                     <TextBlock
                         Text="{Binding Content.DisplayName}"
                         HorizontalAlignment="Left"
@@ -31,19 +31,19 @@
                         <MenuFlyoutItem
                             Text="Create Folder"
                             Click="MediaTreeView_CreateFolder"
-                            Icon="Add"/>
+                            Icon="Add" />
                         <MenuFlyoutItem
                             Text="Delete Folder"
                             Click="MediaTreeView_DeleteFolder"
-                            Icon="Delete"/>
+                            Icon="Delete" />
                         <MenuFlyoutItem
                             Text="Rename Folder"
                             Click="MediaTreeView_RenameFolder"
-                            Icon="Rename"/>
+                            Icon="Rename" />
                         <MenuFlyoutItem
                             Text="Add Files"
                             Click="MediaTreeView_AddFiles"
-                            Icon="Add"/>
+                            Icon="Add" />
                     </MenuFlyout>
 
                 </TreeViewItem.ContextFlyout>
@@ -55,11 +55,11 @@
             x:Key="TreeViewItemFileTemplate">
             <TreeViewItem Height="44">
                 <StackPanel Orientation="Horizontal">
-                    <fa:FontAwesome 
-                        Icon="FileImageOutline" 
-                        HorizontalAlignment="Center" 
+                    <fa:FontAwesome
+                        Icon="FileImageOutline"
+                        HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Margin="0,0,10,0"/>
+                        Margin="0,0,10,0" />
                     <TextBlock
                         Text="{Binding Content.DisplayName}"
                         HorizontalAlignment="Left"
@@ -71,11 +71,11 @@
                         <MenuFlyoutItem
                             Text="Delete File"
                             Click="MediaTreeView_DeleteFile"
-                            Icon="Delete"/>
+                            Icon="Delete" />
                         <MenuFlyoutItem
                             Text="Rename File"
                             Click="MediaTreeView_RenameFile"
-                            Icon="Rename"/>
+                            Icon="Rename" />
                     </MenuFlyout>
 
                 </TreeViewItem.ContextFlyout>
@@ -111,7 +111,7 @@
         <local:MediaManagerTreeViewItemTemplateSelector
             x:Key="MediaManagerTreeViewItemTemplateSelector"
             FolderTemplate="{StaticResource TreeViewItemFolderTemplate}"
-            FileTemplate="{StaticResource TreeViewItemFileTemplate}"/>
+            FileTemplate="{StaticResource TreeViewItemFileTemplate}" />
 
     </Page.Resources>
 
@@ -120,7 +120,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -145,7 +145,7 @@
             Collapsed="TreeViewMedia_OnCollapsed"
             ItemInvoked="TreeViewMedia_OnItemInvoked"
             SelectionMode="Single"
-            DropCompleted="TreeViewMedia_OnDropCompleted"/>
+            DropCompleted="TreeViewMedia_OnDropCompleted" />
 
     </Grid>
 </Page>

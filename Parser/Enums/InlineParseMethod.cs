@@ -1,86 +1,85 @@
 namespace Parser.Enums
 {
-    public enum InlineParseMethod
-    {
+	public enum InlineParseMethod
+	{
         /// <summary>
-        /// A Comment text
+        ///     A Comment text
         /// </summary>
         Comment,
 
         /// <summary>
-        /// A Link Reference
+        ///     A Link Reference
         /// </summary>
         LinkReference,
 
         /// <summary>
-        /// A bold element
+        ///     A bold element
         /// </summary>
         Bold,
 
         /// <summary>
-        /// An bold and italic block
+        ///     An bold and italic block
         /// </summary>
         BoldItalic,
 
         /// <summary>
-        /// A code element
+        ///     A code element
         /// </summary>
         Code,
 
         /// <summary>
-        /// An italic block
+        ///     An italic block
         /// </summary>
         Italic,
 
         /// <summary>
-        /// A link block
+        ///     A link block
         /// </summary>
         MarkdownLink,
 
         /// <summary>
-        /// An angle bracket link.
+        ///     An angle bracket link.
         /// </summary>
         AngleBracketLink,
 
         /// <summary>
-        /// A url block
+        ///     A url block
         /// </summary>
         Url,
 
         /// <summary>
-        /// A reddit style link
+        ///     A reddit style link
         /// </summary>
         RedditLink,
 
         /// <summary>
-        /// An in line text link
+        ///     An in line text link
         /// </summary>
         PartialLink,
 
         /// <summary>
-        /// An email element
+        ///     An email element
         /// </summary>
         Email,
 
         /// <summary>
-        /// strike through element
+        ///     strike through element
         /// </summary>
         Strikethrough,
 
         /// <summary>
-        /// Super script element.
+        ///     Super script element.
         /// </summary>
         Superscript,
 
         /// <summary>
-        /// Image element.
+        ///     Image element.
         /// </summary>
         Image,
 
         /// <summary>
-        /// Emoji element.
+        ///     Emoji element.
         /// </summary>
         Emoji
-
-    }
+	}
 }

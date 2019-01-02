@@ -13,16 +13,16 @@ using Windows.UI.Xaml.Navigation;
 
 namespace PrivateWiki.Pages
 {
-	/// <summary>
-	/// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-	/// </summary>
-	public sealed partial class ImportDiffPage : Page
+    /// <summary>
+    ///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+    /// </summary>
+    public sealed partial class ImportDiffPage : Page
 	{
 		public static List<Diff> Diff = null;
 
 		public ImportDiffPage()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -40,7 +40,6 @@ namespace PrivateWiki.Pages
 			DiffBlock.Blocks.Add(paragraph);
 
 			foreach (var diff in diffs)
-			{
 				switch (diff.operation)
 				{
 					case Operation.DELETE:
@@ -77,7 +76,6 @@ namespace PrivateWiki.Pages
 						paragraph.Inlines.Add(span3);
 						break;
 				}
-			}
 		}
 
 		private void DiffBtn_Click(object sender, RoutedEventArgs e)

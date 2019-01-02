@@ -18,37 +18,36 @@
 
             <StackPanel
                 Orientation="Vertical">
-            
 
-            <AutoSuggestBox
-                Name="SearchBox"
-                QueryIcon="Find"
-                PlaceholderText="Search Page"
-                TextChanged="SearchBox_OnTextChanged"
-                QuerySubmitted="SearchBox_OnQuerySubmitted"
-                FontSize="30"
-                MinWidth="300"/>
 
-            <ListView
-                Name="SearchResultsBox">
+                <AutoSuggestBox
+                    Name="SearchBox"
+                    QueryIcon="Find"
+                    PlaceholderText="Search Page"
+                    TextChanged="SearchBox_OnTextChanged"
+                    QuerySubmitted="SearchBox_OnQuerySubmitted"
+                    FontSize="30"
+                    MinWidth="300" />
 
-                <ListView.ItemTemplate>
-                    <DataTemplate>
+                <ListView
+                    Name="SearchResultsBox">
 
-                        <StackPanel
-                        Background="LightGray">
-                            <TextBlock
-                            FontSize="30"
-                            />
-                            <TextBlock
-                            FontSize="20"/>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
 
-                        </StackPanel>
+                            <StackPanel
+                                Background="LightGray">
+                                <TextBlock
+                                    FontSize="30" />
+                                <TextBlock
+                                    FontSize="20" />
 
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                            </StackPanel>
 
-            </ListView>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
 
             </StackPanel>
 

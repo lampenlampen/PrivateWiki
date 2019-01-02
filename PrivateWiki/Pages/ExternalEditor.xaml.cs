@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
+using Windows.Storage.Pickers;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -12,25 +15,25 @@ using StorageProvider;
 
 namespace PrivateWiki.Pages
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public sealed partial class ExternalEditor : Page
+    /// <summary>
+    ///     An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class ExternalEditor : Page
 	{
 		private ContentPage Page;
-		private string TMP_FILE_FUTURE_ACCESS_LIST = "tmp_file_future_access_list";
+		private readonly string TMP_FILE_FUTURE_ACCESS_LIST = "tmp_file_future_access_list";
 		private string VSCODE_PATH = "C:\\Software\\Microsoft VS Code\\bin\\code.cmd";
 
 		public ExternalEditor()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 		}
 
 		protected override void OnNavigatedTo([NotNull] NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
 
-			string pageId = (string) e.Parameter;
+			var pageId = (string) e.Parameter;
 
 			Page = new ContentPageProvider().GetContentPage(pageId);
 
@@ -43,15 +46,15 @@ namespace PrivateWiki.Pages
 
 			await FileIO.WriteTextAsync(file, Page.Content);
 
-			var success = await Windows.System.Launcher.LaunchFileAsync(file);
+			var success = await Launcher.LaunchFileAsync(file);
 		}
 
 		private async Task<StorageFile> PickFile()
 		{
 			// TODO Refactor Method
-			var picker = new Windows.Storage.Pickers.FileSavePicker()
+			var picker = new FileSavePicker
 			{
-				SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary,
+				SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
 				SuggestedFileName = Page.Id.Replace(":", "_")
 			};
 			picker.FileTypeChoices.Add("Markdown", new[] {".md"});
@@ -59,7 +62,7 @@ namespace PrivateWiki.Pages
 			var file = await picker.PickSaveFileAsync();
 
 			// TODO Save Location
-			Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.AddOrReplace(
+			StorageApplicationPermissions.FutureAccessList.AddOrReplace(
 				TMP_FILE_FUTURE_ACCESS_LIST, file);
 
 			return file;
@@ -82,7 +85,7 @@ namespace PrivateWiki.Pages
 			if (action == ContentDialogResult.Primary)
 			{
 				var file =
-					await Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.GetFileAsync(
+					await StorageApplicationPermissions.FutureAccessList.GetFileAsync(
 						TMP_FILE_FUTURE_ACCESS_LIST);
 
 				var content = await FileIO.ReadTextAsync(file);

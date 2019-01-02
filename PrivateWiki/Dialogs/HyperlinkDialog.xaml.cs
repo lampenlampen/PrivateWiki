@@ -8,7 +8,7 @@ namespace PrivateWiki.Dialogs
 	{
 		public HyperlinkDialog()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 		}
 
 		public string Hyperlink { get; private set; }

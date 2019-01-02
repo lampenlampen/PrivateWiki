@@ -33,7 +33,7 @@
                 Name="ExportAllPages"
                 Content="Export All Pages"
                 Margin="0, 0, 10, 0"
-                IsChecked="True"/>
+                IsChecked="True" />
 
             <RadioButton
                 Name="ExportSinglePage"

@@ -13,14 +13,14 @@ using JetBrains.Annotations;
 
 namespace PrivateWiki.Pages
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public sealed partial class MediaManager : Page
+    /// <summary>
+    ///     An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class MediaManager : Page
 	{
 		public MediaManager()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 		}
 
 		protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -48,39 +48,19 @@ namespace PrivateWiki.Pages
 			// Only process the node if it's a folder and has unrealized children.
 			StorageFolder folder;
 			if (node.Content is StorageFolder && node.HasUnrealizedChildren)
-			{
 				folder = node.Content as StorageFolder;
-			}
 			else
-			{
-				// The node isn't a folder, or it's already been filled.
 				return;
-			}
 
 			var itemsList = await folder.GetItemsAsync();
 
-			if (itemsList.Count == 0)
-			{
-				// The item is a folder, but it's empty.
-				// Leave HasUnrealizedChildren == true so that the chevron appears,
-				// but don't try to process children that aren't there.
-				return;
-			}
+			if (itemsList.Count == 0) return;
 
 			foreach (var item in itemsList)
 			{
 				var newNode = new TreeViewNode {Content = item};
 
-				if (item is StorageFolder)
-				{
-					// If the item is a folder, set HasUnrealizedChildren to true.
-					// This makes the collapsed chevron show up.
-					newNode.HasUnrealizedChildren = true;
-				}
-				else
-				{
-					// The item is a StorageFile. No processing needed.
-				}
+				if (item is StorageFolder) newNode.HasUnrealizedChildren = true;
 
 				node.Children.Add(newNode);
 			}
@@ -305,7 +285,7 @@ namespace PrivateWiki.Pages
 			var node = (sender as MenuFlyoutItem).DataContext as TreeViewNode;
 			var folder = node.Content as StorageFolder;
 
-			var picker = new Windows.Storage.Pickers.FileOpenPicker()
+			var picker = new FileOpenPicker
 			{
 				ViewMode = PickerViewMode.Thumbnail,
 				SuggestedStartLocation = PickerLocationId.PicturesLibrary
@@ -327,7 +307,7 @@ namespace PrivateWiki.Pages
 				{
 					Title = "Copy Files...",
 					Content = panel,
-					PrimaryButtonText = "Cancel",
+					PrimaryButtonText = "Cancel"
 				};
 
 				dialog2.ShowAsync();

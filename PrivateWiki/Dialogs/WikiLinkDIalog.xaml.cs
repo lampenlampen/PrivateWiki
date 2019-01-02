@@ -11,14 +11,14 @@ namespace PrivateWiki.Dialogs
 	{
 		public WikiLinkDialog()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 
 			Pages = new ContentPageProvider().GetAllContentPages().Map(p => p.Id).ToList();
 
 			WikiLinkComboBox.ItemsSource = Pages;
 		}
 
-		private List<string> Pages { get; set; }
+		private List<string> Pages { get; }
 
 		public string WikiLink { get; private set; }
 

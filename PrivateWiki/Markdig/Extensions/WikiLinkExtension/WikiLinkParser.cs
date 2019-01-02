@@ -12,7 +12,7 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 		public WikiLinkParser()
 		{
 			Debug.WriteLine("WikiLinkParser");
-			OpeningCharacters = new char[]
+			OpeningCharacters = new[]
 			{
 				'['
 			};
@@ -40,17 +40,11 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 		{
 			// Previous char must be a whitespace or a punctuation
 			var previousChar = slice.PeekCharExtra(-1);
-			if (!IsValidPreviousCharacter(previousChar))
-			{
-				return false;
-			}
+			if (!IsValidPreviousCharacter(previousChar)) return false;
 
 			List<char> pendingEmphasis;
 			// Check that an autolink is possible in the current context
-			if (!IsAutoLinkValidInCurrentContext(processor, out pendingEmphasis))
-			{
-				return false;
-			}
+			if (!IsAutoLinkValidInCurrentContext(processor, out pendingEmphasis)) return false;
 
 			var startPosition = slice.Start;
 
@@ -91,7 +85,7 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 			*/
 
 			// Parse URL
-			string link = "";
+			var link = "";
 
 			/*
 			string link;
@@ -120,24 +114,17 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 
 			// If we have any pending emphasis, remove any pending emphasis characters from the end of the link
 			if (pendingEmphasis != null)
-			{
-				for (int i = link.Length - 1; i >= 0; i--)
-				{
+				for (var i = link.Length - 1; i >= 0; i--)
 					if (pendingEmphasis.Contains(link[i]))
 					{
 						slice.Start--;
 					}
 					else
 					{
-						if (i < link.Length - 1)
-						{
-							link = link.Substring(0, i + 1);
-						}
+						if (i < link.Length - 1) link = link.Substring(0, i + 1);
 
 						break;
 					}
-				}
-			}
 
 			// Post-check URL
 
@@ -178,22 +165,22 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 
 			int line;
 			int column;
-			var inline = new LinkInline()
+			var inline = new LinkInline
 			{
 				Span =
 				{
-					Start = processor.GetSourcePosition(startPosition, out line, out column),
+					Start = processor.GetSourcePosition(startPosition, out line, out column)
 				},
 				Line = line,
 				Column = column,
 				Url = link,
 				IsClosed = true,
-				IsAutoLink = true,
+				IsAutoLink = true
 			};
 
 			inline.Span.End = inline.Span.Start + link.Length - 1;
 			inline.UrlSpan = inline.Span;
-			inline.AppendChild(new LiteralInline()
+			inline.AppendChild(new LiteralInline
 			{
 				Span = inline.Span,
 				Line = line,
@@ -218,16 +205,10 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 				if (htmlInline != null)
 				{
 					// If we have a </a> we don't expect nested <a>
-					if (htmlInline.Tag.StartsWith("</a", StringComparison.OrdinalIgnoreCase))
-					{
-						break;
-					}
+					if (htmlInline.Tag.StartsWith("</a", StringComparison.OrdinalIgnoreCase)) break;
 
 					// If there is a pending <a>, we can't allow a link
-					if (htmlInline.Tag.StartsWith("<a", StringComparison.OrdinalIgnoreCase))
-					{
-						return false;
-					}
+					if (htmlInline.Tag.StartsWith("<a", StringComparison.OrdinalIgnoreCase)) return false;
 				}
 
 				// Check previous sibling and parents in the tree 
@@ -237,20 +218,15 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 			// Check that we don't have any pending brackets opened (where we could have a possible markdown link)
 			// NOTE: This assume that [ and ] are used for links, otherwise autolink will not work properly
 			currentInline = processor.Inline;
-			int countBrackets = 0;
+			var countBrackets = 0;
 			while (currentInline != null)
 			{
 				var linkDelimiterInline = currentInline as LinkDelimiterInline;
 				if (linkDelimiterInline != null && linkDelimiterInline.IsActive)
 				{
 					if (linkDelimiterInline.Type == DelimiterType.Open)
-					{
 						countBrackets++;
-					}
-					else if (linkDelimiterInline.Type == DelimiterType.Close)
-					{
-						countBrackets--;
-					}
+					else if (linkDelimiterInline.Type == DelimiterType.Close) countBrackets--;
 				}
 				else
 				{
@@ -258,16 +234,10 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 					var emphasisDelimiter = currentInline as EmphasisDelimiterInline;
 					if (emphasisDelimiter != null)
 					{
-						if (pendingEmphasis == null)
-						{
-							// Not optimized for GC, but we don't expect this case much
-							pendingEmphasis = new List<char>();
-						}
+						if (pendingEmphasis == null) pendingEmphasis = new List<char>();
 
 						if (!pendingEmphasis.Contains(emphasisDelimiter.DelimiterChar))
-						{
 							pendingEmphasis.Add(emphasisDelimiter.DelimiterChar);
-						}
 					}
 				}
 

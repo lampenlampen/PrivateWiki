@@ -1,6 +1,6 @@
 ﻿namespace PrivateWiki.Data
 {
-	interface IPageAccess
+	internal interface IPageAccess
 	{
 	}
 }

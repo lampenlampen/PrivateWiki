@@ -10,16 +10,16 @@ using StorageProvider;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 namespace PrivateWiki.Pages
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public sealed partial class NewPage : Page
+    /// <summary>
+    ///     An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class NewPage : Page
 	{
 		[CanBeNull] private string _pageId;
 
 		public NewPage()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 		}
 
 		protected override void OnNavigatedTo([NotNull] NavigationEventArgs e)

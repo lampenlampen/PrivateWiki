@@ -14,18 +14,18 @@ using StorageProvider;
 
 namespace PrivateWiki.Pages
 {
-	/// <summary>
-	/// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-	/// </summary>
-	public sealed partial class PageEditor : Page
+    /// <summary>
+    ///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+    /// </summary>
+    public sealed partial class PageEditor : Page
 	{
 		public PageEditor()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 		}
 
 		[NotNull] private ContentPage Page { get; set; }
-		private bool NewPage { get; set; } = false;
+		private bool NewPage { get; set; }
 
 		private void PreviewWebviewNavigationStartedAsync(WebView sender,
 			[NotNull] WebViewNavigationStartingEventArgs args)
@@ -63,10 +63,7 @@ namespace PrivateWiki.Pages
 			}
 
 			ShowPageInEditor();
-			if (NewPage)
-			{
-				RemoveNewPageFromBackStack();
-			}
+			if (NewPage) RemoveNewPageFromBackStack();
 		}
 
 		private void ShowPageInEditor()
@@ -119,10 +116,7 @@ namespace PrivateWiki.Pages
 				// TODO Error while Updating Page
 				new ContentPageProvider().UpdateContentPage(Page);
 
-				if (Frame.CanGoBack)
-				{
-					Frame.GoBack();
-				}
+				if (Frame.CanGoBack) Frame.GoBack();
 			}
 		}
 
@@ -157,10 +151,6 @@ namespace PrivateWiki.Pages
 					Frame.GoBack();
 				}
 			}
-			else
-			{
-				// Cancel Delete Action
-			}
 		}
 
 		private async void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -179,12 +169,8 @@ namespace PrivateWiki.Pages
 			}
 
 			if (Pivot.SelectedIndex == 2)
-			{
 				foreach (var tag in Page.Tags)
-				{
 					ListView.Items.Add(tag.Name);
-				}
-			}
 		}
 
 		private void AddTag_Click(object sender, RoutedEventArgs e)
@@ -341,23 +327,16 @@ namespace PrivateWiki.Pages
 
 		private void PageEditorToolbar_HorizontalRule(object sender, RoutedEventArgs e)
 		{
-			if (PageEditorTextBox.SelectionLength != 0)
-			{
-				return;
-			}
+			if (PageEditorTextBox.SelectionLength != 0) return;
 
 			var index = PageEditorTextBox.SelectionStart;
 
 			string text;
 
 			if (PageEditorTextBox.Text[index - 1].Equals('\r'))
-			{
 				text = PageEditorTextBox.Text.Insert(index, "---\r\n");
-			}
 			else
-			{
 				text = PageEditorTextBox.Text.Insert(index, "\r\n---\r\n");
-			}
 
 			PageEditorTextBox.Text = text;
 			PageEditorTextBox.SelectionStart = index + 5;

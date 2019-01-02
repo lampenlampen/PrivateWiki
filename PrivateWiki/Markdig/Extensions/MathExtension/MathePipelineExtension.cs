@@ -2,7 +2,7 @@
 
 namespace PrivateWiki.Markdig.Extensions.MathExtension
 {
-	static class MathePipelineExtension
+	internal static class MathePipelineExtension
 	{
 		public static MarkdownPipelineBuilder UseMyMathExtension(this MarkdownPipelineBuilder pipeline)
 		{

@@ -14,13 +14,13 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <ComboBox
             Name="WikiLinkComboBox"
             PlaceholderText="WikiLink"
             IsTextSearchEnabled="True"
-            LightDismissOverlayMode="Auto"/>
+            LightDismissOverlayMode="Auto" />
     </Grid>
 </local:DissmissableDialog>

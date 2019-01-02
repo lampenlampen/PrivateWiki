@@ -28,8 +28,8 @@
                 Width="Auto">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
                 <Button
@@ -37,14 +37,14 @@
                     Content="Create new Page"
                     Click="CreatePage_Click"
                     HorizontalAlignment="Right"
-                    Margin="0, 0, 30, 0"/>
+                    Margin="0, 0, 30, 0" />
 
                 <Button
                     Grid.Column="1"
                     Content="Import existing Page"
                     Click="ImportPage_Click"
                     Width="Auto"
-                    Margin="30, 0, 0, 0"/>
+                    Margin="30, 0, 0, 0" />
 
             </Grid>
 

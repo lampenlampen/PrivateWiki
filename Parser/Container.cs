@@ -3,27 +3,24 @@ using System.Text;
 
 namespace Parser
 {
-    public class Container: Block
-    {
-        public IList<Block> Blocks { get; set; }
+	public class Container : Block
+	{
+		public Container(IList<Block> blocks)
+		{
+			Blocks = blocks;
+		}
 
-        public Container(IList<Block> blocks)
-        {
-            Blocks = blocks;
-        }
+		public IList<Block> Blocks { get; set; }
 
-        public override string ToString()
-        {
-            var builder = new StringBuilder();
+		public override string ToString()
+		{
+			var builder = new StringBuilder();
 
-            for (int i = 0; i < Blocks.Count -1; i++)
-            {
-                builder.AppendLine(Blocks[i].ToString());
-            }
+			for (var i = 0; i < Blocks.Count - 1; i++) builder.AppendLine(Blocks[i].ToString());
 
-            builder.Append(Blocks[Blocks.Count - 1]);
-            
-            return builder.ToString();
-        }
-    }
+			builder.Append(Blocks[Blocks.Count - 1]);
+
+			return builder.ToString();
+		}
+	}
 }

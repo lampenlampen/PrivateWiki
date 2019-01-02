@@ -14,11 +14,11 @@ namespace PrivateWiki.Dialogs
 {
 	public sealed partial class ExportDialog : DissmissableDialog
 	{
-		[NotNull] private string _id;
+		[NotNull] private readonly string _id;
 
 		public ExportDialog(string id)
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 			_id = id;
 		}
 
@@ -26,7 +26,7 @@ namespace PrivateWiki.Dialogs
 		{
 			var folder = await MediaAccess.PickFolderAsync();
 
-			List<ContentPage> pages = new List<ContentPage>();
+			var pages = new List<ContentPage>();
 
 			if (ExportAllPages.IsChecked == true)
 			{
@@ -35,10 +35,6 @@ namespace PrivateWiki.Dialogs
 			else if (ExportSinglePage.IsChecked == true)
 			{
 				pages.Add(new ContentPageProvider().GetContentPage(_id));
-			}
-			else
-			{
-				// TODO Error
 			}
 
 			var exportHtml = ExportHtml.IsChecked == true;

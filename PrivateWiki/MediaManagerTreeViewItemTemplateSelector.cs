@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace PrivateWiki
 {
-	class MediaManagerTreeViewItemTemplateSelector : DataTemplateSelector
+	internal class MediaManagerTreeViewItemTemplateSelector : DataTemplateSelector
 	{
 		public DataTemplate FolderTemplate { get; set; }
 		public DataTemplate FileTemplate { get; set; }
@@ -13,10 +13,7 @@ namespace PrivateWiki
 		{
 			var node = (TreeViewNode) item;
 
-			if (node.Content is StorageFolder)
-			{
-				return FolderTemplate;
-			}
+			if (node.Content is StorageFolder) return FolderTemplate;
 
 			return FileTemplate;
 		}

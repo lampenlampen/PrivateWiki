@@ -9,20 +9,11 @@ namespace PrivateWiki.Data
 		{
 			var provider = new ContentPageProvider();
 
-			if (!provider.ContainsContentPage("syntax"))
-			{
-				InitSyntaxPage(provider);
-			}
+			if (!provider.ContainsContentPage("syntax")) InitSyntaxPage(provider);
 
-			if (!provider.ContainsContentPage("start"))
-			{
-				InitStartPage(provider);
-			}
+			if (!provider.ContainsContentPage("start")) InitStartPage(provider);
 
-			if (!provider.ContainsContentPage("test"))
-			{
-				InitTestPage(provider);
-			}
+			if (!provider.ContainsContentPage("test")) InitTestPage(provider);
 		}
 
 		private static void InitSyntaxPage([NotNull] ContentPageProvider provider)

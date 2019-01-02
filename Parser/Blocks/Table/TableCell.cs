@@ -1,42 +1,42 @@
 using System.Collections.Generic;
-using System.Net.Mime;
 using System.Runtime.CompilerServices;
 
-[assembly:InternalsVisibleTo("TestProject1")]
+[assembly: InternalsVisibleTo("TestProject1")]
+
 namespace Parser.Blocks.Table
 {
     /// <summary>
-    /// Represents a cell in the table.
+    ///     Represents a cell in the table.
     /// </summary>
     public class TableCell
-    {
+	{
+		public TableCell(string text)
+		{
+			Text = text;
+		}
+
+		public TableCell(IList<MarkupInline> inlines)
+		{
+			Inlines = inlines;
+		}
+
         /// <summary>
-        /// Gets or sets the cell contents.
+        ///     Gets or sets the cell contents.
         /// </summary>
         public IList<MarkupInline> Inlines { get; set; }
 
-        public string Text { get; set; }
+		public string Text { get; set; }
 
-        public TableCell(string text)
-        {
-            Text = text;
-        }
+		internal static TableCell Parse(string text)
+		{
+			// TODO TableCell Parse
+			return new TableCell(text);
+		}
 
-        public TableCell(IList<MarkupInline> inlines)
-        {
-            Inlines = inlines;
-        }
-
-        internal static TableCell Parse(string text)
-        {
-            // TODO TableCell Parse
-            return new TableCell(text);
-        }
-
-        public override string ToString()
-        {
-            // TODO TableCell ToString
-            return Text;
-        }
-    }
+		public override string ToString()
+		{
+			// TODO TableCell ToString
+			return Text;
+		}
+	}
 }

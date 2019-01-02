@@ -5,7 +5,7 @@ using Markdig.Renderers.Html;
 
 namespace PrivateWiki.Markdig.Extensions.MathExtension
 {
-	class MyHtmlMathInlineRenderer : HtmlObjectRenderer<MathInline>
+	internal class MyHtmlMathInlineRenderer : HtmlObjectRenderer<MathInline>
 	{
 		protected override void Write([NotNull] HtmlRenderer renderer, [NotNull] MathInline obj)
 		{

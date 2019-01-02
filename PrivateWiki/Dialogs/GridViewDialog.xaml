@@ -13,16 +13,16 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel 
+        <StackPanel
             Grid.Row="0"
             Orientation="Horizontal">
             <Button
                 Content="Add Columns"
-                Click="AddColumn_Click"/>
+                Click="AddColumn_Click" />
         </StackPanel>
 
         <controls:DataGrid

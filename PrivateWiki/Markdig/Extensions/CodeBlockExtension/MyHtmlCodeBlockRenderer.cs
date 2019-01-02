@@ -9,7 +9,7 @@ using Markdig.SyntaxHighlighting;
 
 namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 {
-	class MyHtmlCodeBlockRenderer : SyntaxHighlightingCodeBlockRenderer
+	internal class MyHtmlCodeBlockRenderer : SyntaxHighlightingCodeBlockRenderer
 	{
 		private readonly IStyleSheet _customCss;
 		private readonly CodeBlockRenderer _underlyingRenderer;
@@ -27,7 +27,7 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 				// Code Block is Indented
 
 				renderer
-					.Write($"<div")
+					.Write("<div")
 					.WriteAttributes(obj.TryGetAttributes() ?? new HtmlAttributes())
 					.Write(">");
 
@@ -65,7 +65,7 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 			attributes.AddClass("editor-colors");
 
 			renderer
-				.Write($"<div")
+				.Write("<div")
 				.WriteAttributes(attributes)
 				.Write(">");
 
@@ -73,14 +73,9 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 			var code = GetCode(obj, out firstLine);
 
 			if (languageMoniker.Equals("mermaid"))
-			{
 				RenderMermaidDiagram(renderer, code);
-			}
 			else
-			{
-				// Code
 				RenderCode(renderer, languageMoniker, firstLine, code);
-			}
 
 			renderer.WriteLine("</div>");
 		}
@@ -103,10 +98,7 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 
 			var markup = ApplySyntaxHighlighting(languageMoniker, firstLine, code);
 
-			if (language != null)
-			{
-				markup = markup.Substring(56, markup.Length - 56 - 12);
-			}
+			if (language != null) markup = markup.Substring(56, markup.Length - 56 - 12);
 
 			var html = $"<pre style=\"{MarkdigStyleSheet.CodeBlock.GetCodeBlockBoxStyle()}\">\r\n" +
 			           $"<code style=\"{MarkdigStyleSheet.CodeBlock.GetCodeBlockStyle()}\">" +
@@ -136,11 +128,7 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 			var languageTypeAdapter = new LanguageTypeAdapter();
 			var language = languageTypeAdapter.Parse(languageMoniker, firstLine);
 
-			if (language == null)
-			{
-				//handle unrecognised language formats, e.g. when using mermaid diagrams
-				return code;
-			}
+			if (language == null) return code;
 
 			var codeBuilder = new StringBuilder();
 			var codeWriter = new StringWriter(codeBuilder);
@@ -157,21 +145,14 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 			foreach (var line in obj.Lines.Lines)
 			{
 				var slice = line.Slice;
-				if (slice.Text == null)
-				{
-					continue;
-				}
+				if (slice.Text == null) continue;
 
 				var lineText = slice.Text.Substring(slice.Start, slice.Length);
 
 				if (firstLine == null)
-				{
 					firstLine = lineText;
-				}
 				else
-				{
 					code.AppendLine();
-				}
 
 				code.Append(lineText);
 			}

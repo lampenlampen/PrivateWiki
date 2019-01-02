@@ -13,13 +13,13 @@ namespace PrivateWiki
 {
 	public sealed partial class SearchPopupContent : UserControl
 	{
-		private List<ContentPage> _pages;
-		ObservableCollection<ContentPage> Pages = new ObservableCollection<ContentPage>();
+		private readonly List<ContentPage> _pages;
+		private ObservableCollection<ContentPage> Pages = new ObservableCollection<ContentPage>();
 
 
 		public SearchPopupContent()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 
 			var provider = new ContentPageProvider();
 			_pages = provider.GetAllContentPages();
@@ -47,10 +47,7 @@ namespace PrivateWiki
 
 			var p = Parent as FrameworkElement;
 
-			while (!(p is Popup))
-			{
-				p = p.Parent as FrameworkElement;
-			}
+			while (!(p is Popup)) p = p.Parent as FrameworkElement;
 
 			(p as Popup).IsOpen = false;
 		}
