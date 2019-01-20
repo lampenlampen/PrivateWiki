@@ -11,7 +11,7 @@
     <AssemblyName>PrivateWiki</AssemblyName>
     <DefaultLanguage>de-DE</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-      <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -99,58 +99,58 @@
     <Compile Include="Data\FileSystemAccess.cs" />
     <Compile Include="Data\InitPages.cs" />
     <Compile Include="Data\IPageAccess.cs" />
-      <Compile Include="Data\MediaAccess.cs"/>
-      <Compile Include="Dialogs\ExportDialog.xaml.cs">
-          <DependentUpon>ExportDialog.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Dialogs\GridViewDialog.xaml.cs">
-          <DependentUpon>GridViewDialog.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Dialogs\WikiLinkDialog.xaml.cs">
-          <DependentUpon>WikiLinkDialog.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Dialogs\DissmissableDialog.cs"/>
-      <Compile Include="DiffMatchPatchAlg.cs"/>
-      <Compile Include="MarkdownWikiFile\MarkdownWikiFile.cs"/>
-      <Compile Include="Pages\ExternalEditor.xaml.cs">
+    <Compile Include="Data\MediaAccess.cs" />
+    <Compile Include="Dialogs\ExportDialog.xaml.cs">
+      <DependentUpon>ExportDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\GridViewDialog.xaml.cs">
+      <DependentUpon>GridViewDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\WikiLinkDialog.xaml.cs">
+      <DependentUpon>WikiLinkDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DissmissableDialog.cs" />
+    <Compile Include="DiffMatchPatchAlg.cs" />
+    <Compile Include="MarkdownWikiFile\MarkdownWikiFile.cs" />
+    <Compile Include="Pages\ExternalEditor.xaml.cs">
       <DependentUpon>ExternalEditor.xaml</DependentUpon>
     </Compile>
-      <Compile Include="Dialogs\HyperlinkDialog.xaml.cs">
-          <DependentUpon>HyperlinkDialog.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Markdig\IPageParser.cs"/>
-      <Compile Include="Markdig\IPageRenderer.cs"/>
-      <Compile Include="Pages\ImportDiffPage.xaml.cs">
-          <DependentUpon>ImportDiffPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Pages\MediaManager.xaml.cs">
+    <Compile Include="Dialogs\HyperlinkDialog.xaml.cs">
+      <DependentUpon>HyperlinkDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Markdig\IPageParser.cs" />
+    <Compile Include="Markdig\IPageRenderer.cs" />
+    <Compile Include="Pages\ImportDiffPage.xaml.cs">
+      <DependentUpon>ImportDiffPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MediaManager.xaml.cs">
       <DependentUpon>MediaManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="MediaManagerTreeViewItemTemplateSelector.cs" />
-      <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockExtension.cs"/>
-      <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockPipelineExtension.cs"/>
-      <Compile Include="Markdig\Extensions\MathExtension\MathePipelineExtension.cs"/>
-      <Compile Include="Markdig\HeadersParser.cs"/>
-      <Compile Include="Markdig\MarkdigStyleSheet.cs"/>
-      <Compile Include="Markdig\Extensions\CodeBlockExtension\MyHtmlCodeBlockRenderer.cs"/>
-      <Compile Include="Markdig\Extensions\MathExtension\MyHtmlMathInlineRenderer.cs"/>
-      <Compile Include="Markdig\Extensions\MathExtension\MyMathematicsExtension.cs"/>
-      <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkParser.cs"/>
+    <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockExtension.cs" />
+    <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockPipelineExtension.cs" />
+    <Compile Include="Markdig\Extensions\MathExtension\MathePipelineExtension.cs" />
+    <Compile Include="Markdig\HeadersParser.cs" />
+    <Compile Include="Markdig\MarkdigStyleSheet.cs" />
+    <Compile Include="Markdig\Extensions\CodeBlockExtension\MyHtmlCodeBlockRenderer.cs" />
+    <Compile Include="Markdig\Extensions\MathExtension\MyHtmlMathInlineRenderer.cs" />
+    <Compile Include="Markdig\Extensions\MathExtension\MyMathematicsExtension.cs" />
+    <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkParser.cs" />
     <Compile Include="NavigationHandler.cs" />
-      <Compile Include="Pages\NewPage.xaml.cs">
+    <Compile Include="Pages\NewPage.xaml.cs">
       <DependentUpon>NewPage.xaml</DependentUpon>
     </Compile>
-      <Compile Include="Pages\PageEditor.xaml.cs">
+    <Compile Include="Pages\PageEditor.xaml.cs">
       <DependentUpon>PageEditor.xaml</DependentUpon>
     </Compile>
-      <Compile Include="Pages\PageViewer.xaml.cs">
+    <Compile Include="Pages\PageViewer.xaml.cs">
       <DependentUpon>PageViewer.xaml</DependentUpon>
     </Compile>
-      <Compile Include="Pages\MainPage.xaml.cs">
+    <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-      <Compile Include="Markdig\MarkdigParser.cs"/>
-      <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkExtension.cs"/>
+    <Compile Include="Markdig\MarkdigParser.cs" />
+    <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchPopupContent.xaml.cs">
       <DependentUpon>SearchPopupContent.xaml</DependentUpon>
@@ -180,47 +180,47 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-      <Page Include="Dialogs\ExportDialog.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="Dialogs\GridViewDialog.xaml">
+    <Page Include="Dialogs\ExportDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-      <Page Include="Dialogs\WikiLinkDialog.xaml">
+    <Page Include="Dialogs\GridViewDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-      <Page Include="Pages\ExternalEditor.xaml">
-          <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="Dialogs\HyperlinkDialog.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="Pages\ImportDiffPage.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="Pages\MediaManager.xaml">
+    <Page Include="Dialogs\WikiLinkDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-      <Page Include="Pages\NewPage.xaml">
-          <Generator>MSBuild:Compile</Generator>
-          <SubType>Designer</SubType>
-      </Page>
-      <Page Include="Pages\PageEditor.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="Pages\PageViewer.xaml">
+    <Page Include="Pages\ExternalEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-      <Page Include="Pages\MainPage.xaml">
+    <Page Include="Dialogs\HyperlinkDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ImportDiffPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MediaManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\NewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -237,35 +237,31 @@
       <Version>2018.2.1</Version>
     </PackageReference>
     <PackageReference Include="LanguageExt.Core">
-        <Version>3.1.14</Version>
+      <Version>3.1.14</Version>
     </PackageReference>
     <PackageReference Include="Markdig">
-        <Version>0.15.6</Version>
+      <Version>0.15.6</Version>
     </PackageReference>
     <PackageReference Include="Markdig.SyntaxHighlighting">
       <Version>1.1.7</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
-        <Version>2.2.0</Version>
+      <Version>2.2.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.0-Preview1-26502-02</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-        <Version>5.0.0</Version>
+      <Version>5.0.0</Version>
     </PackageReference>
-      <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
-          <Version>5.0.0</Version>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
+      <Version>5.0.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-        <Version>2.0.181018003</Version>
+      <Version>2.0.181018003</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Parser\Parser.csproj">
-      <Project>{c6e2f66a-0f4d-48cd-9f9c-6def69863b41}</Project>
-      <Name>Parser</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StorageProvider\StorageProvider.csproj">
       <Project>{a89ee218-2edd-4807-bcbf-35e409a1b7ee}</Project>
       <Name>StorageProvider</Name>
