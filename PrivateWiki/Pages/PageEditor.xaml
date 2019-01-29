@@ -42,11 +42,21 @@
 
                             <StackPanel
                                 Orientation="Horizontal">
+                                
                                 <AppBarButton
-                                    Name="Add_Image"
                                     Icon="Pictures"
-                                    Click="PageEditor_AddImage"
-                                    Content="Add Image" />
+                                    IsCompact="True"
+                                    ToolTipService.ToolTip="Images"
+                                    AutomationProperties.Name="Images"
+                                    Tapped="Image_Tapped">
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem Text="Add Existing Image" Icon="Pictures" Click="PageEditor_AddExistingImage"/>
+                                            <MenuFlyoutItem Text="Add New Image" Icon="Pictures" Click="PageEditor_AddNewImage"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                </AppBarButton>
+                                
                                 <AppBarButton
                                     Name="Bold"
                                     Content="Bold"

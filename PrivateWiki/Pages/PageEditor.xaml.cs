@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using JetBrains.Annotations;
 using PrivateWiki.Data;
@@ -190,8 +193,18 @@ namespace PrivateWiki.Pages
 		{
 			Frame.Navigate(typeof(ExternalEditor), Page.Id);
 		}
+		
+		/// <summary>
+		/// Shows the FlyoutMenu if the Image Button is tapped.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Image_Tapped(object sender, TappedRoutedEventArgs e)
+		{
+			if (sender is AppBarButton element) FlyoutBase.ShowAttachedFlyout(element);
+		}
 
-		private async void PageEditor_AddImage(object sender, RoutedEventArgs e)
+		private async void PageEditor_AddNewImage(object sender, RoutedEventArgs e)
 		{
 			var file = await MediaAccess.PickImageFileAsync();
 
@@ -207,12 +220,29 @@ namespace PrivateWiki.Pages
 				}
 				catch (AggregateException)
 				{
+					// TODO Image already exists in folder
 				}
 
 				var index = PageEditorTextBox.SelectionStart;
 				var imageMarkdown = $"![{file.Name}](\\images\\{file.Name}.{file.FileType})";
 				var newContent = PageEditorTextBox.Text.Insert(index, imageMarkdown);
 				PageEditorTextBox.Text = newContent;
+			}
+		}
+		
+		private async void PageEditor_AddExistingImage(object sender, RoutedEventArgs e)
+		{
+			var dialog = new PageEditorImagePickerDialog();
+			var result = await dialog.ShowAsync();
+
+			if (result == ContentDialogResult.Primary)
+			{
+				if (PageEditorTextBox.SelectionLength != 0) return;
+
+				var index = PageEditorTextBox.SelectionStart;
+				var text = PageEditorTextBox.Text.Insert(index, dialog.PickedImage);
+				PageEditorTextBox.Text = text;
+				PageEditorTextBox.SelectionStart = index + dialog.PickedImage.Length;
 			}
 		}
 
