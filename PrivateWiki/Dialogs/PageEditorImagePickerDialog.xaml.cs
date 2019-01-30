@@ -1,28 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
-using Windows.Storage.Search;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Die Elementvorlage "Inhaltsdialogfeld" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
 namespace PrivateWiki.Dialogs
 {
-    public sealed partial class PageEditorImagePickerDialog : DissmissableDialog
+	public sealed partial class PageEditorImagePickerDialog : DissmissableDialog
     {
         public ObservableCollection<ImagePickerDialogModel> Images { get; private set; } = new ObservableCollection<ImagePickerDialogModel>();
 
@@ -47,7 +33,7 @@ namespace PrivateWiki.Dialogs
             if (imageFolder == null) return;
 
             var imageFiles = await imageFolder.GetFilesAsync();
-            var images = imageFiles.Map(file => new ImagePickerDialogModel(file.Path, file.DisplayName));
+            var images = imageFiles.Map(file => new ImagePickerDialogModel(file.DisplayName, new Uri(file.Path)));
 
             Images = new ObservableCollection<ImagePickerDialogModel>(images);
 
@@ -58,7 +44,8 @@ namespace PrivateWiki.Dialogs
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            PickedImage = "Hallo Test";
+			var selectedImage = ImageView.SelectedItem as ImagePickerDialogModel;
+            PickedImage = selectedImage.Title;
         }
     }
 }

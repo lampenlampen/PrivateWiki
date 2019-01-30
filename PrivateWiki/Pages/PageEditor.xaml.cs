@@ -224,7 +224,7 @@ namespace PrivateWiki.Pages
 				}
 
 				var index = PageEditorTextBox.SelectionStart;
-				var imageMarkdown = $"![{file.Name}](\\images\\{file.Name}.{file.FileType})";
+				var imageMarkdown = $"![{file.Name}](\\images\\{file.Name})";
 				var newContent = PageEditorTextBox.Text.Insert(index, imageMarkdown);
 				PageEditorTextBox.Text = newContent;
 			}
@@ -240,7 +240,8 @@ namespace PrivateWiki.Pages
 				if (PageEditorTextBox.SelectionLength != 0) return;
 
 				var index = PageEditorTextBox.SelectionStart;
-				var text = PageEditorTextBox.Text.Insert(index, dialog.PickedImage);
+				var imageMarkdownText = $"![{dialog.PickedImage}](\\images\\{dialog.PickedImage}.jpg)";
+				var text = PageEditorTextBox.Text.Insert(index, imageMarkdownText);
 				PageEditorTextBox.Text = text;
 				PageEditorTextBox.SelectionStart = index + dialog.PickedImage.Length;
 			}

@@ -15,12 +15,13 @@
         <GridView 
             Name="ImageView"
             SelectionMode="Single"
-            ItemsSource="{x:Bind Images}">
+            ItemsSource="{x:Bind Images}"
+            MinWidth="500">
             <GridView.ItemTemplate>
                 <DataTemplate x:Name="ImageGalleryDataTemplate" x:DataType="privateWiki:ImagePickerDialogModel">
-                    <Grid Height="180" Width="320" AutomationProperties.Name="{x:Bind Title}">
+                    <Grid Height="135" Width="240" AutomationProperties.Name="{x:Bind Title}">
                         <Image Source="{x:Bind Image}" Stretch="UniformToFill"/>
-                        <StackPanel Orientation="Vertical" Height="60" VerticalAlignment="Bottom" Background="{ThemeResource SystemBaseLowColor}" Padding="12">
+                        <StackPanel Orientation="Vertical" Height="40" VerticalAlignment="Bottom" Background="{ThemeResource SystemBaseLowColor}" Padding="12">
                             <TextBlock Text="{x:Bind Title}"/>
                         </StackPanel>
                     </Grid>
