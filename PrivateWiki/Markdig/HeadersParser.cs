@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Markdig.Renderers;
+using Markdig.Renderers.Html;
 using Markdig.Syntax;
 
 namespace PrivateWiki.Markdig
@@ -19,7 +21,7 @@ namespace PrivateWiki.Markdig
 		private TreeViewNode rootHeader;
 
 
-		public TreeViewNode ParseHeaders(MarkdownDocument doc)
+		public IList<TreeViewNode> ParseHeaders(MarkdownDocument doc)
 		{
 			rootHeader = new TreeViewNode {Content = "test", IsExpanded = true};
 
@@ -27,6 +29,8 @@ namespace PrivateWiki.Markdig
 
 			foreach (HeadingBlock header in headerBlocks)
 			{
+				var attributes = header.TryGetAttributes();
+				var id = attributes.Id;
 				renderer.Writer = new StringWriter();
 
 				renderer.WriteLeafInline(header);
@@ -36,7 +40,7 @@ namespace PrivateWiki.Markdig
 				switch (header.Level)
 				{
 					case 1:
-						AddHeaderLevel1(text);
+						AddHeaderLevel1(text, id);
 						break;
 					case 2:
 						AddHeaderLevel2(text);
@@ -56,12 +60,21 @@ namespace PrivateWiki.Markdig
 				}
 			}
 
-			return rootHeader;
+			return rootHeader.Children;
 		}
 
-		private void AddHeaderLevel1(string text)
+		private void AddHeaderLevel1(string text, string id)
 		{
-			AddHeaderLevel1(new TreeViewNode {Content = text});
+			var node = new TreeViewNode
+			{
+				Content = text
+			};
+
+			AddHeaderLevel1(new TreeViewNode
+			{
+				Content = text,
+				
+			});
 		}
 
 		private void AddHeaderLevel1(TreeViewNode header)

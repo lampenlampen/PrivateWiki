@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Navigation;
 using JetBrains.Annotations;
 using PrivateWiki.Data;
 using StorageProvider;
+using System.Collections.Generic;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -106,9 +107,18 @@ namespace PrivateWiki.Pages
 		{
 			var diffEngine = new diff_match_patch();
 
-			var diff = diffEngine.diff_main(page.Content, newPage);
+			var a = diffEngine.diff_linesToChars(page.Content, newPage);
+			var text1 = a[0] as string;
+			var text2 = a[1] as string;
+			var lineArray = a[2] as List<string>;
+
+
+			var diff = diffEngine.diff_main(text1, text2, false);
+			diffEngine.diff_charsToLines(diff, lineArray);
 
 			diffEngine.diff_cleanupSemantic(diff);
+
+			var htmlDiff = diffEngine.diff_prettyHtml(diff);
 
 			Frame.Navigate(typeof(ImportDiffPage), Tuple.Create(diff, Page.Id));
 		}

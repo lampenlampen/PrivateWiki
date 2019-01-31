@@ -627,7 +627,7 @@ namespace PrivateWiki
 		 *     encoded text2 and the List of unique strings.  The zeroth element
 		 *     of the List of unique strings is intentionally blank.
 		 */
-		protected object[] diff_linesToChars(string text1, string text2)
+		public object[] diff_linesToChars(string text1, string text2)
 		{
 			var lineArray = new List<string>();
 			var lineHash = new Dictionary<string, int>();
@@ -700,7 +700,7 @@ namespace PrivateWiki
 		 * @param diffs List of Diff objects.
 		 * @param lineArray List of unique strings.
 		 */
-		protected void diff_charsToLines(ICollection<Diff> diffs,
+		public void diff_charsToLines(ICollection<Diff> diffs,
 			IList<string> lineArray)
 		{
 			StringBuilder text;

@@ -117,7 +117,10 @@ namespace PrivateWiki.Pages
 			// Show TOC
 			var doc = parser.Parse(Page);
 			var toc = new HeadersParser().ParseHeaders(doc);
-			TreeView.RootNodes.Add(toc);
+			foreach (var header in toc)
+			{
+				TreeView.RootNodes.Add(header);
+			}
 
 			// Show Page
 
