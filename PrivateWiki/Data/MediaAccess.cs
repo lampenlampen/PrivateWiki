@@ -64,9 +64,9 @@ namespace PrivateWiki.Data
 			var picker = new FileSavePicker
 			{
 				SuggestedFileName = "PrivateWiki",
-				DefaultFileExtension = "mdwiki",
 				SuggestedStartLocation = PickerLocationId.DocumentsLibrary
 			};
+            picker.FileTypeChoices.Add("MarkdownWiki", new[] { ".mdwiki" });
 
 			return await picker.PickSaveFileAsync();
 		}
