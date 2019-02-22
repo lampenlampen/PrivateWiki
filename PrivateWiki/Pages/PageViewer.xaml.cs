@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -27,14 +28,16 @@ namespace PrivateWiki.Pages
 	{
 		private readonly string CodeButtonCopy = "codeButtonCopy";
 
+		private string contentPageId { get; set; }
+
+		private ContentPage Page { get; set; }
+
+		private Hashtable HeaderIds { get; set; }
+
 		public PageViewer()
 		{
 			InitializeComponent();
 		}
-
-		private string contentPageId { get; set; }
-
-		private ContentPage Page { get; set; }
 
 		private void WebViewNavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
 		{
@@ -116,7 +119,8 @@ namespace PrivateWiki.Pages
 
 			// Show TOC
 			var doc = parser.Parse(Page);
-			var toc = new HeadersParser().ParseHeaders(doc);
+			var (toc, headerIds) = new HeadersParser().ParseHeaders(doc);
+			HeaderIds = headerIds;
 			foreach (var header in toc)
 			{
 				TreeView.RootNodes.Add(header);
@@ -243,11 +247,16 @@ namespace PrivateWiki.Pages
 			wikiFile.saveAllPagesAsync();
 		}
 
-		private async void TreeView_ItemInvoked(TreeView sender,
-			[NotNull] TreeViewItemInvokedEventArgs args)
+		/// <summary>
+		/// A Headeritem in the toc was invoked.
+		/// Scrolls to the header in the page.
+		/// </summary>
+		/// <param name="sender">The pressed header</param>
+		/// <param name="args"></param>
+		private async void TreeView_ItemInvoked(TreeView sender, [NotNull] TreeViewItemInvokedEventArgs args)
 		{
-			var headerId = (string) ((TreeViewNode) args.InvokedItem).Content;
-			Debug.WriteLine($"Header Clicked: {headerId}");
+			var header = (string) ((TreeViewNode) args.InvokedItem).Content;
+			var headerId = (string) HeaderIds[header];
 
 			var scrollTo = $"document.getElementById(\"{headerId}\").scrollIntoView();";
 

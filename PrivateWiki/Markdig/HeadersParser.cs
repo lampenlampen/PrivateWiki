@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
@@ -20,8 +22,10 @@ namespace PrivateWiki.Markdig
 		private readonly HtmlRenderer renderer = new HtmlRenderer(new StringWriter());
 		private TreeViewNode rootHeader;
 
+		private Hashtable HeaderIDs { get; } = new Hashtable();
 
-		public IList<TreeViewNode> ParseHeaders(MarkdownDocument doc)
+
+		public Tuple<IList<TreeViewNode>, Hashtable> ParseHeaders(MarkdownDocument doc)
 		{
 			rootHeader = new TreeViewNode {Content = "test", IsExpanded = true};
 
@@ -43,37 +47,33 @@ namespace PrivateWiki.Markdig
 						AddHeaderLevel1(text, id);
 						break;
 					case 2:
-						AddHeaderLevel2(text);
+						AddHeaderLevel2(text, id);
 						break;
 					case 3:
-						AddHeaderLevel3(text);
+						AddHeaderLevel3(text, id);
 						break;
 					case 4:
-						AddHeaderLevel4(text);
+						AddHeaderLevel4(text, id);
 						break;
 					case 5:
-						AddHeaderLevel5(text);
+						AddHeaderLevel5(text, id);
 						break;
 					case 6:
-						AddHeaderLevel6(text);
+						AddHeaderLevel6(text, id);
 						break;
 				}
 			}
 
-			return rootHeader.Children;
+			return Tuple.Create(rootHeader.Children, HeaderIDs);
 		}
 
 		private void AddHeaderLevel1(string text, string id)
 		{
-			var node = new TreeViewNode
-			{
-				Content = text
-			};
+			HeaderIDs.Add(text, id);
 
 			AddHeaderLevel1(new TreeViewNode
 			{
 				Content = text,
-				
 			});
 		}
 
@@ -88,8 +88,9 @@ namespace PrivateWiki.Markdig
 			headerLevel6 = null;
 		}
 
-		private void AddHeaderLevel2(string text)
+		private void AddHeaderLevel2(string text, string id)
 		{
+			HeaderIDs.Add(text, id);
 			AddHeaderLevel2(new TreeViewNode {Content = text});
 		}
 
@@ -105,8 +106,9 @@ namespace PrivateWiki.Markdig
 			headerLevel6 = null;
 		}
 
-		private void AddHeaderLevel3(string text)
+		private void AddHeaderLevel3(string text, string id)
 		{
+			HeaderIDs.Add(text, id);
 			AddHeaderLevel3(new TreeViewNode {Content = text});
 		}
 
@@ -121,8 +123,9 @@ namespace PrivateWiki.Markdig
 			headerLevel6 = null;
 		}
 
-		private void AddHeaderLevel4(string text)
+		private void AddHeaderLevel4(string text, string id)
 		{
+			HeaderIDs.Add(text, id);
 			AddHeaderLevel4(new TreeViewNode {Content = text});
 		}
 
@@ -136,8 +139,9 @@ namespace PrivateWiki.Markdig
 			headerLevel6 = null;
 		}
 
-		private void AddHeaderLevel5(string text)
+		private void AddHeaderLevel5(string text, string id)
 		{
+			HeaderIDs.Add(text, id);
 			AddHeaderLevel5(new TreeViewNode {Content = text});
 		}
 
@@ -150,8 +154,9 @@ namespace PrivateWiki.Markdig
 			headerLevel6 = null;
 		}
 
-		private void AddHeaderLevel6(string text)
+		private void AddHeaderLevel6(string text, string id)
 		{
+			HeaderIDs.Add(text, id);
 			AddHeaderLevel6(new TreeViewNode {Content = text});
 		}
 
