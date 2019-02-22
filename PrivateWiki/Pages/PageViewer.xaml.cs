@@ -124,6 +124,7 @@ namespace PrivateWiki.Pages
 			foreach (var header in toc)
 			{
 				TreeView.RootNodes.Add(header);
+				header.IsExpanded = true;
 			}
 
 			// Show Page
