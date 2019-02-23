@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Windows.Storage;
@@ -275,8 +276,7 @@ namespace PrivateWiki.Pages
 
 		private async void Pdf_Click(object sender, RoutedEventArgs e)
 		{
-			//Debug.WriteLine("Print");
-			await FileSystemAccess.SaveToFolder();
+			// TODO Print PDF
 		}
 
 		private void Favorite_Click(object sender, RoutedEventArgs e)
@@ -353,6 +353,11 @@ namespace PrivateWiki.Pages
 			Frame.Navigate(typeof(MediaManager));
 		}
 
+		/// <summary>
+		/// Called when the user clicks the "Export"-Button.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private async void Export_Click(object sender, RoutedEventArgs e)
 		{
 			var dialog = new ExportDialog(Page.Id);
@@ -360,7 +365,7 @@ namespace PrivateWiki.Pages
 			var result = await dialog.ShowAsync();
 		}
 
-		private void SiteManager_Click(object sender, RoutedEventArgs e)
+		private async void SiteManager_Click(object sender, RoutedEventArgs e)
 		{
 			// TODO Site Manager
 		}
