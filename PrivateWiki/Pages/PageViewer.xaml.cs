@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Linq;
@@ -31,8 +31,6 @@ namespace PrivateWiki.Pages
 		private string contentPageId { get; set; }
 
 		private ContentPage Page { get; set; }
-
-		private Hashtable HeaderIds { get; set; }
 
 		public PageViewer()
 		{
@@ -119,8 +117,7 @@ namespace PrivateWiki.Pages
 
 			// Show TOC
 			var doc = parser.Parse(Page);
-			var (toc, headerIds) = new HeadersParser().ParseHeaders(doc);
-			HeaderIds = headerIds;
+			var toc = new HeadersParser().ParseHeaders(doc);
 			foreach (var header in toc)
 			{
 				TreeView.RootNodes.Add(header);
@@ -256,14 +253,13 @@ namespace PrivateWiki.Pages
 		/// <param name="args"></param>
 		private async void TreeView_ItemInvoked(TreeView sender, [NotNull] TreeViewItemInvokedEventArgs args)
 		{
-			var header = (string) ((TreeViewNode) args.InvokedItem).Content;
-			var headerId = (string) HeaderIds[header];
+			var node = (MyTreeViewNode) args.InvokedItem;
+			var header = (string) node.Content;
+			var headerId = node.Tag;
 
 			var scrollTo = $"document.getElementById(\"{headerId}\").scrollIntoView();";
 
 			await Webview.InvokeScriptAsync("eval", new[] {scrollTo});
-
-			Debug.WriteLine("Scrolled");
 		}
 
 		private void Print_Click(object sender, RoutedEventArgs e)
