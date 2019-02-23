@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Linq;
@@ -358,6 +358,64 @@ namespace PrivateWiki.Pages
 			var dialog = new ExportDialog(Page.Id);
 
 			var result = await dialog.ShowAsync();
+		}
+
+		private void SiteManager_Click(object sender, RoutedEventArgs e)
+		{
+			// TODO Site Manager
+		}
+
+		/// <summary>
+		/// This method is called, if the user clicked the "Import"-Button.
+		///
+		/// The method should import a markdown page into the database.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private async void Import_Click(object sender, RoutedEventArgs e)
+		{
+			// TODO Import Markdown File
+			// TODO Import Images
+
+			var file = MediaAccess.PickMarkdownFileAsync();
+
+			var importer = new MarkdownImport();
+
+			var page = await importer.ImportMarkdownFileAsync(await file);
+
+			var dialog = new ContentDialog
+			{
+				Name = "Import Page",
+				Content = "If a page with the same id exists already, it will be overriden by the imported one.",
+				PrimaryButtonText = "Import",
+				CloseButtonText = "Abort",
+				DefaultButton = ContentDialogButton.Primary
+			};
+
+			var result = dialog.ShowAsync();
+
+			if (await result == ContentDialogResult.Primary)
+			{
+				// Import Button Clicked
+
+				var pageProvider = new ContentPageProvider();
+
+				if (pageProvider.ContainsContentPage(page))
+				{
+					// Page already exists in db
+					// Update Page (override)
+					// TODO Update existing Page
+
+					pageProvider.UpdateContentPage(page);
+				}
+				else
+				{
+					// Page does not exists already in db
+					// Insert Page
+
+					pageProvider.InsertContentPage(page);
+				}
+			}
 		}
 	}
 }

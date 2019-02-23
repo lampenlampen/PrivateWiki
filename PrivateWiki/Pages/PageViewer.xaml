@@ -92,8 +92,16 @@
                     Click="Export_Click" />
 
                 <AppBarButton
+                    Label="Import"
+                    Click="Import_Click" />
+
+                <AppBarButton
                     Label="Media Manager"
                     Click="MediaManager_Click" />
+
+                <AppBarButton
+                    Label="Site Manager"
+                    Click="SiteManager_Click" />
 
                 <AppBarButton Label="Settings" Icon="Setting" Click="Setting_Click" />
 
