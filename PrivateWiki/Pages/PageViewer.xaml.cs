@@ -257,7 +257,6 @@ namespace PrivateWiki.Pages
 			var node = (MyTreeViewNode) args.InvokedItem;
 			var header = (string) node.Content;
 			var headerId = node.Tag;
-
 			var scrollTo = $"document.getElementById(\"{headerId}\").scrollIntoView();";
 
 			await Webview.InvokeScriptAsync("eval", new[] {scrollTo});
@@ -274,9 +273,35 @@ namespace PrivateWiki.Pages
 			await Webview.InvokeScriptAsync("eval", new[] {@"window.scrollTo(0,0);"});
 		}
 
+		/// <summary>
+		/// This method is called, when the user clicks the "Print"-Button.
+		///
+		/// Prints the current page to a pdf file.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private async void Pdf_Click(object sender, RoutedEventArgs e)
 		{
 			// TODO Print PDF
+
+			var dialog = new ContentDialog
+			{
+				Title = "Print Dialog",
+				Content = "This App currently does not directly support pdf printing functionality.\r\nIt is possible to open this Page in your Browser, where you can print the page to PDF.",
+				PrimaryButtonText = "Open in Browser",
+				CloseButtonText = "Close",
+				DefaultButton = ContentDialogButton.Primary
+			};
+
+			var result = await dialog.ShowAsync();
+
+			if (result == ContentDialogResult.Primary)
+			{
+				var pageExporter = new PageExporter();
+				var file = await pageExporter.ExportPage(Page);
+
+				_ = Launcher.LaunchFileAsync(file);
+			}
 		}
 
 		private void Favorite_Click(object sender, RoutedEventArgs e)
@@ -358,11 +383,9 @@ namespace PrivateWiki.Pages
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private async void Export_Click(object sender, RoutedEventArgs e)
+		private void Export_Click(object sender, RoutedEventArgs e)
 		{
-			var dialog = new ExportDialog(Page.Id);
-
-			var result = await dialog.ShowAsync();
+			_ = new ExportDialog(Page.Id).ShowAsync();
 		}
 
 		private async void SiteManager_Click(object sender, RoutedEventArgs e)

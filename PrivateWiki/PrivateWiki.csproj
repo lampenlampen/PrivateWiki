@@ -100,6 +100,7 @@
     <Compile Include="Data\IPageAccess.cs" />
     <Compile Include="Data\MarkdownImport.cs" />
     <Compile Include="Data\MediaAccess.cs" />
+    <Compile Include="Data\PageExporter.cs" />
     <Compile Include="Dialogs\ExportDialog.xaml.cs">
       <DependentUpon>ExportDialog.xaml</DependentUpon>
     </Compile>
