@@ -1,7 +1,8 @@
 ﻿using System;
 
-namespace StorageProvide.Migrations
+namespace StorageProvider.Migrations
 {
+	
 	internal class Program
 	{
 		private static void Main(string[] args)

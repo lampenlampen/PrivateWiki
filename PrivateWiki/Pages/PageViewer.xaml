@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition Width="11" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
@@ -41,8 +41,7 @@
             Background="{ThemeResource SystemControlBackgroundAccentBrush}">
 
             <AppBarButton Label="To Top" Icon="Up" Click="Top_Click" />
-            <AppBarButton Label="PDF" Icon="Document" Click="Pdf_Click" />
-            <AppBarButton Label="Print" Icon="Print" Click="Print_Click">
+            <AppBarButton Label="PDF" Icon="Print" Click="Pdf_Click">
                 <AppBarButton.KeyboardAccelerators>
                     <KeyboardAccelerator
                         Modifiers="Control"
@@ -89,11 +88,12 @@
 
                 <AppBarButton
                     Label="Export"
-                    Click="Export_Click" />
+                    Click="Export_Click"/>
 
                 <AppBarButton
                     Label="Import"
-                    Click="Import_Click" />
+                    Click="Import_Click"
+                    Icon="Import"/>
 
                 <AppBarButton
                     Label="Media Manager"
@@ -113,7 +113,7 @@
             Name="WebViewBorder"
             Grid.Row="1"
             Grid.Column="0"
-            BorderThickness="1"
+            BorderThickness="0"
             BorderBrush="LightGray"
             Background="White"
             Padding="10, 10, 10, 10">
@@ -136,42 +136,42 @@
 
         </Border>
 
+        <Line
+            Grid.Row="1"
+            Grid.Column="1"
+            Stroke="Gray"
+            StrokeThickness="2"
+            Y1="0"
+            Y2="200000"
+            HorizontalAlignment="Center"/>
+
         <controls:GridSplitter
             Grid.Row="1"
             Grid.Column="1"
             Width="11"
-            ResizeBehavior="BasedOnAlignment"
-            ResizeDirection="Auto"
-            Background="Gray"
+            MinWidth="0"
+            ResizeBehavior="PreviousAndNext"
+            ResizeDirection="Columns"
+            Background="Transparent"
             Foreground="White"
-            FontSize="13">
+            FontSize="13"
+            Padding="0, 0, 0, 0"/>
 
-            <controls:GridSplitter.Element>
-                <Grid>
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        IsHitTestVisible="False"
-                        VerticalAlignment="Center"
-                        Text="&#xE784;"
-                        Foreground="Black"
-                        FontFamily="Segoe MDL2 Assets" />
-                </Grid>
-
-            </controls:GridSplitter.Element>
-        </controls:GridSplitter>
-
+        
 
         <StackPanel
             Name="RightMenu"
             Grid.Row="1"
             Grid.Column="2"
-            Padding="0, 10, 10, 20">
+            Padding="0, 10, 10, 20"
+            Margin="0,0,0,0"
+            Background="White">
 
             <TextBlock Text="Table of Contents"
                        HorizontalAlignment="Left"
                        FontSize="30"
                        TextDecorations="Underline"
-                       Padding="20, 0, 0, 20" />
+                       Padding="10, 0, 0, 20" />
 
             <TreeView
                 Name="TreeView"
@@ -184,7 +184,7 @@
                        HorizontalAlignment="Left"
                        FontSize="30"
                        TextDecorations="Underline"
-                       Padding="20, 20, 0, 20" />
+                       Padding="10, 20, 0, 20" />
 
             <ListView
                 Name="ListView"

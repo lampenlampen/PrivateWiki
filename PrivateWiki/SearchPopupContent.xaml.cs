@@ -4,7 +4,10 @@ using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using DataAccessLibrary;
+using NodaTime;
 using PrivateWiki.Data;
+using PrivateWiki.Data.DataAccess;
 using StorageProvider;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -13,16 +16,18 @@ namespace PrivateWiki
 {
 	public sealed partial class SearchPopupContent : UserControl
 	{
-		private readonly List<ContentPage> _pages;
-		private ObservableCollection<ContentPage> Pages = new ObservableCollection<ContentPage>();
+		private readonly List<PageModel> _pages;
+		private ObservableCollection<PageModel> Pages = new ObservableCollection<PageModel>();
+
+		private DataAccessImpl dataAccess;
 
 
 		public SearchPopupContent()
 		{
 			InitializeComponent();
-
-			var provider = new ContentPageProvider();
-			_pages = provider.GetAllContentPages();
+			dataAccess = new DataAccessImpl();
+			
+			_pages = dataAccess.GetPages();
 
 
 			SearchResultsBox.ItemsSource = Pages;
@@ -31,9 +36,9 @@ namespace PrivateWiki
 
 		private void Filter(string text)
 		{
-			var pages = _pages.Filter(p => p.Id.Contains(text));
+			var pages = _pages.Filter(p => p.Link.Contains(text));
 
-			Pages = new ObservableCollection<ContentPage>(pages);
+			Pages = new ObservableCollection<PageModel>(pages);
 		}
 
 		private void SearchBox_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

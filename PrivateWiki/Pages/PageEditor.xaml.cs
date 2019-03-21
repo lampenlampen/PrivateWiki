@@ -7,8 +7,11 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using DataAccessLibrary;
 using JetBrains.Annotations;
+using NodaTime;
 using PrivateWiki.Data;
+using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Dialogs;
 using PrivateWiki.Markdig;
 using StorageProvider;
@@ -21,13 +24,17 @@ namespace PrivateWiki.Pages
     ///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
     public sealed partial class PageEditor : Page
-	{
+    {
+
+	    private DataAccessImpl dataAccess;
 		public PageEditor()
 		{
 			InitializeComponent();
+			dataAccess = new DataAccessImpl();
+
 		}
 
-		[NotNull] private ContentPage Page { get; set; }
+		[NotNull] private PageModel Page { get; set; }
 		private bool NewPage { get; set; }
 
 		private void PreviewWebviewNavigationStartedAsync(WebView sender,
@@ -53,16 +60,14 @@ namespace PrivateWiki.Pages
 			Debug.WriteLine($"Id: {pageId}");
 			if (pageId == null) throw new ArgumentNullException("Page id must be nonnull!");
 
-			var pageProvider = new ContentPageProvider();
-
-			if (pageProvider.ContainsContentPage(pageId))
+			if (dataAccess.ContainsPage(pageId))
 			{
-				Page = pageProvider.GetContentPage(pageId);
+				Page = dataAccess.GetPageOrNull(pageId);
 			}
 			else
 			{
 				NewPage = true;
-				Page = ContentPage.Create(pageId);
+				Page = new PageModel(Guid.NewGuid(), pageId, "", SystemClock.Instance);
 			}
 
 			ShowPageInEditor();
@@ -109,7 +114,7 @@ namespace PrivateWiki.Pages
 			if (NewPage)
 			{
 				// TODO Error while Inserting Page
-				new ContentPageProvider().InsertContentPage(Page);
+				dataAccess.InsertPage(Page);
 
 				Frame.Navigate(typeof(PageViewer), Page.Id);
 				RemoveEditorPageFromBackStack();
@@ -117,7 +122,7 @@ namespace PrivateWiki.Pages
 			else
 			{
 				// TODO Error while Updating Page
-				new ContentPageProvider().UpdateContentPage(Page);
+				dataAccess.UpdatePage(Page);
 
 				if (Frame.CanGoBack) Frame.GoBack();
 			}
@@ -146,7 +151,7 @@ namespace PrivateWiki.Pages
 			{
 				// Delete the page.
 				Debug.WriteLine("Delete");
-				new ContentPageProvider().DeleteContentPage(Page);
+				dataAccess.DeletePage(Page);
 
 				if (Frame.CanGoBack)
 				{
@@ -172,8 +177,12 @@ namespace PrivateWiki.Pages
 			}
 
 			if (Pivot.SelectedIndex == 2)
-				foreach (var tag in Page.Tags)
-					ListView.Items.Add(tag.Name);
+			{
+				/*
+					foreach (var tag in Page.Tags)
+						ListView.Items.Add(tag.Name);
+						*/
+			}
 		}
 
 		private void AddTag_Click(object sender, RoutedEventArgs e)

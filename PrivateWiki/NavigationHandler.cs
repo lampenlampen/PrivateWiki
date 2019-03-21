@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using DataAccessLibrary;
 using JetBrains.Annotations;
 using StorageProvider;
 
@@ -12,17 +13,17 @@ namespace PrivateWiki
 
 		internal static List<string> Pages { get; set; } = new List<string>();
 
-		public static bool AddPage([NotNull] ContentPage page)
+		public static bool AddPage([NotNull] PageModel page)
 		{
-			Pages.Remove(page.Id);
-			Pages.Add(page.Id);
+			Pages.Remove(page.Link);
+			Pages.Add(page.Link);
 			Normalize();
 			return true;
 		}
 
-		public static bool RemovePage([NotNull] ContentPage page)
+		public static bool RemovePage([NotNull] PageModel page)
 		{
-			Pages.Remove(page.Id);
+			Pages.Remove(page.Link);
 
 			return true;
 		}

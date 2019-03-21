@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
+using DataAccessLibrary;
 using JetBrains.Annotations;
+using NodaTime;
 using PrivateWiki.Data;
+using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Markdig;
 using StorageProvider;
 
@@ -16,25 +19,28 @@ namespace PrivateWiki.Dialogs
 	{
 		[NotNull] private readonly string _id;
 
+		private DataAccessImpl dataAccess;
+
 		public ExportDialog(string id)
 		{
 			InitializeComponent();
 			_id = id;
+			dataAccess = new DataAccessImpl();
 		}
 
 		private async void Export_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
 			var folder = await MediaAccess.PickFolderAsync();
 
-			var pages = new List<ContentPage>();
+			var pages = new List<PageModel>();
 
 			if (ExportAllPages.IsChecked == true)
 			{
-				pages.AddRange(new ContentPageProvider().GetAllContentPages());
+				pages.AddRange(dataAccess.GetPages());
 			}
 			else if (ExportSinglePage.IsChecked == true)
 			{
-				pages.Add(new ContentPageProvider().GetContentPage(_id));
+				pages.Add(dataAccess.GetPageOrNull(_id));
 			}
 
 			var exportHtml = ExportHtml.IsChecked == true;
@@ -46,14 +52,14 @@ namespace PrivateWiki.Dialogs
 				{
 					var parser = new MarkdigParser();
 
-					var file = await folder.CreateFileAsync($"{page.Id.Replace(':', '_')}.html",
+					var file = await folder.CreateFileAsync($"{page.Link.Replace(':', '_')}.html",
 						CreationCollisionOption.ReplaceExisting);
 					await FileIO.WriteTextAsync(file, parser.ToHtmlString(page.Content), UnicodeEncoding.Utf8);
 				}
 
 				if (exportMarkdown)
 				{
-					var file = await folder.CreateFileAsync($"{page.Id.Replace(':', '_')}.md",
+					var file = await folder.CreateFileAsync($"{page.Link.Replace(':', '_')}.md",
 						CreationCollisionOption.ReplaceExisting);
 					await FileIO.WriteTextAsync(file, page.Content, UnicodeEncoding.Utf8);
 				}

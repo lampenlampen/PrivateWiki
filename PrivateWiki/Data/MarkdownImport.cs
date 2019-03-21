@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
+using DataAccessLibrary;
+using NodaTime;
 using StorageProvider;
 
 namespace PrivateWiki.Data
 {
 	public class MarkdownImport
 	{
-		private StorageFile File { get; set; }
-
-		public async Task<ContentPage> ImportMarkdownFileAsync(StorageFile file)
+		public async Task<PageModel> ImportMarkdownFileAsync(StorageFile file)
 		{
-			File = file;
+			var token = StorageApplicationPermissions.FutureAccessList.Add(file);
 
-			var content = await ReadMarkdownFileAsync();
+			var content = await ReadMarkdownFileAsync(file);
 
-			return new ContentPage(file.DisplayName, content);
+			return new PageModel(Guid.NewGuid(), file.DisplayName, content, SystemClock.Instance, token, SystemClock.Instance.GetCurrentInstant());
 		}
 
-		private async Task<string> ReadMarkdownFileAsync()
+		private async Task<string> ReadMarkdownFileAsync(StorageFile file)
 		{
-			return await FileIO.ReadTextAsync(File);
+			return await FileIO.ReadTextAsync(file);
 		}
 	}
 }

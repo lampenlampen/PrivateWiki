@@ -8,6 +8,7 @@ using StorageProvider;
 
 namespace StorageProvider.Migrations
 {
+	[Obsolete]
     [DbContext(typeof(PageContext))]
     [Migration("20181020135141_InitialCreate")]
     partial class InitialCreate

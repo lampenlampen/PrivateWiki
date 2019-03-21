@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PrivateWiki</RootNamespace>
     <AssemblyName>PrivateWiki</AssemblyName>
-    <DefaultLanguage>de-DE</DefaultLanguage>
+    <DefaultLanguage>en-us</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
@@ -75,6 +75,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <WarningLevel>2</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -96,7 +97,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\ContentPageProvider.cs" />
+    <Compile Include="Data\DataAccess\DataAccessLibrary.DataAccessImpl.cs" />
+    <Compile Include="Data\DataAccess\IDataAccess.cs" />
     <Compile Include="Data\InitPages.cs" />
+    <Compile Include="Data\DefaultPages.cs" />
     <Compile Include="Data\IPageAccess.cs" />
     <Compile Include="Data\MarkdownImport.cs" />
     <Compile Include="Data\MediaAccess.cs" />
@@ -167,8 +171,12 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="PrivateWiki_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\DefaultPages\Syntax.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Visual_Studio_Code_1.18_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -270,8 +278,18 @@
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.0.181018003.1</Version>
     </PackageReference>
+    <PackageReference Include="NodaTime">
+      <Version>2.4.4</Version>
+    </PackageReference>
+    <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3">
+      <Version>1.1.13</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataAccessLibrary\DataAccessLibrary.csproj">
+      <Project>{9D7A3C2D-31DC-4D9E-AFD0-2E1FE0631044}</Project>
+      <Name>DataAccessLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StorageProvider\StorageProvider.csproj">
       <Project>{a89ee218-2edd-4807-bcbf-35e409a1b7ee}</Project>
       <Name>StorageProvider</Name>

@@ -1,26 +1,29 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
+using NodaTime;
 using StorageProvider;
 
 namespace PrivateWiki.Data
 {
+	[Obsolete("Use DefaultPages instead", false)]
 	internal static class InitPages
 	{
 		public static void InitPages2()
 		{
-			var provider = new ContentPageProvider();
+			var provider = new ContentPageProvider(SystemClock.Instance);
 
-			if (!provider.ContainsContentPage("syntax")) InitSyntaxPage(provider);
+			if (!provider.ContainsPage("syntax")) InitSyntaxPage(provider);
 
-			if (!provider.ContainsContentPage("start")) InitStartPage(provider);
+			if (!provider.ContainsPage("start")) InitStartPage(provider);
 
-			if (!provider.ContainsContentPage("test")) InitTestPage(provider);
+			if (!provider.ContainsPage("test")) InitTestPage(provider);
 		}
 
 		private static void InitSyntaxPage([NotNull] ContentPageProvider provider)
 		{
 			var syntaxPage = new ContentPage("syntax", GetSyntaxPageString());
 
-			provider.InsertContentPage(syntaxPage);
+			provider.InsertPage(syntaxPage);
 		}
 
 		private static string GetSyntaxPageString()
@@ -40,10 +43,10 @@ namespace PrivateWiki.Data
 		private static void InitStartPage([NotNull] ContentPageProvider provider)
 		{
 			var startPage = new ContentPage("start", GetStartPageString());
-			provider.InsertContentPage(startPage);
+			provider.InsertPage(startPage);
 		}
 
-		private static string GetStartPageString()
+		internal static string GetStartPageString()
 		{
 			return @"# Welcome to your Private Wiki
 
@@ -57,7 +60,7 @@ To view a preview article follow this [link](:test)";
 		private static void InitTestPage([NotNull] ContentPageProvider provider)
 		{
 			var testPage = new ContentPage("test", GetTestPageString());
-			provider.InsertContentPage(testPage);
+			provider.InsertPage(testPage);
 		}
 
 		private static string GetTestPageString()

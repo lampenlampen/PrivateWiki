@@ -11,6 +11,9 @@ using JetBrains.Annotations;
 using PrivateWiki.Data;
 using StorageProvider;
 using System.Collections.Generic;
+using DataAccessLibrary;
+using NodaTime;
+using PrivateWiki.Data.DataAccess;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -21,13 +24,16 @@ namespace PrivateWiki.Pages
     /// </summary>
     public sealed partial class ExternalEditor : Page
 	{
-		private ContentPage Page;
+		private PageModel Page;
 		private readonly string TMP_FILE_FUTURE_ACCESS_LIST = "tmp_file_future_access_list";
 		private string VSCODE_PATH = "C:\\Software\\Microsoft VS Code\\bin\\code.cmd";
+
+		private DataAccessImpl dataAccess;
 
 		public ExternalEditor()
 		{
 			InitializeComponent();
+			dataAccess = new DataAccessImpl();
 		}
 
 		protected override void OnNavigatedTo([NotNull] NavigationEventArgs e)
@@ -36,7 +42,7 @@ namespace PrivateWiki.Pages
 
 			var pageId = (string) e.Parameter;
 
-			Page = new ContentPageProvider().GetContentPage(pageId);
+			Page = dataAccess.GetPageOrNull(pageId);
 
 			LaunchExternalEditor();
 		}
@@ -56,7 +62,7 @@ namespace PrivateWiki.Pages
 			var picker = new FileSavePicker
 			{
 				SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
-				SuggestedFileName = Page.Id.Replace(":", "_")
+				SuggestedFileName = Page.Link.Replace(":", "_")
 			};
 			picker.FileTypeChoices.Add("Markdown", new[] {".md"});
 
@@ -95,7 +101,7 @@ namespace PrivateWiki.Pages
 
 				Page.Content = content;
 
-				new ContentPageProvider().UpdateContentPage(Page);
+				dataAccess.UpdatePage(Page);
 
 				file.DeleteAsync();
 			}
@@ -103,7 +109,7 @@ namespace PrivateWiki.Pages
 			//if (Frame.CanGoBack) Frame.GoBack();
 		}
 
-		private void GenerateDiff(ContentPage page, string newPage)
+		private void GenerateDiff(PageModel page, string newPage)
 		{
 			var diffEngine = new diff_match_patch();
 

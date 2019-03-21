@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="2.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="JetBrains.Annotations">
+      <HintPath>..\..\..\.nuget\packages\jetbrains.annotations\2018.3.0\lib\netstandard2.0\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="NodaTime">
+      <HintPath>..\..\..\.nuget\packages\nodatime\2.4.4\lib\netstandard2.0\NodaTime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

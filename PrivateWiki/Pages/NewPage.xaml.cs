@@ -3,8 +3,11 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using DataAccessLibrary;
 using JetBrains.Annotations;
+using NodaTime;
 using PrivateWiki.Data;
+using PrivateWiki.Data.DataAccess;
 using StorageProvider;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -17,9 +20,12 @@ namespace PrivateWiki.Pages
 	{
 		[CanBeNull] private string _pageId;
 
+		private DataAccessImpl dataAccess;
+
 		public NewPage()
 		{
 			InitializeComponent();
+			dataAccess = new DataAccessImpl();
 		}
 
 		protected override void OnNavigatedTo([NotNull] NavigationEventArgs e)
@@ -39,11 +45,11 @@ namespace PrivateWiki.Pages
 
 			if (file == null) return;
 
-			var page = ContentPage.Create(_pageId);
+			var content = await FileIO.ReadTextAsync(file);
 
-			page.Content = await FileIO.ReadTextAsync(file);
+			var page = new PageModel(Guid.NewGuid(), _pageId, content, SystemClock.Instance);
 
-			new ContentPageProvider().InsertContentPage(page);
+			dataAccess.InsertPage(page);
 
 			NavigateToPage();
 		}

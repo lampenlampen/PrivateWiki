@@ -3,13 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using NodaTime;
+using PrivateWiki.Data.DataAccess;
 using StorageProvider;
 
 namespace PrivateWiki.Data
 {
-	internal class ContentPageProvider : IPageAccess
+	[Obsolete("Use DataAccessImpl instead", true)]
+	internal class ContentPageProvider : DataAccessImpl
 	{
-		public void InitDatabase()
+		private IClock Clock { get; set; }
+
+		public ContentPageProvider(IClock clock)
+		{
+			Clock = clock;
+		}
+
+		public void InitializeDatabase()
 		{
 			using (var db = new PageContext())
 			{
@@ -18,7 +28,7 @@ namespace PrivateWiki.Data
 		}
 
 		[NotNull]
-		public ContentPage GetContentPage([NotNull] string id)
+		public ContentPage GetPage([NotNull] string id)
 		{
 			using (var db = new PageContext())
 			{
@@ -27,7 +37,7 @@ namespace PrivateWiki.Data
 		}
 
 		[NotNull]
-		public List<ContentPage> GetAllContentPages()
+		public List<ContentPage> GetAllPages()
 		{
 			using (var db = new PageContext())
 			{
@@ -35,10 +45,10 @@ namespace PrivateWiki.Data
 			}
 		}
 
-		public bool InsertContentPage([NotNull] ContentPage page)
+		public bool InsertPage([NotNull] ContentPage page)
 		{
-			page.CreationTime = new DateTimeOffset();
-			page.ChangeTime = new DateTimeOffset();
+			page.CreationTime = Clock.GetCurrentInstant();
+			page.ChangeTime = Clock.GetCurrentInstant();
 
 			using (var db = new PageContext())
 			{
@@ -48,9 +58,9 @@ namespace PrivateWiki.Data
 			}
 		}
 
-		public bool UpdateContentPage([NotNull] ContentPage page)
+		public bool UpdatePage([NotNull] ContentPage page)
 		{
-			page.ChangeTime = DateTimeOffset.Now;
+			page.ChangeTime = Clock.GetCurrentInstant();
 
 
 			using (var db = new PageContext())
@@ -61,7 +71,7 @@ namespace PrivateWiki.Data
 			}
 		}
 
-		public bool DeleteContentPage([NotNull] ContentPage page)
+		public bool DeletePage([NotNull] ContentPage page)
 		{
 			using (var db = new PageContext())
 			{
@@ -71,7 +81,7 @@ namespace PrivateWiki.Data
 			}
 		}
 
-		public bool ContainsContentPage([NotNull] ContentPage page)
+		public bool ContainsPage([NotNull] ContentPage page)
 		{
 			using (var db = new PageContext())
 			{
@@ -79,9 +89,9 @@ namespace PrivateWiki.Data
 			}
 		}
 
-		public bool ContainsContentPage([NotNull] string id)
+		public bool ContainsPage([NotNull] string id)
 		{
-			return ContainsContentPage(ContentPage.Create(id));
+			return ContainsPage(ContentPage.Create(id));
 		}
 	}
 }

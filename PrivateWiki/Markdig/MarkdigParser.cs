@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text;
+using DataAccessLibrary;
 using JetBrains.Annotations;
 using Markdig;
 using Markdig.Renderers;
@@ -52,7 +53,7 @@ namespace PrivateWiki.Markdig
 			return dom;
 		}
 
-		public MarkdownDocument Parse(ContentPage page)
+		public MarkdownDocument Parse(PageModel page)
 		{
 			return Parse(page.Content);
 		}
@@ -92,7 +93,7 @@ namespace PrivateWiki.Markdig
 			return builder.ToString();
 		}
 
-		public string ToHtmlString(ContentPage page)
+		public string ToHtmlString(PageModel page)
 		{
 			return ToHtmlString(page.Content);
 		}

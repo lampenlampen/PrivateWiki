@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
 using Windows.System;
 using Windows.UI.Text;
 using Windows.UI.ViewManagement;
@@ -12,8 +13,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using DataAccessLibrary;
 using JetBrains.Annotations;
+using NodaTime;
 using PrivateWiki.Data;
+using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Dialogs;
 using PrivateWiki.Markdig;
 using StorageProvider;
@@ -22,20 +26,23 @@ using StorageProvider;
 
 namespace PrivateWiki.Pages
 {
-    /// <summary>
-    ///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-    /// </summary>
-    public sealed partial class PageViewer : Page
+	/// <summary>
+	///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+	/// </summary>
+	public sealed partial class PageViewer : Page
 	{
 		private readonly string CodeButtonCopy = "codeButtonCopy";
 
+		private DataAccessImpl dataAccess;
+
 		private string contentPageId { get; set; }
 
-		private ContentPage Page { get; set; }
+		private PageModel Page { get; set; }
 
 		public PageViewer()
 		{
 			InitializeComponent();
+			dataAccess = new DataAccessImpl();
 		}
 
 		private void WebViewNavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
@@ -94,16 +101,14 @@ namespace PrivateWiki.Pages
 
 		private async void ShowContentPage()
 		{
-			var provider = new ContentPageProvider();
-
-			if (!provider.ContainsContentPage(contentPageId))
+			if (!dataAccess.ContainsPage(contentPageId))
 				if (Frame.CanGoBack)
 				{
 					Frame.GoBack();
 					return;
 				}
 
-			Page = provider.GetContentPage(contentPageId);
+			Page = dataAccess.GetPageOrNull(contentPageId);
 			Debug.WriteLine($"Page Some: {contentPageId}");
 			var parser = new MarkdigParser();
 
@@ -136,9 +141,27 @@ namespace PrivateWiki.Pages
 			Webview.Navigate(new Uri("ms-appdata:///local/media/index.html"));
 
 			// Show Tags
+			/*
 			if (Page.Tags != null)
 				foreach (var tag in Page.Tags)
 					ListView.Items.Add(tag.Name);
+			*/
+		}
+
+		private async void CheckExternalPage()
+		{
+			if (Page.ExternalFileToken == null)
+			{
+				return;
+			}
+
+			var token = Page.ExternalFileToken;
+			var importDate = Page.ExternalFileImportDate;
+
+			var file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
+
+			var fileProperties = await file.GetBasicPropertiesAsync();
+			var modifiedDate = fileProperties.DateModified;
 		}
 
 		private void ShowLastVisitedPages()
@@ -223,14 +246,14 @@ namespace PrivateWiki.Pages
 			NavigateToPage(id);
 		}
 
-		private void NavigateToPage([NotNull] string id)
+		private void NavigateToPage([NotNull] string link)
 		{
-			if (Page.Id.Equals(id)) return;
+			if (Page.Link.Equals(link)) return;
 
-			if (new ContentPageProvider().ContainsContentPage(id))
-				Frame.Navigate(typeof(PageViewer), id);
+			if (dataAccess.ContainsPage(link))
+				Frame.Navigate(typeof(PageViewer), link);
 			else
-				Frame.Navigate(typeof(NewPage), id);
+				Frame.Navigate(typeof(NewPage), link);
 		}
 
 		private void Edit_Click(object sender, RoutedEventArgs e)
@@ -283,11 +306,12 @@ namespace PrivateWiki.Pages
 		private async void Pdf_Click(object sender, RoutedEventArgs e)
 		{
 			// TODO Print PDF
+			var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
 
 			var dialog = new ContentDialog
 			{
-				Title = "Print Dialog",
-				Content = "This App currently does not directly support pdf printing functionality.\r\nIt is possible to open this Page in your Browser, where you can print the page to PDF.",
+				Title = resourceLoader.GetString("PrintPDF/Dialog/Title"),
+				Content = resourceLoader.GetString("PrintPDF/Dialog/Content"),
 				PrimaryButtonText = "Open in Browser",
 				CloseButtonText = "Close",
 				DefaultButton = ContentDialogButton.Primary
@@ -307,7 +331,7 @@ namespace PrivateWiki.Pages
 		private void Favorite_Click(object sender, RoutedEventArgs e)
 		{
 			Page.IsFavorite = true;
-			new ContentPageProvider().UpdateContentPage(Page);
+			dataAccess.UpdatePage(Page);
 		}
 
 		private void Fullscreen_Click(object sender, RoutedEventArgs e)
@@ -385,7 +409,7 @@ namespace PrivateWiki.Pages
 		/// <param name="e"></param>
 		private void Export_Click(object sender, RoutedEventArgs e)
 		{
-			_ = new ExportDialog(Page.Id).ShowAsync();
+			_ = new ExportDialog(Page.Link).ShowAsync();
 		}
 
 		private async void SiteManager_Click(object sender, RoutedEventArgs e)
@@ -425,23 +449,20 @@ namespace PrivateWiki.Pages
 			if (await result == ContentDialogResult.Primary)
 			{
 				// Import Button Clicked
-
-				var pageProvider = new ContentPageProvider();
-
-				if (pageProvider.ContainsContentPage(page))
+				if (dataAccess.ContainsPage(page))
 				{
 					// Page already exists in db
 					// Update Page (override)
 					// TODO Update existing Page
 
-					pageProvider.UpdateContentPage(page);
+					dataAccess.UpdatePage(page);
 				}
 				else
 				{
 					// Page does not exists already in db
 					// Insert Page
 
-					pageProvider.InsertContentPage(page);
+					dataAccess.InsertPage(page);
 				}
 			}
 		}

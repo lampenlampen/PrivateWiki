@@ -4,7 +4,9 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using NodaTime;
 using PrivateWiki.Data;
+using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Pages;
 
 namespace PrivateWiki
@@ -23,9 +25,12 @@ namespace PrivateWiki
 			InitializeComponent();
 			Suspending += OnSuspending;
 
-			new ContentPageProvider().InitDatabase();
-			InitPages.InitPages2();
-			//new Data.ContentPageProvider().InsertContentPage(new StorageProvider.ContentPage(2, "test", PageViewer.getExampleMarkdownString()));
+			var dataAccess = new DataAccessImpl();
+			dataAccess.InitializeDatabase();
+			DefaultPages.InsertDefaultPages();
+
+			var pages = dataAccess.GetPages();
+
 		}
 
         /// <summary>
