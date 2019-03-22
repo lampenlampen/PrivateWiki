@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using Windows.Storage;
 using DataAccessLibrary;
@@ -20,14 +19,20 @@ namespace PrivateWiki.Data
 				dataAccess.InsertPage(await LoadSyntaxPage());
 			}
 
-			var startPage = LoadStartPage();
+			var startPage = await LoadStartPage();
 			if (!dataAccess.ContainsPage(startPage))
 			{
-				dataAccess.InsertPage(LoadStartPage());
+				dataAccess.InsertPage(startPage);
+			}
+
+			var testPage = await LoadExamplePage();
+			if (!dataAccess.ContainsPage(testPage))
+			{
+				dataAccess.InsertPage(testPage);
 			}
 		}
 
-		public static async Task<PageModel> LoadSyntaxPage()
+		private static async Task<PageModel> LoadSyntaxPage()
 		{
 			var defaultPagesDir = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\DefaultPages");
 
@@ -38,9 +43,26 @@ namespace PrivateWiki.Data
 			return new PageModel(Guid.NewGuid(), "syntax", content, SystemClock.Instance);
 		}
 
-		public static PageModel LoadStartPage()
+		private static async Task<PageModel> LoadStartPage()
 		{
-			return new PageModel(Guid.NewGuid(), "start", InitPages.GetStartPageString(), SystemClock.Instance);
+			var defaultPagesDir = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\DefaultPages");
+
+			var startFile = await defaultPagesDir.GetFileAsync("Start.md");
+
+			var content = await FileIO.ReadTextAsync(startFile);
+
+			return new PageModel(Guid.NewGuid(), "start", content, SystemClock.Instance);
+		}
+
+		private static async Task<PageModel> LoadExamplePage()
+		{
+			var defaultPagesDir = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\DefaultPages");
+
+			var exampleFile = await defaultPagesDir.GetFileAsync("Example.md");
+
+			var content = await FileIO.ReadTextAsync(exampleFile);
+
+			return new PageModel(Guid.NewGuid(), "test", content, SystemClock.Instance);
 		}
 	}
 }

@@ -115,7 +115,7 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 			var codeHeader =
 				$"<div class=\"codeHeader\" style=\"{MarkdigStyleSheet.CodeBlockHeader.GetCodeBlockHeaderStyle()}\">\r\n" +
 				$"<span class=\"language\" style=\"{MarkdigStyleSheet.CodeBlockHeader.GetCodeBlockLanguageSpanStyle()}\">{languageMoniker}</span>\r\n" +
-				$"<button id=\"codeCopy\" onClick=\"codeCopyClickFunction\" class=\"action\" style=\"{MarkdigStyleSheet.CodeBlockHeader.GetCodeBlockButtonStyle()}\">\r\n" +
+				$"<button id=\"codeCopy\" onclick=\"codeCopyClickFunction()\" class=\"action\" style=\"{MarkdigStyleSheet.CodeBlockHeader.GetCodeBlockButtonStyle()}\">\r\n" +
 				$"<span style=\"{MarkdigStyleSheet.CodeBlockHeader.GetCodeBlockButtonIconStyle()}\"> </span>\r\n" +
 				"<span>Copy</span>\r\n" +
 				"</button>\r\n" +

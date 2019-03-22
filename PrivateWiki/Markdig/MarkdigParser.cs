@@ -68,6 +68,11 @@ namespace PrivateWiki.Markdig
 			// Charset = UTF-8
 			builder.AppendLine("<meta charset=\"UTF-8\">");
 
+			builder.AppendLine(
+				"<script>" +
+				"function codeCopyClickFunction() { window.external.notify(\"codeButtonCopy\");}" +
+				"</script>");
+
 			// MathJax Script
 			builder.AppendLine("<script type=\"text/javascript\">");
 			builder.AppendLine(

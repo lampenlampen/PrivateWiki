@@ -391,9 +391,7 @@ namespace PrivateWiki.Pages
 		{
 			await Webview.InvokeScriptAsync("eval", new[]
 			{
-				"function codeCopyClickFunction(){" +
-				$" window.external.notify('{CodeButtonCopy}');" +
-				"}"
+				$"function codeCopyClickFunction() {{ window.external.notify('{CodeButtonCopy}');}}"
 			});
 		}
 
