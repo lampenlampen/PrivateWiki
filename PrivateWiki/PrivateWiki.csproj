@@ -96,11 +96,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\ContentPageProvider.cs" />
     <Compile Include="Data\DataAccess\DataAccessLibrary.DataAccessImpl.cs" />
     <Compile Include="Data\DataAccess\IDataAccess.cs" />
     <Compile Include="Data\DefaultPages.cs" />
-    <Compile Include="Data\IPageAccess.cs" />
     <Compile Include="Data\MarkdownImport.cs" />
     <Compile Include="Data\MediaAccess.cs" />
     <Compile Include="Data\PageExporter.cs" />
@@ -121,6 +119,7 @@
     <Compile Include="ImagePickerDialogModel.cs" />
     <Compile Include="MarkdownWikiFile\MarkdownWikiFile.cs" />
     <Compile Include="MyTreeViewNode.cs" />
+    <Compile Include="MyUriToStreamResolver.cs" />
     <Compile Include="Pages\ExternalEditor.xaml.cs">
       <DependentUpon>ExternalEditor.xaml</DependentUpon>
     </Compile>

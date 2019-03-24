@@ -138,7 +138,12 @@ namespace PrivateWiki.Pages
 			var file = await mediaFolder.CreateFileAsync("index.html", CreationCollisionOption.ReplaceExisting);
 			await FileIO.WriteTextAsync(file, html);
 
-			Webview.Navigate(new Uri("ms-appdata:///local/media/index.html"));
+			// Webview.Navigate(new Uri("ms-appdata:///local/media/index.html"));
+			//Webview.Navigate(new Uri("ms-appx-web://PrivateWiki/local/media/index.html"));
+
+			var uri = Webview.BuildLocalStreamUri("MyTag", "/media/index.html");
+			var uriResolver = new MyUriToStreamResolver();
+			Webview.NavigateToLocalStreamUri(uri, uriResolver);
 
 			// Show Tags
 			/*
@@ -285,15 +290,26 @@ namespace PrivateWiki.Pages
 			await Webview.InvokeScriptAsync("eval", new[] {scrollTo});
 		}
 
-		private void Print_Click(object sender, RoutedEventArgs e)
+		private async void Print_Click(object sender, RoutedEventArgs e)
 		{
 			// TODO Print Page
 			Debug.WriteLine("Print Page");
+
+			await Webview.InvokeScriptAsync("eval", new[]
+			{
+				$"document.getElementById(\"codeCopy\").click();"
+			});
 		}
 
 		private async void Top_Click(object sender, RoutedEventArgs e)
 		{
-			await Webview.InvokeScriptAsync("eval", new[] {@"window.scrollTo(0,0);"});
+			//await Webview.InvokeScriptAsync("eval", new[] {"window.scrollTo(0,0);"});
+
+			// TODO
+			await Webview.InvokeScriptAsync("eval", new[]
+			{
+				$"document.getElementById(\"codeCopy\").click();"
+			});
 		}
 
 		/// <summary>
@@ -389,10 +405,34 @@ namespace PrivateWiki.Pages
 
 		private async void Webview_OnLoadCompleted(object sender, NavigationEventArgs e)
 		{
+			/*
 			await Webview.InvokeScriptAsync("eval", new[]
 			{
 				$"function codeCopyClickFunction() {{ window.external.notify('{CodeButtonCopy}');}}"
 			});
+			*/
+
+			/*
+			await Webview.InvokeScriptAsync("eval", new[]
+		{
+			"var loginButon=document.getElementById('codeCopy');" +
+			"if (loginButon.addEventListener) {" +
+				"loginButon.addEventListener('click', clickFunction, false);" +
+			"} else {" +
+				"loginButon.attachEvent('onclick', clickFunction);" +
+			"}  " +
+			"function clickFunction(){" +
+				" window.external.notify('CodeButtonCopy');"+
+			 "}"
+		});*/
+
+			/*
+			await Webview.InvokeScriptAsync("eval", new[] {
+				"var button = document.getElementById('codeCopy');" +
+				"button.addEventListener('click', clickFunction);" +
+				"function clickFunction() { window.external.notify('CodeButtonCopy'; }"
+			});
+			*/
 		}
 
 		private void MediaManager_Click(object sender, RoutedEventArgs e)

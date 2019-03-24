@@ -9,23 +9,29 @@ namespace PrivateWiki.Data
 {
 	public static class DefaultPages
 	{
-		public static async void InsertDefaultPages()
+		public static async void InsertDefaultPagesAsync()
 		{
 			var dataAccess = new DataAccessImpl();
 
 			var syntaxPage = await LoadSyntaxPage();
+			//syntaxPageTask.RunSynchronously();
+			//var syntaxPage = syntaxPageTask.Result;
 			if (!dataAccess.ContainsPage(syntaxPage))
 			{
-				dataAccess.InsertPage(await LoadSyntaxPage());
+				dataAccess.InsertPage(syntaxPage);
 			}
 
 			var startPage = await LoadStartPage();
+			// startPageTask.RunSynchronously();
+			// var startPage = startPageTask.Result;
 			if (!dataAccess.ContainsPage(startPage))
 			{
 				dataAccess.InsertPage(startPage);
 			}
 
 			var testPage = await LoadExamplePage();
+			// testPageTask.RunSynchronously();
+			// var testPage = testPageTask.Result;
 			if (!dataAccess.ContainsPage(testPage))
 			{
 				dataAccess.InsertPage(testPage);

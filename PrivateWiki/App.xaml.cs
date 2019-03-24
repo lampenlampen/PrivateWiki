@@ -8,6 +8,7 @@ using NodaTime;
 using PrivateWiki.Data;
 using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Pages;
+using Windows.Storage;
 
 namespace PrivateWiki
 {
@@ -27,10 +28,9 @@ namespace PrivateWiki
 
 			var dataAccess = new DataAccessImpl();
 			dataAccess.InitializeDatabase();
-			DefaultPages.InsertDefaultPages();
+			DefaultPages.InsertDefaultPagesAsync();
 
 			var pages = dataAccess.GetPages();
-
 		}
 
         /// <summary>

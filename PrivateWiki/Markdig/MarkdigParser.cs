@@ -70,7 +70,8 @@ namespace PrivateWiki.Markdig
 
 			builder.AppendLine(
 				"<script>" +
-				"function codeCopyClickFunction() { window.external.notify(\"codeButtonCopy\");}" +
+				"function codeCopyClickFunction() { " +
+				"window.external.notify(\"codeButtonCopy\"); }" +
 				"</script>");
 
 			// MathJax Script
