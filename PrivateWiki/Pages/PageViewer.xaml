@@ -129,7 +129,7 @@
                     MinWidth="100"
                     Width="Auto"
                     Height="Auto"
-                    NavigationStarting="WebViewNavigationStarting"
+                    NavigationStarting="WebView_OnNavigationStarting"
                     ScriptNotify="Webview_OnScriptNotify"
                     LoadCompleted="Webview_OnLoadCompleted" />
             </Border>

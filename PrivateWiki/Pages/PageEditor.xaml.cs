@@ -171,7 +171,7 @@ namespace PrivateWiki.Pages
 				var localFolder = ApplicationData.Current.LocalFolder;
 				var mediaFolder = await localFolder.GetFolderAsync("media");
 				var file = await mediaFolder.CreateFileAsync(htmlFileName, CreationCollisionOption.ReplaceExisting);
-				await FileIO.WriteTextAsync(file, html);
+				await FileIO.WriteTextAsync(file, await html);
 
 				Preview_WebView.Navigate(new Uri($"ms-appdata:///local/media/{htmlFileName}"));
 			}

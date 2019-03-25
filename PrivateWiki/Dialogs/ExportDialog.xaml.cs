@@ -54,7 +54,7 @@ namespace PrivateWiki.Dialogs
 
 					var file = await folder.CreateFileAsync($"{page.Link.Replace(':', '_')}.html",
 						CreationCollisionOption.ReplaceExisting);
-					await FileIO.WriteTextAsync(file, parser.ToHtmlString(page.Content), UnicodeEncoding.Utf8);
+					await FileIO.WriteTextAsync(file, await parser.ToHtmlString(page.Content), UnicodeEncoding.Utf8);
 				}
 
 				if (exportMarkdown)

@@ -1,5 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
+using System.Threading.Tasks;
+using Windows.Storage;
 using DataAccessLibrary;
 using JetBrains.Annotations;
 using Markdig;
@@ -58,7 +61,7 @@ namespace PrivateWiki.Markdig
 			return Parse(page.Content);
 		}
 
-		public string ToHtmlString(string markdown)
+		public string ToHtmlStringOld(string markdown)
 		{
 			var builder = new StringBuilder();
 			builder.AppendLine("<!DOCTYPE html>");
@@ -99,9 +102,22 @@ namespace PrivateWiki.Markdig
 			return builder.ToString();
 		}
 
-		public string ToHtmlString(PageModel page)
+		public async Task<string> ToHtmlString(string markdown)
 		{
-			return ToHtmlString(page.Content);
+			var webViewFolder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\WebView");
+
+			var file = await webViewFolder.GetFileAsync("index.html");
+
+			var htmlHead = await FileIO.ReadTextAsync(file);
+
+			var html = $"<!DOCTYPE html>\n<html>\n{htmlHead}\n<body>\n{ToHtmlCustom(markdown)}\n</body></html>";
+
+			return html;
+		}
+
+		public async Task<string> ToHtmlString(PageModel page)
+		{
+			return await ToHtmlString(page.Content);
 		}
 	}
 }

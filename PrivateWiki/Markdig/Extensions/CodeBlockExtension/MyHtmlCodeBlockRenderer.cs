@@ -112,11 +112,23 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 
 		private void RenderCodeHeader(HtmlRenderer renderer, string languageMoniker)
 		{
-			var codeHeader =
-				$"<div class=\"codeHeader\" style=\"{MarkdigStyleSheet.CodeBlockHeader.GetCodeBlockHeaderStyle()}\">\r\n" +
-				$"<span class=\"language\" style=\"{MarkdigStyleSheet.CodeBlockHeader.GetCodeBlockLanguageSpanStyle()}\">{languageMoniker}</span>\r\n" +
-				$"<button id=\"codeCopy\" onclick=\"codeCopyClickFunction()\" class=\"action\" style=\"{MarkdigStyleSheet.CodeBlockHeader.GetCodeBlockButtonStyle()}\">\r\n" +
+			/*
+			 * var codeHeader =
+				$"<div class=\"codeBlockHeader\" style=\"{MarkdigStyleSheet.CodeBlockHeader.GetCodeBlockHeaderStyle()}\">\r\n" +
+				$"<span class=\"codeBlockLanguage\" style=\"{MarkdigStyleSheet.CodeBlockHeader.GetCodeBlockLanguageSpanStyle()}\">{languageMoniker}</span>\r\n" +
+				$"<button onclick=\"codeCopyClickFunction()\" class=\"codeBlockCopyButton\" style=\"{MarkdigStyleSheet.CodeBlockHeader.GetCodeBlockButtonStyle()}\">\r\n" +
 				$"<span style=\"{MarkdigStyleSheet.CodeBlockHeader.GetCodeBlockButtonIconStyle()}\"> </span>\r\n" +
+				"<i class=\"fas fa-copy\"> </i>" +
+				"<span>Copy</span>\r\n" +
+				"</button>\r\n" +
+				"</div>\r\n";
+			 */
+
+			var codeHeader =
+				$"<div class=\"codeBlockHeader\">\r\n" +
+				$"<span class=\"codeBlockLanguage\">{languageMoniker}</span>\r\n" +
+				$"<button onclick=\"codeCopyClickFunction()\" class=\"codeBlockCopyButton\">\r\n" +
+				"<i class=\"fas fa-copy\"> </i>" +
 				"<span>Copy</span>\r\n" +
 				"</button>\r\n" +
 				"</div>\r\n";

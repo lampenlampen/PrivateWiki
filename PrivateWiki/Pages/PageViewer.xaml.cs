@@ -45,7 +45,7 @@ namespace PrivateWiki.Pages
 			dataAccess = new DataAccessImpl();
 		}
 
-		private void WebViewNavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
+		private void WebView_OnNavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
 		{
 			var uri = args.Uri;
 
@@ -85,6 +85,16 @@ namespace PrivateWiki.Pages
 			Debug.WriteLine($"Link: {uri.AbsoluteUri}");
 			var success = Launcher.LaunchUriAsync(uri);
 			args.Cancel = true;
+		}
+
+		private void Webview_OnScriptNotify(object sender, NotifyEventArgs e)
+		{
+			Debug.WriteLine("WebView Script");
+			if (e.Value == CodeButtonCopy) Debug.WriteLine("Copy Button clicked.");
+		}
+
+		private async void Webview_OnLoadCompleted(object sender, NavigationEventArgs e)
+		{
 		}
 
 		protected override void OnNavigatedTo([NotNull] NavigationEventArgs e)
@@ -132,11 +142,21 @@ namespace PrivateWiki.Pages
 
 			// Show Page
 
-			var html = parser.ToHtmlString(Page);
+			var html = await parser.ToHtmlString(Page);
 			var localFolder = ApplicationData.Current.LocalFolder;
 			var mediaFolder = await localFolder.CreateFolderAsync("media", CreationCollisionOption.OpenIfExists);
 			var file = await mediaFolder.CreateFileAsync("index.html", CreationCollisionOption.ReplaceExisting);
 			await FileIO.WriteTextAsync(file, html);
+
+			var webViewFolder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\WebView");
+			
+			var styleSheetFile = await webViewFolder.GetFileAsync("preferred.css");
+			
+			await styleSheetFile.CopyAsync(mediaFolder, styleSheetFile.Name, NameCollisionOption.ReplaceExisting);
+			
+
+			var javascriptFile = await webViewFolder.GetFileAsync("index.js");
+			await javascriptFile.CopyAsync(mediaFolder, javascriptFile.Name, NameCollisionOption.ReplaceExisting);
 
 			// Webview.Navigate(new Uri("ms-appdata:///local/media/index.html"));
 			//Webview.Navigate(new Uri("ms-appx-web://PrivateWiki/local/media/index.html"));
@@ -395,44 +415,6 @@ namespace PrivateWiki.Pages
 		private void Search_Click(object sender, RoutedEventArgs e)
 		{
 			SearchPopup.IsOpen = true;
-		}
-
-		private void Webview_OnScriptNotify(object sender, NotifyEventArgs e)
-		{
-			Debug.WriteLine("WebView Script");
-			if (e.Value == CodeButtonCopy) Debug.WriteLine("Copy Button clicked.");
-		}
-
-		private async void Webview_OnLoadCompleted(object sender, NavigationEventArgs e)
-		{
-			/*
-			await Webview.InvokeScriptAsync("eval", new[]
-			{
-				$"function codeCopyClickFunction() {{ window.external.notify('{CodeButtonCopy}');}}"
-			});
-			*/
-
-			/*
-			await Webview.InvokeScriptAsync("eval", new[]
-		{
-			"var loginButon=document.getElementById('codeCopy');" +
-			"if (loginButon.addEventListener) {" +
-				"loginButon.addEventListener('click', clickFunction, false);" +
-			"} else {" +
-				"loginButon.attachEvent('onclick', clickFunction);" +
-			"}  " +
-			"function clickFunction(){" +
-				" window.external.notify('CodeButtonCopy');"+
-			 "}"
-		});*/
-
-			/*
-			await Webview.InvokeScriptAsync("eval", new[] {
-				"var button = document.getElementById('codeCopy');" +
-				"button.addEventListener('click', clickFunction);" +
-				"function clickFunction() { window.external.notify('CodeButtonCopy'; }"
-			});
-			*/
 		}
 
 		private void MediaManager_Click(object sender, RoutedEventArgs e)

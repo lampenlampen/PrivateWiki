@@ -24,6 +24,7 @@ namespace PrivateWiki.Markdig
 			public static string GetCodeBlockHeaderStyle()
 			{
 				var builder = new StringBuilder();
+				/*
 				builder.Append($"background-color:{BackgroundColor};");
 				builder.Append("border-bottom-color:rgba(0,0,0,1);");
 				builder.Append("border-bottom-style:none;");
@@ -46,6 +47,7 @@ namespace PrivateWiki.Markdig
 				builder.Append($"line-height:{LineHeight};");
 				builder.Append($"margin-top:{MarginTop};");
 				builder.Append($"min-height:{MinHeight};");
+				*/
 
 				return builder.ToString();
 			}

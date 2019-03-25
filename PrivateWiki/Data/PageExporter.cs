@@ -21,7 +21,7 @@ namespace PrivateWiki.Data
 			var parser = new MarkdigParser();
 			var file = await ApplicationData.Current.TemporaryFolder.CreateFileAsync($"{page.Link.Replace(':', '_')}.html", CreationCollisionOption.ReplaceExisting);
 
-			await FileIO.WriteTextAsync(file, parser.ToHtmlString(page.Content));
+			await FileIO.WriteTextAsync(file, await parser.ToHtmlString(page.Content));
 
 			return file;
 		}

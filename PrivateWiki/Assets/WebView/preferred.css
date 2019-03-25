@@ -1,0 +1,56 @@
+div.codeBlockHeader {
+    background-color: rgb(242, 242, 242);
+    border-bottom-color: rgba(0, 0, 0, 1);
+    border-bottom-style: none;
+    border-bottom-width: 0px;
+    border-left-color: rgb(242, 242, 242);
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-right-color: rgb(242, 242, 242);
+    border-right-style: solid;
+    border-left-width: 1px;
+    border-top-color: rgb(242, 242, 242);
+    border-top-style: solid;
+    border-top-width: 1px;
+    box-sizing: content-box;
+
+    /* color: rgba(0, 0, 0, 1); */
+    color: red;
+    display: flex;
+    flex-direction: row;
+    font-size: 12.8px;
+    font-weight: 400;
+    line-height: 25.33px;
+    margin-top: 16px;
+    min-height: 30px;
+}
+
+span.codeBlockLanguage {
+    box-sizing: content-box;
+    color: rgb(0, 0, 0);
+    display: block;
+    flex-grow: 1;
+    font-size: 12.8px;
+    font-weight: 400;
+    line-height: 25.33px;
+    padding-bottom: 2px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 2px;
+}
+
+button.codeBlockCopyButton {
+    align-items: center;
+    background-color: transparent;
+    border: 0px none rgb(227, 227, 227);
+    border-left-style: solid;
+    border-left-width: 1px;
+    box-sizing: content-box;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    display: flex;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
