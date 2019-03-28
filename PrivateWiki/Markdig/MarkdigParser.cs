@@ -61,52 +61,11 @@ namespace PrivateWiki.Markdig
 			return Parse(page.Content);
 		}
 
-		public string ToHtmlStringOld(string markdown)
-		{
-			var builder = new StringBuilder();
-			builder.AppendLine("<!DOCTYPE html>");
-			builder.AppendLine("<html>");
-			builder.AppendLine("<head>");
-
-			// Charset = UTF-8
-			builder.AppendLine("<meta charset=\"UTF-8\">");
-
-			builder.AppendLine(
-				"<script>" +
-				"function codeCopyClickFunction() { " +
-				"window.external.notify(\"codeButtonCopy\"); }" +
-				"</script>");
-
-			// MathJax Script
-			builder.AppendLine("<script type=\"text/javascript\">");
-			builder.AppendLine(
-				"MathJax.Hub.Config({tex2jax: {inlineMath: [['$', '$'], [\"\\(\", \"\\)\"]], processEscapes: true}});");
-			builder.AppendLine("</script>");
-			builder.AppendLine(
-				"<script type=\"text/javascript\" async src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML\">");
-			builder.AppendLine("MathJax.Hub.Register.StartupHook(\"onLoad\",function () {");
-			builder.AppendLine("MathJax.Hub.Config({elements: document.querySelectorAll(\".math\")});");
-			builder.AppendLine("});");
-			builder.AppendLine("</script>");
-
-			// Mermaid Script
-			builder.AppendLine(
-				"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/7.1.2/mermaid.min.js\"></script>");
-			builder.AppendLine("<script>mermaid.initialize({startOnLoad:true});</script>");
-
-			builder.AppendLine("</head>");
-			builder.AppendLine("<body>");
-			builder.AppendLine(ToHtmlCustom(markdown));
-			builder.AppendLine("</body>");
-			builder.AppendLine("</html>");
-			return builder.ToString();
-		}
-
 		public async Task<string> ToHtmlString(string markdown)
 		{
 			var webViewFolder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\WebView");
 
-			var file = await webViewFolder.GetFileAsync("index.html");
+			var file = await webViewFolder.GetFileAsync("head.html");
 
 			var htmlHead = await FileIO.ReadTextAsync(file);
 

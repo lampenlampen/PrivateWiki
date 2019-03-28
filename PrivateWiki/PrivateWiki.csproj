@@ -139,7 +139,6 @@
     <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockPipelineExtension.cs" />
     <Compile Include="Markdig\Extensions\MathExtension\MathePipelineExtension.cs" />
     <Compile Include="Markdig\HeadersParser.cs" />
-    <Compile Include="Markdig\MarkdigStyleSheet.cs" />
     <Compile Include="Markdig\Extensions\CodeBlockExtension\MyHtmlCodeBlockRenderer.cs" />
     <Compile Include="Markdig\Extensions\MathExtension\MyHtmlMathInlineRenderer.cs" />
     <Compile Include="Markdig\Extensions\MathExtension\MyMathematicsExtension.cs" />
@@ -184,7 +183,7 @@
     <Content Include="Assets\Visual_Studio_Code_1.18_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\WebView\index.html">
+    <Content Include="Assets\WebView\head.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\WebView\index.js">

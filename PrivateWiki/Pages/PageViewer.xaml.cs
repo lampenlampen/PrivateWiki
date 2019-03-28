@@ -104,12 +104,12 @@ namespace PrivateWiki.Pages
 			contentPageId = (string) e.Parameter;
 			Debug.WriteLine($"Id: {contentPageId}");
 
-			if (contentPageId == null) throw new ArgumentNullException("Page id must be nonnull!");
+			if (contentPageId == null) throw new ArgumentNullException(contentPageId);
 
-			ShowContentPage();
+			DisplayPage();
 		}
 
-		private async void ShowContentPage()
+		private async void DisplayPage()
 		{
 			if (!dataAccess.ContainsPage(contentPageId))
 				if (Frame.CanGoBack)
@@ -134,10 +134,10 @@ namespace PrivateWiki.Pages
 			// Show TOC
 			var doc = parser.Parse(Page);
 			var toc = new HeadersParser().ParseHeaders(doc);
-			foreach (var header in toc)
+
+			foreach (var header in toc.Children)
 			{
 				TreeView.RootNodes.Add(header);
-				header.IsExpanded = true;
 			}
 
 			// Show Page
@@ -151,15 +151,10 @@ namespace PrivateWiki.Pages
 			var webViewFolder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\WebView");
 			
 			var styleSheetFile = await webViewFolder.GetFileAsync("preferred.css");
-			
 			await styleSheetFile.CopyAsync(mediaFolder, styleSheetFile.Name, NameCollisionOption.ReplaceExisting);
 			
-
 			var javascriptFile = await webViewFolder.GetFileAsync("index.js");
 			await javascriptFile.CopyAsync(mediaFolder, javascriptFile.Name, NameCollisionOption.ReplaceExisting);
-
-			// Webview.Navigate(new Uri("ms-appdata:///local/media/index.html"));
-			//Webview.Navigate(new Uri("ms-appx-web://PrivateWiki/local/media/index.html"));
 
 			var uri = Webview.BuildLocalStreamUri("MyTag", "/media/index.html");
 			var uriResolver = new MyUriToStreamResolver();

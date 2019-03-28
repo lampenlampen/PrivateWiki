@@ -22,7 +22,7 @@ namespace PrivateWiki.Markdig
 		private readonly HtmlRenderer renderer = new HtmlRenderer(new StringWriter());
 		private TreeViewNode rootHeader;
 
-		public IList<TreeViewNode> ParseHeaders(MarkdownDocument doc)
+		public TreeViewNode ParseHeaders(MarkdownDocument doc)
 		{
 			rootHeader = new TreeViewNode {Content = "test", IsExpanded = true};
 
@@ -60,7 +60,13 @@ namespace PrivateWiki.Markdig
 						break;
 				}
 			}
-			return rootHeader.Children;
+
+			if (rootHeader.Children.Count > 1)
+			{
+				throw new Exception("Only 1 Top Level Heading allowed.");
+			}
+
+			return rootHeader.Children[0];
 		}
 
 		private void AddHeaderLevel1(string text, string id)
