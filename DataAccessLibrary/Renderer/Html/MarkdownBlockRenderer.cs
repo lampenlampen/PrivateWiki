@@ -4,7 +4,7 @@ using DataAccessLibrary.PageAST;
 using DataAccessLibrary.PageAST.Blocks;
 using MarkdigHtmlRenderer = Markdig.Renderers.HtmlRenderer;
 
-namespace DataAccessLibrary.Renderer
+namespace DataAccessLibrary.Renderer.Html
 {
 	public class MarkdownBlockRenderer : HtmlRenderer
 	{

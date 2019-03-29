@@ -1,7 +1,6 @@
 using System.IO;
-using DataAccessLibrary.Renderer;
+using DataAccessLibrary.Renderer.Html;
 using Markdig;
-using Markdig.Renderers;
 using Markdig.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MarkdigHtmlRenderer = Markdig.Renderers.HtmlRenderer;
