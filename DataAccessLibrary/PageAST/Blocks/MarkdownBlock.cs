@@ -8,14 +8,21 @@ namespace DataAccessLibrary.PageAST.Blocks
 		public Guid Id { get; set; }
 
 		public MarkdownDocument Content { get; set; }
+		
+		public string Source { get; set; }
 
-		public SourceSpan Span { get; set; }
-
-		public MarkdownBlock(MarkdownDocument doc, SourceSpan span)
+		public MarkdownBlock(MarkdownDocument doc, string source)
 		{
 			Id = Guid.NewGuid();
-			Span = span;
+			Source = source;
 			Content = doc;
+		}
+
+		public MarkdownBlock(Guid id, MarkdownDocument content, string source)
+		{
+			Id = id;
+			Content = content;
+			Source = source;
 		}
 	}
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Data.Common;
 using System.IO;
+using DataAccessLibrary.PageAST.Blocks;
 using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NodaTime;
@@ -20,7 +21,7 @@ namespace DataAccessLibrary.Test
 			_clock = SystemClock.Instance;
 		}
 
-		[TestCleanup]
+		//[TestCleanup]
 		public void DeleteTestDatabase()
 		{
 			File.Delete(_db.DataSource);
@@ -29,7 +30,6 @@ namespace DataAccessLibrary.Test
 		[TestMethod]
 		public void CreateDatabaseTest()
 		{
-			
 			var db = new DataAccess(_db, _clock);
 			db.InitializeDatabase();
 			var path = Path.GetFullPath(_db.DataSource);
@@ -53,8 +53,8 @@ namespace DataAccessLibrary.Test
 			var dbPage1 = pages.Find(p => p.Id.Equals(page1.Id));
 			var dbPage2 = pages.Find(p => p.Id.Equals(page2.Id));
 
-			Assert.IsTrue(dbPage1 != null, "Page1 was not saved to the db.", pages, new[] { page1 });
-			Assert.IsTrue(dbPage2 != null, "Page2 was not saved to the db.", pages, new[] { page2 });
+			Assert.IsTrue(dbPage1 != null, "Page1 was not saved to the db.", pages, new[] {page1});
+			Assert.IsTrue(dbPage2 != null, "Page2 was not saved to the db.", pages, new[] {page2});
 		}
 
 		[TestMethod]
@@ -63,7 +63,7 @@ namespace DataAccessLibrary.Test
 			var db = new DataAccess(_db, _clock);
 			db.InitializeDatabase();
 
-			var page1 = new PageModel(Guid.NewGuid(),"page1", "# Page 1", _clock);
+			var page1 = new PageModel(Guid.NewGuid(), "page1", "# Page 1", _clock);
 			var page2 = new PageModel(Guid.NewGuid(), "page2", "# Page 2", _clock);
 
 			db.InsertPages(new[] {page1, page2});
@@ -97,7 +97,7 @@ namespace DataAccessLibrary.Test
 			var db = new DataAccess(_db, _clock);
 			db.InitializeDatabase();
 
-			var page1 = new PageModel(Guid.NewGuid(), "page1","# Page 1", _clock);
+			var page1 = new PageModel(Guid.NewGuid(), "page1", "# Page 1", _clock);
 
 			db.InsertPage(page1);
 
@@ -110,7 +110,7 @@ namespace DataAccessLibrary.Test
 			Assert.IsTrue(dbPage.Id.Equals(page1.Id), "Page Update was not successful.");
 			Assert.IsTrue(dbPage.Content.Equals(page1.Content), "Page Update was not successful.");
 		}
-		
+
 		[TestMethod]
 		public void UpdatePageTest()
 		{
@@ -136,16 +136,49 @@ namespace DataAccessLibrary.Test
 		{
 			var db = new DataAccess(_db, _clock);
 			db.InitializeDatabase();
-			
-			var page1 = new PageModel(Guid.NewGuid(), "page1", "# Page 1",_clock);
-			
+
+			var page1 = new PageModel(Guid.NewGuid(), "page1", "# Page 1", _clock);
+
 			db.InsertPage(page1);
-			
+
 			Assert.IsTrue(db.ContainsPage(page1), "Page was not saved in db.");
 
 			db.DeletePage(page1);
-			
+
 			Assert.IsFalse(db.ContainsPage(page1), "Page was not deleted from db.");
+		}
+
+		[TestMethod]
+		public void InsertMarkdownBlockTest()
+		{
+			var markdown =
+				"# Welcome to your Private Wiki\n\n## Get Started\n\nTo learn more about the syntax have a lock in the [Syntax](:syntax) page.\n\nTo view a preview article follow this [link](:test)";
+
+			var db = new DataAccess(_db, _clock);
+			db.InitializeDatabase();
+
+			var block1 = new MarkdownBlock(Guid.NewGuid(), Markdig.Parser.ParseToMarkdownDocument(markdown), markdown);
+
+			db.InsertMarkdownBlock(block1);
+		}
+
+		[TestMethod]
+		public void GetMarkdownBlockOrNullTest()
+		{
+			var markdown =
+				"# Welcome to your Private Wiki\n\n## Get Started\n\nTo learn more about the syntax have a lock in the [Syntax](:syntax) page.\n\nTo view a preview article follow this [link](:test)";
+			
+			var db = new DataAccess(_db, _clock);
+			db.InitializeDatabase();
+			
+			var block = new MarkdownBlock(Guid.NewGuid(), Markdig.Parser.ParseToMarkdownDocument(markdown), markdown);
+
+			db.InsertMarkdownBlock(block);
+
+			var output = db.GetMarkdownBlockOrNull(block.Id);
+			
+			Assert.AreEqual(block.Id, output.Id);
+			Assert.AreEqual(block.Source, output.Source);
 		}
 	}
 }

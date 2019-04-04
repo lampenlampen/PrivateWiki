@@ -8,28 +8,36 @@ namespace DataAccessLibrary.Renderer.Html
 {
 	public abstract class HtmlRenderer : IHtmlRenderer
 	{
-		public MarkdigHtmlRenderer _renderer;
-
 		public abstract string RenderToHtml(IPageBlock block);
 
 		public abstract void RenderToHtml(IPageBlock block, MarkdigHtmlRenderer renderer);
 
-		public static void RenderToHtml(IEnumerable<IPageBlock> blocks, MarkdigHtmlRenderer renderer)
+		public static void RenderToHtml2(Document doc, MarkdigHtmlRenderer htmlRenderer)
 		{
-			foreach (var block in blocks)
+			var renderers = new List<IHtmlRenderer>
+			{
+				new CodeBlockRenderer(),
+				new MarkdownBlockRenderer(),
+				new TitleBlockRenderer()
+			};
+
+			foreach (var block in doc.Blocks)
 			{
 				switch (block)
 				{
 					case null:
 						throw new ArgumentNullException(nameof(block));
 					case CodeBlock codeBlock:
-							
+						var codeBlockRenderer = renderers.Find(r => r is CodeBlockRenderer);
+						codeBlockRenderer.RenderToHtml(codeBlock, htmlRenderer);
 						break;
 					case HeadingBlock headingBlock:
 						break;
 					case MarkdownBlock markdownBlock:
+						var markdownBlockRenderer = renderers.Find(r => r is MarkdownBlockRenderer);
+						markdownBlockRenderer.RenderToHtml(markdownBlock, htmlRenderer);
 						break;
-					case TextBlock textBlock:
+					case MarkdownTextBlock textBlock:
 						break;
 					case TitleBlock titleBlock:
 						break;

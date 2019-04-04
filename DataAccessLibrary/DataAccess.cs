@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
+using DataAccessLibrary.PageAST.Blocks;
 using NodaTime;
 
 namespace DataAccessLibrary
@@ -26,9 +27,11 @@ namespace DataAccessLibrary
 			{
 				Db.Open();
 
-				var command = new SqliteCommand(SQLiteHelper.createPageTableCommand, Db);
+				var command = new SqliteCommand(SQLiteHelper.PagesTable.createPageTableCommand, Db);
+				var command2 = new SqliteCommand(SQLiteHelper.MarkdownBlockTable.createMarkdownBlockTableCommand, Db);
 
 				command.ExecuteReader();
+				command2.ExecuteReader();
 
 				Db.Close();
 			}
@@ -53,7 +56,7 @@ namespace DataAccessLibrary
 				{
 					Connection = Db,
 					CommandText =
-						$"INSERT INTO {SQLiteHelper.tableName} VALUES (@Id, @Link, @Content, @CreationTime, @ChangeTime, @IsFavorite, @IsLocked, @ExternalFileToken, @ExternalFileImportDate)"
+						$"INSERT INTO {SQLiteHelper.PagesTable.tableName} VALUES (@Id, @Link, @Content, @CreationTime, @ChangeTime, @IsFavorite, @IsLocked, @ExternalFileToken, @ExternalFileImportDate)"
 				};
 
 				command.Parameters.AddWithValue("@Id", page.Id.ToString());
@@ -64,7 +67,8 @@ namespace DataAccessLibrary
 				command.Parameters.AddWithValue("@IsFavorite", page.IsFavorite);
 				command.Parameters.AddWithValue("@IsLocked", page.IsLocked);
 
-				if (page.ExternalFileToken != null) command.Parameters.AddWithValue("@ExternalFileToken", page.ExternalFileToken);
+				if (page.ExternalFileToken != null)
+					command.Parameters.AddWithValue("@ExternalFileToken", page.ExternalFileToken);
 				else command.Parameters.AddWithValue("@ExternalFileToken", DBNull.Value);
 
 				if (page.ExternalFileImportDate != null)
@@ -98,7 +102,7 @@ namespace DataAccessLibrary
 			{
 				Db.Open();
 
-				var command = new SqliteCommand($"SELECT * FROM {SQLiteHelper.tableName}", Db);
+				var command = new SqliteCommand($"SELECT * FROM {SQLiteHelper.PagesTable.tableName}", Db);
 
 				var query = command.ExecuteReader();
 
@@ -119,7 +123,8 @@ namespace DataAccessLibrary
 				var command = new SqliteCommand
 				{
 					Connection = Db,
-					CommandText = $"SELECT * FROM {SQLiteHelper.tableName} WHERE {SQLiteHelper.col_id} = @Id"
+					CommandText =
+						$"SELECT * FROM {SQLiteHelper.PagesTable.tableName} WHERE {SQLiteHelper.PagesTable.col_id} = @Id"
 				};
 
 				command.Parameters.AddWithValue("@Id", id.ToString());
@@ -128,11 +133,12 @@ namespace DataAccessLibrary
 
 				var pages = SQLiteQueryToPageModelConverter.ConvertSQLiteQueryToPageModels(query);
 
-				if (pages.Count == 0 )
+				if (pages.Count == 0)
 				{
 					// TODO No Page found
 					return null;
 				}
+
 				if (pages.Count == 1)
 				{
 					// Page found
@@ -153,7 +159,8 @@ namespace DataAccessLibrary
 				var command = new SqliteCommand
 				{
 					Connection = Db,
-					CommandText = $"SELECT * FROM {SQLiteHelper.tableName} WHERE {SQLiteHelper.col_link} = @Link"
+					CommandText =
+						$"SELECT * FROM {SQLiteHelper.PagesTable.tableName} WHERE {SQLiteHelper.PagesTable.col_link} = @Link"
 				};
 
 				command.Parameters.AddWithValue("@Link", link);
@@ -167,6 +174,7 @@ namespace DataAccessLibrary
 					// TODO No Page found
 					return null;
 				}
+
 				if (pages.Count == 1)
 				{
 					// Page found
@@ -186,15 +194,15 @@ namespace DataAccessLibrary
 
 				var command = new SqliteCommand
 				{
-					CommandText = $"UPDATE {SQLiteHelper.tableName} SET " +
-					              $"{SQLiteHelper.col_content} = @Content, " +
-					              $"{SQLiteHelper.col_creationDate} = @CreationDate, " +
-					              $"{SQLiteHelper.col_lastChangeDate} = {Clock.GetCurrentInstant().ToUnixTimeMilliseconds()}, " +
-					              $"{SQLiteHelper.col_isFavorite} = @IsFavorite, " +
-					              $"{SQLiteHelper.col_isLocked} = @IsLocked, " +
-					              $"{SQLiteHelper.col_externalFileToken} = @ExternalFileToken, " +
-					              $"{SQLiteHelper.col_externalFileImportDate} = @ExternalFileImportDate " +
-					              $"WHERE {SQLiteHelper.col_id} = @Id",
+					CommandText = $"UPDATE {SQLiteHelper.PagesTable.tableName} SET " +
+					              $"{SQLiteHelper.PagesTable.col_content} = @Content, " +
+					              $"{SQLiteHelper.PagesTable.col_creationDate} = @CreationDate, " +
+					              $"{SQLiteHelper.PagesTable.col_lastChangeDate} = {Clock.GetCurrentInstant().ToUnixTimeMilliseconds()}, " +
+					              $"{SQLiteHelper.PagesTable.col_isFavorite} = @IsFavorite, " +
+					              $"{SQLiteHelper.PagesTable.col_isLocked} = @IsLocked, " +
+					              $"{SQLiteHelper.PagesTable.col_externalFileToken} = @ExternalFileToken, " +
+					              $"{SQLiteHelper.PagesTable.col_externalFileImportDate} = @ExternalFileImportDate " +
+					              $"WHERE {SQLiteHelper.PagesTable.col_id} = @Id",
 					Connection = Db
 				};
 				command.Parameters.AddWithValue("@Content", page.Content);
@@ -203,7 +211,8 @@ namespace DataAccessLibrary
 				command.Parameters.AddWithValue("@IsLocked", page.IsLocked);
 				command.Parameters.AddWithValue("@Id", page.Id.ToString());
 
-				if (page.ExternalFileToken != null) command.Parameters.AddWithValue("@ExternalFileToken", page.ExternalFileToken);
+				if (page.ExternalFileToken != null)
+					command.Parameters.AddWithValue("@ExternalFileToken", page.ExternalFileToken);
 				else command.Parameters.AddWithValue("@ExternalFileToken", DBNull.Value);
 
 				if (page.ExternalFileImportDate != null)
@@ -222,7 +231,6 @@ namespace DataAccessLibrary
 
 				Db.Close();
 			}
-
 		}
 
 		public void UpdateContent(PageModel page)
@@ -233,7 +241,8 @@ namespace DataAccessLibrary
 
 				var command = new SqliteCommand
 				{
-					CommandText = $"UPDATE {SQLiteHelper.tableName} SET {SQLiteHelper.col_content} = @Content WHERE {SQLiteHelper.col_id} = @Id",
+					CommandText =
+						$"UPDATE {SQLiteHelper.PagesTable.tableName} SET {SQLiteHelper.PagesTable.col_content} = @Content WHERE {SQLiteHelper.PagesTable.col_id} = @Id",
 					Connection = Db
 				};
 				command.Parameters.AddWithValue("@Content", page.Content);
@@ -243,7 +252,6 @@ namespace DataAccessLibrary
 
 				Db.Close();
 			}
-
 		}
 
 		public bool ContainsPage(PageModel page)
@@ -251,11 +259,12 @@ namespace DataAccessLibrary
 			using (Db)
 			{
 				Db.Open();
-				
+
 				var command = new SqliteCommand
 				{
 					Connection = Db,
-					CommandText = $"SELECT * FROM {SQLiteHelper.tableName} WHERE {SQLiteHelper.col_id} = @Id OR {SQLiteHelper.col_link} = @Link"
+					CommandText =
+						$"SELECT * FROM {SQLiteHelper.PagesTable.tableName} WHERE {SQLiteHelper.PagesTable.col_id} = @Id OR {SQLiteHelper.PagesTable.col_link} = @Link"
 				};
 
 				command.Parameters.AddWithValue("@Id", page.Id.ToString());
@@ -264,7 +273,7 @@ namespace DataAccessLibrary
 				var query = command.ExecuteReader();
 
 				var count = 0;
-				
+
 				while (query.Read())
 				{
 					count++;
@@ -285,7 +294,8 @@ namespace DataAccessLibrary
 				var command = new SqliteCommand
 				{
 					Connection = Db,
-					CommandText = $"SELECT * FROM {SQLiteHelper.tableName} WHERE {SQLiteHelper.col_id} = @Id"
+					CommandText =
+						$"SELECT * FROM {SQLiteHelper.PagesTable.tableName} WHERE {SQLiteHelper.PagesTable.col_id} = @Id"
 				};
 
 				command.Parameters.AddWithValue("@Id", id.ToString());
@@ -314,7 +324,8 @@ namespace DataAccessLibrary
 				var command = new SqliteCommand
 				{
 					Connection = Db,
-					CommandText = $"SELECT EXISTS (SELECT * FROM {SQLiteHelper.tableName} WHERE {SQLiteHelper.col_link} = @Link)"
+					CommandText =
+						$"SELECT EXISTS (SELECT * FROM {SQLiteHelper.PagesTable.tableName} WHERE {SQLiteHelper.PagesTable.col_link} = @Link)"
 				};
 
 				command.Parameters.AddWithValue("@Link", link);
@@ -343,7 +354,8 @@ namespace DataAccessLibrary
 				var command = new SqliteCommand
 				{
 					Connection = Db,
-					CommandText = $"DELETE FROM {SQLiteHelper.tableName} WHERE {SQLiteHelper.col_id} = @Id"
+					CommandText =
+						$"DELETE FROM {SQLiteHelper.PagesTable.tableName} WHERE {SQLiteHelper.PagesTable.col_id} = @Id"
 				};
 				command.Parameters.AddWithValue("@Id", page.Id.ToString());
 
@@ -352,6 +364,62 @@ namespace DataAccessLibrary
 				Db.Close();
 
 				return true;
+			}
+		}
+
+		public void InsertMarkdownBlock(MarkdownBlock block)
+		{
+			using (Db)
+			{
+				Db.Open();
+
+				var command = new SqliteCommand
+				{
+					Connection = Db,
+					CommandText =
+						$"INSERT INTO {SQLiteHelper.MarkdownBlockTable.MarkdownBlockTableName} VALUES (@Id, @Source)"
+				};
+
+				command.Parameters.AddWithValue("@Id", block.Id.ToString());
+				command.Parameters.AddWithValue("@Source", block.Source);
+
+				command.ExecuteReader();
+
+				Db.Close();
+			}
+		}
+
+		public MarkdownBlock GetMarkdownBlockOrNull(Guid id)
+		{
+			using (Db)
+			{
+				Db.Open();
+
+				var command = new SqliteCommand
+				{
+					Connection = Db,
+					CommandText =
+						$"SELECT * FROM {SQLiteHelper.MarkdownBlockTable.MarkdownBlockTableName} WHERE {SQLiteHelper.MarkdownBlockTable.col_Id} = @Id"
+				};
+
+				command.Parameters.AddWithValue("@Id", id.ToString());
+
+				var query = command.ExecuteReader();
+
+				var blocks = new List<MarkdownBlock>();
+
+				while (query.Read())
+				{
+					var source = query.GetString(query.GetOrdinal(SQLiteHelper.MarkdownBlockTable.col_Source));
+
+					var block = new MarkdownBlock(id, Markdig.Parser.ParseToMarkdownDocument(source), source);
+					
+					blocks.Add(block);
+				}
+
+				if (blocks.Count > 1) throw new Exception("Too many MarkdownBlocks");
+
+				return blocks.First();
 			}
 		}
 	}

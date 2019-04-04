@@ -18,7 +18,7 @@ namespace DataAccessLibrary.Test
  			
 			var markdownBlockRenderer = new MarkdownBlockRenderer();
 
-			var output = markdownBlockRenderer.RenderToHtml(new MarkdownBlock(doc, SourceSpan.Empty));
+			var output = markdownBlockRenderer.RenderToHtml(new MarkdownBlock(doc, markdown));
 			
 			Assert.AreEqual(output, Markdown.ToHtml(markdown));
 		}
@@ -31,7 +31,7 @@ namespace DataAccessLibrary.Test
  			
 			var markdownBlockRenderer = new MarkdownBlockRenderer();
 
-			var output = markdownBlockRenderer.RenderToHtml(new MarkdownBlock(doc, SourceSpan.Empty));
+			var output = markdownBlockRenderer.RenderToHtml(new MarkdownBlock(doc, markdown));
 			
 			Assert.AreEqual(output, Markdown.ToHtml(markdown));
 		}

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DataAccessLibrary.PageAST;
 using DataAccessLibrary.PageAST.Blocks;
 using Markdig;
@@ -18,7 +19,7 @@ namespace DataAccessLibrary.Markdig
 
 		public static Document ParseMarkdown(string markdown)
 		{
-			var document = new Document();
+			var blocks = new List<IPageBlock>();
 			var markdigDoc = ParseToMarkdownDocument(markdown);
 
 			foreach (var block in markdigDoc)
@@ -26,15 +27,15 @@ namespace DataAccessLibrary.Markdig
 				switch (block)
 				{
 					case ParagraphBlock paragraphBlock:
-						var textBlock = new TextBlock(markdown.Substring(paragraphBlock.Span.Start, paragraphBlock.Span.Length), paragraphBlock);
-						document.Blocks.Add(textBlock);
+						var textBlock = new MarkdownTextBlock(markdown.Substring(paragraphBlock.Span.Start, paragraphBlock.Span.Length), paragraphBlock);
+						blocks.Add(textBlock);
 						break;
 					default:
 						throw new ArgumentOutOfRangeException(nameof(block));
 				}
 			}
 
-			return document;
+			return new Document(blocks);
 		}
 
 		public static ContainerInline ParseMarkdownText(string markdown)

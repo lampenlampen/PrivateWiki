@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using System.IO;
-using DataAccessLibrary.Markdig;
 using DataAccessLibrary.PageAST;
 using DataAccessLibrary.PageAST.Blocks;
 using Markdig;
 using Markdig.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using CodeBlock = DataAccessLibrary.PageAST.Blocks.CodeBlock;
 using MarkdigHtmlRenderer = Markdig.Renderers.HtmlRenderer;
 
 namespace DataAccessLibrary.Test
@@ -13,25 +14,21 @@ namespace DataAccessLibrary.Test
 	public class HtmlRendererTest
 	{
 		[TestMethod]
-		public void RendererInlinesToHtmlTest()
+		public void RenderToHtmlTest()
 		{
-			var markdown = "Hallo *dies* ist ein _Markdown_ Text.";
+			var markdown = "Hallo *dies* ist ein _Markdown_ Text.\n\n```\npublic static void main(String[] args)\n{\n    System.out.println(\"Hello World\");\n}\n```\n\nHallo wie geht es dir?";
+			var code = "public static void main(String[] args)\n{\n    System.out.println(\"Hello World\");\n}";
 			var doc = Markdown.Parse(markdown);
-			var inlines = (doc[0] as LeafBlock).Inline;
-
-			var renderer = new HtmlRenderer(new MarkdigHtmlRenderer(new StringWriter()));
-			var a = renderer.RenderInlinesToHtml(inlines);
-		}
-
-		[TestMethod]
-		public void RenderTextBlockTest()
-		{
-			var markdown = "Hallo *dies* ist ein _Markdown_ Text.";
-			var paragraphBlock = (ParagraphBlock) Markdown.Parse(markdown)[0];
-			var textBlock = new TextBlock(markdown, paragraphBlock);
-
-			var renderer = new HtmlRenderer(new MarkdigHtmlRenderer(new StringWriter()));
-			var html = renderer.RenderTextBlock(textBlock);
+			var markdownBlock = new MarkdownBlock(doc, markdown);
+			var codeBlock = new CodeBlock(code, "java");
+			
+			Document document = new Document(new List<IPageBlock> {markdownBlock, codeBlock, markdownBlock});
+			
+			var htmlRenderer = new MarkdigHtmlRenderer(new StringWriter());
+			Renderer.Html.HtmlRenderer.RenderToHtml2(document, htmlRenderer);
+			
+			htmlRenderer.Writer.Flush();
+			var html = htmlRenderer.Writer.ToString();
 		}
 	}
 }

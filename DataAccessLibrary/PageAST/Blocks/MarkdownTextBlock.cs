@@ -4,7 +4,7 @@ using Markdig.Syntax.Inlines;
 
 namespace DataAccessLibrary.PageAST.Blocks
 {
-	public class TextBlock : IPageBlock
+	public class MarkdownTextBlock : IPageBlock
 	{
 		public Guid Id { get; set; }
 		
@@ -14,14 +14,14 @@ namespace DataAccessLibrary.PageAST.Blocks
 		
 		public string SourceCode { get; set; }
 
-		public TextBlock(string sourceCode, ParagraphBlock block)
+		public MarkdownTextBlock(string sourceCode, ParagraphBlock block)
 		{
 			Id = Guid.NewGuid();
 			SourceCode = sourceCode;
 			Content = block;
 		}
 
-		public TextBlock(string sourceCode, ContainerInline inlines)
+		public MarkdownTextBlock(string sourceCode, ContainerInline inlines)
 		{
 			Id = Guid.NewGuid();
 			SourceCode = sourceCode;
