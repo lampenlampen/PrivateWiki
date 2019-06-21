@@ -27,11 +27,13 @@ namespace DataAccessLibrary
 			{
 				Db.Open();
 
-				var command = new SqliteCommand(SQLiteHelper.PagesTable.createPageTableCommand, Db);
-				var command2 = new SqliteCommand(SQLiteHelper.MarkdownBlockTable.createMarkdownBlockTableCommand, Db);
+				var command = new SqliteCommand(SQLiteHelper.PagesTable.CreatePageTableCommand, Db);
+				var command2 = new SqliteCommand(SQLiteHelper.MarkdownBlockTable.CreateMarkdownBlockTableCommand, Db);
+				var command3 = new SqliteCommand(SQLiteHelper.CodeBlockTable.CreateCodeBlockTableCommand,Db);
 
 				command.ExecuteReader();
 				command2.ExecuteReader();
+				command3.ExecuteReader();
 
 				Db.Close();
 			}
@@ -418,8 +420,130 @@ namespace DataAccessLibrary
 				}
 
 				if (blocks.Count > 1) throw new Exception("Too many MarkdownBlocks");
+				
+				Db.Close();
 
 				return blocks.First();
+			}
+		}
+
+		public bool ContainsMarkdownBlock(Guid id)
+		{
+			using (Db)
+			{
+				Db.Open();
+
+				var command = new SqliteCommand
+				{
+					Connection = Db,
+					CommandText = $"SELECT EXISTS (SELECT * FROM {SQLiteHelper.MarkdownBlockTable.MarkdownBlockTableName} WHERE {SQLiteHelper.MarkdownBlockTable.col_Id} = @Id)"
+				};
+				command.Parameters.AddWithValue("@Id", id.ToString());
+
+				var query = command.ExecuteReader();
+				
+				var count = 0;
+
+				while (query.Read())
+				{
+					count++;
+				}
+
+				Db.Close();
+
+				return count != 0;
+			}
+		}
+
+		public void InsertCodeBlock(CodeBlock block)
+		{
+			using (Db)
+			{
+				Db.Open();
+				
+				var command = new SqliteCommand
+				{
+					Connection = Db,
+					CommandText =
+						$"INSERT INTO {SQLiteHelper.CodeBlockTable.CodeBlockTableName} VALUES (@Id, @Code, @LanguageCode)"
+				};
+
+				command.Parameters.AddWithValue("@Id", block.Id.ToString());
+				command.Parameters.AddWithValue("@Code", block.Code);
+				command.Parameters.AddWithValue("@LanguageCode", block.LanguageCode);
+
+				command.ExecuteReader();
+
+				Db.Close();
+			}
+		}
+
+		public CodeBlock GetCodeBlock(Guid id)
+		{
+			using (Db)
+			{
+				using (Db)
+				{
+					Db.Open();
+
+					var command = new SqliteCommand
+					{
+						Connection = Db,
+						CommandText =
+							$"SELECT * FROM {SQLiteHelper.CodeBlockTable.CodeBlockTableName} WHERE {SQLiteHelper.CodeBlockTable.col_Id} = @Id"
+					};
+
+					command.Parameters.AddWithValue("@Id", id.ToString());
+
+					var query = command.ExecuteReader();
+
+					var blocks = new List<CodeBlock>();
+
+					while (query.Read())
+					{
+						var code = query.GetString(query.GetOrdinal(SQLiteHelper.CodeBlockTable.col_Code));
+						var languageCode =
+							query.GetString(query.GetOrdinal(SQLiteHelper.CodeBlockTable.col_LanugageCode));
+
+						var block = new CodeBlock(id, code, languageCode);
+					
+						blocks.Add(block);
+					}
+
+					if (blocks.Count > 1) throw new Exception("Too many MarkdownBlocks");
+				
+					Db.Close();
+
+					return blocks.First();
+				}
+			}
+		}
+
+		public bool ContainsCodeBlock(Guid id)
+		{
+			using (Db)
+			{
+				Db.Open();
+
+				var command = new SqliteCommand
+				{
+					Connection = Db,
+					CommandText = $"SELECT EXISTS (SELECT * FROM {SQLiteHelper.CodeBlockTable.CodeBlockTableName} WHERE {SQLiteHelper.CodeBlockTable.col_Id} = @Id)"
+				};
+				command.Parameters.AddWithValue("@Id", id.ToString());
+
+				var query = command.ExecuteReader();
+				
+				var count = 0;
+
+				while (query.Read())
+				{
+					count++;
+				}
+
+				Db.Close();
+
+				return count != 0;
 			}
 		}
 	}

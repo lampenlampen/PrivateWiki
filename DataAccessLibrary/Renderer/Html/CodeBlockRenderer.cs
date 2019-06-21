@@ -23,7 +23,7 @@ namespace DataAccessLibrary.Renderer.Html
 			return renderer.Writer.ToString();
 		}
 
-		public override void RenderToHtml(IPageBlock block, global::Markdig.Renderers.HtmlRenderer renderer)
+		public override void RenderToHtml(IPageBlock block, MarkdigHtmlRenderer renderer)
 		{
 			if(!(block is CodeBlock codeBlock)) throw new ArgumentException("Invalid Block Type", nameof(block));
 

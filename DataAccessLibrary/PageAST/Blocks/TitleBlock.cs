@@ -1,7 +1,4 @@
 using System;
-using DataAccessLibrary.Renderer;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
 using MarkdigHeadingBlock = Markdig.Syntax.HeadingBlock;
 
 namespace DataAccessLibrary.PageAST.Blocks
@@ -10,20 +7,22 @@ namespace DataAccessLibrary.PageAST.Blocks
 	{
 		public Guid Id { get; set; }
 		
-		public ContainerInline Inline { get; set; }
+		public string Title { get; set; }
 		
-		public SourceSpan Span { get; set; }
+		public string Source { get; set; }
 
-		public TitleBlock(ContainerInline inline, SourceSpan span)
+		public TitleBlock(string title, string source)
 		{
 			Id = Guid.NewGuid();
-			Inline = inline;
-			Span = span;
+			Title = title;
+			Source = source;
 		}
 
-		public string GetSourceMarkdown(string source)
+		public TitleBlock(Guid id, string title, string source)
 		{
-			return source.Substring(Span.Start, Span.Length);
+			Id = id;
+			Title = title;
+			Source = source;
 		}
 	}
 }

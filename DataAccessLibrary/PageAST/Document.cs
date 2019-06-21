@@ -22,7 +22,7 @@ namespace DataAccessLibrary.PageAST
 		public Instant ChangeTime { get; set; }
 		
 		[NotNull]
-		public string Identifier { get; set; }
+		public string Link { get; set; }
 		
 		public List<IPageBlock> Blocks { get; set; }
 
@@ -30,5 +30,27 @@ namespace DataAccessLibrary.PageAST
 		{
 			Blocks = blocks;
 		}
+
+		public Document(Guid id, [NotNull] TitleBlock title, Instant creationTime, Instant changeTime, [NotNull] string link, List<IPageBlock> blocks)
+		{
+			Id = id;
+			Title = title;
+			CreationTime = creationTime;
+			ChangeTime = changeTime;
+			Link = link;
+			Blocks = blocks;
+		}
+		
+		public Document([NotNull] TitleBlock title, Instant creationTime, Instant changeTime, [NotNull] string link, List<IPageBlock> blocks)
+		{
+			Id = Guid.NewGuid();
+			Title = title;
+			CreationTime = creationTime;
+			ChangeTime = changeTime;
+			Link = link;
+			Blocks = blocks;
+		}
+		
+		
 	}
 }

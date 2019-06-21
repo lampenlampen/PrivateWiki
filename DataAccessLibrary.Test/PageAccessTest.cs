@@ -165,8 +165,10 @@ namespace DataAccessLibrary.Test
 		[TestMethod]
 		public void GetMarkdownBlockOrNullTest()
 		{
-			var markdown =
+			string markdown =
 				"# Welcome to your Private Wiki\n\n## Get Started\n\nTo learn more about the syntax have a lock in the [Syntax](:syntax) page.\n\nTo view a preview article follow this [link](:test)";
+
+			string? a = null;
 			
 			var db = new DataAccess(_db, _clock);
 			db.InitializeDatabase();
