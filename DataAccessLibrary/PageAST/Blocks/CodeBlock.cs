@@ -2,7 +2,6 @@ using System;
 using System.Reflection;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
-
 namespace DataAccessLibrary.PageAST.Blocks
 {
 	public class CodeBlock : IPageBlock

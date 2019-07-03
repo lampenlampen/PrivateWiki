@@ -12,7 +12,6 @@ namespace DataAccessLibrary.PageAST
 		[NotNull]
 		public Guid Id { get; set; }
 		
-		[NotNull]
 		public TitleBlock Title { get; set; }
 		
 		[NotNull]
@@ -25,23 +24,24 @@ namespace DataAccessLibrary.PageAST
 		public string Link { get; set; }
 		
 		public List<IPageBlock> Blocks { get; set; }
+		
+		public string Content { get; set; }
 
 		public Document([NotNull] List<IPageBlock> blocks)
 		{
 			Blocks = blocks;
 		}
 
-		public Document(Guid id, [NotNull] TitleBlock title, Instant creationTime, Instant changeTime, [NotNull] string link, List<IPageBlock> blocks)
+		public Document(Guid id, TitleBlock title, Instant creationTime, Instant changeTime, [NotNull] string link)
 		{
 			Id = id;
 			Title = title;
 			CreationTime = creationTime;
 			ChangeTime = changeTime;
 			Link = link;
-			Blocks = blocks;
 		}
 		
-		public Document([NotNull] TitleBlock title, Instant creationTime, Instant changeTime, [NotNull] string link, List<IPageBlock> blocks)
+		public Document(TitleBlock title, Instant creationTime, Instant changeTime, [NotNull] string link, List<IPageBlock> blocks)
 		{
 			Id = Guid.NewGuid();
 			Title = title;
@@ -49,6 +49,16 @@ namespace DataAccessLibrary.PageAST
 			ChangeTime = changeTime;
 			Link = link;
 			Blocks = blocks;
+		}
+		
+		public Document(Guid id, TitleBlock title, Instant creationTime, Instant changeTime, [NotNull] string link, string content)
+		{
+			Id = id;
+			Title = title;
+			CreationTime = creationTime;
+			ChangeTime = changeTime;
+			Link = link;
+			Content = content;
 		}
 		
 		

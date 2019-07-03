@@ -71,14 +71,16 @@ namespace DataAccessLibrary
 			internal const string col_ModifyDate = "modify_date";
 			internal const string col_Link = "link";
 			internal const string col_Title = "title";
+			internal const string col_content = "content";
 
 			internal static readonly string CreateDocumentTableCommand =
 				$"CREATE TABLE IF NOT EXISTS {DocumentTableName} (" +
 				$"{col_Id} STRING PRIMARY KEY, " +
 				$"{col_CreationDate} INTEGER, " +
 				$"{col_ModifyDate} INTEGER, " +
-				$"{col_Link} STRING" +
-				$"{col_Title} STRING" +
+				$"{col_Link} STRING," +
+				$"{col_Title} STRING," +
+				$"{col_content} STRING" +
 				$")";
 		}
 
@@ -95,7 +97,9 @@ namespace DataAccessLibrary
 				$"{col_nachfolger} STRING, " +
 				$"{col_document_id} STRING, " +
 				$"PRIMARY KEY ({col_vorgaenger}, {col_vorgaenger}, {col_document_id})," +
-				$"FOREIGN KEY ({col_vorgaenger}) REFERENCES {DocumentTable.DocumentTableName} ({DocumentTable.col_Id})";
+				$"FOREIGN KEY ({col_vorgaenger}) REFERENCES {DocumentTable.DocumentTableName}({DocumentTable.col_Id})," +
+				$"FOREIGN KEY ({col_nachfolger}) REFERENCES {DocumentTable.DocumentTableName}({DocumentTable.col_Id})" +
+				$")";
 		}
 
 

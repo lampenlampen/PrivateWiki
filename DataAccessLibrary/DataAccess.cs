@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
+using DataAccessLibrary.PageAST;
 using DataAccessLibrary.PageAST.Blocks;
 using NodaTime;
 
@@ -30,10 +31,12 @@ namespace DataAccessLibrary
 				var command = new SqliteCommand(SQLiteHelper.PagesTable.CreatePageTableCommand, Db);
 				var command2 = new SqliteCommand(SQLiteHelper.MarkdownBlockTable.CreateMarkdownBlockTableCommand, Db);
 				var command3 = new SqliteCommand(SQLiteHelper.CodeBlockTable.CreateCodeBlockTableCommand,Db);
+				var command4 = new SqliteCommand(SQLiteHelper.DocumentTable.CreateDocumentTableCommand, Db);
 
 				command.ExecuteReader();
 				command2.ExecuteReader();
 				command3.ExecuteReader();
+				command4.ExecuteReader();
 
 				Db.Close();
 			}
@@ -544,6 +547,63 @@ namespace DataAccessLibrary
 				Db.Close();
 
 				return count != 0;
+			}
+		}
+
+		public Document GetDocument(Guid id)
+		{
+			using (Db)
+			{
+				Db.Open();
+
+				var command = new SqliteCommand
+				{
+					Connection = Db,
+					CommandText = $"SELECT * FROM {SQLiteHelper.DocumentTable.DocumentTableName} WHERE id = @Id"
+				};
+				command.Parameters.AddWithValue("@DocumentTable", SQLiteHelper.DocumentTable.DocumentTableName);
+				command.Parameters.AddWithValue("@Id", id.ToString());
+
+				var query = command.ExecuteReader();
+
+				var list = new SQLiteQueryToPageBlockConverter().ConvertToDocumentBlock(query);
+
+				if (list.Count() != 1) throw new Exception("Too many documents!");
+				
+				Db.Close();
+
+				return list.First().Item1;
+			}
+		}
+
+		public bool ContainsDocument(Guid id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void InsertDocument(Document document)
+		{
+			using (Db)
+			{
+				Db.Open();
+				
+				var command = new SqliteCommand
+				{
+					Connection = Db,
+					CommandText = $"INSERT INTO {SQLiteHelper.DocumentTable.DocumentTableName} VALUES (@Id, @CreateDate, @ModifyDate, @Link, @Title, @Content)"
+				};
+
+				command.Parameters.AddWithValue("@DocumentTable", SQLiteHelper.DocumentTable.DocumentTableName);
+				command.Parameters.AddWithValue("@Id", document.Id.ToString());
+				command.Parameters.AddWithValue("@CreateDate", document.CreationTime.ToUnixTimeMilliseconds());
+				command.Parameters.AddWithValue("@ModifyDate", document.ChangeTime.ToUnixTimeMilliseconds());
+				command.Parameters.AddWithValue("@Link", document.Link);
+				command.Parameters.AddWithValue("@Title", document.Title.Title);
+				command.Parameters.AddWithValue("@Content", document.Content);
+
+				command.ExecuteReader();
+				
+				Db.Close();
 			}
 		}
 	}

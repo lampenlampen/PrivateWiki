@@ -1,6 +1,7 @@
 using System;
 using System.Data.Common;
 using System.IO;
+using DataAccessLibrary.PageAST;
 using DataAccessLibrary.PageAST.Blocks;
 using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -21,7 +22,7 @@ namespace DataAccessLibrary.Test
 			_clock = SystemClock.Instance;
 		}
 
-		//[TestCleanup]
+		[TestCleanup]
 		public void DeleteTestDatabase()
 		{
 			File.Delete(_db.DataSource);
@@ -181,6 +182,29 @@ namespace DataAccessLibrary.Test
 			
 			Assert.AreEqual(block.Id, output.Id);
 			Assert.AreEqual(block.Source, output.Source);
+		}
+
+		[TestMethod]
+		public void InsertDocument()
+		{
+			var document = new Document(
+				Guid.NewGuid(), 
+				new TitleBlock("title1", "title1"), 
+				_clock.GetCurrentInstant(), 
+				_clock.GetCurrentInstant(), 
+				"Document1", 
+				"2;8;9;5");
+			
+			var db = new DataAccess(_db, _clock);
+			db.InitializeDatabase();
+			
+			db.InsertDocument(document);
+
+			var output = db.GetDocument(document.Id);
+			
+			Assert.AreEqual(document.Id, output.Id);
+			
+			// TODO Check Equals
 		}
 	}
 }
