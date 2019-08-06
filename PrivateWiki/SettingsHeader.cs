@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.UI.Xaml.Controls;
 
 namespace PrivateWiki
 {
-	class MyTreeViewNode : TreeViewNode
+	public enum SettingsHeader
 	{
-		public string Tag { get; set; }
+		Site = 0,
+		Modules = 1,
+		System = 2
 	}
 }

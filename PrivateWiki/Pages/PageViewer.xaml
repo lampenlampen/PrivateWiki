@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:composition="using:Windows.UI.Composition"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:privateWiki="using:PrivateWiki"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -109,18 +110,11 @@
 
         </CommandBar>
 
-        <Border
-            Name="WebViewBorder"
-            Grid.Row="1"
-            Grid.Column="0"
-            BorderThickness="0"
-            BorderBrush="LightGray"
-            Background="White"
-            Padding="10, 10, 10, 10">
-
             <Border
+                Grid.Row="1"
+                Grid.Column="0"
                 BorderBrush="Gray"
-                BorderThickness="2"
+                BorderThickness="0"
                 CornerRadius="4"
                 Padding="5, 0, 5, 5">
                 <WebView
@@ -134,26 +128,18 @@
                     LoadCompleted="Webview_OnLoadCompleted" />
             </Border>
 
-        </Border>
 
-        <Line
-            Grid.Row="1"
-            Grid.Column="1"
-            Stroke="Gray"
-            StrokeThickness="2"
-            Y1="0"
-            Y2="200000"
-            HorizontalAlignment="Center" />
+       
 
         <controls:GridSplitter
             Grid.Row="1"
             Grid.Column="1"
-            Width="11"
+            Width="5"
             MinWidth="0"
             ResizeBehavior="PreviousAndNext"
             ResizeDirection="Columns"
-            Background="Transparent"
-            Foreground="White"
+            Background="#EEEEEE"
+            Foreground="#EEEEEE"
             FontSize="13"
             Padding="0, 0, 0, 0" />
 
@@ -164,33 +150,21 @@
             Grid.Column="2"
             Padding="0, 10, 10, 20"
             Margin="0,0,0,0"
-            Background="White">
+            Background="#EEEEEE">
 
             <TextBlock
                 Name="TOCHeader"
                 Text="Table of Contents"
                 HorizontalAlignment="Left"
-                FontSize="30"
+                FontSize="16"
                 TextDecorations="Underline"
                 Padding="10, 0, 0, 20" />
 
-            <TreeView
+            <muxc:TreeView
                 Name="TreeView"
                 ItemInvoked="TreeView_ItemInvoked"
-                MaxHeight="400"
-                MaxWidth="300"
+                MinWidth="250"
                 VerticalAlignment="Top" />
-
-            <TextBlock Text="Tags"
-                       HorizontalAlignment="Left"
-                       FontSize="30"
-                       TextDecorations="Underline"
-                       Padding="10, 20, 0, 20" />
-
-            <ListView
-                Name="ListView"
-                VerticalAlignment="Top"
-                SelectionMode="None" />
 
         </StackPanel>
 

@@ -21,6 +21,8 @@ using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Dialogs;
 using PrivateWiki.Markdig;
 using StorageProvider;
+using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
+using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -295,7 +297,7 @@ namespace PrivateWiki.Pages
 		/// </summary>
 		/// <param name="sender">The pressed header</param>
 		/// <param name="args"></param>
-		private async void TreeView_ItemInvoked(TreeView sender, [NotNull] TreeViewItemInvokedEventArgs args)
+		private async void TreeView_ItemInvoked(TreeView treeView, TreeViewItemInvokedEventArgs args)
 		{
 			var node = (MyTreeViewNode) args.InvokedItem;
 			var header = (string) node.Content;
@@ -318,13 +320,7 @@ namespace PrivateWiki.Pages
 
 		private async void Top_Click(object sender, RoutedEventArgs e)
 		{
-			//await Webview.InvokeScriptAsync("eval", new[] {"window.scrollTo(0,0);"});
-
-			// TODO
-			await Webview.InvokeScriptAsync("eval", new[]
-			{
-				$"document.getElementById(\"codeCopy\").click();"
-			});
+			await Webview.InvokeScriptAsync("eval", new[] {"window.scrollTo(0,0);"});
 		}
 
 		/// <summary>
@@ -404,7 +400,7 @@ namespace PrivateWiki.Pages
 
 		private void Setting_Click(object sender, RoutedEventArgs e)
 		{
-			// TODO Settings
+			Frame.Navigate(typeof(SettingsPage));
 		}
 
 		private void Search_Click(object sender, RoutedEventArgs e)

@@ -330,7 +330,7 @@ namespace DataAccessLibrary
 				{
 					Connection = Db,
 					CommandText =
-						$"SELECT EXISTS (SELECT * FROM {SQLiteHelper.PagesTable.tableName} WHERE {SQLiteHelper.PagesTable.col_link} = @Link)"
+						$"SELECT * FROM {SQLiteHelper.PagesTable.tableName} WHERE {SQLiteHelper.PagesTable.col_link} = @Link"
 				};
 
 				command.Parameters.AddWithValue("@Link", link);

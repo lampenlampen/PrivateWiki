@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="PrivateWiki.Pages.SettingsPages.NavigationSettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PrivateWiki.Pages.SettingsPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="#EEEEEE">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <RelativePanel
+            Grid.Row="0"
+            Padding="16, 16, 16, 16">
+
+            <FontIcon 
+                Name="SettingsNavigationIcon"
+                FontFamily="Segoe MDL2 Assets" 
+                Glyph="&#xE122;"
+                Margin="0, 0, 16, 0"
+                FontSize="64"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignVerticalCenterWithPanel="True"/>
+
+            <StackPanel
+                RelativePanel.RightOf="SettingsNavigationIcon"
+                RelativePanel.AlignVerticalCenterWithPanel="True">
+
+                <TextBlock 
+                    Text="Navigation"
+                    FontSize="18"
+                />
+                <TextBlock
+                    Text="Manage the site navigation"/>
+
+            </StackPanel>
+                
+
+
+        </RelativePanel>
+
+    </Grid>
+</Page>

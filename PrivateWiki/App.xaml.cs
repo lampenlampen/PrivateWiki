@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -9,6 +11,7 @@ using PrivateWiki.Data;
 using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Pages;
 using Windows.Storage;
+using PrivateWiki.Pages.SettingsPages;
 
 namespace PrivateWiki
 {
@@ -33,12 +36,12 @@ namespace PrivateWiki
 			var pages = dataAccess.GetPages();
 		}
 
-        /// <summary>
-        ///     Wird aufgerufen, wenn die Anwendung durch den Endbenutzer normal gestartet wird. Weitere Einstiegspunkte
-        ///     werden z. B. verwendet, wenn die Anwendung gestartet wird, um eine bestimmte Datei zu öffnen.
-        /// </summary>
-        /// <param name="e">Details über Startanforderung und -prozess.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+		/// <summary>
+		///     Wird aufgerufen, wenn die Anwendung durch den Endbenutzer normal gestartet wird. Weitere Einstiegspunkte
+		///     werden z. B. verwendet, wenn die Anwendung gestartet wird, um eine bestimmte Datei zu öffnen.
+		/// </summary>
+		/// <param name="e">Details über Startanforderung und -prozess.</param>
+		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
 			var rootFrame = Window.Current.Content as Frame;
 
