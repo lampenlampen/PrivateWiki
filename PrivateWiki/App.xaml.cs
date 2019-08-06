@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -11,7 +12,11 @@ using PrivateWiki.Data;
 using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Pages;
 using Windows.Storage;
+using ChakraBridge;
+using Microsoft.Extensions.Logging;
 using PrivateWiki.Pages.SettingsPages;
+using Console = ChakraBridge.Console;
+using Window = Windows.UI.Xaml.Window;
 
 namespace PrivateWiki
 {
@@ -41,7 +46,7 @@ namespace PrivateWiki
 		///     werden z. B. verwendet, wenn die Anwendung gestartet wird, um eine bestimmte Datei zu öffnen.
 		/// </summary>
 		/// <param name="e">Details über Startanforderung und -prozess.</param>
-		protected override void OnLaunched(LaunchActivatedEventArgs e)
+		protected override async void OnLaunched(LaunchActivatedEventArgs e)
 		{
 			var rootFrame = Window.Current.Content as Frame;
 
@@ -65,6 +70,9 @@ namespace PrivateWiki
 
 			if (e.PrelaunchActivated == false)
 			{
+
+				await TestMethod();
+
 				if (rootFrame.Content == null) rootFrame.Navigate(typeof(MainPage), e.Arguments);
 
 				// Sicherstellen, dass das aktuelle Fenster aktiv ist
@@ -72,7 +80,35 @@ namespace PrivateWiki
 			}
 		}
 
-        /// <summary>
+		public async Task TestMethod()
+		{
+			var host = new ChakraHost();
+
+			ChakraBridge.CommunicationManager.RegisterType(typeof(string));
+			ChakraBridge.CommunicationManager.OnObjectReceived = data =>
+			{
+				var latex = (string) data;
+				var dialog = new ContentDialog();
+				dialog.Content = data;
+				dialog.ShowAsync();
+			};
+
+			var script = await ChakraBridge.CoreTools.GetPackagedFileContentAsync(@"Assets\Latex.js", "latex.js");
+
+			var script2 =
+				script +
+				"\r\n\r\nfunction parseLatex(latex) { let generator = new HtmlGenerator({hyphenate: false }); let doc = parse(latex, {generator: generator}).htmlDocument(); sendToHost(JSON.stringify(doc), \"string\");}\r\n\r\nparseLatex(\"Hi, this is a line of text.\");";
+
+			host.RunScript(script2);
+
+			// host.RunScript("import  { parse, HtmlGenerator } from 'latex.js'\r\n\r\nlet latex = \"Hi, this is a line of text.\"\r\n\r\n\r\nlet generator = new HtmlGenerator({ hyphenate: false })\r\n\r\nlet doc = parse(latex, { generator: generator }).htmlDocument()\r\n\r\nsendToHost(doc, \"string\")");
+
+			// host.RunScript("function parseLatex(latex) { let generator = new HtmlGenerator({hyphenate: false }); let doc = parse(latex, {generator: generator}).htmlDocument(); sendToHost(doc, \"string\");}");
+
+			// host.CallFunction("parseLatex", "Hi, this is a line of text.");
+		}
+
+		/// <summary>
         ///     Wird aufgerufen, wenn die Navigation auf eine bestimmte Seite fehlschlägt
         /// </summary>
         /// <param name="sender">Der Rahmen, bei dem die Navigation fehlgeschlagen ist</param>
