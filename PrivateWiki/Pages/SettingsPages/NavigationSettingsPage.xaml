@@ -6,45 +6,92 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:PrivateWiki.Controls"
+    xmlns:privateWiki="using:PrivateWiki"
     mc:Ignorable="d"
     Background="#EEEEEE">
 
+    <Page.Resources>
+        <DataTemplate x:Key="NavigationDividerTemplate">
+            
+        </DataTemplate>
+        <DataTemplate x:Key="NavigationHeaderTemplate">
+            <TextBlock/>
+        </DataTemplate>
+        <DataTemplate x:Key="NavigationLinkTemplate">
+            <TextBlock/>
+        </DataTemplate>
+
+        <privateWiki:SettingNavigationTemplateSelector
+            x:Key="SettingNavigationTemplateSelector"
+            DividerTemplate="{StaticResource NavigationDividerTemplate}"
+            HeaderTemplate="{StaticResource NavigationHeaderTemplate}"
+            LinkTemplate="{StaticResource NavigationLinkTemplate}"/>
+
+    </Page.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition
-                Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <RelativePanel
-            Grid.Row="0"
-            Padding="16, 16, 16, 16">
+        <controls:SettingsHeader
+            Title="Navigation"
+            Subtitle="Manage the site navigation"
+            ApplyClick="SettingsHeader_OnApplyClick"
+            ResetClick="SettingsHeader_OnResetClick"/>
 
-            <FontIcon 
-                Name="SettingsNavigationIcon"
-                FontFamily="Segoe MDL2 Assets" 
-                Glyph="&#xE122;"
-                Margin="0, 0, 16, 0"
-                FontSize="64"
-                RelativePanel.AlignLeftWithPanel="True"
-                RelativePanel.AlignVerticalCenterWithPanel="True"/>
+        <Grid
+            Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="256"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-            <StackPanel
-                RelativePanel.RightOf="SettingsNavigationIcon"
-                RelativePanel.AlignVerticalCenterWithPanel="True">
+            <StackPanel Grid.Column="0" Margin="32">
 
-                <TextBlock 
-                    Text="Navigation"
-                    FontSize="18"
-                />
-                <TextBlock
-                    Text="Manage the site navigation"/>
+                <StackPanel
+                    Orientation="Horizontal"
+                    MinHeight="64"
+                    MinWidth="256"
+                    Margin="0,8,32,8"
+                    Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE80F;" VerticalAlignment="Center" Margin="16,0,16,0"/>
+                    <TextBlock Text="Home" VerticalAlignment="Center" Margin="0,0,16,0"/>
+
+                </StackPanel>
+
+                <ListView x:Name="Listview" MinWidth="256"
+                          ItemsSource="{x:Bind navigationItems}"
+                          ItemTemplateSelector="{StaticResource SettingNavigationTemplateSelector}"/>
+
+                <Button
+                    Margin="12,8,32,8"
+                    MinWidth="256"
+                    Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" VerticalAlignment="Center" Margin="16,0,16,0"/>
+                        <TextBlock Text="Add" VerticalAlignment="Center" Margin="0,0,16,0"/>
+
+                    </StackPanel>
+
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Link" Click="Add_LinkClick"/>
+                            <MenuFlyoutItem Text="Header" Click="Add_HeaderClick"/>
+                            <MenuFlyoutItem Text="Divider" Click="Add_DividerClick"/>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
 
             </StackPanel>
-                
 
 
-        </RelativePanel>
+        </Grid>
 
     </Grid>
 </Page>

@@ -39,7 +39,7 @@
                             Margin="0, 0, 16, 0"/>
 
                         <TextBlock
-                            Text="{Binding Item}"></TextBlock>
+                            Text="{Binding ItemString}"></TextBlock>
                     </StackPanel>
 
                     
@@ -57,46 +57,9 @@
                     
                 </GroupStyle>
             </ListView.GroupStyle>
+            </ListView>
 
-            <!--
-            <ListViewHeaderItem>Site</ListViewHeaderItem>
-            <ListViewItem>General</ListViewItem>
-            
-            <ListViewItem>
-                <ListViewItem.Content>
-
-                    <StackPanel
-                        Orientation="Horizontal">
-
-                        <FontIcon 
-                            FontFamily="Segoe MDL2 Assets" 
-                            Glyph="&#xE122;"
-                            Margin="0, 0, 16, 0"/>
-
-                        <TextBlock>Navigation</TextBlock>
-
-                    </StackPanel>
-
-                </ListViewItem.Content>
-            </ListViewItem>
-            <ListViewItem>Pages</ListViewItem>
-            <ListViewItem>Theme</ListViewItem>
-
-            <ListViewHeaderItem>
-                Modules
-            </ListViewHeaderItem>
-            <ListViewItem>Rendering</ListViewItem>
-            <ListViewItem>Storage</ListViewItem>
-
-            <ListViewHeaderItem>
-                System
-            </ListViewHeaderItem>
-            <ListViewItem>Developer Tools</ListViewItem>
-            -->
-
-        </ListView>
-
-        <Frame
+            <Frame
             Name="SettingsContentFrame"
             Grid.Column="1"
             Background="#EEEEEE"

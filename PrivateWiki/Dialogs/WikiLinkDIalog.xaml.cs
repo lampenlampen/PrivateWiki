@@ -5,6 +5,8 @@ using NodaTime;
 using PrivateWiki.Data;
 using PrivateWiki.Data.DataAccess;
 
+#nullable enable
+
 // Die Elementvorlage "Inhaltsdialogfeld" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
 namespace PrivateWiki.Dialogs
@@ -28,5 +30,6 @@ namespace PrivateWiki.Dialogs
 		{
 			WikiLink = WikiLinkComboBox.SelectionBoxItem as string;
 		}
+
 	}
 }

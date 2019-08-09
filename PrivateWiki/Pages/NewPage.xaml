@@ -9,8 +9,31 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <RelativePanel
+            Grid.Row="0">
+
+            <Button
+                RelativePanel.AlignRightWithPanel="True"
+                Margin="16, 16, 16, 16"
+                Background="Transparent"
+                Click="CloseBtn_Click">
+
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
+
+            </Button>
+
+        </RelativePanel>
+
+        
 
         <StackPanel
+            Grid.Row="1"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
 

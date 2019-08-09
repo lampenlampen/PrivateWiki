@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
+#nullable enable
+
 namespace PrivateWiki.Data
 {
 	internal class MediaAccess
@@ -68,7 +70,7 @@ namespace PrivateWiki.Data
 			};
             picker.FileTypeChoices.Add("MarkdownWiki", new[] { ".mdwiki" });
 
-			return await picker.PickSaveFileAsync();
+            return await picker.PickSaveFileAsync();
 		}
 	}
 }

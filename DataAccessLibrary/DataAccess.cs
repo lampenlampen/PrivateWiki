@@ -38,6 +38,7 @@ namespace DataAccessLibrary
 				command3.ExecuteReader();
 				command4.ExecuteReader();
 
+				command.Dispose();
 				Db.Close();
 			}
 		}

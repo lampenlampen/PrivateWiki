@@ -27,26 +27,28 @@ namespace PrivateWiki.Pages
 		{
 			this.InitializeComponent();
 
-			var generalItem = new SettingsItem {Item = "General", Header = SettingsHeader.Site};
-			var navigationItem = new SettingsItem { Item = "Navigation", Header = SettingsHeader.Site };
-			var pagesItem = new SettingsItem { Item = "Pages", Header = SettingsHeader.Site };
-			var themeItem = new SettingsItem { Item = "Theme", Header = SettingsHeader.Site };
-			var renderingItem = new SettingsItem { Item = "Rendering", Header = SettingsHeader.Modules };
-			var storageItem = new SettingsItem { Item = "Storage", Header = SettingsHeader.Modules };
-			var developerToolsItem = new SettingsItem { Item = "Developer Tools", Header = SettingsHeader.System };
+			var generalItem = new SettingsItem(SettingItems.General, SettingHeaders.Site);
+			var navigationItem = new SettingsItem(SettingItems.Navigation, SettingHeaders.Site);
+			var pagesItem = new SettingsItem(SettingItems.Pages, SettingHeaders.Site);
+			var themeItem = new SettingsItem(SettingItems.Theme, SettingHeaders.Site);
+			var renderingItem = new SettingsItem(SettingItems.Rendering, SettingHeaders.Modules);
+			var storageItem = new SettingsItem(SettingItems.Storage, SettingHeaders.Modules);
+			var developerToolsItem = new SettingsItem(SettingItems.DeveloperTools, SettingHeaders.System) { ItemString = "Developer Tools"};
 
-			List<SettingsItem> settingsItems = new List<SettingsItem>();
-			settingsItems.Add(generalItem);
-			settingsItems.Add(navigationItem);
-			settingsItems.Add(pagesItem);
-			settingsItems.Add(themeItem);
-			settingsItems.Add(renderingItem);
-			settingsItems.Add(storageItem);
-			settingsItems.Add(developerToolsItem);
+			List<SettingsItem> settingsItems = new List<SettingsItem>
+			{
+				generalItem,
+				navigationItem,
+				pagesItem,
+				themeItem,
+				renderingItem,
+				storageItem,
+				developerToolsItem
+			};
 
-			var groupeditems = settingsItems.GroupBy(s => s.Header);
+			var groupedItems = settingsItems.GroupBy(s => s.HeaderString);
 
-			cvs.Source = groupeditems;
+			cvs.Source = groupedItems;
 		}
 
 		private void SettingsMenuClick(object sender, ItemClickEventArgs args)
@@ -55,31 +57,59 @@ namespace PrivateWiki.Pages
 
 			switch (clickedItem.Item)
 			{
-				case "General":
+				case SettingItems.General:
 					break;
-				case "Navigation":
+				case SettingItems.Navigation:
 					SettingsContentFrame.Navigate(typeof(NavigationSettingsPage));
 					break;
-				case "Pages":
+				case SettingItems.Pages:
 					break;
-				case "Theme":
+				case SettingItems.Theme:
 					break;
-				case "Rendering":
+				case SettingItems.Rendering:
+					SettingsContentFrame.Navigate(typeof(RenderingSettingsPage));
 					break;
-				case "Storage":
+				case SettingItems.Storage:
 					break;
-				case "Developer Tools":
+				case SettingItems.DeveloperTools:
 					break;
-				default: throw new NotSupportedException("Settings Item not supported!");
 			}
 		}
 	}
 
 	public class SettingsItem
 	{
-		public string Item { get; set; }
-		public SettingsHeader Header { get; set; }
+		public SettingItems Item { get; set; }
 
-		public String HeaderString => Header.ToString();
+		public string ItemString { get; set; }
+		public SettingHeaders Header { get; set; }
+
+		public String HeaderString { get; set; }
+
+		public SettingsItem(SettingItems item, SettingHeaders header)
+		{
+			Item = item;
+			Header = header;
+			ItemString = item.ToString();
+			HeaderString = header.ToString();
+		}
+	}
+
+	public enum SettingItems
+	{
+		General,
+		Navigation,
+		Rendering,
+		Pages,
+		Theme,
+		Storage,
+		DeveloperTools
+	}
+
+	public enum SettingHeaders
+	{
+		Site = 0,
+		Modules = 1,
+		System = 2
 	}
 }

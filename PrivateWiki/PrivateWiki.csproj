@@ -11,13 +11,15 @@
     <AssemblyName>PrivateWiki</AssemblyName>
     <DefaultLanguage>en-us</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>PrivateWiki_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -96,6 +98,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SettingsHeader.xaml.cs">
+      <DependentUpon>SettingsHeader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\DataAccess\DataAccessLibrary.DataAccessImpl.cs" />
     <Compile Include="Data\DataAccess\IDataAccess.cs" />
     <Compile Include="Data\DefaultPages.cs" />
@@ -118,6 +123,7 @@
     <Compile Include="DiffMatchPatchAlg.cs" />
     <Compile Include="ImagePickerDialogModel.cs" />
     <Compile Include="MarkdownWikiFile\MarkdownWikiFile.cs" />
+    <Compile Include="Models\NavigationItem.cs" />
     <Compile Include="MyTreeViewNode.cs" />
     <Compile Include="MyUriToStreamResolver.cs" />
     <Compile Include="Pages\ExternalEditor.xaml.cs">
@@ -164,6 +170,10 @@
     <Compile Include="Pages\SettingsPages\NavigationSettingsPage.xaml.cs">
       <DependentUpon>NavigationSettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SettingsPages\RenderingSettingsPage.xaml.cs">
+      <DependentUpon>RenderingSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingNavigationTemplateSelector.cs" />
     <Compile Include="Pages\XamlPageViewer.xaml.cs">
       <DependentUpon>XamlPageViewer.xaml</DependentUpon>
     </Compile>
@@ -171,7 +181,6 @@
     <Compile Include="SearchPopupContent.xaml.cs">
       <DependentUpon>SearchPopupContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SettingsHeader.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -217,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\SettingsHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\ExportDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -270,6 +283,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\SettingsPages\NavigationSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPages\RenderingSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -330,9 +347,7 @@
       <Name>StorageProvider</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

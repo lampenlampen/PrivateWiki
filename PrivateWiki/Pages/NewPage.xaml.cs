@@ -1,7 +1,9 @@
 ﻿using System;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using DataAccessLibrary;
 using JetBrains.Annotations;
@@ -20,12 +22,29 @@ namespace PrivateWiki.Pages
 	{
 		[CanBeNull] private string _pageId;
 
-		private DataAccessImpl dataAccess;
+		private readonly DataAccessImpl dataAccess;
 
 		public NewPage()
 		{
 			InitializeComponent();
 			dataAccess = new DataAccessImpl();
+
+			KeyboardAccelerator GoBack = new KeyboardAccelerator();
+			GoBack.Key = VirtualKey.GoBack;
+			GoBack.Invoked += BackInvoked;
+			KeyboardAccelerator AltLeft = new KeyboardAccelerator();
+			AltLeft.Key = VirtualKey.Left;
+			AltLeft.Invoked += BackInvoked;
+			this.KeyboardAccelerators.Add(GoBack);
+			this.KeyboardAccelerators.Add(AltLeft);
+			// ALT routes here
+			AltLeft.Modifiers = VirtualKeyModifiers.Menu;
+		}
+
+		private void BackInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		{
+			GoBackRequested();
+			args.Handled = true;
 		}
 
 		protected override void OnNavigatedTo([NotNull] NavigationEventArgs e)
@@ -57,6 +76,22 @@ namespace PrivateWiki.Pages
 		private void NavigateToPage()
 		{
 			Frame.Navigate(typeof(PageEditor), _pageId);
+		}
+
+		private void CloseBtn_Click(object sender, RoutedEventArgs e)
+		{
+			GoBackRequested();
+		}
+
+		private bool GoBackRequested()
+		{
+			if (Frame.CanGoBack)
+			{
+				Frame.GoBack();
+				return true;
+			}
+
+			return false;
 		}
 	}
 }
