@@ -27,7 +27,8 @@
             ItemClick="SettingsMenuClick"
             SelectionMode="Single"
             IsItemClickEnabled="True"
-            ItemsSource="{Binding Source={StaticResource cvs}}">
+            ItemsSource="{Binding Source={StaticResource cvs}}"
+            Background="{ThemeResource SystemControlAcrylicWindowBrush}">
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:SettingsItem">

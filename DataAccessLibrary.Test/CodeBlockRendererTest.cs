@@ -1,7 +1,5 @@
 using DataAccessLibrary.PageAST.Blocks;
-using DataAccessLibrary.Renderer;
 using DataAccessLibrary.Renderer.Html;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DataAccessLibrary.Test

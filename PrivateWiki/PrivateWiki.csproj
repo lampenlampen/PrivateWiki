@@ -98,6 +98,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NavigationSettingsHeaderItemControl.xaml.cs">
+      <DependentUpon>NavigationSettingsHeaderItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SettingsHeader.xaml.cs">
       <DependentUpon>SettingsHeader.xaml</DependentUpon>
     </Compile>
@@ -226,6 +229,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\NavigationSettingsHeaderItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SettingsHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

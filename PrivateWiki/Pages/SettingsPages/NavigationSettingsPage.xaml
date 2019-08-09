@@ -8,6 +8,7 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:controls="using:PrivateWiki.Controls"
     xmlns:privateWiki="using:PrivateWiki"
+    xmlns:models="using:PrivateWiki.Models"
     mc:Ignorable="d"
     Background="#EEEEEE">
 
@@ -15,11 +16,11 @@
         <DataTemplate x:Key="NavigationDividerTemplate">
             
         </DataTemplate>
-        <DataTemplate x:Key="NavigationHeaderTemplate">
-            <TextBlock/>
+        <DataTemplate x:Key="NavigationHeaderTemplate" x:DataType="models:HeaderItem">
+            <TextBlock Text="{x:Bind Text}" />
         </DataTemplate>
-        <DataTemplate x:Key="NavigationLinkTemplate">
-            <TextBlock/>
+        <DataTemplate x:Key="NavigationLinkTemplate" x:DataType="models:LinkItem">
+            <TextBlock Text="{x:Bind Text}" />
         </DataTemplate>
 
         <privateWiki:SettingNavigationTemplateSelector
@@ -37,58 +38,87 @@
         </Grid.RowDefinitions>
 
         <controls:SettingsHeader
+            Grid.Row="0"
             Title="Navigation"
             Subtitle="Manage the site navigation"
             ApplyClick="SettingsHeader_OnApplyClick"
             ResetClick="SettingsHeader_OnResetClick"/>
 
         <Grid
-            Grid.Row="1">
+            Grid.Row="1"
+            Padding="32, 16, 32, 32"
+            Height="Auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" MinWidth="256"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Margin="32">
+            <Grid Grid.Column="0" Margin="0, 0, 32, 0" Height="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                <StackPanel
-                    Orientation="Horizontal"
-                    MinHeight="64"
-                    MinWidth="256"
-                    Margin="0,8,32,8"
-                    Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+                <Grid
+                    Grid.Row="0"
+                    Background="White"
+                    Padding="8">
 
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE80F;" VerticalAlignment="Center" Margin="16,0,16,0"/>
-                    <TextBlock Text="Home" VerticalAlignment="Center" Margin="0,0,16,0"/>
+                    <StackPanel
+                        Orientation="Horizontal"
+                        MinHeight="64"
+                        MinWidth="256"
+                        Background="{ThemeResource SystemControlBackgroundAccentBrush}">
 
-                </StackPanel>
-
-                <ListView x:Name="Listview" MinWidth="256"
-                          ItemsSource="{x:Bind navigationItems}"
-                          ItemTemplateSelector="{StaticResource SettingNavigationTemplateSelector}"/>
-
-                <Button
-                    Margin="12,8,32,8"
-                    MinWidth="256"
-                    Background="{ThemeResource SystemControlBackgroundAccentBrush}">
-
-                    <StackPanel Orientation="Horizontal">
-
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" VerticalAlignment="Center" Margin="16,0,16,0"/>
-                        <TextBlock Text="Add" VerticalAlignment="Center" Margin="0,0,16,0"/>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE80F;" VerticalAlignment="Center" Margin="16,0,16,0"/>
+                        <TextBlock Text="Home" VerticalAlignment="Center" Margin="0,0,16,0"/>
 
                     </StackPanel>
+                </Grid>
 
-                    <Button.Flyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem Text="Link" Click="Add_LinkClick"/>
-                            <MenuFlyoutItem Text="Header" Click="Add_HeaderClick"/>
-                            <MenuFlyoutItem Text="Divider" Click="Add_DividerClick"/>
-                        </MenuFlyout>
-                    </Button.Flyout>
-                </Button>
+                <ListView x:Name="Listview" 
+                          Background="White"
+                          Grid.Row="1"
+                          Padding="8"
+                          MinWidth="256"
+                          ItemsSource="{x:Bind navigationItems}"
+                          SelectionChanged="Listview_SelectionChanged"
+                          ItemTemplateSelector="{StaticResource SettingNavigationTemplateSelector}"/>
 
-            </StackPanel>
+                <Grid
+                    Background="White"
+                    Grid.Row="2"
+                    Padding="8">
+
+                    <Button
+                        MinWidth="256"
+                        Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" VerticalAlignment="Center" Margin="16,0,16,0"/>
+                            <TextBlock Text="Add" VerticalAlignment="Center" Margin="0,0,16,0"/>
+
+                        </StackPanel>
+
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="Link" Click="Add_LinkClick"/>
+                                <MenuFlyoutItem Text="Header" Click="Add_HeaderClick"/>
+                                <MenuFlyoutItem Text="Divider" Click="Add_DividerClick"/>
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+
+                
+
+            </Grid>
+
+            <Grid
+                Grid.Column="1"
+                x:Name="NavigationSettingsItemContent"></Grid>
 
 
         </Grid>

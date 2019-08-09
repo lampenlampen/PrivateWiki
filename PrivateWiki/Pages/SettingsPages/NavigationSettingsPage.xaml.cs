@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using PrivateWiki.Controls;
 using PrivateWiki.Models;
 
 #nullable enable
@@ -51,29 +52,32 @@ namespace PrivateWiki.Pages.SettingsPages
 
 		private void Add_LinkClick(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			var link = new LinkItem {Text = "Link" };
+			navigationItems.Add(link);
 		}
 
 		private void Add_HeaderClick(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			var header = new HeaderItem {Text="Header"};
+			navigationItems.Add(header);
 		}
 
 		private void Add_DividerClick(object sender, RoutedEventArgs e)
 		{
-			var listViewItem = new ListViewItem();
+			var divider = new DividerItem();
+			navigationItems.Add(divider );
+		}
 
-			var color = (Color)Application.Current.Resources["SystemAccentColor"];
-			var backgroundBrush = new SolidColorBrush(color);
+		private void Listview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			NavigationSettingsItemContent.Children.Clear();
 
-			listViewItem.Background = backgroundBrush;
-			listViewItem.MinWidth = 256D;
+			var item = (NavigationItem) ((ListView) sender).SelectedItem;
 
-			var line = new LineGeometry();
-
-			listViewItem.Content = line;
-
-			Listview.Items.Add(line);
+			if (item is HeaderItem)
+			{
+				NavigationSettingsItemContent.Children.Add(new NavigationSettingsHeaderItemControl());
+			}
 		}
 	}
 }
