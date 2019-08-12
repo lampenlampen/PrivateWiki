@@ -23,5 +23,23 @@ namespace PrivateWiki.Controls
 		{
 			this.InitializeComponent();
 		}
+
+		public string HeaderText
+		{
+			get => (string)GetValue(HeaderTextProperty);
+			set => SetValue(HeaderTextProperty, value);
+		}
+
+		// Using a DependencyProperty as the backing store for TitleProperty.
+		// This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty HeaderTextProperty = DependencyProperty.Register("HeaderTextProperty",
+			typeof(string), typeof(NavigationSettingsHeaderItemControl), null);
+
+		public event TextChangedEventHandler TextChanged;
+
+		private void Text_OnTextChanged(object sender, TextChangedEventArgs e)
+		{
+			TextChanged?.Invoke(sender, e);
+		}
 	}
 }

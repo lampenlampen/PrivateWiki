@@ -74,10 +74,15 @@ namespace PrivateWiki.Pages.SettingsPages
 
 			var item = (NavigationItem) ((ListView) sender).SelectedItem;
 
-			if (item is HeaderItem)
+			if (item is HeaderItem headerItem)
 			{
+				var headerControl = new NavigationSettingsHeaderItemControl();
+				headerControl.TextChanged += (o, args) => { headerItem.Text = headerControl.HeaderText; };
+
 				NavigationSettingsItemContent.Children.Add(new NavigationSettingsHeaderItemControl());
 			}
 		}
+
+
 	}
 }
