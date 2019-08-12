@@ -286,9 +286,7 @@ namespace PrivateWiki.Pages
 
 		private async void Revision_Click(object sender, RoutedEventArgs e)
 		{
-			Debug.WriteLine("Show Revision");
-			var wikiFile = await MarkdownWikiFile.MarkdownWikiFile.createMarkdownWikiFileAsync();
-			wikiFile.saveAllPagesAsync();
+			throw new NotImplementedException();
 		}
 
 		/// <summary>

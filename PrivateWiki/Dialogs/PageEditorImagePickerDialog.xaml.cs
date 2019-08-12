@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
@@ -33,7 +34,7 @@ namespace PrivateWiki.Dialogs
             if (imageFolder == null) return;
 
             var imageFiles = await imageFolder.GetFilesAsync();
-            var images = imageFiles.Map(file => new ImagePickerDialogModel(file.DisplayName, new Uri(file.Path)));
+            var images = imageFiles.Select(file => new ImagePickerDialogModel(file.DisplayName, new Uri(file.Path)));
 
             Images = new ObservableCollection<ImagePickerDialogModel>(images);
 

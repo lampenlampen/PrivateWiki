@@ -17,7 +17,7 @@ namespace PrivateWiki.Dialogs
 		{
 			InitializeComponent();
 
-			Pages = new DataAccessImpl().GetPages().Map(p => p.Link).ToList();
+			Pages = new DataAccessImpl().GetPages().Select(p => p.Link).ToList();
 
 			WikiLinkComboBox.ItemsSource = Pages;
 		}

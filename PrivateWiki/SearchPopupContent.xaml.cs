@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -36,7 +37,7 @@ namespace PrivateWiki
 
 		private void Filter(string text)
 		{
-			var pages = _pages.Filter(p => p.Link.Contains(text));
+			var pages = _pages.Where(p => p.Link.Contains(text));
 
 			Pages = new ObservableCollection<PageModel>(pages);
 		}
