@@ -11,7 +11,7 @@ namespace PrivateWiki
 
 		protected override DataTemplate SelectTemplateCore(object item)
 		{
-			var node = (TreeViewNode) item;
+			var node = (TreeViewNode)item;
 
 			if (node.Content is StorageFolder) return FolderTemplate;
 

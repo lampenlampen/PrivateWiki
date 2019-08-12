@@ -3,7 +3,7 @@ using MarkdigHtmlRenderer = Markdig.Renderers.HtmlRenderer;
 
 namespace DataAccessLibrary.Renderer.Html
 {
-	public class TitleBlockRenderer: IHtmlRenderer
+	public class TitleBlockRenderer : IHtmlRenderer
 	{
 		public string RenderToHtml(IPageBlock block)
 		{

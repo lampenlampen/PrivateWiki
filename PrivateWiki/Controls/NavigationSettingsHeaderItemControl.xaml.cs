@@ -41,5 +41,12 @@ namespace PrivateWiki.Controls
 		{
 			TextChanged?.Invoke(sender, e);
 		}
+
+		public event RoutedEventHandler DeleteHeader;
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			DeleteHeader?.Invoke(sender, e);
+		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,16 +8,15 @@ using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using JetBrains.Annotations;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace PrivateWiki.Pages
 {
-    /// <summary>
-    ///     An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class MediaManager : Page
+	/// <summary>
+	///     An empty page that can be used on its own or navigated to within a Frame.
+	/// </summary>
+	public sealed partial class MediaManager : Page
 	{
 		public MediaManager()
 		{
@@ -58,7 +58,7 @@ namespace PrivateWiki.Pages
 
 			foreach (var item in itemsList)
 			{
-				var newNode = new TreeViewNode {Content = item};
+				var newNode = new TreeViewNode { Content = item };
 
 				if (item is StorageFolder) newNode.HasUnrealizedChildren = true;
 
@@ -108,7 +108,7 @@ namespace PrivateWiki.Pages
 			var node = (sender as MenuFlyoutItem).DataContext as TreeViewNode;
 			var folder = node.Content as StorageFolder;
 
-			var panel = new StackPanel {Orientation = Orientation.Vertical};
+			var panel = new StackPanel { Orientation = Orientation.Vertical };
 			var textBlock = new TextBlock
 			{
 				Text = "Please enter a name for the new folder."
@@ -174,7 +174,7 @@ namespace PrivateWiki.Pages
 			var node = (sender as MenuFlyoutItem).DataContext as TreeViewNode;
 			var folder = node.Content as StorageFolder;
 
-			var panel = new StackPanel {Orientation = Orientation.Vertical};
+			var panel = new StackPanel { Orientation = Orientation.Vertical };
 			var textBlock = new TextBlock
 			{
 				Text = "Please enter a new name."
@@ -243,7 +243,7 @@ namespace PrivateWiki.Pages
 			var node = (sender as MenuFlyoutItem).DataContext as TreeViewNode;
 			var file = node.Content as StorageFile;
 
-			var panel = new StackPanel {Orientation = Orientation.Vertical};
+			var panel = new StackPanel { Orientation = Orientation.Vertical };
 			var textBlock = new TextBlock
 			{
 				Text = "Please enter a new name."
@@ -300,7 +300,7 @@ namespace PrivateWiki.Pages
 				var copiedFiles = files.Select(it => it.CopyAsync(folder).AsTask());
 
 				var panel = new StackPanel();
-				var progressBar = new ProgressBar {IsIndeterminate = true};
+				var progressBar = new ProgressBar { IsIndeterminate = true };
 				panel.Children.Add(progressBar);
 
 				var dialog2 = new ContentDialog

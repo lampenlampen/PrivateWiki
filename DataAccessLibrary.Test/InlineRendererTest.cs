@@ -1,8 +1,8 @@
-using System.IO;
 using DataAccessLibrary.Renderer.Html;
 using Markdig;
 using Markdig.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 using MarkdigHtmlRenderer = Markdig.Renderers.HtmlRenderer;
 
 namespace DataAccessLibrary.Test
@@ -17,16 +17,16 @@ namespace DataAccessLibrary.Test
 			var inlineRenderer = new InlineRenderer();
 			var doc = Markdown.Parse(markdown);
 			var inlines = (doc[0] as LeafBlock).Inline;
-			
+
 			var html = inlineRenderer.RenderToHtml(inlines);
 
 			var markdigRenderer = new MarkdigHtmlRenderer(new StringWriter());
-			
+
 			inlineRenderer.RenderToHtml(inlines, markdigRenderer);
-			
+
 			markdigRenderer.Writer.Flush();
 			var html2 = markdigRenderer.Writer.ToString();
-			
+
 			Assert.AreEqual(html, html2);
 		}
 	}

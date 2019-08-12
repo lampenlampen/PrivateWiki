@@ -21,7 +21,7 @@
             
             <TextBlock Text="Header" Style="{StaticResource TitleTextBlockStyle}"/>
             <TextBox x:Name="Text" Header= "{Binding HeaderText, ElementName=NavigationSettingsHeaderItemUserControl}" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left" TextChanged="Text_OnTextChanged"/>
-            <Button HorizontalAlignment="Right">
+            <Button HorizontalAlignment="Right" Click="Button_Click">
                 <StackPanel Orientation="Horizontal">
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
                     <TextBlock Text="Delete Header"/>

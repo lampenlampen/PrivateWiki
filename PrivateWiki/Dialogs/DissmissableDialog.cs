@@ -8,10 +8,10 @@ namespace PrivateWiki.Dialogs
 {
 	public class DissmissableDialog : ContentDialog
 	{
-        /// <summary>
-        ///     Reference to the rectangle behind the dialog
-        /// </summary>
-        private Rectangle _rectangle;
+		/// <summary>
+		///     Reference to the rectangle behind the dialog
+		/// </summary>
+		private Rectangle _rectangle;
 
 		protected override void OnApplyTemplate()
 		{

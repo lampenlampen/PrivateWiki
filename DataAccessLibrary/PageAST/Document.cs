@@ -1,9 +1,25 @@
+
+/* Unmerged change from project 'DataAccessLibrary (netcoreapp3.0)'
+Before:
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using DataAccessLibrary.PageAST.Blocks;
 using JetBrains.Annotations;
 using NodaTime;
+After:
+using DataAccessLibrary.PageAST.Blocks;
+using JetBrains.Annotations;
+using NodaTime;
+using System;
+using System.Collections.Generic;
+using System.Dynamic;
+*/
+using DataAccessLibrary.PageAST.Blocks;
+using JetBrains.Annotations;
+using NodaTime;
+using System;
+using System.Collections.Generic;
 
 namespace DataAccessLibrary.PageAST
 {
@@ -11,20 +27,20 @@ namespace DataAccessLibrary.PageAST
 	{
 		[NotNull]
 		public Guid Id { get; set; }
-		
+
 		public TitleBlock Title { get; set; }
-		
+
 		[NotNull]
 		public Instant CreationTime { get; set; }
-		
+
 		[NotNull]
 		public Instant ChangeTime { get; set; }
-		
+
 		[NotNull]
 		public string Link { get; set; }
-		
+
 		public List<IPageBlock> Blocks { get; set; }
-		
+
 		public string Content { get; set; }
 
 		public Document([NotNull] List<IPageBlock> blocks)
@@ -40,7 +56,7 @@ namespace DataAccessLibrary.PageAST
 			ChangeTime = changeTime;
 			Link = link;
 		}
-		
+
 		public Document(TitleBlock title, Instant creationTime, Instant changeTime, [NotNull] string link, List<IPageBlock> blocks)
 		{
 			Id = Guid.NewGuid();
@@ -50,7 +66,7 @@ namespace DataAccessLibrary.PageAST
 			Link = link;
 			Blocks = blocks;
 		}
-		
+
 		public Document(Guid id, TitleBlock title, Instant creationTime, Instant changeTime, [NotNull] string link, string content)
 		{
 			Id = id;
@@ -60,7 +76,7 @@ namespace DataAccessLibrary.PageAST
 			Link = link;
 			Content = content;
 		}
-		
-		
+
+
 	}
 }

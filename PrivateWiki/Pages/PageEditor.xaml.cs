@@ -1,4 +1,11 @@
-﻿using System;
+﻿using DataAccessLibrary;
+using JetBrains.Annotations;
+using NodaTime;
+using PrivateWiki.Data;
+using PrivateWiki.Data.DataAccess;
+using PrivateWiki.Dialogs;
+using PrivateWiki.Markdig;
+using System;
 using System.Diagnostics;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -7,26 +14,18 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using DataAccessLibrary;
-using JetBrains.Annotations;
-using NodaTime;
-using PrivateWiki.Data;
-using PrivateWiki.Data.DataAccess;
-using PrivateWiki.Dialogs;
-using PrivateWiki.Markdig;
-using StorageProvider;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
 namespace PrivateWiki.Pages
 {
-    /// <summary>
-    ///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-    /// </summary>
-    public sealed partial class PageEditor : Page
-    {
+	/// <summary>
+	///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+	/// </summary>
+	public sealed partial class PageEditor : Page
+	{
 
-	    private DataAccessImpl dataAccess;
+		private DataAccessImpl dataAccess;
 		public PageEditor()
 		{
 			InitializeComponent();
@@ -56,7 +55,7 @@ namespace PrivateWiki.Pages
 
 		protected override void OnNavigatedTo([NotNull] NavigationEventArgs e)
 		{
-			var pageId = (string) e.Parameter;
+			var pageId = (string)e.Parameter;
 			Debug.WriteLine($"Id: {pageId}");
 			if (pageId == null) throw new ArgumentNullException("Page id must be nonnull!");
 
@@ -188,11 +187,7 @@ namespace PrivateWiki.Pages
 		private void AddTag_Click(object sender, RoutedEventArgs e)
 		{
 			var tagName = AddTagBox.Text;
-			var tag = new Tag
-			{
-				Name = tagName
-			};
-
+			
 			// TODO Save Tags to DB
 			//Page.Tags.Add(tag);
 			ListView.Items.Add(tagName);
@@ -202,7 +197,7 @@ namespace PrivateWiki.Pages
 		{
 			Frame.Navigate(typeof(ExternalEditor), Page.Id);
 		}
-		
+
 		/// <summary>
 		/// Shows the FlyoutMenu if the Image Button is tapped.
 		/// </summary>
@@ -238,7 +233,7 @@ namespace PrivateWiki.Pages
 				PageEditorTextBox.Text = newContent;
 			}
 		}
-		
+
 		private async void PageEditor_AddExistingImage(object sender, RoutedEventArgs e)
 		{
 			var dialog = new PageEditorImagePickerDialog();

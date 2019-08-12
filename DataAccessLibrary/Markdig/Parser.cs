@@ -1,12 +1,19 @@
-using System;
-using System.Collections.Generic;
 using DataAccessLibrary.PageAST;
 using DataAccessLibrary.PageAST.Blocks;
 using Markdig;
-using Markdig.Parsers;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
+using System;
+
+/* Unmerged change from project 'DataAccessLibrary (netcoreapp3.0)'
+Before:
 using MarkdigHeadingBlock = Markdig.Syntax.HeadingBlock;
+After:
+using System;
+using System.Collections.Generic;
+using MarkdigHeadingBlock = Markdig.Syntax.HeadingBlock;
+*/
+using System.Collections.Generic;
 
 namespace DataAccessLibrary.Markdig
 {
@@ -47,7 +54,7 @@ namespace DataAccessLibrary.Markdig
 			{
 				return paragraphBlock.Inline;
 			}
-			
+
 			throw new Exception("Text contains more than one blocks.");
 		}
 	}

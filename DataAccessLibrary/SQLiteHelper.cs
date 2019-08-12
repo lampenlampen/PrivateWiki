@@ -1,7 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+/* Unmerged change from project 'DataAccessLibrary (netcoreapp3.0)'
+Before:
+using System;
+After:
+using Microsoft.Data.Sqlite;
+using System;
+*/
+using
+/* Unmerged change from project 'DataAccessLibrary (netcoreapp3.0)'
+Before:
 using System.Text;
 using Microsoft.Data.Sqlite;
+After:
+using System.Text;
+*/
+Microsoft.Data.Sqlite;
 
 namespace DataAccessLibrary
 {
@@ -23,16 +36,16 @@ namespace DataAccessLibrary
 			internal const string col_externalFileImportDate = "external_file_import_date";
 
 			internal static readonly string CreatePageTableCommand = $"CREATE TABLE IF NOT EXISTS {tableName} (" +
-			                                                       $"{col_id} STRING PRIMARY KEY," +
-			                                                       $"{col_link} STRING UNIQUE, " +
-			                                                       $"{col_content} STRING," +
-			                                                       $"{col_creationDate} INTEGER," +
-			                                                       $"{col_lastChangeDate} INTEGER," +
-			                                                       $"{col_isFavorite} INTEGER," +
-			                                                       $"{col_isLocked} INTEGER," +
-			                                                       $"{col_externalFileToken} STRING," +
-			                                                       $"{col_externalFileImportDate} INTEGER" +
-			                                                       $")";
+																   $"{col_id} STRING PRIMARY KEY," +
+																   $"{col_link} STRING UNIQUE, " +
+																   $"{col_content} STRING," +
+																   $"{col_creationDate} INTEGER," +
+																   $"{col_lastChangeDate} INTEGER," +
+																   $"{col_isFavorite} INTEGER," +
+																   $"{col_isLocked} INTEGER," +
+																   $"{col_externalFileToken} STRING," +
+																   $"{col_externalFileImportDate} INTEGER" +
+																   $")";
 		}
 
 		public static class MarkdownBlockTable

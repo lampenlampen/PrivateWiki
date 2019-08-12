@@ -7,10 +7,10 @@ using Windows.UI.Xaml.Controls;
 
 namespace PrivateWiki.Pages
 {
-    /// <summary>
-    ///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-    /// </summary>
-    public sealed partial class MainPage : Page
+	/// <summary>
+	///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+	/// </summary>
+	public sealed partial class MainPage : Page
 	{
 		public MainPage()
 		{
@@ -29,8 +29,8 @@ namespace PrivateWiki.Pages
 			EditorFrame.Navigate(typeof(PageViewer), "start");
 		}
 
-        /// Extend acrylic into the title bar.
-        private void ExtendAcrylicIntoTitleBar()
+		/// Extend acrylic into the title bar.
+		private void ExtendAcrylicIntoTitleBar()
 		{
 			CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
 			var titleBar = ApplicationView.GetForCurrentView().TitleBar;

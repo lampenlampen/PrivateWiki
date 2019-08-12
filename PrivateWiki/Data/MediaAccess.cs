@@ -68,9 +68,9 @@ namespace PrivateWiki.Data
 				SuggestedFileName = "PrivateWiki",
 				SuggestedStartLocation = PickerLocationId.DocumentsLibrary
 			};
-            picker.FileTypeChoices.Add("MarkdownWiki", new[] { ".mdwiki" });
+			picker.FileTypeChoices.Add("MarkdownWiki", new[] { ".mdwiki" });
 
-            return await picker.PickSaveFileAsync();
+			return await picker.PickSaveFileAsync();
 		}
 	}
 }

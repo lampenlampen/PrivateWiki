@@ -1,30 +1,30 @@
-﻿using System;
+﻿using NodaTime;
+using PrivateWiki.Data;
+using PrivateWiki.Data.DataAccess;
+using PrivateWiki.Pages;
+using PrivateWiki.Pages.SettingsPages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using NodaTime;
-using PrivateWiki.Data;
-using PrivateWiki.Data.DataAccess;
-using PrivateWiki.Pages;
-using Windows.Storage;
-using PrivateWiki.Pages.SettingsPages;
 
 namespace PrivateWiki
 {
-    /// <summary>
-    ///     Stellt das anwendungsspezifische Verhalten bereit, um die Standardanwendungsklasse zu ergänzen.
-    /// </summary>
-    sealed partial class App : Application
+	/// <summary>
+	///     Stellt das anwendungsspezifische Verhalten bereit, um die Standardanwendungsklasse zu ergänzen.
+	/// </summary>
+	sealed partial class App : Application
 	{
-        /// <summary>
-        ///     Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code
-        ///     und daher das logische Äquivalent von main() bzw. WinMain().
-        /// </summary>
-        public App()
+		/// <summary>
+		///     Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code
+		///     und daher das logische Äquivalent von main() bzw. WinMain().
+		/// </summary>
+		public App()
 		{
 			InitializeComponent();
 			Suspending += OnSuspending;
@@ -32,8 +32,6 @@ namespace PrivateWiki
 			var dataAccess = new DataAccessImpl();
 			dataAccess.InitializeDatabase();
 			DefaultPages.InsertDefaultPagesAsync();
-
-			var pages = dataAccess.GetPages();
 		}
 
 		/// <summary>
@@ -72,24 +70,24 @@ namespace PrivateWiki
 			}
 		}
 
-        /// <summary>
-        ///     Wird aufgerufen, wenn die Navigation auf eine bestimmte Seite fehlschlägt
-        /// </summary>
-        /// <param name="sender">Der Rahmen, bei dem die Navigation fehlgeschlagen ist</param>
-        /// <param name="e">Details über den Navigationsfehler</param>
-        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+		/// <summary>
+		///     Wird aufgerufen, wenn die Navigation auf eine bestimmte Seite fehlschlägt
+		/// </summary>
+		/// <param name="sender">Der Rahmen, bei dem die Navigation fehlgeschlagen ist</param>
+		/// <param name="e">Details über den Navigationsfehler</param>
+		private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
 		{
 			throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
 		}
 
-        /// <summary>
-        ///     Wird aufgerufen, wenn die Ausführung der Anwendung angehalten wird.  Der Anwendungszustand wird gespeichert,
-        ///     ohne zu wissen, ob die Anwendung beendet oder fortgesetzt wird und die Speicherinhalte dabei
-        ///     unbeschädigt bleiben.
-        /// </summary>
-        /// <param name="sender">Die Quelle der Anhalteanforderung.</param>
-        /// <param name="e">Details zur Anhalteanforderung.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+		/// <summary>
+		///     Wird aufgerufen, wenn die Ausführung der Anwendung angehalten wird.  Der Anwendungszustand wird gespeichert,
+		///     ohne zu wissen, ob die Anwendung beendet oder fortgesetzt wird und die Speicherinhalte dabei
+		///     unbeschädigt bleiben.
+		/// </summary>
+		/// <param name="sender">Die Quelle der Anhalteanforderung.</param>
+		/// <param name="e">Details zur Anhalteanforderung.</param>
+		private void OnSuspending(object sender, SuspendingEventArgs e)
 		{
 			var deferral = e.SuspendingOperation.GetDeferral();
 			//TODO: Anwendungszustand speichern und alle Hintergrundaktivitäten beenden

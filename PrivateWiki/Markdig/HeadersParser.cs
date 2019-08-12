@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Markdig.Renderers;
+using Markdig.Renderers.Html;
+using Markdig.Syntax;
+using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.UI.Xaml.Controls;
-using Markdig.Renderers;
-using Markdig.Renderers.Html;
-using Markdig.Syntax;
 
 namespace PrivateWiki.Markdig
 {
@@ -24,7 +24,7 @@ namespace PrivateWiki.Markdig
 
 		public TreeViewNode ParseHeaders(MarkdownDocument doc)
 		{
-			rootHeader = new TreeViewNode {Content = "test", IsExpanded = true};
+			rootHeader = new TreeViewNode { Content = "test", IsExpanded = true };
 
 			var headerBlocks = doc.Where(b => b is HeadingBlock);
 

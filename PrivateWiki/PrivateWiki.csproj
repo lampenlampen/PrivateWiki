@@ -98,6 +98,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NavigationSettingsDividerItemControl.xaml.cs">
+      <DependentUpon>NavigationSettingsDividerItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NavigationSettingsHeaderItemControl.xaml.cs">
       <DependentUpon>NavigationSettingsHeaderItemControl.xaml</DependentUpon>
     </Compile>
@@ -228,6 +231,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\NavigationSettingsDividerItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\NavigationSettingsHeaderItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -321,7 +328,7 @@
     <PackageReference Include="Microsoft.AppCenter.Analytics">
       <Version>2.1.1</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
+    <PackageReference Include="Microsoft.Data.Sqlite.Core">
       <Version>2.2.6</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
@@ -340,17 +347,13 @@
       <Version>2.4.6</Version>
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3">
-      <Version>2.0.0</Version>
+      <Version>1.1.14</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLibrary\DataAccessLibrary.csproj">
       <Project>{9D7A3C2D-31DC-4D9E-AFD0-2E1FE0631044}</Project>
       <Name>DataAccessLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StorageProvider\StorageProvider.csproj">
-      <Project>{a89ee218-2edd-4807-bcbf-35e409a1b7ee}</Project>
-      <Name>StorageProvider</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

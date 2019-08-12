@@ -1,7 +1,7 @@
-using System;
-using System.IO;
 using DataAccessLibrary.PageAST;
 using DataAccessLibrary.PageAST.Blocks;
+using System;
+using System.IO;
 using MarkdigHtmlRenderer = Markdig.Renderers.HtmlRenderer;
 
 namespace DataAccessLibrary.Renderer.Html
@@ -10,8 +10,8 @@ namespace DataAccessLibrary.Renderer.Html
 	{
 		public override string RenderToHtml(IPageBlock block)
 		{
-			if(!(block is CodeBlock codeBlock)) throw new ArgumentException("Invalid Block Type", nameof(block));
-			
+			if (!(block is CodeBlock codeBlock)) throw new ArgumentException("Invalid Block Type", nameof(block));
+
 			var renderer = new MarkdigHtmlRenderer(new StringWriter());
 			renderer.EnsureLine();
 			renderer.Write("<pre><code>");
@@ -25,7 +25,7 @@ namespace DataAccessLibrary.Renderer.Html
 
 		public override void RenderToHtml(IPageBlock block, MarkdigHtmlRenderer renderer)
 		{
-			if(!(block is CodeBlock codeBlock)) throw new ArgumentException("Invalid Block Type", nameof(block));
+			if (!(block is CodeBlock codeBlock)) throw new ArgumentException("Invalid Block Type", nameof(block));
 
 			renderer.EnsureLine();
 			renderer.Write("<pre><code>");

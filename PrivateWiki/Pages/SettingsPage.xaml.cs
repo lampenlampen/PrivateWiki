@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrivateWiki.Pages.SettingsPages;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,7 +13,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using PrivateWiki.Pages.SettingsPages;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -33,7 +33,7 @@ namespace PrivateWiki.Pages
 			var themeItem = new SettingsItem(SettingItems.Theme, SettingHeaders.Site);
 			var renderingItem = new SettingsItem(SettingItems.Rendering, SettingHeaders.Modules);
 			var storageItem = new SettingsItem(SettingItems.Storage, SettingHeaders.Modules);
-			var developerToolsItem = new SettingsItem(SettingItems.DeveloperTools, SettingHeaders.System) { ItemString = "Developer Tools"};
+			var developerToolsItem = new SettingsItem(SettingItems.DeveloperTools, SettingHeaders.System) { ItemString = "Developer Tools" };
 
 			List<SettingsItem> settingsItems = new List<SettingsItem>
 			{
@@ -53,7 +53,7 @@ namespace PrivateWiki.Pages
 
 		private void SettingsMenuClick(object sender, ItemClickEventArgs args)
 		{
-			var clickedItem = (SettingsItem) args.ClickedItem;
+			var clickedItem = (SettingsItem)args.ClickedItem;
 
 			switch (clickedItem.Item)
 			{

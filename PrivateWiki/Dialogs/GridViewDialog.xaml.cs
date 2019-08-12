@@ -1,6 +1,6 @@
-﻿using Windows.UI.Xaml;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 
 // Die Elementvorlage "Inhaltsdialogfeld" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -12,7 +12,7 @@ namespace PrivateWiki.Dialogs
 		{
 			InitializeComponent();
 
-			var list = new[] {"hallo", "huhu", "hihi"};
+			var list = new[] { "hallo", "huhu", "hihi" };
 
 			DataGrid.ItemsSource = list;
 		}

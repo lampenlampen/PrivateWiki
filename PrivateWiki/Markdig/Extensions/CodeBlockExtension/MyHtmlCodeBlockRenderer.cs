@@ -1,11 +1,11 @@
-﻿using System.IO;
-using System.Text;
-using ColorCode;
+﻿using ColorCode;
 using Markdig.Parsers;
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Markdig.SyntaxHighlighting;
+using System.IO;
+using System.Text;
 
 namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 {
@@ -83,8 +83,8 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 		private void RenderMermaidDiagram(HtmlRenderer renderer, string code)
 		{
 			var html = "<div class=\"mermaid\">" +
-			           $"{code}" +
-			           "</div>";
+					   $"{code}" +
+					   "</div>";
 
 			renderer.Write(html);
 		}
@@ -101,10 +101,10 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 			if (language != null) markup = markup.Substring(56, markup.Length - 56 - 12);
 
 			var html = "<pre class=\"codeBlockBox\">\r\n" +
-			           "<code class=\"codeBlockCode\">" +
-			           $"{markup}" +
-			           "</code>" +
-			           "</pre>";
+					   "<code class=\"codeBlockCode\">" +
+					   $"{markup}" +
+					   "</code>" +
+					   "</pre>";
 
 
 			renderer.Write(html);

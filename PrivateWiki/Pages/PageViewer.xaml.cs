@@ -1,4 +1,11 @@
-﻿using System;
+﻿using DataAccessLibrary;
+using JetBrains.Annotations;
+using NodaTime;
+using PrivateWiki.Data;
+using PrivateWiki.Data.DataAccess;
+using PrivateWiki.Dialogs;
+using PrivateWiki.Markdig;
+using System;
 using System.Collections;
 using System.Diagnostics;
 using System.IO;
@@ -13,14 +20,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using DataAccessLibrary;
-using JetBrains.Annotations;
-using NodaTime;
-using PrivateWiki.Data;
-using PrivateWiki.Data.DataAccess;
-using PrivateWiki.Dialogs;
-using PrivateWiki.Markdig;
-using StorageProvider;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
 
@@ -103,7 +102,7 @@ namespace PrivateWiki.Pages
 		{
 			base.OnNavigatedTo(e);
 
-			contentPageId = (string) e.Parameter;
+			contentPageId = (string)e.Parameter;
 			Debug.WriteLine($"Id: {contentPageId}");
 
 			if (contentPageId == null) throw new ArgumentNullException(contentPageId);
@@ -151,10 +150,10 @@ namespace PrivateWiki.Pages
 			await FileIO.WriteTextAsync(file, html);
 
 			var webViewFolder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\WebView");
-			
+
 			var styleSheetFile = await webViewFolder.GetFileAsync("preferred.css");
 			await styleSheetFile.CopyAsync(mediaFolder, styleSheetFile.Name, NameCollisionOption.ReplaceExisting);
-			
+
 			var javascriptFile = await webViewFolder.GetFileAsync("index.js");
 			await javascriptFile.CopyAsync(mediaFolder, javascriptFile.Name, NameCollisionOption.ReplaceExisting);
 
@@ -211,7 +210,7 @@ namespace PrivateWiki.Pages
 
 		private void ShowLastVisitedPages2()
 		{
-			var stackPanel = new StackPanel {Orientation = Orientation.Horizontal};
+			var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
 			var stack = NavigationHandler.Pages;
 
 			if (stack.Count <= 0) return;
@@ -262,7 +261,7 @@ namespace PrivateWiki.Pages
 
 		private void Btn_Click([NotNull] object sender, RoutedEventArgs e)
 		{
-			var id = (string) ((Button) sender).Content;
+			var id = (string)((Button)sender).Content;
 			Debug.WriteLine($"Page Clicked: {id}");
 
 			NavigateToPage(id);
@@ -297,12 +296,12 @@ namespace PrivateWiki.Pages
 		/// <param name="args"></param>
 		private async void TreeView_ItemInvoked(TreeView treeView, TreeViewItemInvokedEventArgs args)
 		{
-			var node = (MyTreeViewNode) args.InvokedItem;
-			var header = (string) node.Content;
+			var node = (MyTreeViewNode)args.InvokedItem;
+			var header = (string)node.Content;
 			var headerId = node.Tag;
 			var scrollTo = $"document.getElementById(\"{headerId}\").scrollIntoView();";
 
-			await Webview.InvokeScriptAsync("eval", new[] {scrollTo});
+			await Webview.InvokeScriptAsync("eval", new[] { scrollTo });
 		}
 
 		private async void Print_Click(object sender, RoutedEventArgs e)
@@ -318,7 +317,7 @@ namespace PrivateWiki.Pages
 
 		private async void Top_Click(object sender, RoutedEventArgs e)
 		{
-			await Webview.InvokeScriptAsync("eval", new[] {"window.scrollTo(0,0);"});
+			await Webview.InvokeScriptAsync("eval", new[] { "window.scrollTo(0,0);" });
 		}
 
 		/// <summary>

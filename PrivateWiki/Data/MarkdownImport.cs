@@ -1,10 +1,9 @@
-﻿using System;
+﻿using DataAccessLibrary;
+using NodaTime;
+using System;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
-using DataAccessLibrary;
-using NodaTime;
-using StorageProvider;
 
 namespace PrivateWiki.Data
 {

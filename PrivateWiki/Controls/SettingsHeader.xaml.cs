@@ -28,7 +28,7 @@ namespace PrivateWiki.Controls
 
 		public string Title
 		{
-			get => (string) GetValue(TitleProperty);
+			get => (string)GetValue(TitleProperty);
 			set => SetValue(TitleProperty, value);
 		}
 
@@ -64,6 +64,6 @@ namespace PrivateWiki.Controls
 			ResetClick?.Invoke(this, e);
 		}
 
-		
+
 	}
 }

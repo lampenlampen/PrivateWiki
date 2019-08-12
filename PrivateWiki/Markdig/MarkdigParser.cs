@@ -1,16 +1,15 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Storage;
-using DataAccessLibrary;
+﻿using DataAccessLibrary;
 using JetBrains.Annotations;
 using Markdig;
 using Markdig.Renderers;
 using Markdig.Syntax;
 using PrivateWiki.Markdig.Extensions.CodeBlockExtension;
 using PrivateWiki.Markdig.Extensions.MathExtension;
-using StorageProvider;
+using System;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace PrivateWiki.Markdig
 {

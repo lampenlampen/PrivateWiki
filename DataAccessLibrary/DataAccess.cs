@@ -1,12 +1,11 @@
-﻿using System;
+﻿using DataAccessLibrary.PageAST;
 using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Diagnostics;
-using System.Linq;
-using DataAccessLibrary.PageAST;
 using DataAccessLibrary.PageAST.Blocks;
 using NodaTime;
+using System;
+using System.Linq;
+using System.Diagnostics;
 
 namespace DataAccessLibrary
 {
@@ -24,23 +23,22 @@ namespace DataAccessLibrary
 
 		public void InitializeDatabase()
 		{
-			using (Db)
-			{
-				Db.Open();
+			using var db = Db;
 
-				var command = new SqliteCommand(SQLiteHelper.PagesTable.CreatePageTableCommand, Db);
-				var command2 = new SqliteCommand(SQLiteHelper.MarkdownBlockTable.CreateMarkdownBlockTableCommand, Db);
-				var command3 = new SqliteCommand(SQLiteHelper.CodeBlockTable.CreateCodeBlockTableCommand,Db);
-				var command4 = new SqliteCommand(SQLiteHelper.DocumentTable.CreateDocumentTableCommand, Db);
+			db.Open();
+			
+			var command = new SqliteCommand(SQLiteHelper.PagesTable.CreatePageTableCommand, Db);
+			var command2 = new SqliteCommand(SQLiteHelper.MarkdownBlockTable.CreateMarkdownBlockTableCommand, Db);
+			var command3 = new SqliteCommand(SQLiteHelper.CodeBlockTable.CreateCodeBlockTableCommand, Db);
+			var command4 = new SqliteCommand(SQLiteHelper.DocumentTable.CreateDocumentTableCommand, Db);
 
-				command.ExecuteReader();
-				command2.ExecuteReader();
-				command3.ExecuteReader();
-				command4.ExecuteReader();
+			command.ExecuteReader();
+			command2.ExecuteReader();
+			command3.ExecuteReader();
+			command4.ExecuteReader();
 
-				command.Dispose();
-				Db.Close();
-			}
+			command.Dispose();
+			Db.Close();
 		}
 
 		private bool CheckPageModelInvariant(PageModel page)
@@ -201,14 +199,14 @@ namespace DataAccessLibrary
 				var command = new SqliteCommand
 				{
 					CommandText = $"UPDATE {SQLiteHelper.PagesTable.tableName} SET " +
-					              $"{SQLiteHelper.PagesTable.col_content} = @Content, " +
-					              $"{SQLiteHelper.PagesTable.col_creationDate} = @CreationDate, " +
-					              $"{SQLiteHelper.PagesTable.col_lastChangeDate} = {Clock.GetCurrentInstant().ToUnixTimeMilliseconds()}, " +
-					              $"{SQLiteHelper.PagesTable.col_isFavorite} = @IsFavorite, " +
-					              $"{SQLiteHelper.PagesTable.col_isLocked} = @IsLocked, " +
-					              $"{SQLiteHelper.PagesTable.col_externalFileToken} = @ExternalFileToken, " +
-					              $"{SQLiteHelper.PagesTable.col_externalFileImportDate} = @ExternalFileImportDate " +
-					              $"WHERE {SQLiteHelper.PagesTable.col_id} = @Id",
+								  $"{SQLiteHelper.PagesTable.col_content} = @Content, " +
+								  $"{SQLiteHelper.PagesTable.col_creationDate} = @CreationDate, " +
+								  $"{SQLiteHelper.PagesTable.col_lastChangeDate} = {Clock.GetCurrentInstant().ToUnixTimeMilliseconds()}, " +
+								  $"{SQLiteHelper.PagesTable.col_isFavorite} = @IsFavorite, " +
+								  $"{SQLiteHelper.PagesTable.col_isLocked} = @IsLocked, " +
+								  $"{SQLiteHelper.PagesTable.col_externalFileToken} = @ExternalFileToken, " +
+								  $"{SQLiteHelper.PagesTable.col_externalFileImportDate} = @ExternalFileImportDate " +
+								  $"WHERE {SQLiteHelper.PagesTable.col_id} = @Id",
 					Connection = Db
 				};
 				command.Parameters.AddWithValue("@Content", page.Content);
@@ -419,12 +417,12 @@ namespace DataAccessLibrary
 					var source = query.GetString(query.GetOrdinal(SQLiteHelper.MarkdownBlockTable.col_Source));
 
 					var block = new MarkdownBlock(id, Markdig.Parser.ParseToMarkdownDocument(source), source);
-					
+
 					blocks.Add(block);
 				}
 
 				if (blocks.Count > 1) throw new Exception("Too many MarkdownBlocks");
-				
+
 				Db.Close();
 
 				return blocks.First();
@@ -445,7 +443,7 @@ namespace DataAccessLibrary
 				command.Parameters.AddWithValue("@Id", id.ToString());
 
 				var query = command.ExecuteReader();
-				
+
 				var count = 0;
 
 				while (query.Read())
@@ -464,7 +462,7 @@ namespace DataAccessLibrary
 			using (Db)
 			{
 				Db.Open();
-				
+
 				var command = new SqliteCommand
 				{
 					Connection = Db,
@@ -510,12 +508,12 @@ namespace DataAccessLibrary
 							query.GetString(query.GetOrdinal(SQLiteHelper.CodeBlockTable.col_LanugageCode));
 
 						var block = new CodeBlock(id, code, languageCode);
-					
+
 						blocks.Add(block);
 					}
 
 					if (blocks.Count > 1) throw new Exception("Too many MarkdownBlocks");
-				
+
 					Db.Close();
 
 					return blocks.First();
@@ -537,7 +535,7 @@ namespace DataAccessLibrary
 				command.Parameters.AddWithValue("@Id", id.ToString());
 
 				var query = command.ExecuteReader();
-				
+
 				var count = 0;
 
 				while (query.Read())
@@ -570,7 +568,7 @@ namespace DataAccessLibrary
 				var list = new SQLiteQueryToPageBlockConverter().ConvertToDocumentBlock(query);
 
 				if (list.Count() != 1) throw new Exception("Too many documents!");
-				
+
 				Db.Close();
 
 				return list.First().Item1;
@@ -587,7 +585,7 @@ namespace DataAccessLibrary
 			using (Db)
 			{
 				Db.Open();
-				
+
 				var command = new SqliteCommand
 				{
 					Connection = Db,
@@ -603,7 +601,7 @@ namespace DataAccessLibrary
 				command.Parameters.AddWithValue("@Content", document.Content);
 
 				command.ExecuteReader();
-				
+
 				Db.Close();
 			}
 		}

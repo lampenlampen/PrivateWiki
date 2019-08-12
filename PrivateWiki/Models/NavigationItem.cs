@@ -6,7 +6,7 @@ namespace PrivateWiki.Models
 {
 	public class NavigationItem
 	{
-		
+
 
 	}
 

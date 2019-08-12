@@ -247,7 +247,7 @@ namespace PrivateWiki
 				deadline = DateTime.MaxValue;
 			else
 				deadline = DateTime.Now +
-				           new TimeSpan((long) (Diff_Timeout * 1000) * 10000);
+						   new TimeSpan((long)(Diff_Timeout * 1000) * 10000);
 
 			return diff_main(text1, text2, checklines, deadline);
 		}
@@ -395,9 +395,9 @@ namespace PrivateWiki
 		{
 			// Scan the text on a line-by-line basis first.
 			var a = diff_linesToChars(text1, text2);
-			text1 = (string) a[0];
-			text2 = (string) a[1];
-			var linearray = (List<string>) a[2];
+			text1 = (string)a[0];
+			text2 = (string)a[1];
+			var linearray = (List<string>)a[2];
 
 			var diffs = diff_main(text1, text2, false, deadline);
 
@@ -510,7 +510,7 @@ namespace PrivateWiki
 
 					var y1 = x1 - k1;
 					while (x1 < text1_length && y1 < text2_length
-					                         && text1[x1] == text2[y1])
+											 && text1[x1] == text2[y1])
 					{
 						x1++;
 						y1++;
@@ -551,8 +551,8 @@ namespace PrivateWiki
 
 					var y2 = x2 - k2;
 					while (x2 < text1_length && y2 < text2_length
-					                         && text1[text1_length - x2 - 1]
-					                         == text2[text2_length - y2 - 1])
+											 && text1[text1_length - x2 - 1]
+											 == text2[text2_length - y2 - 1])
 					{
 						x2++;
 						y2++;
@@ -641,7 +641,7 @@ namespace PrivateWiki
 			// Allocate 2/3rds of the space for text1, the rest for text2.
 			var chars1 = diff_linesToCharsMunge(text1, lineArray, lineHash, 40000);
 			var chars2 = diff_linesToCharsMunge(text2, lineArray, lineHash, 65535);
-			return new object[] {chars1, chars2, lineArray};
+			return new object[] { chars1, chars2, lineArray };
 		}
 
 		/**
@@ -672,7 +672,7 @@ namespace PrivateWiki
 
 				if (lineHash.ContainsKey(line))
 				{
-					chars.Append((char) lineHash[line]);
+					chars.Append((char)lineHash[line]);
 				}
 				else
 				{
@@ -685,7 +685,7 @@ namespace PrivateWiki
 
 					lineArray.Add(line);
 					lineHash.Add(line, lineArray.Count - 1);
-					chars.Append((char) (lineArray.Count - 1));
+					chars.Append((char)(lineArray.Count - 1));
 				}
 
 				lineStart = lineEnd + 1;
@@ -786,7 +786,7 @@ namespace PrivateWiki
 
 				length += found;
 				if (found == 0 || text1.Substring(text_length - length) ==
-				    text2.Substring(0, length))
+					text2.Substring(0, length))
 				{
 					best = length;
 					length++;
@@ -832,7 +832,7 @@ namespace PrivateWiki
 			// A half-match was found, sort out the return data.
 			if (text1.Length > text2.Length)
 				return hm;
-			return new[] {hm[2], hm[3], hm[0], hm[1], hm[4]};
+			return new[] { hm[2], hm[3], hm[0], hm[1], hm[4] };
 		}
 
 		/**
@@ -854,7 +854,7 @@ namespace PrivateWiki
 			string best_longtext_a = string.Empty, best_longtext_b = string.Empty;
 			string best_shorttext_a = string.Empty, best_shorttext_b = string.Empty;
 			while (j < shorttext.Length && (j = shorttext.IndexOf(seed, j + 1,
-				       StringComparison.Ordinal)) != -1)
+					   StringComparison.Ordinal)) != -1)
 			{
 				var prefixLength = diff_commonPrefix(longtext.Substring(i),
 					shorttext.Substring(j));
@@ -863,7 +863,7 @@ namespace PrivateWiki
 				if (best_common.Length < suffixLength + prefixLength)
 				{
 					best_common = shorttext.Substring(j - suffixLength, suffixLength)
-					              + shorttext.Substring(j, prefixLength);
+								  + shorttext.Substring(j, prefixLength);
 					best_longtext_a = longtext.Substring(0, i - suffixLength);
 					best_longtext_b = longtext.Substring(i + prefixLength);
 					best_shorttext_a = shorttext.Substring(0, j - suffixLength);
@@ -893,7 +893,7 @@ namespace PrivateWiki
 			// Always equal to equalities[equalitiesLength-1][1]
 			string lastEquality = null;
 			var pointer = 0; // Index of current position.
-			// Number of characters that changed prior to the equality.
+							 // Number of characters that changed prior to the equality.
 			var length_insertions1 = 0;
 			var length_deletions1 = 0;
 			// Number of characters that changed after the equality.
@@ -922,9 +922,9 @@ namespace PrivateWiki
 					// Eliminate an equality that is smaller or equal to the edits on both
 					// sides of it.
 					if (lastEquality != null && lastEquality.Length
-					                         <= Math.Max(length_insertions1, length_deletions1)
-					                         && lastEquality.Length
-					                         <= Math.Max(length_insertions2, length_deletions2))
+											 <= Math.Max(length_insertions1, length_deletions1)
+											 && lastEquality.Length
+											 <= Math.Max(length_insertions2, length_deletions2))
 					{
 						// Duplicate record.
 						diffs.Insert(equalities.Peek(),
@@ -963,7 +963,7 @@ namespace PrivateWiki
 			while (pointer < diffs.Count)
 			{
 				if (diffs[pointer - 1].operation == Operation.DELETE &&
-				    diffs[pointer].operation == Operation.INSERT)
+					diffs[pointer].operation == Operation.INSERT)
 				{
 					var deletion = diffs[pointer - 1].text;
 					var insertion = diffs[pointer].text;
@@ -972,7 +972,7 @@ namespace PrivateWiki
 					if (overlap_length1 >= overlap_length2)
 					{
 						if (overlap_length1 >= deletion.Length / 2.0 ||
-						    overlap_length1 >= insertion.Length / 2.0)
+							overlap_length1 >= insertion.Length / 2.0)
 						{
 							// Overlap found.
 							// Insert an equality and trim the surrounding edits.
@@ -987,7 +987,7 @@ namespace PrivateWiki
 					else
 					{
 						if (overlap_length2 >= deletion.Length / 2.0 ||
-						    overlap_length2 >= insertion.Length / 2.0)
+							overlap_length2 >= insertion.Length / 2.0)
 						{
 							// Reverse overlap found.
 							// Insert an equality and swap and trim the surrounding edits.
@@ -1022,7 +1022,7 @@ namespace PrivateWiki
 			while (pointer < diffs.Count - 1)
 			{
 				if (diffs[pointer - 1].operation == Operation.EQUAL &&
-				    diffs[pointer + 1].operation == Operation.EQUAL)
+					diffs[pointer + 1].operation == Operation.EQUAL)
 				{
 					// This is a single edit surrounded by equalities.
 					var equality1 = diffs[pointer - 1].text;
@@ -1045,15 +1045,15 @@ namespace PrivateWiki
 					var bestEdit = edit;
 					var bestEquality2 = equality2;
 					var bestScore = diff_cleanupSemanticScore(equality1, edit) +
-					                diff_cleanupSemanticScore(edit, equality2);
+									diff_cleanupSemanticScore(edit, equality2);
 					while (edit.Length != 0 && equality2.Length != 0
-					                        && edit[0] == equality2[0])
+											&& edit[0] == equality2[0])
 					{
 						equality1 += edit[0];
 						edit = edit.Substring(1) + equality2[0];
 						equality2 = equality2.Substring(1);
 						var score = diff_cleanupSemanticScore(equality1, edit) +
-						            diff_cleanupSemanticScore(edit, equality2);
+									diff_cleanupSemanticScore(edit, equality2);
 						// The >= encourages trailing rather than leading whitespace on
 						// edits.
 						if (score >= bestScore)
@@ -1149,7 +1149,7 @@ namespace PrivateWiki
 			// Always equal to equalities[equalitiesLength-1][1]
 			var lastEquality = string.Empty;
 			var pointer = 0; // Index of current position.
-			// Is there an insertion operation before the last equality.
+							 // Is there an insertion operation before the last equality.
 			var pre_ins = false;
 			// Is there a deletion operation before the last equality.
 			var pre_del = false;
@@ -1163,7 +1163,7 @@ namespace PrivateWiki
 				{
 					// Equality found.
 					if (diffs[pointer].text.Length < Diff_EditCost
-					    && (post_ins || post_del))
+						&& (post_ins || post_del))
 					{
 						// Candidate found.
 						equalities.Push(pointer);
@@ -1197,10 +1197,10 @@ namespace PrivateWiki
 					 * <ins>A</ins><del>B</del>X<del>C</del>
 					 */
 					if (lastEquality.Length != 0
-					    && (pre_ins && pre_del && post_ins && post_del
-					        || lastEquality.Length < Diff_EditCost / 2
-					        && (pre_ins ? 1 : 0) + (pre_del ? 1 : 0) + (post_ins ? 1 : 0)
-					        + (post_del ? 1 : 0) == 3))
+						&& (pre_ins && pre_del && post_ins && post_del
+							|| lastEquality.Length < Diff_EditCost / 2
+							&& (pre_ins ? 1 : 0) + (pre_del ? 1 : 0) + (post_ins ? 1 : 0)
+							+ (post_del ? 1 : 0) == 3))
 					{
 						// Duplicate record.
 						diffs.Insert(equalities.Peek(),
@@ -1272,8 +1272,8 @@ namespace PrivateWiki
 								if (commonlength != 0)
 								{
 									if (pointer - count_delete - count_insert > 0 &&
-									    diffs[pointer - count_delete - count_insert - 1].operation
-									    == Operation.EQUAL)
+										diffs[pointer - count_delete - count_insert - 1].operation
+										== Operation.EQUAL)
 									{
 										diffs[pointer - count_delete - count_insert - 1].text
 											+= text_insert.Substring(0, commonlength);
@@ -1294,11 +1294,11 @@ namespace PrivateWiki
 								if (commonlength != 0)
 								{
 									diffs[pointer].text = text_insert.Substring(text_insert.Length
-									                                            - commonlength) + diffs[pointer].text;
+																				- commonlength) + diffs[pointer].text;
 									text_insert = text_insert.Substring(0, text_insert.Length
-									                                       - commonlength);
+																		   - commonlength);
 									text_delete = text_delete.Substring(0, text_delete.Length
-									                                       - commonlength);
+																		   - commonlength);
 								}
 							}
 
@@ -1322,7 +1322,7 @@ namespace PrivateWiki
 							pointer++;
 						}
 						else if (pointer != 0
-						         && diffs[pointer - 1].operation == Operation.EQUAL)
+								 && diffs[pointer - 1].operation == Operation.EQUAL)
 						{
 							// Merge this equality with the previous one.
 							diffs[pointer - 1].text += diffs[pointer].text;
@@ -1352,7 +1352,7 @@ namespace PrivateWiki
 			while (pointer < diffs.Count - 1)
 			{
 				if (diffs[pointer - 1].operation == Operation.EQUAL &&
-				    diffs[pointer + 1].operation == Operation.EQUAL)
+					diffs[pointer + 1].operation == Operation.EQUAL)
 				{
 					// This is a single edit surrounded by equalities.
 					if (diffs[pointer].text.EndsWith(diffs[pointer - 1].text,
@@ -1360,10 +1360,10 @@ namespace PrivateWiki
 					{
 						// Shift the edit over the previous equality.
 						diffs[pointer].text = diffs[pointer - 1].text +
-						                      diffs[pointer].text.Substring(0, diffs[pointer].text.Length -
-						                                                       diffs[pointer - 1].text.Length);
+											  diffs[pointer].text.Substring(0, diffs[pointer].text.Length -
+																			   diffs[pointer - 1].text.Length);
 						diffs[pointer + 1].text = diffs[pointer - 1].text
-						                          + diffs[pointer + 1].text;
+												  + diffs[pointer + 1].text;
 						diffs.Splice(pointer - 1, 1);
 						changes = true;
 					}
@@ -1562,7 +1562,7 @@ namespace PrivateWiki
 		{
 			var diffs = new List<Diff>();
 			var pointer = 0; // Cursor in text1
-			var tokens = delta.Split(new[] {"\t"},
+			var tokens = delta.Split(new[] { "\t" },
 				StringSplitOptions.None);
 			foreach (var token in tokens)
 			{
@@ -1615,9 +1615,9 @@ namespace PrivateWiki
 						catch (ArgumentOutOfRangeException e)
 						{
 							throw new ArgumentException("Delta length (" + pointer
-							                                             + ") larger than source text length (" +
-							                                             text1.Length
-							                                             + ").", e);
+																		 + ") larger than source text length (" +
+																		 text1.Length
+																		 + ").", e);
 						}
 
 						if (token[0] == '=')
@@ -1635,8 +1635,8 @@ namespace PrivateWiki
 
 			if (pointer != text1.Length)
 				throw new ArgumentException("Delta length (" + pointer
-				                                             + ") smaller than source text length (" + text1.Length +
-				                                             ").");
+															 + ") smaller than source text length (" + text1.Length +
+															 ").");
 
 			return diffs;
 		}
@@ -1663,7 +1663,7 @@ namespace PrivateWiki
 			if (text.Length == 0)
 				return -1;
 			if (loc + pattern.Length <= text.Length
-			    && text.Substring(loc, pattern.Length) == pattern)
+				&& text.Substring(loc, pattern.Length) == pattern)
 				return loc;
 			return match_bitap(text, pattern, loc);
 		}
@@ -1719,7 +1719,7 @@ namespace PrivateWiki
 				while (bin_min < bin_mid)
 				{
 					if (match_bitapScore(d, loc + bin_mid, loc, pattern)
-					    <= score_threshold)
+						<= score_threshold)
 						bin_min = bin_mid;
 					else
 						bin_max = bin_mid;
@@ -1746,7 +1746,7 @@ namespace PrivateWiki
 						rd[j] = ((rd[j + 1] << 1) | 1) & charMatch;
 					else
 						rd[j] = (((rd[j + 1] << 1) | 1) & charMatch) | ((last_rd[j + 1] | last_rd[j]) << 1) | 1 |
-						        last_rd[j + 1];
+								last_rd[j + 1];
 
 					if ((rd[j] & matchmask) != 0)
 					{
@@ -1784,11 +1784,11 @@ namespace PrivateWiki
 		 */
 		private double match_bitapScore(int e, int x, int loc, string pattern)
 		{
-			var accuracy = (float) e / pattern.Length;
+			var accuracy = (float)e / pattern.Length;
 			var proximity = Math.Abs(loc - x);
 			if (Match_Distance == 0) return proximity == 0 ? accuracy : 1.0;
 
-			return accuracy + proximity / (float) Match_Distance;
+			return accuracy + proximity / (float)Match_Distance;
 		}
 
 		/**
@@ -1835,8 +1835,8 @@ namespace PrivateWiki
 			// Look for the first and last matches of pattern in text.  If two
 			// different matches are found, increase the pattern length.
 			while (text.IndexOf(pattern, StringComparison.Ordinal)
-			       != text.LastIndexOf(pattern, StringComparison.Ordinal)
-			       && pattern.Length < Match_MaxBits - Patch_Margin - Patch_Margin)
+				   != text.LastIndexOf(pattern, StringComparison.Ordinal)
+				   && pattern.Length < Match_MaxBits - Patch_Margin - Patch_Margin)
 			{
 				padding += Patch_Margin;
 				pattern = text.JavaSubstring(Math.Max(0, patch.start2 - padding),
@@ -1930,9 +1930,9 @@ namespace PrivateWiki
 			var patch = new Patch();
 			var char_count1 = 0; // Number of characters into the text1 string.
 			var char_count2 = 0; // Number of characters into the text2 string.
-			// Start with text1 (prepatch_text) and apply the diffs until we arrive at
-			// text2 (postpatch_text). We recreate the patches one by one to determine
-			// context info.
+								 // Start with text1 (prepatch_text) and apply the diffs until we arrive at
+								 // text2 (postpatch_text). We recreate the patches one by one to determine
+								 // context info.
 			var prepatch_text = text1;
 			var postpatch_text = text1;
 			foreach (var aDiff in diffs)
@@ -1959,7 +1959,7 @@ namespace PrivateWiki
 						break;
 					case Operation.EQUAL:
 						if (aDiff.text.Length <= 2 * Patch_Margin
-						    && patch.diffs.Count() != 0 && aDiff != diffs.Last())
+							&& patch.diffs.Count() != 0 && aDiff != diffs.Last())
 						{
 							// Small equality inside a patch.
 							patch.diffs.Add(aDiff);
@@ -2037,7 +2037,7 @@ namespace PrivateWiki
 		 */
 		public object[] patch_apply(List<Patch> patches, string text)
 		{
-			if (patches.Count == 0) return new object[] {text, new bool[0]};
+			if (patches.Count == 0) return new object[] { text, new bool[0] };
 
 			// Deep copy the patches so that no changes are made to originals.
 			patches = patch_deepCopy(patches);
@@ -2102,7 +2102,7 @@ namespace PrivateWiki
 					{
 						// Perfect match, just shove the Replacement text in.
 						text = text.Substring(0, start_loc) + diff_text2(aPatch.diffs)
-						                                    + text.Substring(start_loc + text1.Length);
+															+ text.Substring(start_loc + text1.Length);
 					}
 					else
 					{
@@ -2110,8 +2110,8 @@ namespace PrivateWiki
 						// indices.
 						var diffs = diff_main(text1, text2, false);
 						if (text1.Length > Match_MaxBits
-						    && diff_levenshtein(diffs) / (float) text1.Length
-						    > Patch_DeleteThreshold)
+							&& diff_levenshtein(diffs) / (float)text1.Length
+							> Patch_DeleteThreshold)
 						{
 							// The end points match, but the content is unacceptably bad.
 							results[x] = false;
@@ -2129,8 +2129,8 @@ namespace PrivateWiki
 										text = text.Insert(start_loc + index2, aDiff.text);
 									else if (aDiff.operation == Operation.DELETE)
 										text = text.Remove(start_loc + index2, diff_xIndex(diffs,
-											                                       index1 + aDiff.text.Length) -
-										                                       index2);
+																				   index1 + aDiff.text.Length) -
+																			   index2);
 								}
 
 								if (aDiff.operation != Operation.DELETE) index1 += aDiff.text.Length;
@@ -2144,8 +2144,8 @@ namespace PrivateWiki
 
 			// Strip the padding off.
 			text = text.Substring(nullPadding.Length, text.Length
-			                                          - 2 * nullPadding.Length);
-			return new object[] {text, results};
+													  - 2 * nullPadding.Length);
+			return new object[] { text, results };
 		}
 
 		/**
@@ -2158,7 +2158,7 @@ namespace PrivateWiki
 		{
 			var paddingLength = Patch_Margin;
 			var nullPadding = string.Empty;
-			for (short x = 1; x <= paddingLength; x++) nullPadding += (char) x;
+			for (short x = 1; x <= paddingLength; x++) nullPadding += (char)x;
 
 			// Bump all the patches forward.
 			foreach (var aPatch in patches)
@@ -2185,7 +2185,7 @@ namespace PrivateWiki
 				var firstDiff = diffs.First();
 				var extraLength = paddingLength - firstDiff.text.Length;
 				firstDiff.text = nullPadding.Substring(firstDiff.text.Length)
-				                 + firstDiff.text;
+								 + firstDiff.text;
 				patch.start1 -= extraLength;
 				patch.start2 -= extraLength;
 				patch.length1 += extraLength;
@@ -2248,7 +2248,7 @@ namespace PrivateWiki
 					}
 
 					while (bigpatch.diffs.Count != 0
-					       && patch.length1 < patch_size - Patch_Margin)
+						   && patch.length1 < patch_size - Patch_Margin)
 					{
 						var diff_type = bigpatch.diffs[0].operation;
 						var diff_text = bigpatch.diffs[0].text;
@@ -2262,8 +2262,8 @@ namespace PrivateWiki
 							empty = false;
 						}
 						else if (diff_type == Operation.DELETE && patch.diffs.Count == 1
-						                                       && patch.diffs.First().operation == Operation.EQUAL
-						                                       && diff_text.Length > 2 * patch_size)
+															   && patch.diffs.First().operation == Operation.EQUAL
+															   && diff_text.Length > 2 * patch_size)
 						{
 							// This is a large deletion.  Let it pass in one chunk.
 							patch.length1 += diff_text.Length;
@@ -2316,8 +2316,8 @@ namespace PrivateWiki
 						patch.length1 += postcontext.Length;
 						patch.length2 += postcontext.Length;
 						if (patch.diffs.Count != 0
-						    && patch.diffs[patch.diffs.Count - 1].operation
-						    == Operation.EQUAL)
+							&& patch.diffs[patch.diffs.Count - 1].operation
+							== Operation.EQUAL)
 							patch.diffs[patch.diffs.Count - 1].text += postcontext;
 						else
 							patch.diffs.Add(new Diff(Operation.EQUAL, postcontext));
@@ -2366,7 +2366,7 @@ namespace PrivateWiki
 				m = patchHeader.Match(text[textPointer]);
 				if (!m.Success)
 					throw new ArgumentException("Invalid patch string: "
-					                            + text[textPointer]);
+												+ text[textPointer]);
 
 				patch = new Patch();
 				patches.Add(patch);

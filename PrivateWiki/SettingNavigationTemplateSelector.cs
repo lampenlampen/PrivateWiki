@@ -1,8 +1,7 @@
-﻿using System;
+﻿using PrivateWiki.Models;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using PrivateWiki.Models;
-using Remotion.Linq.Parsing;
 
 namespace PrivateWiki
 {
@@ -14,7 +13,7 @@ namespace PrivateWiki
 
 		protected override DataTemplate SelectTemplateCore(object item)
 		{
-			
+
 			switch (item)
 			{
 				case HeaderItem _: return HeaderTemplate;

@@ -13,10 +13,10 @@ using Windows.UI.Xaml.Navigation;
 
 namespace PrivateWiki.Pages
 {
-    /// <summary>
-    ///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-    /// </summary>
-    public sealed partial class ImportDiffPage : Page
+	/// <summary>
+	///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+	/// </summary>
+	public sealed partial class ImportDiffPage : Page
 	{
 		public static List<Diff> Diff = null;
 
@@ -29,7 +29,7 @@ namespace PrivateWiki.Pages
 		{
 			base.OnNavigatedTo(e);
 
-			(List<Diff> diffs, string id) = (Tuple<List<Diff>, string>) e.Parameter;
+			(List<Diff> diffs, string id) = (Tuple<List<Diff>, string>)e.Parameter;
 
 			GenerateDiff(diffs);
 		}

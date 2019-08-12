@@ -1,24 +1,23 @@
-﻿using System;
+﻿using DataAccessLibrary;
+using JetBrains.Annotations;
+using NodaTime;
+using PrivateWiki.Data;
+using PrivateWiki.Data.DataAccess;
+using System;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using DataAccessLibrary;
-using JetBrains.Annotations;
-using NodaTime;
-using PrivateWiki.Data;
-using PrivateWiki.Data.DataAccess;
-using StorageProvider;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 namespace PrivateWiki.Pages
 {
-    /// <summary>
-    ///     An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class NewPage : Page
+	/// <summary>
+	///     An empty page that can be used on its own or navigated to within a Frame.
+	/// </summary>
+	public sealed partial class NewPage : Page
 	{
 		[CanBeNull] private string _pageId;
 
@@ -50,7 +49,7 @@ namespace PrivateWiki.Pages
 		protected override void OnNavigatedTo([NotNull] NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
-			_pageId = (string) e.Parameter;
+			_pageId = (string)e.Parameter;
 		}
 
 		private void CreatePage_Click([NotNull] object sender, [NotNull] RoutedEventArgs e)

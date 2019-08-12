@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using DataAccessLibrary;
+using NodaTime;
+using PrivateWiki.Data;
+using PrivateWiki.Data.DataAccess;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using DataAccessLibrary;
-using NodaTime;
-using PrivateWiki.Data;
-using PrivateWiki.Data.DataAccess;
-using StorageProvider;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -27,7 +26,7 @@ namespace PrivateWiki
 		{
 			InitializeComponent();
 			dataAccess = new DataAccessImpl();
-			
+
 			_pages = dataAccess.GetPages();
 
 

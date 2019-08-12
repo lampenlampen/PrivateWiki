@@ -10,43 +10,43 @@ using Windows.UI.Xaml.Controls;
 namespace PrivateWiki.Dialogs
 {
 	public sealed partial class PageEditorImagePickerDialog : DissmissableDialog
-    {
-        public ObservableCollection<ImagePickerDialogModel> Images { get; private set; } = new ObservableCollection<ImagePickerDialogModel>();
+	{
+		public ObservableCollection<ImagePickerDialogModel> Images { get; private set; } = new ObservableCollection<ImagePickerDialogModel>();
 
-        public string PickedImage = "";
+		public string PickedImage = "";
 
-        public PageEditorImagePickerDialog()
-        {
-            this.InitializeComponent();
-            
-            ImageView.ItemsSource = Images;
+		public PageEditorImagePickerDialog()
+		{
+			this.InitializeComponent();
 
-            GetImagesAsync();
-        }
-        
-        private async void GetImagesAsync()
-        {
-            var mediaFolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("media");
-            if (mediaFolder == null) return;
-            
+			ImageView.ItemsSource = Images;
 
-            var imageFolder = await mediaFolder.GetFolderAsync("images");
-            if (imageFolder == null) return;
+			GetImagesAsync();
+		}
 
-            var imageFiles = await imageFolder.GetFilesAsync();
-            var images = imageFiles.Select(file => new ImagePickerDialogModel(file.DisplayName, new Uri(file.Path)));
+		private async void GetImagesAsync()
+		{
+			var mediaFolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("media");
+			if (mediaFolder == null) return;
 
-            Images = new ObservableCollection<ImagePickerDialogModel>(images);
 
-            ImageView.ItemsSource = Images;
+			var imageFolder = await mediaFolder.GetFolderAsync("images");
+			if (imageFolder == null) return;
 
-            Debug.WriteLine($"Images: {Images.Count}");
-        }
+			var imageFiles = await imageFolder.GetFilesAsync();
+			var images = imageFiles.Select(file => new ImagePickerDialogModel(file.DisplayName, new Uri(file.Path)));
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
+			Images = new ObservableCollection<ImagePickerDialogModel>(images);
+
+			ImageView.ItemsSource = Images;
+
+			Debug.WriteLine($"Images: {Images.Count}");
+		}
+
+		private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+		{
 			var selectedImage = ImageView.SelectedItem as ImagePickerDialogModel;
-            PickedImage = selectedImage.Title;
-        }
-    }
+			PickedImage = selectedImage.Title;
+		}
+	}
 }

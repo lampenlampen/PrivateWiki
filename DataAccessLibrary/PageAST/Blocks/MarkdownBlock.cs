@@ -1,5 +1,5 @@
-using System;
 using Markdig.Syntax;
+using System;
 
 namespace DataAccessLibrary.PageAST.Blocks
 {
@@ -8,7 +8,7 @@ namespace DataAccessLibrary.PageAST.Blocks
 		public Guid Id { get; set; }
 
 		public MarkdownDocument Content { get; set; }
-		
+
 		public string Source { get; set; }
 
 		public MarkdownBlock(MarkdownDocument doc, string source)

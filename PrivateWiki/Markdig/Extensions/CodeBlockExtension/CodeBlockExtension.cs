@@ -1,9 +1,9 @@
-﻿using System;
-using ColorCode;
+﻿using ColorCode;
 using Markdig;
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
 using Markdig.SyntaxHighlighting;
+using System;
 
 namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 {

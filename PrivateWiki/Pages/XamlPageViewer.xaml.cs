@@ -30,14 +30,14 @@ namespace PrivateWiki.Pages
 
 		private void Code_OnClick(object sender, RoutedEventArgs e)
 		{
-			
+
 
 			var textbox = new TextBox();
 			textbox.Text = "new Header";
 			textbox.FontSize = 18d;
 			textbox.FontWeight = FontWeights.Bold;
 
-			StackPanel.Children.Insert(StackPanel.Children.Count -1, textbox);
+			StackPanel.Children.Insert(StackPanel.Children.Count - 1, textbox);
 		}
 
 		private void Text_OnClick(object sender, RoutedEventArgs e)
@@ -48,7 +48,7 @@ namespace PrivateWiki.Pages
 			textbox.TextWrapping = TextWrapping.Wrap;
 			//textbox.IsReadOnly = true;
 			textbox.BorderThickness = new Thickness(0);
-			
+
 
 			StackPanel.Children.Insert(StackPanel.Children.Count - 1, textbox);
 		}

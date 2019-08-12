@@ -1,4 +1,10 @@
-﻿using System;
+﻿using DataAccessLibrary;
+using JetBrains.Annotations;
+using NodaTime;
+using PrivateWiki.Data;
+using PrivateWiki.Data.DataAccess;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
@@ -7,22 +13,15 @@ using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using JetBrains.Annotations;
-using PrivateWiki.Data;
-using StorageProvider;
-using System.Collections.Generic;
-using DataAccessLibrary;
-using NodaTime;
-using PrivateWiki.Data.DataAccess;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace PrivateWiki.Pages
 {
-    /// <summary>
-    ///     An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class ExternalEditor : Page
+	/// <summary>
+	///     An empty page that can be used on its own or navigated to within a Frame.
+	/// </summary>
+	public sealed partial class ExternalEditor : Page
 	{
 		private PageModel Page;
 		private readonly string TMP_FILE_FUTURE_ACCESS_LIST = "tmp_file_future_access_list";
@@ -40,7 +39,7 @@ namespace PrivateWiki.Pages
 		{
 			base.OnNavigatedTo(e);
 
-			var pageId = (string) e.Parameter;
+			var pageId = (string)e.Parameter;
 
 			Page = dataAccess.GetPageOrNull(pageId);
 
@@ -64,7 +63,7 @@ namespace PrivateWiki.Pages
 				SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
 				SuggestedFileName = Page.Link.Replace(":", "_")
 			};
-			picker.FileTypeChoices.Add("Markdown", new[] {".md"});
+			picker.FileTypeChoices.Add("Markdown", new[] { ".md" });
 
 			var file = await picker.PickSaveFileAsync();
 

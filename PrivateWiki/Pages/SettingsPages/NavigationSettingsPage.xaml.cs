@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PrivateWiki.Controls;
+using PrivateWiki.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -14,8 +16,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using PrivateWiki.Controls;
-using PrivateWiki.Models;
 
 #nullable enable
 
@@ -28,15 +28,15 @@ namespace PrivateWiki.Pages.SettingsPages
 	/// </summary>
 	public sealed partial class NavigationSettingsPage : Page
 	{
-		ObservableCollection<NavigationItem> navigationItems = new ObservableCollection<NavigationItem>();
+		private ObservableCollection<NavigationItem> navigationItems = new ObservableCollection<NavigationItem>();
 
 		public NavigationSettingsPage()
 		{
 			this.InitializeComponent();
 			navigationItems.Add(new DividerItem());
-			navigationItems.Add(new HeaderItem());
+			navigationItems.Add(new HeaderItem { Text = "Header" });
 			navigationItems.Add(new DividerItem());
-			navigationItems.Add(new LinkItem());
+			navigationItems.Add(new LinkItem() { Text = "Link" });
 			navigationItems.Add(new DividerItem());
 		}
 
@@ -52,34 +52,51 @@ namespace PrivateWiki.Pages.SettingsPages
 
 		private void Add_LinkClick(object sender, RoutedEventArgs e)
 		{
-			var link = new LinkItem {Text = "Link" };
+			var link = new LinkItem { Text = "Link" };
 			navigationItems.Add(link);
 		}
 
 		private void Add_HeaderClick(object sender, RoutedEventArgs e)
 		{
-			var header = new HeaderItem {Text="Header"};
+			var header = new HeaderItem { Text = "Header" };
 			navigationItems.Add(header);
 		}
 
 		private void Add_DividerClick(object sender, RoutedEventArgs e)
 		{
 			var divider = new DividerItem();
-			navigationItems.Add(divider );
+			navigationItems.Add(divider);
 		}
 
 		private void Listview_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			NavigationSettingsItemContent.Children.Clear();
 
-			var item = (NavigationItem) ((ListView) sender).SelectedItem;
+			var item = (NavigationItem)((ListView)sender).SelectedItem;
 
 			if (item is HeaderItem headerItem)
 			{
 				var headerControl = new NavigationSettingsHeaderItemControl();
 				headerControl.TextChanged += (o, args) => { headerItem.Text = headerControl.HeaderText; };
+				headerControl.DeleteHeader += (o, args) =>
+				{
+					var sender = o;
+				};
 
-				NavigationSettingsItemContent.Children.Add(new NavigationSettingsHeaderItemControl());
+				NavigationSettingsItemContent.Children.Add(headerControl);
+			}
+			else if (item is DividerItem dividerItem)
+			{
+				var dividerControl = new NavigationSettingsDividerItemControl();
+				NavigationSettingsItemContent.Children.Add(dividerControl);
+			}
+			else if (item is LinkItem linkItem)
+			{
+
+			}
+			else
+			{
+				throw new ArgumentException();
 			}
 		}
 

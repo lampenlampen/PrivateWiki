@@ -5,11 +5,9 @@ using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
 using DataAccessLibrary;
 using JetBrains.Annotations;
-using NodaTime;
 using PrivateWiki.Data;
 using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Markdig;
-using StorageProvider;
 
 // Die Elementvorlage "Inhaltsdialogfeld" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -19,7 +17,7 @@ namespace PrivateWiki.Dialogs
 	{
 		[NotNull] private readonly string _id;
 
-		private DataAccessImpl dataAccess;
+		private readonly DataAccessImpl dataAccess;
 
 		public ExportDialog(string id)
 		{
@@ -35,13 +33,8 @@ namespace PrivateWiki.Dialogs
 			var pages = new List<PageModel>();
 
 			if (ExportAllPages.IsChecked == true)
-			{
 				pages.AddRange(dataAccess.GetPages());
-			}
-			else if (ExportSinglePage.IsChecked == true)
-			{
-				pages.Add(dataAccess.GetPageOrNull(_id));
-			}
+			else if (ExportSinglePage.IsChecked == true) pages.Add(dataAccess.GetPageOrNull(_id));
 
 			var exportHtml = ExportHtml.IsChecked == true;
 			var exportMarkdown = ExportMarkdown.IsChecked == true;

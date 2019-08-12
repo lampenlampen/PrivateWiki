@@ -1,8 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using NodaTime;
+
+/* Unmerged change from project 'DataAccessLibrary (netcoreapp3.0)'
+Before:
 using System.Text;
 using JetBrains.Annotations;
 using NodaTime;
+After:
+using System;
+using System.Collections.Generic;
+using System.Text;
+*/
+using System;
 
 namespace DataAccessLibrary
 {
@@ -12,7 +21,7 @@ namespace DataAccessLibrary
 		///     The unique id
 		/// </summary>
 		public Guid Id { get; set; }
-		
+
 		/// <summary>
 		/// The unique Link.
 		/// </summary>

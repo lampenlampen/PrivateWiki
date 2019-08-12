@@ -1,11 +1,10 @@
-using System;
-using System.Data.Common;
-using System.IO;
 using DataAccessLibrary.PageAST;
 using DataAccessLibrary.PageAST.Blocks;
 using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NodaTime;
+using System;
+using System.IO;
 
 namespace DataAccessLibrary.Test
 {
@@ -54,8 +53,8 @@ namespace DataAccessLibrary.Test
 			var dbPage1 = pages.Find(p => p.Id.Equals(page1.Id));
 			var dbPage2 = pages.Find(p => p.Id.Equals(page2.Id));
 
-			Assert.IsTrue(dbPage1 != null, "Page1 was not saved to the db.", pages, new[] {page1});
-			Assert.IsTrue(dbPage2 != null, "Page2 was not saved to the db.", pages, new[] {page2});
+			Assert.IsTrue(dbPage1 != null, "Page1 was not saved to the db.", pages, new[] { page1 });
+			Assert.IsTrue(dbPage2 != null, "Page2 was not saved to the db.", pages, new[] { page2 });
 		}
 
 		[TestMethod]
@@ -67,7 +66,7 @@ namespace DataAccessLibrary.Test
 			var page1 = new PageModel(Guid.NewGuid(), "page1", "# Page 1", _clock);
 			var page2 = new PageModel(Guid.NewGuid(), "page2", "# Page 2", _clock);
 
-			db.InsertPages(new[] {page1, page2});
+			db.InsertPages(new[] { page1, page2 });
 			var pages = db.GetPages();
 
 			var dbPage1 = pages.Find(p => p.Id.Equals(page1.Id));
@@ -169,17 +168,15 @@ namespace DataAccessLibrary.Test
 			string markdown =
 				"# Welcome to your Private Wiki\n\n## Get Started\n\nTo learn more about the syntax have a lock in the [Syntax](:syntax) page.\n\nTo view a preview article follow this [link](:test)";
 
-			string? a = null;
-			
 			var db = new DataAccess(_db, _clock);
 			db.InitializeDatabase();
-			
+
 			var block = new MarkdownBlock(Guid.NewGuid(), Markdig.Parser.ParseToMarkdownDocument(markdown), markdown);
 
 			db.InsertMarkdownBlock(block);
 
 			var output = db.GetMarkdownBlockOrNull(block.Id);
-			
+
 			Assert.AreEqual(block.Id, output.Id);
 			Assert.AreEqual(block.Source, output.Source);
 		}
@@ -188,22 +185,22 @@ namespace DataAccessLibrary.Test
 		public void InsertDocument()
 		{
 			var document = new Document(
-				Guid.NewGuid(), 
-				new TitleBlock("title1", "title1"), 
-				_clock.GetCurrentInstant(), 
-				_clock.GetCurrentInstant(), 
-				"Document1", 
+				Guid.NewGuid(),
+				new TitleBlock("title1", "title1"),
+				_clock.GetCurrentInstant(),
+				_clock.GetCurrentInstant(),
+				"Document1",
 				"2;8;9;5");
-			
+
 			var db = new DataAccess(_db, _clock);
 			db.InitializeDatabase();
-			
+
 			db.InsertDocument(document);
 
 			var output = db.GetDocument(document.Id);
-			
+
 			Assert.AreEqual(document.Id, output.Id);
-			
+
 			// TODO Check Equals
 		}
 	}
