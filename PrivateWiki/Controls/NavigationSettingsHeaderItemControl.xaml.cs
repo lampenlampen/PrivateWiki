@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -19,34 +20,32 @@ namespace PrivateWiki.Controls
 {
 	public sealed partial class NavigationSettingsHeaderItemControl : UserControl
 	{
+		public Guid Id { get; set; }
+
+		public string HeaderText => Text.Text;
+
 		public NavigationSettingsHeaderItemControl()
 		{
 			this.InitializeComponent();
 		}
 
-		public string HeaderText
+		public void initControl(string label)
 		{
-			get => (string)GetValue(HeaderTextProperty);
-			set => SetValue(HeaderTextProperty, value);
+			Text.Text = label;
 		}
-
-		// Using a DependencyProperty as the backing store for TitleProperty.
-		// This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty HeaderTextProperty = DependencyProperty.Register("HeaderTextProperty",
-			typeof(string), typeof(NavigationSettingsHeaderItemControl), null);
 
 		public event TextChangedEventHandler TextChanged;
 
 		private void Text_OnTextChanged(object sender, TextChangedEventArgs e)
 		{
-			TextChanged?.Invoke(sender, e);
+			TextChanged?.Invoke(this, e);
 		}
 
 		public event RoutedEventHandler DeleteHeader;
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-			DeleteHeader?.Invoke(sender, e);
+			DeleteHeader?.Invoke(this, e);
 		}
 	}
 }

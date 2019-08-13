@@ -9,6 +9,7 @@
     xmlns:controls="using:PrivateWiki.Controls"
     xmlns:privateWiki="using:PrivateWiki"
     xmlns:models="using:PrivateWiki.Models"
+    xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="#EEEEEE">
 
@@ -17,10 +18,10 @@
             
         </DataTemplate>
         <DataTemplate x:Key="NavigationHeaderTemplate" x:DataType="models:HeaderItem">
-            <TextBlock Text="{x:Bind Text}" />
+            <TextBlock Text="{x:Bind Label}" />
         </DataTemplate>
         <DataTemplate x:Key="NavigationLinkTemplate" x:DataType="models:LinkItem">
-            <TextBlock Text="{x:Bind Text}" />
+            <TextBlock Text="{x:Bind Label}" />
         </DataTemplate>
 
         <privateWiki:SettingNavigationTemplateSelector
@@ -53,74 +54,75 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Margin="0, 0, 32, 0" Height="Auto">
+            <Grid x:Name="grid" Grid.Column="0" Margin="0, 0, 32, 0" Height="Auto">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Grid
+                <controls1:DropShadowPanel
                     Grid.Row="0"
-                    Background="White"
-                    Padding="8">
+                    Color="Black"
+                    OffsetX="3"
+                    OffsetY="3"
+                    BlurRadius="5"
+                    ShadowOpacity=".3"
+                    Height="Auto"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch">
 
-                    <StackPanel
-                        Orientation="Horizontal"
-                        MinHeight="64"
-                        MinWidth="256"
-                        Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+                        <StackPanel x:Name="stackpanel"  Background="White" Padding="8">
 
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE80F;" VerticalAlignment="Center" Margin="16,0,16,0"/>
-                        <TextBlock Text="Home" VerticalAlignment="Center" Margin="0,0,16,0"/>
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Height="Auto"
+                            Padding="8"
+                            MinHeight="64"
+                            MinWidth="256"
+                            Background="{ThemeResource SystemControlBackgroundAccentBrush}">
 
-                    </StackPanel>
-                </Grid>
-
-                <ListView x:Name="Listview" 
-                          Background="White"
-                          Grid.Row="1"
-                          Padding="8"
-                          MinWidth="256"
-                          ItemsSource="{x:Bind navigationItems}"
-                          SelectionChanged="Listview_SelectionChanged"
-                          ItemTemplateSelector="{StaticResource SettingNavigationTemplateSelector}"/>
-
-                <Grid
-                    Background="White"
-                    Grid.Row="2"
-                    Padding="8">
-
-                    <Button
-                        MinWidth="256"
-                        Background="{ThemeResource SystemControlBackgroundAccentBrush}">
-
-                        <StackPanel Orientation="Horizontal">
-
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" VerticalAlignment="Center" Margin="16,0,16,0"/>
-                            <TextBlock Text="Add" VerticalAlignment="Center" Margin="0,0,16,0"/>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE80F;" VerticalAlignment="Center" Margin="16,0,16,0"/>
+                            <TextBlock Text="Home" VerticalAlignment="Center" Margin="0,0,16,0"/>
 
                         </StackPanel>
 
-                        <Button.Flyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem Text="Link" Click="Add_LinkClick"/>
-                                <MenuFlyoutItem Text="Header" Click="Add_HeaderClick"/>
-                                <MenuFlyoutItem Text="Divider" Click="Add_DividerClick"/>
-                            </MenuFlyout>
-                        </Button.Flyout>
-                    </Button>
-                </Grid>
+                        <ListView x:Name="Listview"
+                                  Padding="8"
+                                  MinWidth="256"
+                                  ItemsSource="{x:Bind navigationItems}"
+                                  SelectionChanged="Listview_SelectionChanged"
+                                  ItemTemplateSelector="{StaticResource SettingNavigationTemplateSelector}"/>
 
-                
+                        <Button
+                            Height="Auto"
+                            MinWidth="256"
+                            Padding="8"
+                            Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" VerticalAlignment="Center" Margin="16,0,16,0"/>
+                                <TextBlock Text="Add" VerticalAlignment="Center" Margin="0,0,16,0"/>
+
+                            </StackPanel>
+
+                            <Button.Flyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Link" Click="Add_LinkClick"/>
+                                    <MenuFlyoutItem Text="Header" Click="Add_HeaderClick"/>
+                                    <MenuFlyoutItem Text="Divider" Click="Add_DividerClick"/>
+                                </MenuFlyout>
+                            </Button.Flyout>
+                        </Button>
+
+                    </StackPanel>
+
+                </controls1:DropShadowPanel>
 
             </Grid>
 
             <Grid
                 Grid.Column="1"
-                x:Name="NavigationSettingsItemContent"></Grid>
-
-
+                x:Name="NavigationSettingsItemContent"/>
         </Grid>
 
     </Grid>

@@ -6,6 +6,7 @@
     xmlns:local="using:PrivateWiki.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
@@ -17,17 +18,40 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Background="White">
-            
-            <TextBlock Text="Header" Style="{StaticResource TitleTextBlockStyle}"/>
-            <TextBox x:Name="Text" Header= "{Binding HeaderText, ElementName=NavigationSettingsHeaderItemUserControl}" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left" TextChanged="Text_OnTextChanged"/>
-            <Button HorizontalAlignment="Right" Click="Button_Click">
-                <StackPanel Orientation="Horizontal">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
-                    <TextBlock Text="Delete Header"/>
-                </StackPanel>
-            </Button>
-            
-        </StackPanel>
+        <controls:DropShadowPanel
+            Grid.Row="0"
+            Color="Black"
+            OffsetX="3"
+            OffsetY="3"
+            BlurRadius="5"
+            ShadowOpacity=".3"
+            Height="Auto"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch">
+
+            <StackPanel x:Name="stackpanel" Background="White" Padding="8">
+
+                <TextBlock Text="Header" Style="{StaticResource TitleTextBlockStyle}"/>
+                <Border
+                    Margin="0, 8, 0, 8"
+                    BorderBrush="LightGray"
+                    BorderThickness="1"
+                    Width="{x:Bind stackpanel.Width}"/>
+                <TextBox x:Name="Text" Header="Label" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left" TextChanged="Text_OnTextChanged"/>
+                <Border
+                    Margin="0, 8, 0, 8"
+                    BorderBrush="LightGray"
+                    BorderThickness="1"
+                    Width="{x:Bind stackpanel.Width}"/>
+                <Button HorizontalAlignment="Right" Click="Button_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
+                        <TextBlock Text="Delete Header"/>
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+
+            </controls:DropShadowPanel>
     </Grid>
 </UserControl>

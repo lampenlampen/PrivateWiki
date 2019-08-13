@@ -11,10 +11,10 @@
 
     <Grid Height="Auto">
 
-        <Button Click="Button_Click">
-            <StackPanel Orientation="Horizontal">
+        <Button Click="Button_Click" Height="Auto">
+            <StackPanel Orientation="Horizontal" Height="Auto">
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
-                <TextBlock Text="Delete Header"/>
+                <TextBlock Text="Delete Divider"/>
             </StackPanel>
         </Button>
 

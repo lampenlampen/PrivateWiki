@@ -28,7 +28,7 @@ namespace PrivateWiki.Controls
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-			DeleteDivider?.Invoke(sender, e);
+			DeleteDivider?.Invoke(this, e);
 		}
 	}
 }

@@ -104,6 +104,9 @@
     <Compile Include="Controls\NavigationSettingsHeaderItemControl.xaml.cs">
       <DependentUpon>NavigationSettingsHeaderItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NavigationSettingsLinkItemControl.xaml.cs">
+      <DependentUpon>NavigationSettingsLinkItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SettingsHeader.xaml.cs">
       <DependentUpon>SettingsHeader.xaml</DependentUpon>
     </Compile>
@@ -186,6 +189,7 @@
     <Compile Include="SearchPopupContent.xaml.cs">
       <DependentUpon>SearchPopupContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\FullyObservableCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -236,6 +240,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NavigationSettingsHeaderItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NavigationSettingsLinkItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -342,6 +350,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.1.190606001</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.2</Version>
     </PackageReference>
     <PackageReference Include="NodaTime">
       <Version>2.4.6</Version>
