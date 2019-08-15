@@ -27,7 +27,7 @@
 
         <controls:DataGrid
             Grid.Row="1"
-            Name="DataGrid"
+            Name="Datagrid"
             AutoGenerateColumns="True"
             IsReadOnly="False"
             CellEditEnded="DataGrid_OnCellEditEnded"

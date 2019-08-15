@@ -163,7 +163,7 @@
 
                 <controls:InAppNotification
                     Grid.Row="1"
-                    Name="InAppNotification"
+                    x:Name="InAppNotification"
                     ShowDismissButton="True" />
 
 

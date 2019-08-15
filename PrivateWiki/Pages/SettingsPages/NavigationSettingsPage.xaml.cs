@@ -141,52 +141,57 @@ namespace PrivateWiki.Pages.SettingsPages
 
 			var item = (NavigationItem) ((ListView) sender).SelectedItem;
 
-			if (item is HeaderItem headerItem)
+			switch (item)
 			{
-				var headerControl = new NavigationSettingsHeaderItemControl();
-				headerControl.initControl(headerItem.Label);
-
-				headerControl.TextChanged += (o, args) =>
+				case HeaderItem headerItem:
 				{
-					headerItem.Label = ((NavigationSettingsHeaderItemControl) o).HeaderText;
-				};
-				headerControl.DeleteHeader += (o, args) =>
+					var headerControl = new NavigationSettingsHeaderItemControl();
+					headerControl.initControl(headerItem.Label);
+
+					headerControl.TextChanged += (o, args) =>
+					{
+						headerItem.Label = ((NavigationSettingsHeaderItemControl) o).HeaderText;
+					};
+					headerControl.DeleteHeader += (o, args) =>
+					{
+						var item = (NavigationItem) Listview.SelectedItem;
+						navigationItems.Remove(item);
+					};
+
+					NavigationSettingsItemContent.Children.Add(headerControl);
+					break;
+				}
+				case DividerItem dividerItem:
 				{
-					var item = (NavigationItem) Listview.SelectedItem;
-					navigationItems.Remove(item);
-				};
+					var dividerControl = new NavigationSettingsDividerItemControl();
 
-				NavigationSettingsItemContent.Children.Add(headerControl);
-			}
-			else if (item is DividerItem dividerItem)
-			{
-				var dividerControl = new NavigationSettingsDividerItemControl();
+					dividerControl.DeleteDivider += (o, args) =>
+					{
+						var item = (NavigationItem) Listview.SelectedItem;
+						navigationItems.Remove(item);
+					};
 
-				dividerControl.DeleteDivider += (o, args) =>
+					NavigationSettingsItemContent.Children.Add(dividerControl);
+					break;
+				}
+				case LinkItem linkItem:
 				{
-					var item = (NavigationItem) Listview.SelectedItem;
-					navigationItems.Remove(item);
-				};
-
-				NavigationSettingsItemContent.Children.Add(dividerControl);
-			}
-			else if (item is LinkItem linkItem)
-			{
-				var linkControl = new NavigationSettingsLinkItemControl();
-				linkControl.InitControl(linkItem.Label, linkItem.PageId);
+					var linkControl = new NavigationSettingsLinkItemControl();
+					linkControl.InitControl(linkItem.Label, linkItem.PageId);
 
 
-				linkControl.DeleteLink += DeleteNavigationItem;
-				linkControl.LabelChanged += (o, args) =>
-				{
-					linkItem.Label = ((NavigationSettingsLinkItemControl) o).Label;
-				};
-				linkControl.LinkSelected += id => linkItem.PageId = id;
+					linkControl.DeleteLink += DeleteNavigationItem;
+					linkControl.LabelChanged += (o, args) =>
+					{
+						linkItem.Label = ((NavigationSettingsLinkItemControl) o).Label;
+					};
+					linkControl.LinkSelected += id => linkItem.PageId = id;
 
-				NavigationSettingsItemContent.Children.Add(linkControl);
-			}
-			else
-			{
+					NavigationSettingsItemContent.Children.Add(linkControl);
+					break;
+				}
+				default:
+					break;
 			}
 		}
 

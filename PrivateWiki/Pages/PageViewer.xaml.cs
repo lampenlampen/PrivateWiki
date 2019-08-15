@@ -8,6 +8,7 @@ using PrivateWiki.Markdig;
 using System;
 using System.Collections;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using PrivateWiki.Utilities;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
 
@@ -44,6 +46,25 @@ namespace PrivateWiki.Pages
 		{
 			InitializeComponent();
 			dataAccess = new DataAccessImpl();
+			Init();
+		}
+
+		private void Init()
+		{
+			// TODO Create Setting AcrylicBackground
+			var acrylicBackground = true;
+
+			// ReSharper disable once ConditionIsAlwaysTrueOrFalse
+			if (acrylicBackground)
+			{
+				PageViewerGrid.Background = (Brush) Application.Current.Resources["SystemControlAcrylicWindowBrush"];
+				Webview.DefaultBackgroundColor = Color.Transparent.ToWindowsUiColor();
+			}
+			else
+			{
+				PageViewerGrid.Background = new SolidColorBrush(Color.White.ToWindowsUiColor());
+				Webview.DefaultBackgroundColor = Color.White.ToWindowsUiColor();
+			}
 		}
 
 		private void WebView_OnNavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
@@ -138,7 +159,7 @@ namespace PrivateWiki.Pages
 
 			foreach (var header in toc.Children)
 			{
-				TreeView.RootNodes.Add(header);
+				Treeview.RootNodes.Add(header);
 			}
 
 			// Show Page

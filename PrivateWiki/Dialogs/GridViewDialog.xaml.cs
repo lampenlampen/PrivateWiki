@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+﻿using System.Collections.Generic;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -8,13 +9,13 @@ namespace PrivateWiki.Dialogs
 {
 	public sealed partial class GridViewDialog : DissmissableDialog
 	{
+		List<string> list = new List<string>() { "hallo", "huhu", "hihi" };
+
 		public GridViewDialog()
 		{
 			InitializeComponent();
 
-			var list = new[] { "hallo", "huhu", "hihi" };
-
-			DataGrid.ItemsSource = list;
+			Datagrid.ItemsSource = list;
 		}
 
 		private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -23,7 +24,7 @@ namespace PrivateWiki.Dialogs
 
 		private void AddColumn_Click(object sender, RoutedEventArgs e)
 		{
-			DataGrid.Columns.Add(new DataGridTextColumn());
+			Datagrid.Columns.Add(new DataGridTextColumn());
 		}
 
 		private void DataGrid_OnCellEditEnded(object sender, DataGridCellEditEndedEventArgs e)

@@ -110,6 +110,9 @@
     <Compile Include="Controls\SettingsHeader.xaml.cs">
       <DependentUpon>SettingsHeader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Settings\Rendering\CoreControl.xaml.cs">
+      <DependentUpon>CoreControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\DataAccess\DataAccessLibrary.DataAccessImpl.cs" />
     <Compile Include="Data\DataAccess\IDataAccess.cs" />
     <Compile Include="Data\DefaultPages.cs" />
@@ -132,6 +135,7 @@
     <Compile Include="DiffMatchPatchAlg.cs" />
     <Compile Include="ImagePickerDialogModel.cs" />
     <Compile Include="Models\NavigationItem.cs" />
+    <Compile Include="Models\RenderingViewModels.cs" />
     <Compile Include="MyTreeViewNode.cs" />
     <Compile Include="MyUriToStreamResolver.cs" />
     <Compile Include="Pages\ExternalEditor.xaml.cs">
@@ -189,6 +193,7 @@
     <Compile Include="SearchPopupContent.xaml.cs">
       <DependentUpon>SearchPopupContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\ColorExtension.cs" />
     <Compile Include="Utilities\FullyObservableCollection.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +253,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SettingsHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Settings\Rendering\CoreControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

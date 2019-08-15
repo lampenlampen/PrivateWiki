@@ -7,11 +7,14 @@
     xmlns:composition="using:Windows.UI.Composition"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:muxm="using:Microsoft.UI.Xaml.Media"
     xmlns:privateWiki="using:PrivateWiki"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid
+        x:Name="PageViewerGrid"
+        Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -110,26 +113,24 @@
 
         </CommandBar>
 
-            <Border
-                Grid.Row="1"
-                Grid.Column="0"
-                BorderBrush="Gray"
-                BorderThickness="0"
-                CornerRadius="4"
-                Padding="5, 0, 5, 5">
-                <WebView
-                    Name="Webview"
-                    MinHeight="100"
-                    MinWidth="100"
-                    Width="Auto"
-                    Height="Auto"
-                    NavigationStarting="WebView_OnNavigationStarting"
-                    ScriptNotify="Webview_OnScriptNotify"
-                    LoadCompleted="Webview_OnLoadCompleted" />
-            </Border>
-
-
-       
+        <Border
+            Grid.Row="1"
+            Grid.Column="0"
+            BorderBrush="Gray"
+            BorderThickness="0"
+            CornerRadius="4"
+            Padding="5, 0, 5, 5">
+            <WebView
+                Name="Webview"
+                MinHeight="100"
+                MinWidth="100"
+                Width="Auto"
+                Height="Auto"
+                NavigationStarting="WebView_OnNavigationStarting"
+                ScriptNotify="Webview_OnScriptNotify"
+                LoadCompleted="Webview_OnLoadCompleted" 
+                DefaultBackgroundColor="White"/>
+        </Border>
 
         <controls:GridSplitter
             Grid.Row="1"
@@ -161,7 +162,7 @@
                 Padding="10, 0, 0, 20" />
 
             <muxc:TreeView
-                Name="TreeView"
+                Name="Treeview"
                 ItemInvoked="TreeView_ItemInvoked"
                 MinWidth="250"
                 VerticalAlignment="Top" />
