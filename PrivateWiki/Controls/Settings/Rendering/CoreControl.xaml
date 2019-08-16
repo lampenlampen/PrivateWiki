@@ -45,10 +45,11 @@
                         RelativePanel.AlignVerticalCenterWithPanel="True"
                         VerticalAlignment="Center"
                         Margin="0,0,12,0"
+                        Foreground="White"
                         FontFamily="Segoe MDL2 Assets" Glyph="&#xF589;" />
                     <TextBlock
                         RelativePanel.RightOf="CoreIcon"
-                        Text="{x:Bind model.Title}"
+                        Text="{x:Bind Model.Title}"
                         Style="{StaticResource TitleTextBlockStyle}"
                         Foreground="White" />
 
@@ -57,7 +58,8 @@
                         OnContent="Enabled"
                         OffContent="Disabled"
                         IsEnabled="False"
-                        IsOn="True"/>
+                        Foreground="White"
+                        IsOn="{x:Bind Model.IsEnabled, Mode=TwoWay}"/>
 
                 </RelativePanel>
 
@@ -70,7 +72,7 @@
                     <ToggleSwitch
                         OnContent="Allow Html Tags"
                         OffContent="Allow Html Tags"
-                        IsOn="{x:Bind model.IsHtmlTagEnabled, Mode=TwoWay}"/>
+                        IsOn="{x:Bind Model.IsHtmlTagEnabled, Mode=TwoWay}"/>
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"
@@ -85,7 +87,7 @@
                     <ToggleSwitch
                         OnContent="Allow abbreviations"
                         OffContent="Allow abbreviations"
-                        IsOn="{x:Bind model.IsAbbreviationEnabled, Mode=TwoWay}"/>
+                        IsOn="{x:Bind Model.IsAbbreviationEnabled, Mode=TwoWay}"/>
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"
@@ -100,7 +102,7 @@
                     <ToggleSwitch
                         OnContent="Allow auto link"
                         OffContent="Allow auto link"
-                        IsOn="{x:Bind model.IsAutoLinkEnabled, Mode=TwoWay}"/>
+                        IsOn="{x:Bind Model.IsAutoLinkEnabled, Mode=TwoWay}"/>
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"
@@ -115,7 +117,7 @@
                     <ToggleSwitch
                         OnContent="Bootstrap Enabled"
                         OffContent="Bootstrap Enabled"
-                        IsOn="{x:Bind model.IsBootstrapEnabled, Mode=TwoWay}"/>
+                        IsOn="{x:Bind Model.IsBootstrapEnabled, Mode=TwoWay}"/>
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"
@@ -130,7 +132,7 @@
                     <ToggleSwitch
                         OnContent="Allow Citation"
                         OffContent="Allow Citation"
-                        IsOn="{x:Bind model.IsCitationEnabled, Mode=TwoWay}"/>
+                        IsOn="{x:Bind Model.IsCitationEnabled, Mode=TwoWay}"/>
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"
@@ -145,7 +147,7 @@
                     <ToggleSwitch
                         OnContent="Allow Definition List"
                         OffContent="Disallow Definition List"
-                        IsOn="{x:Bind model.IsDefinitionListEnabled, Mode=TwoWay}"/>
+                        IsOn="{x:Bind Model.IsDefinitionListEnabled, Mode=TwoWay}"/>
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"
@@ -160,7 +162,7 @@
                     <ToggleSwitch
                         OnContent="Allow Emoji &amp; Smiley"
                         OffContent="Disallow Emoji &amp; Smiley"
-                        IsOn="{x:Bind model.IsEmojiSmileyEnabled, Mode=TwoWay}"/>
+                        IsOn="{x:Bind Model.IsEmojiSmileyEnabled, Mode=TwoWay}"/>
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"
@@ -175,7 +177,7 @@
                     <ToggleSwitch
                         OnContent="Allow Figure"
                         OffContent="Disallow Figure"
-                        IsOn="{x:Bind model.IsFigureEnabled, Mode=TwoWay}"/>
+                        IsOn="{x:Bind Model.IsFigureEnabled, Mode=TwoWay}"/>
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"
@@ -190,7 +192,7 @@
                     <ToggleSwitch
                         OnContent="Allow Footer"
                         OffContent="Disallow Footer"
-                        IsOn="{x:Bind model.IsFooterEnabled, Mode=TwoWay}"/>
+                        IsOn="{x:Bind Model.IsFooterEnabled, Mode=TwoWay}"/>
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"
@@ -205,7 +207,7 @@
                     <ToggleSwitch
                         OnContent="Allow Footnote"
                         OffContent="Disallow Footnote"
-                        IsOn="{x:Bind model.IsFootnoteEnabled, Mode=TwoWay}"/>
+                        IsOn="{x:Bind Model.IsFootnoteEnabled, Mode=TwoWay}"/>
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"
@@ -220,7 +222,7 @@
                     <ToggleSwitch
                         OnContent="Allow Media Links"
                         OffContent="Disallow Media Links"
-                        IsOn="{x:Bind model.IsMediaLinkEnabled, Mode=TwoWay}"/>
+                        IsOn="{x:Bind Model.IsMediaLinkEnabled, Mode=TwoWay}"/>
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"
@@ -235,7 +237,7 @@
                     <ToggleSwitch
                         OnContent="Render softline as hardline"
                         OffContent="Don't render softline as hardline"
-                        IsOn="{x:Bind model.IsSoftLineAsHardlineBreakEnabled, Mode=TwoWay}"/>
+                        IsOn="{x:Bind Model.IsSoftLineAsHardlineBreakEnabled, Mode=TwoWay}"/>
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"
@@ -250,7 +252,7 @@
                     <ToggleSwitch
                         OnContent="Allow Smarty Pants"
                         OffContent="Disallow Smarty Pants"
-                        IsOn="{x:Bind model.IsSmartyPantEnabled, Mode=TwoWay}"/>
+                        IsOn="{x:Bind Model.IsSmartyPantEnabled, Mode=TwoWay}"/>
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"
@@ -265,7 +267,7 @@
                     <ToggleSwitch
                         OnContent="Allow Generic Attributes"
                         OffContent="Disallow Generic Attributes"
-                        IsOn="{x:Bind model.IsGenericAttributeEnabled, Mode=TwoWay}"/>
+                        IsOn="{x:Bind Model.IsGenericAttributeEnabled, Mode=TwoWay}"/>
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"

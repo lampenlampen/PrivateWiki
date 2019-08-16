@@ -18,16 +18,16 @@ using PrivateWiki.Models;
 
 namespace PrivateWiki.Controls.Settings.Rendering
 {
-	public sealed partial class CoreControl : UserControl
+	public sealed partial class EmphasisExtraControl : UserControl
 	{
-		private CoreRenderModel Model { get; set; }
+		private EmphasisExtraModel Model { get; set; }
 
-		public CoreControl()
+		public EmphasisExtraControl()
 		{
 			this.InitializeComponent();
 		}
 
-		public void Init(CoreRenderModel model)
+		public void Init(EmphasisExtraModel model)
 		{
 			this.Model = model;
 		}

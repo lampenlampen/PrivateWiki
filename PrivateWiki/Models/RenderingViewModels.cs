@@ -67,35 +67,57 @@ namespace PrivateWiki.Models
 		}
 	}
 
+	public class EmphasisExtraModel : RenderModel
+	{
+		public bool IsStrikethroughEnabled { get; set; }
+
+		public bool IsSuperSubScriptEnabled { get; set; }
+
+		public bool IsInsertedEnabled { get; set; }
+
+		public bool IsMarkedEnabled { get; set; }
+
+		public EmphasisExtraModel()
+		{
+			Title = "Emphasis Extra";
+			Subtitle = "Emphasis rendering";
+			Type = RenderMarkdownToHtmlType.EmphasisExtra;
+			Icon = "\uE1C8";
+			// TODO Icon
+		}
+	}
+
+	public class TableRenderModel : RenderModel
+	{
+		public bool IsGridTableEnabled { get; set; }
+
+		public bool IsPipeTableEnabled { get; set; }
+
+		public TableRenderModel()
+		{
+			Title = "Table";
+			Subtitle = "Advanced table markup";
+			Type = RenderMarkdownToHtmlType.Table;
+			Icon = "\uE80A";
+		}
+	}
+
 	public enum RenderMarkdownToHtmlType
 	{
 		Core,
-		Abbreviation,
-		AutoLink,
-		Bootstrap,
-		Citation,
 		CustomContainer,
-		DefinitionList,
-		EmojiSmiley,
 		EmphasisExtra,
-		Figure,
-		Footer,
-		Footnotes,
 
 		/// <summary>
 		/// ListExtra, TaskList
 		/// </summary>
 		List,
 		Mathmatics,
-		Media,
-		SoftlineBreakAsHardlineBreak,
-		SmartyPants,
 
 		/// <summary>
-		/// GidTable, PipeTable
+		/// GridTable, PipeTable
 		/// </summary>
 		Table,
-		GenericAttributes,
 		YamlFrontMatter,
 		SyntaxHighlighting,
 		Diagram,

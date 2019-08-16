@@ -18,16 +18,16 @@ using PrivateWiki.Models;
 
 namespace PrivateWiki.Controls.Settings.Rendering
 {
-	public sealed partial class CoreControl : UserControl
+	public sealed partial class TableControl : UserControl
 	{
-		private CoreRenderModel Model { get; set; }
+		private TableRenderModel Model { get; set; }
 
-		public CoreControl()
+		public TableControl()
 		{
 			this.InitializeComponent();
 		}
 
-		public void Init(CoreRenderModel model)
+		public void Init(TableRenderModel model)
 		{
 			this.Model = model;
 		}

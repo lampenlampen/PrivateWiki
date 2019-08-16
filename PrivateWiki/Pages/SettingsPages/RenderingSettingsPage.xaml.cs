@@ -39,8 +39,8 @@ namespace PrivateWiki.Pages.SettingsPages
 		private void LoadMarkdownToHtmlListItems()
 		{
 			RenderMarkdownToHtmlModels.Add(new CoreRenderModel());
-			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Emphasis Extra", Subtitle = "", Type = RenderMarkdownToHtmlType.EmphasisExtra });
-			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Table", Subtitle = "", Type = RenderMarkdownToHtmlType.Table });
+			RenderMarkdownToHtmlModels.Add(new EmphasisExtraModel());
+			RenderMarkdownToHtmlModels.Add(new TableRenderModel());
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "List", Subtitle = "", Type = RenderMarkdownToHtmlType.List });
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Mathematics", Subtitle = "", Type = RenderMarkdownToHtmlType.Mathmatics });
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Yaml Frontmatter", Subtitle = "", Type = RenderMarkdownToHtmlType.YamlFrontMatter });
@@ -51,6 +51,11 @@ namespace PrivateWiki.Pages.SettingsPages
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Precise Source Location", Subtitle = "", Type = RenderMarkdownToHtmlType.PreciseSourceLocation });
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Self Pipeline", Subtitle = "", Type = RenderMarkdownToHtmlType.SelfPipeline });
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Custom Container", Subtitle = "", Type = RenderMarkdownToHtmlType.CustomContainer });
+
+		}
+
+		private void SaveRenderingOptions()
+		{
 
 		}
 
@@ -76,6 +81,16 @@ namespace PrivateWiki.Pages.SettingsPages
 					var coreControl = new CoreControl();
 					coreControl.Init(coreRenderModel);
 					RenderingSettingsItemContent.Children.Add(coreControl);
+					break;
+				case EmphasisExtraModel emphasisExtraModel:
+					var emphasisExtraControl = new EmphasisExtraControl();
+					emphasisExtraControl.Init(emphasisExtraModel);
+					RenderingSettingsItemContent.Children.Add(emphasisExtraControl);
+					break;
+				case TableRenderModel tableModel:
+					var tableControl = new TableControl();
+					tableControl.Init(tableModel);
+					RenderingSettingsItemContent.Children.Add(tableControl);
 					break;
 				default:
 					break;
