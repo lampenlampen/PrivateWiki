@@ -113,8 +113,20 @@
     <Compile Include="Controls\Settings\Rendering\CoreControl.xaml.cs">
       <DependentUpon>CoreControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Settings\Rendering\DiagramControl.xaml.cs">
+      <DependentUpon>DiagramControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Settings\Rendering\EmphasisExtraControl.xaml.cs">
       <DependentUpon>EmphasisExtraControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Settings\Rendering\ListControl.xaml.cs">
+      <DependentUpon>ListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Settings\Rendering\MathControl.xaml.cs">
+      <DependentUpon>MathControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Settings\Rendering\SyntaxHighlightingControl.xaml.cs">
+      <DependentUpon>SyntaxHighlightingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Settings\Rendering\TableControl.xaml.cs">
       <DependentUpon>TableControl.xaml</DependentUpon>
@@ -199,6 +211,7 @@
     <Compile Include="SearchPopupContent.xaml.cs">
       <DependentUpon>SearchPopupContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings\RenderingModelHandler.cs" />
     <Compile Include="Utilities\ColorExtension.cs" />
     <Compile Include="Utilities\FullyObservableCollection.cs" />
   </ItemGroup>
@@ -266,7 +279,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Settings\Rendering\DiagramControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Settings\Rendering\EmphasisExtraControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Settings\Rendering\ListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Settings\Rendering\MathControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Settings\Rendering\SyntaxHighlightingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

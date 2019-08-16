@@ -11,7 +11,9 @@ namespace PrivateWiki.Models
 	public class RenderModel
 	{
 		// TODO Icon
-		public string Icon { get; set; } = "\uE11D";
+		public string FontGlyph { get; set; } = "\uE11D";
+
+		public string FontFamily { get; set; } = "Segoe MDL2 Assets";
 
 		public string Title { get; set; }
 
@@ -36,13 +38,9 @@ namespace PrivateWiki.Models
 
 		public bool IsCitationEnabled { get; set; }
 
-		public bool IsCustomContainerEnabled { get; set; }
-
 		public bool IsDefinitionListEnabled { get; set; }
 
 		public bool IsEmojiSmileyEnabled { get; set; }
-
-		public bool EmphasisExtraEnabled { get; set; }
 
 		public bool IsFigureEnabled { get; set; }
 
@@ -63,7 +61,7 @@ namespace PrivateWiki.Models
 			Title = "Core";
 			Subtitle = "Basic Markdown Parser";
 			Type = RenderMarkdownToHtmlType.Core;
-			Icon = "\uF589";
+			FontGlyph = "\uF589";
 		}
 	}
 
@@ -82,7 +80,7 @@ namespace PrivateWiki.Models
 			Title = "Emphasis Extra";
 			Subtitle = "Emphasis rendering";
 			Type = RenderMarkdownToHtmlType.EmphasisExtra;
-			Icon = "\uE1C8";
+			FontGlyph = "\uE1C8";
 			// TODO Icon
 		}
 	}
@@ -98,7 +96,60 @@ namespace PrivateWiki.Models
 			Title = "Table";
 			Subtitle = "Advanced table markup";
 			Type = RenderMarkdownToHtmlType.Table;
-			Icon = "\uE80A";
+			FontGlyph = "\uE80A";
+		}
+	}
+
+	public class ListRenderModel : RenderModel
+	{
+		public bool IsTaskListEnabled { get; set; }
+
+		public bool IsListExtraEnabled { get; set; }
+
+		public ListRenderModel()
+		{
+			Title = "List";
+			Subtitle = "List rendering";
+			Type = RenderMarkdownToHtmlType.List;
+			FontGlyph = "\uE15C";
+		}
+	}
+
+	public class MathRenderModel : RenderModel
+	{
+		public MathRenderModel()
+		{
+			Title = "Mathematics";
+			Subtitle = "Math rendering";
+			Type = RenderMarkdownToHtmlType.Mathematics;
+			FontGlyph = "\u2211";
+			FontFamily = "Segoe UI Symbol";
+		}
+	}
+
+	public class SyntaxHighlightingRenderModel : RenderModel
+	{
+		public SyntaxHighlightingRenderModel()
+		{
+			Title = "Syntax Highlighting";
+			Subtitle = "Code syntax highlighting";
+			Type = RenderMarkdownToHtmlType.SyntaxHighlighting;
+			FontGlyph = "\uE7E6";
+		}
+	}
+
+	public class DiagramRenderModel : RenderModel
+	{
+		public bool IsMermaidEnabled { get; set; }
+
+		public bool IsNomnomlEnabled { get; set; }
+
+		public DiagramRenderModel()
+		{
+			Title = "Diagram";
+			Subtitle = "Enable diagram rendering";
+			Type = RenderMarkdownToHtmlType.Diagram;
+			FontGlyph = "\uE9D9";
 		}
 	}
 
@@ -112,7 +163,7 @@ namespace PrivateWiki.Models
 		/// ListExtra, TaskList
 		/// </summary>
 		List,
-		Mathmatics,
+		Mathematics,
 
 		/// <summary>
 		/// GridTable, PipeTable

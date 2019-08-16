@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="PrivateWiki.Controls.Settings.Rendering.EmphasisExtraControl"
+    x:Class="PrivateWiki.Controls.Settings.Rendering.MathControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PrivateWiki.Controls.Settings.Rendering"
@@ -45,7 +45,7 @@
                         VerticalAlignment="Center"
                         Margin="0,0,12,0"
                         Foreground="White"
-                        FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind Model.FontGlyph}" />
+                        FontFamily="{x:Bind Model.FontFamily}" Glyph="{x:Bind Model.FontGlyph}" />
                     <TextBlock
                         RelativePanel.RightOf="CoreIcon"
                         Text="{x:Bind Model.Title}"
@@ -68,14 +68,16 @@
                     Background="White"
                     Padding="16,8,16,8">
 
+                    <!--
+
                     <ToggleSwitch
-                        OnContent="Allow Strikethrough"
-                        OffContent="Disallow Strikethrough"
-                        IsOn="{x:Bind Model.IsStrikethroughEnabled, Mode=TwoWay}" />
+                        OnContent="Allow task list"
+                        OffContent="Disallow task list"
+                        IsOn="{x:Bind Model.IsTaskListEnabled, Mode=TwoWay}" />
 
                     <TextBlock
                         TextWrapping="WrapWholeWords"
-                        Text="Allows to strikethrough a text by surrouznding it by '~~'" />
+                        Text="Renders a list with '[]', '[x]' or '[X]' as task list." />
 
                     <Border
                         Margin="0, 8, 0, 8"
@@ -83,57 +85,10 @@
                         BorderThickness="1"
                         Width="{x:Bind stackpanel.Width}" />
 
-                    <ToggleSwitch
-                        OnContent="Allow superscript/subscript"
-                        OffContent="Disallow superscript/subscript"
-                        IsOn="{x:Bind Model.IsSuperSubScriptEnabled, Mode=TwoWay}" />
-
-                    <TextBlock
-                        TextWrapping="WrapWholeWords"
-                        Text="Render text surrounded by '^'('~') as superscript (subscript)." />
-
-                    <Border
-                        Margin="0, 8, 0, 8"
-                        BorderBrush="LightGray"
-                        BorderThickness="1"
-                        Width="{x:Bind stackpanel.Width}" />
-
-                    <ToggleSwitch
-                        OnContent="Allow inserted text"
-                        OffContent="Disallow inserted text"
-                        IsOn="{x:Bind Model.IsInsertedEnabled, Mode=TwoWay}" />
-
-                    <TextBlock
-                        TextWrapping="WrapWholeWords"
-                        Text="Renders text surrounded by '++' as inserted text." />
-
-                    <Border
-                        Margin="0, 8, 0, 8"
-                        BorderBrush="LightGray"
-                        BorderThickness="1"
-                        Width="{x:Bind stackpanel.Width}" />
-
-                    <ToggleSwitch
-                        OnContent="Allow marked text"
-                        OffContent="Disallow marked text"
-                        IsOn="{x:Bind Model.IsMarkedEnabled, Mode=TwoWay}" />
-
-                    <TextBlock
-                        TextWrapping="WrapWholeWords"
-                        Text="Renders text surrounded by '==' as marked text." />
-
-                    <Border
-                        Margin="0, 8, 0, 8"
-                        BorderBrush="LightGray"
-                        BorderThickness="1"
-                        Width="{x:Bind stackpanel.Width}" />
+                    -->
 
                 </StackPanel>
-
             </Grid>
-
-
         </controls:DropShadowPanel>
-
     </Grid>
 </UserControl>

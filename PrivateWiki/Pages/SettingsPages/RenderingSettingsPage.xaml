@@ -528,7 +528,7 @@
                                                     Grid.Column="0"
                                                     VerticalAlignment="Center"
                                                     FontFamily="Segoe MDL2 Assets"
-                                                    Glyph="{x:Bind Icon}"
+                                                    Glyph="{x:Bind FontGlyph}"
                                                     Margin="0, 0, 12, 0" />
                                                 <StackPanel
                                                     x:Name="MarkdownToHtmlListItemText"
@@ -551,6 +551,7 @@
 
                             </controls1:Expander>
 
+                            <!--
                             <controls1:Expander
                                 x:Name="HtmlExpander"
                                 Expanded="HtmlExpander_OnExpanded"
@@ -602,6 +603,8 @@
                                 </ListView>
 
                             </controls1:Expander>
+                            
+                            -->
 
                         </StackPanel>
 

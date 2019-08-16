@@ -41,17 +41,19 @@ namespace PrivateWiki.Pages.SettingsPages
 			RenderMarkdownToHtmlModels.Add(new CoreRenderModel());
 			RenderMarkdownToHtmlModels.Add(new EmphasisExtraModel());
 			RenderMarkdownToHtmlModels.Add(new TableRenderModel());
-			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "List", Subtitle = "", Type = RenderMarkdownToHtmlType.List });
-			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Mathematics", Subtitle = "", Type = RenderMarkdownToHtmlType.Mathmatics });
+			RenderMarkdownToHtmlModels.Add(new ListRenderModel());
+			RenderMarkdownToHtmlModels.Add(new MathRenderModel());
+			RenderMarkdownToHtmlModels.Add(new SyntaxHighlightingRenderModel());
+			RenderMarkdownToHtmlModels.Add(new DiagramRenderModel());
+
+			/*
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Yaml Frontmatter", Subtitle = "", Type = RenderMarkdownToHtmlType.YamlFrontMatter });
-			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Syntax Highlighting", Subtitle = "", Type = RenderMarkdownToHtmlType.SyntaxHighlighting });
-			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Diagrams", Subtitle = "", Type = RenderMarkdownToHtmlType.Diagram });
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Globalization", Subtitle = "", Type = RenderMarkdownToHtmlType.Globalization });
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Jira Links", Subtitle = "", Type = RenderMarkdownToHtmlType.JiraLinks });
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Precise Source Location", Subtitle = "", Type = RenderMarkdownToHtmlType.PreciseSourceLocation });
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Self Pipeline", Subtitle = "", Type = RenderMarkdownToHtmlType.SelfPipeline });
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Custom Container", Subtitle = "", Type = RenderMarkdownToHtmlType.CustomContainer });
-
+			*/
 		}
 
 		private void SaveRenderingOptions()
@@ -64,10 +66,12 @@ namespace PrivateWiki.Pages.SettingsPages
 			MarkdownHtmlExpander.IsExpanded = false;
 		}
 
+		
 		private void MarkdownHtmlExpander_OnExpanded(object sender, EventArgs e)
 		{
-			HtmlExpander.IsExpanded = false;
+			//HtmlExpander.IsExpanded = false;
 		}
+		
 
 		private void ListviewMarkdownHtml_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -92,7 +96,29 @@ namespace PrivateWiki.Pages.SettingsPages
 					tableControl.Init(tableModel);
 					RenderingSettingsItemContent.Children.Add(tableControl);
 					break;
+				case ListRenderModel listModel:
+					var listControl = new ListControl();
+					listControl.Init(listModel);
+					RenderingSettingsItemContent.Children.Add(listControl);
+					break;
+				case MathRenderModel mathModel:
+					var mathControl = new MathControl();
+					mathControl.Init(mathModel);
+					RenderingSettingsItemContent.Children.Add(mathControl);
+					break;
+				case SyntaxHighlightingRenderModel syntaxHighlightingModel:
+					var syntaxHighlightingControl = new SyntaxHighlightingControl();
+					syntaxHighlightingControl.Init(syntaxHighlightingModel);
+					RenderingSettingsItemContent.Children.Add(syntaxHighlightingControl);
+					break;
+				case DiagramRenderModel diagramModel:
+					var diagramControl = new DiagramControl();
+					diagramControl.Init(diagramModel);
+					RenderingSettingsItemContent.Children.Add(diagramControl);
+					break;
 				default:
+					// TODO Error UI model does not exist
+					// TODO Analytics
 					break;
 			}
 		}
