@@ -154,6 +154,9 @@ namespace PrivateWiki.Pages
 			ShowLastVisitedPages2();
 
 			// Show TOC
+
+			// TODO Show TOC
+			/*
 			var doc = parser.Parse(Page);
 			var toc = new HeadersParser().ParseHeaders(doc);
 
@@ -161,6 +164,8 @@ namespace PrivateWiki.Pages
 			{
 				Treeview.RootNodes.Add(header);
 			}
+
+			*/
 
 			// Show Page
 

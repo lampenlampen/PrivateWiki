@@ -1,7 +1,7 @@
-using JetBrains.Annotations;
 using System;
-using System.Runtime.InteropServices;
 using Windows.UI.Xaml.Media.Imaging;
+
+#nullable enable
 
 namespace PrivateWiki
 {
@@ -11,11 +11,11 @@ namespace PrivateWiki
 		public Uri ImageUri { get; private set; }
 		public BitmapImage Image { get; private set; }
 
-		public ImagePickerDialogModel([NotNull] string title, [NotNull] Uri image)
+		public ImagePickerDialogModel(string title, Uri image)
 		{
-			Title = title ?? throw new ArgumentNullException(nameof(title)); ;
-			ImageUri = image ?? throw new ArgumentNullException(nameof(image)); ;
-			Image = new BitmapImage(image) ?? throw new ArgumentNullException(nameof(image)); ;
+			Title = title;
+			ImageUri = image;
+			Image = new BitmapImage(image);
 		}
 	}
 }

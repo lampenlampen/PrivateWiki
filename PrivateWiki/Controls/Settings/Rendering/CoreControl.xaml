@@ -100,6 +100,21 @@
                         Width="{x:Bind stackpanel.Width}" />
 
                     <ToggleSwitch
+                        OnContent="Allow auto identifier"
+                        OffContent="Disallow auto identifier"
+                        IsOn="{x:Bind Model.IsAutoIdentifierEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Automatically creates an identifier for headings. Required for the table of contents."/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
                         OnContent="Allow auto link"
                         OffContent="Allow auto link"
                         IsOn="{x:Bind Model.IsAutoLinkEnabled, Mode=TwoWay}"/>

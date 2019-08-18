@@ -32,6 +32,8 @@ namespace PrivateWiki.Models
 
 		public bool IsAbbreviationEnabled { get; set; }
 
+		public bool IsAutoIdentifierEnabled { get; set; }
+
 		public bool IsAutoLinkEnabled { get; set; }
 
 		public bool IsBootstrapEnabled { get; set; }

@@ -61,6 +61,7 @@ namespace PrivateWiki.Settings
 			container.Values["core_enabled"] = model.IsEnabled;
 			container.Values["core_is_html_enabled"] = model.IsHtmlTagEnabled;
 			container.Values["core_is_abbreviation_enabled"] = model.IsAbbreviationEnabled;
+			container.Values["core_is_autoidentifier_enabled"] = model.IsAutoIdentifierEnabled;
 			container.Values["core_is_autolink_enabled"] = model.IsAutoLinkEnabled;
 			container.Values["core_is_bootstrap_enabled"] = model.IsBootstrapEnabled;
 			container.Values["core_is_citation_enabled"] = model.IsCitationEnabled;
@@ -156,6 +157,8 @@ namespace PrivateWiki.Settings
 
 		public IEnumerable<RenderModel> LoadRenderingModels()
 		{
+			// TODO default model if not saved yet
+		
 			var renderingContainer = GetRenderingSettingsContainer();
 
 			var models = new List<RenderModel>
@@ -183,6 +186,7 @@ namespace PrivateWiki.Settings
 				IsEnabled = (bool) container.Values["core_enabled"],
 				IsHtmlTagEnabled = (bool) container.Values["core_is_html_enabled"],
 				IsAbbreviationEnabled = (bool) container.Values["core_is_abbreviation_enabled"],
+				IsAutoIdentifierEnabled = (bool) container.Values["core_is_autoidentifier_enabled"],
 				IsAutoLinkEnabled = (bool) container.Values["core_is_autolink_enabled"],
 				IsBootstrapEnabled = (bool) container.Values["core_is_bootstrap_enabled"],
 				IsCitationEnabled = (bool) container.Values["core_is_citation_enabled"],
