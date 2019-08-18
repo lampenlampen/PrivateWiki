@@ -20,14 +20,14 @@ namespace PrivateWiki.Controls.Settings.Rendering
 {
 	public sealed partial class EmphasisExtraControl : UserControl
 	{
-		private EmphasisExtraModel Model { get; set; }
+		private EmphasisExtraRenderModel Model { get; set; }
 
 		public EmphasisExtraControl()
 		{
 			this.InitializeComponent();
 		}
 
-		public void Init(EmphasisExtraModel model)
+		public void Init(EmphasisExtraRenderModel model)
 		{
 			this.Model = model;
 		}

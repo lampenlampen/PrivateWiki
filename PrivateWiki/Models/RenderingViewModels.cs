@@ -65,7 +65,7 @@ namespace PrivateWiki.Models
 		}
 	}
 
-	public class EmphasisExtraModel : RenderModel
+	public class EmphasisExtraRenderModel : RenderModel
 	{
 		public bool IsStrikethroughEnabled { get; set; }
 
@@ -75,7 +75,7 @@ namespace PrivateWiki.Models
 
 		public bool IsMarkedEnabled { get; set; }
 
-		public EmphasisExtraModel()
+		public EmphasisExtraRenderModel()
 		{
 			Title = "Emphasis Extra";
 			Subtitle = "Emphasis rendering";

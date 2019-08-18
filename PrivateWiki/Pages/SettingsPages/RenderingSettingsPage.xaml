@@ -455,7 +455,9 @@
         <controls:SettingsHeader
             Grid.Row="0"
             Title="Rendering"
-            Subtitle="Configure how content is rendered" />
+            Subtitle="Configure how content is rendered"
+            ApplyClick="SettingsHeader_OnApplyClick"
+            ResetClick="SettingsHeader_OnResetClick"/>
 
         <ScrollViewer
             Grid.Row="1">

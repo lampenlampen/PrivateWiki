@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -14,6 +15,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using PrivateWiki.Controls.Settings.Rendering;
 using PrivateWiki.Models;
+using PrivateWiki.Settings;
 
 #nullable enable
 
@@ -34,17 +36,29 @@ namespace PrivateWiki.Pages.SettingsPages
 		{
 			this.InitializeComponent();
 			LoadMarkdownToHtmlListItems();
+
+			ApplicationData.Current.DataChanged += OnRoamingDataChanged;
+		}
+
+		private void OnRoamingDataChanged(ApplicationData sender, object args)
+		{
+			LoadMarkdownToHtmlListItems();
 		}
 
 		private void LoadMarkdownToHtmlListItems()
 		{
+			RenderMarkdownToHtmlModels.Clear();
+
+			/*
 			RenderMarkdownToHtmlModels.Add(new CoreRenderModel());
-			RenderMarkdownToHtmlModels.Add(new EmphasisExtraModel());
+			RenderMarkdownToHtmlModels.Add(new EmphasisExtraRenderModel());
 			RenderMarkdownToHtmlModels.Add(new TableRenderModel());
 			RenderMarkdownToHtmlModels.Add(new ListRenderModel());
 			RenderMarkdownToHtmlModels.Add(new MathRenderModel());
 			RenderMarkdownToHtmlModels.Add(new SyntaxHighlightingRenderModel());
 			RenderMarkdownToHtmlModels.Add(new DiagramRenderModel());
+			*/
+
 
 			/*
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Yaml Frontmatter", Subtitle = "", Type = RenderMarkdownToHtmlType.YamlFrontMatter });
@@ -54,11 +68,39 @@ namespace PrivateWiki.Pages.SettingsPages
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Self Pipeline", Subtitle = "", Type = RenderMarkdownToHtmlType.SelfPipeline });
 			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Custom Container", Subtitle = "", Type = RenderMarkdownToHtmlType.CustomContainer });
 			*/
+
+			var handler = new RenderingModelHandler();
+
+			try
+			{
+				var models = handler.LoadRenderingModels().ToList();
+
+				RenderMarkdownToHtmlModels = models;
+			}
+			catch (NullReferenceException e)
+			{
+				Console.WriteLine(e);
+
+				RenderMarkdownToHtmlModels.Clear();
+
+				RenderMarkdownToHtmlModels.Add(new CoreRenderModel());
+				RenderMarkdownToHtmlModels.Add(new EmphasisExtraRenderModel());
+				RenderMarkdownToHtmlModels.Add(new TableRenderModel());
+				RenderMarkdownToHtmlModels.Add(new ListRenderModel());
+				RenderMarkdownToHtmlModels.Add(new MathRenderModel());
+				RenderMarkdownToHtmlModels.Add(new SyntaxHighlightingRenderModel());
+				RenderMarkdownToHtmlModels.Add(new DiagramRenderModel());
+			}
+
+			
+
+			
 		}
 
 		private void SaveRenderingOptions()
 		{
-
+			var handler = new RenderingModelHandler();
+			handler.SaveRenderingModels(RenderMarkdownToHtmlModels);
 		}
 
 		private void HtmlExpander_OnExpanded(object sender, EventArgs e)
@@ -86,7 +128,7 @@ namespace PrivateWiki.Pages.SettingsPages
 					coreControl.Init(coreRenderModel);
 					RenderingSettingsItemContent.Children.Add(coreControl);
 					break;
-				case EmphasisExtraModel emphasisExtraModel:
+				case EmphasisExtraRenderModel emphasisExtraModel:
 					var emphasisExtraControl = new EmphasisExtraControl();
 					emphasisExtraControl.Init(emphasisExtraModel);
 					RenderingSettingsItemContent.Children.Add(emphasisExtraControl);
@@ -126,6 +168,16 @@ namespace PrivateWiki.Pages.SettingsPages
 		private void ListviewHtml_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			// TODO
+		}
+
+		private void SettingsHeader_OnApplyClick(object sender, RoutedEventArgs e)
+		{
+			SaveRenderingOptions();
+		}
+
+		private void SettingsHeader_OnResetClick(object sender, RoutedEventArgs e)
+		{
+			LoadMarkdownToHtmlListItems();
 		}
 	}
 }
