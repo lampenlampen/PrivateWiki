@@ -60,6 +60,7 @@ namespace PrivateWiki.Models
 
 		public CoreRenderModel()
 		{
+			IsEnabled = true;
 			Title = "Core";
 			Subtitle = "Basic Markdown Parser";
 			Type = RenderMarkdownToHtmlType.Core;

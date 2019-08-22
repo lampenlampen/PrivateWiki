@@ -13,16 +13,16 @@
     <RelativePanel
         Padding="16, 16, 16, 16">
 
-        <FontIcon 
+        <StackPanel 
             Name="SettingsHeaderIcon"
-            FontFamily="Segoe MDL2 Assets" 
-            Glyph="&#xE122;"
             Margin="0, 0, 16, 0"
-            FontSize="64"
             RelativePanel.AlignLeftWithPanel="True"
             RelativePanel.AlignVerticalCenterWithPanel="True"/>
 
+        
+
         <StackPanel
+            x:Name="stackpanel"
             RelativePanel.RightOf="SettingsHeaderIcon"
             RelativePanel.AlignVerticalCenterWithPanel="True">
 

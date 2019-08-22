@@ -9,6 +9,7 @@
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:uwp="using:FontAwesome.UWP"
     xmlns:models="using:PrivateWiki.Models"
+    xmlns:utilities="using:PrivateWiki.Utilities"
     mc:Ignorable="d"
     Background="#EEEEEE">
     <Page.Resources>
@@ -443,6 +444,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <utilities:EnableStateToColorConverter x:Key="BoolToColorConverter" />
     </Page.Resources>
 
     <Grid>
@@ -457,103 +459,101 @@
             Title="Rendering"
             Subtitle="Configure how content is rendered"
             ApplyClick="SettingsHeader_OnApplyClick"
-            ResetClick="SettingsHeader_OnResetClick"/>
+            ResetClick="SettingsHeader_OnResetClick">
+            <controls:SettingsHeader.Icon>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE116;" FontSize="64"/>
+            </controls:SettingsHeader.Icon>
+
+        </controls:SettingsHeader>
 
         <ScrollViewer
             Grid.Row="1">
 
             <Grid
-                Grid.Row="1"
                 Padding="32, 16, 32, 32">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" MinWidth="256" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Grid x:Name="grid" Grid.Column="0" Margin="0, 0, 32, 0" Height="Auto">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+                <controls1:DropShadowPanel
+                    Grid.Row="0"
+                    Color="Black"
+                    Margin="0,0,32,0"
+                    OffsetX="3"
+                    OffsetY="3"
+                    BlurRadius="5"
+                    ShadowOpacity=".3"
+                    Height="Auto"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch">
 
-                    <controls1:DropShadowPanel
-                        Grid.Row="0"
-                        Color="Black"
-                        OffsetX="3"
-                        OffsetY="3"
-                        BlurRadius="5"
-                        ShadowOpacity=".3"
-                        Height="Auto"
-                        HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch">
+                    <StackPanel x:Name="stackpanel" Background="White" Padding="8">
 
-                        <StackPanel x:Name="stackpanel" Background="White" Padding="8">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Height="Auto"
+                            Padding="8"
+                            MinHeight="64"
+                            MinWidth="256"
+                            Background="{ThemeResource SystemControlBackgroundAccentBrush}">
 
-                            <StackPanel
-                                Orientation="Horizontal"
-                                Height="Auto"
-                                Padding="8"
-                                MinHeight="64"
-                                MinWidth="256"
-                                Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+                            <uwp:FontAwesome Icon="Image" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                             Margin="16,0,16,0" />
+                            <TextBlock Text="Rendering Pipeline" VerticalAlignment="Center" Margin="0,0,16,0" />
 
-                                <uwp:FontAwesome Icon="Image" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                 Margin="16,0,16,0" />
-                                <TextBlock Text="Rendering Pipeline" VerticalAlignment="Center" Margin="0,0,16,0" />
+                        </StackPanel>
 
-                            </StackPanel>
+                        <controls1:Expander
+                            x:Name="MarkdownHtmlExpander"
+                            Header="Markdown Processing"
+                            Foreground="Black"
+                            Background="{ThemeResource SystemControlHighlightListAccentLowBrush}"
+                            IsExpanded="False"
+                            Expanded="MarkdownHtmlExpander_OnExpanded">
 
-                            <controls1:Expander
-                                x:Name="MarkdownHtmlExpander"
-                                Header="Markdown Processing"
-                                Foreground="Black"
-                                Background="{ThemeResource SystemControlHighlightListAccentLowBrush}"
-                                IsExpanded="False"
-                                Expanded="MarkdownHtmlExpander_OnExpanded">
+                            <ListView x:Name="ListviewMarkdownHtml"
+                                      MinWidth="256"
+                                      Background="White"
+                                      ItemsSource="{x:Bind RenderMarkdownToHtmlModels}"
+                                      SelectionChanged="ListviewMarkdownHtml_OnSelectionChanged"
+                                      ItemContainerStyle="{StaticResource BorderedItem}">
 
-                                <ListView x:Name="ListviewMarkdownHtml"
-                                          MinWidth="256"
-                                          Background="White"
-                                          ItemsSource="{x:Bind RenderMarkdownToHtmlModels}"
-                                          SelectionChanged="ListviewMarkdownHtml_OnSelectionChanged"
-                                          ItemContainerStyle="{StaticResource BorderedItem}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="models:RenderModel">
+                                        <Grid Padding="8,8,0,8">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <FontIcon
+                                                x:Name="MarkdownHtmlListItemIcon"
+                                                Grid.Column="0"
+                                                VerticalAlignment="Center"
+                                                FontFamily="Segoe MDL2 Assets"
+                                                Glyph="{x:Bind FontGlyph}"
+                                                Margin="0, 0, 12, 0" />
+                                            <StackPanel
+                                                x:Name="MarkdownToHtmlListItemText"
+                                                Grid.Column="1">
+                                                <TextBlock Text="{x:Bind Title}" FontSize="18" />
+                                                <TextBlock Text="{x:Bind Subtitle}" />
+                                            </StackPanel>
+                                            <Ellipse
+                                                x:Name="MarkdownToHtmlStatus"
+                                                Grid.Column="2"
+                                                Margin="16,0,8,0"
+                                                Height="10"
+                                                Width="10"
+                                                Fill="{Binding Path=IsEnabled, Converter={StaticResource BoolToColorConverter}}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </controls1:Expander>
 
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="models:RenderModel">
-                                            <Grid Padding="8,8,0,8">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <FontIcon
-                                                    x:Name="MarkdownHtmlListItemIcon"
-                                                    Grid.Column="0"
-                                                    VerticalAlignment="Center"
-                                                    FontFamily="Segoe MDL2 Assets"
-                                                    Glyph="{x:Bind FontGlyph}"
-                                                    Margin="0, 0, 12, 0" />
-                                                <StackPanel
-                                                    x:Name="MarkdownToHtmlListItemText"
-                                                    Grid.Column="1">
-                                                    <TextBlock Text="{x:Bind Title}" FontSize="18" />
-                                                    <TextBlock Text="{x:Bind Subtitle}" />
-                                                </StackPanel>
-                                                <Ellipse
-                                                    x:Name="MarkdownToHtmlStatus"
-                                                    Grid.Column="2"
-                                                    Margin="16,0,8,0"
-                                                    Height="10"
-                                                    Width="10"
-                                                    Fill="LimeGreen" />
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-
-                                </ListView>
-
-                            </controls1:Expander>
-
-                            <!--
+                        <!--
                             <controls1:Expander
                                 x:Name="HtmlExpander"
                                 Expanded="HtmlExpander_OnExpanded"
@@ -608,19 +608,13 @@
                             
                             -->
 
-                        </StackPanel>
-
-                    </controls1:DropShadowPanel>
-
-                </Grid>
+                    </StackPanel>
+                </controls1:DropShadowPanel>
 
                 <Grid
                     Grid.Column="1"
                     x:Name="RenderingSettingsItemContent" />
             </Grid>
-
         </ScrollViewer>
-
-
     </Grid>
 </Page>

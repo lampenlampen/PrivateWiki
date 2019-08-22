@@ -47,7 +47,11 @@
             Title="Navigation"
             Subtitle="Manage the site navigation"
             ApplyClick="SettingsHeader_OnApplyClick"
-            ResetClick="SettingsHeader_OnResetClick" />
+            ResetClick="SettingsHeader_OnResetClick">
+            <controls:SettingsHeader.Icon>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE122;" FontSize="32"/>
+            </controls:SettingsHeader.Icon>
+        </controls:SettingsHeader>
 
         <ScrollViewer
             Grid.Row="1">

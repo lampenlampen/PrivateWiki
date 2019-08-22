@@ -217,6 +217,7 @@
     </Compile>
     <Compile Include="Settings\DeveloperSettingsModelHandler.cs" />
     <Compile Include="Settings\RenderingModelHandler.cs" />
+    <Compile Include="Utilities\BoolToColorConverter.cs" />
     <Compile Include="Utilities\ColorExtension.cs" />
     <Compile Include="Utilities\FullyObservableCollection.cs" />
   </ItemGroup>

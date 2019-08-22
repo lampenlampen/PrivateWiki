@@ -26,6 +26,18 @@ namespace PrivateWiki.Controls
 			this.InitializeComponent();
 		}
 
+		public IconElement Icon
+		{
+			get => (IconElement) GetValue(IconProperty);
+			set
+			{
+				SetValue(IconProperty, value);
+				SettingsHeaderIcon.Children.Add(value);
+			}
+		}
+
+		public static readonly DependencyProperty IconProperty = DependencyProperty.Register("IconProperty", typeof(IconElement), typeof(SettingsHeader), null);
+
 		public string Title
 		{
 			get => (string)GetValue(TitleProperty);
