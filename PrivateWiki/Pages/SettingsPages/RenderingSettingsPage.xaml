@@ -476,6 +476,13 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                
+
                 <controls1:DropShadowPanel
                     Grid.Row="0"
                     Color="Black"
@@ -610,6 +617,8 @@
 
                     </StackPanel>
                 </controls1:DropShadowPanel>
+
+                </Grid>
 
                 <Grid
                     Grid.Column="1"

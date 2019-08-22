@@ -12,3 +12,6 @@ The Page Viewer:
 
 And the Editor:
 ![Page Editor](Images/PrivateWiki_Editor.png)
+
+And the Settings Page:
+![Settings Page](Images/PrivateWiki_Settings_Rendering.png)
