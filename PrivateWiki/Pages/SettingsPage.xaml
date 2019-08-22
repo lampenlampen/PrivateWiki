@@ -15,56 +15,82 @@
     </Page.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition
-                Width="Auto"
-                MinWidth="250"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        
+        <muxc:NavigationView x:Name="NavView"
+                         Loaded="NavView_Loaded"
+                         ItemInvoked="NavView_ItemInvoked"
+                         BackRequested="NavView_BackRequested"
+                         PaneTitle="Settings"
+                         IsSettingsVisible="False"
+                         IsBackEnabled="True">
+            <muxc:NavigationView.MenuItems>
+                <muxc:NavigationViewItemHeader Content="Site"/>
+                <muxc:NavigationViewItem Tag="general" Icon="Home" Content="General"/>
+                <muxc:NavigationViewItem Tag="navigation" Content="Navigation">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE122;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Tag="pages" Content="Pages">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8C8;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Tag="theme" Content="Theme">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE2B1;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItemSeparator/>
+                <muxc:NavigationViewItemHeader Content="Modules"/>
+                <muxc:NavigationViewItem Tag="rendering" Content="Rendering">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE116;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Tag="storage" Content="Storage">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE96A;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItemSeparator/>
+                <muxc:NavigationViewItemHeader Content="System"/>
+                <muxc:NavigationViewItem Tag="developertools" Content="Developer Tools">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC7A;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+            </muxc:NavigationView.MenuItems>
 
-        <ListView
-            Grid.Column="0"
-            ItemClick="SettingsMenuClick"
-            SelectionMode="Single"
-            IsItemClickEnabled="True"
-            ItemsSource="{Binding Source={StaticResource cvs}}"
-            Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="local:SettingsItem">
-
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon 
-                            FontFamily="Segoe MDL2 Assets" 
-                            Glyph="&#xE122;"
-                            Margin="0, 0, 16, 0"/>
-
-                        <TextBlock
-                            Text="{Binding ItemString}"></TextBlock>
-                    </StackPanel>
-
-                    
-                </DataTemplate>
-            </ListView.ItemTemplate>
-
-            <ListView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Key}"></TextBlock>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-
-                    
-                </GroupStyle>
-            </ListView.GroupStyle>
-            </ListView>
+            <muxc:NavigationView.AutoSuggestBox>
+                <!-- See AutoSuggestBox documentation for
+                 more info about how to implement search. -->
+                <AutoSuggestBox x:Name="NavViewSearchBox" QueryIcon="Find"/>
+            </muxc:NavigationView.AutoSuggestBox>
 
             <Frame
-            Name="SettingsContentFrame"
-            Grid.Column="1"
-            Background="#EEEEEE"
+                Name="SettingsContentFrame"
+                Background="#EEEEEE"
             />
+        </muxc:NavigationView>
 
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger
+                        MinWindowWidth="{x:Bind NavView.CompactModeThresholdWidth}"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!-- Remove the next 3 lines for left-only navigation. -->
+                        <Setter Target="NavView.PaneDisplayMode" Value="Top"/>
+                        <Setter Target="NavViewSearchBox.Width" Value="200"/>
+                        <Setter Target="MainPagesHeader.Visibility" Value="Collapsed"/>
+                        <!-- Leave the next line for left-only navigation. -->
+                        <Setter Target="SettingsContentFrame.Padding" Value="24,0,24,24"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>
