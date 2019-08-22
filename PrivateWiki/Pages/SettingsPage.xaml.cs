@@ -72,6 +72,7 @@ namespace PrivateWiki.Pages
 				case SettingItems.Storage:
 					break;
 				case SettingItems.DeveloperTools:
+					SettingsContentFrame.Navigate(typeof(DeveloperSettingsPage));
 					break;
 			}
 		}

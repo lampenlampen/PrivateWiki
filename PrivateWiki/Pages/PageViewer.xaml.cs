@@ -21,6 +21,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using PrivateWiki.Settings;
 using PrivateWiki.Utilities;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
@@ -51,10 +52,9 @@ namespace PrivateWiki.Pages
 
 		private void Init()
 		{
-			// TODO Create Setting AcrylicBackground
-			var acrylicBackground = true;
+			var handler = new DeveloperSettingsModelHandler();
+			var acrylicBackground = handler.LoadDeveloperSettingsModel().IsAcrylicBackgroundEnabled;
 
-			// ReSharper disable once ConditionIsAlwaysTrueOrFalse
 			if (acrylicBackground)
 			{
 				PageViewerGrid.Background = (Brush) Application.Current.Resources["SystemControlAcrylicWindowBrush"];

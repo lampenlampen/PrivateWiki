@@ -152,6 +152,7 @@
     <Compile Include="Dialogs\DissmissableDialog.cs" />
     <Compile Include="DiffMatchPatchAlg.cs" />
     <Compile Include="ImagePickerDialogModel.cs" />
+    <Compile Include="Models\DeveloperSettingsModel.cs" />
     <Compile Include="Models\NavigationItem.cs" />
     <Compile Include="Models\RenderingViewModels.cs" />
     <Compile Include="MyTreeViewNode.cs" />
@@ -197,6 +198,9 @@
     <Compile Include="Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SettingsPages\DeveloperSettingsPage.xaml.cs">
+      <DependentUpon>DeveloperSettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SettingsPages\NavigationSettingsPage.xaml.cs">
       <DependentUpon>NavigationSettingsPage.xaml</DependentUpon>
     </Compile>
@@ -211,6 +215,7 @@
     <Compile Include="SearchPopupContent.xaml.cs">
       <DependentUpon>SearchPopupContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings\DeveloperSettingsModelHandler.cs" />
     <Compile Include="Settings\RenderingModelHandler.cs" />
     <Compile Include="Utilities\ColorExtension.cs" />
     <Compile Include="Utilities\FullyObservableCollection.cs" />
@@ -352,6 +357,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPages\DeveloperSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
