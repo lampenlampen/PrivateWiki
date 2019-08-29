@@ -75,10 +75,8 @@ namespace PrivateWiki.Pages.SettingsPages
 			JArray items = (JArray) rss["navigation_items"];
 			var count = items.Count;
 
-			for (int i = 0; i < count; i++)
+			foreach (var item in items)
 			{
-				var item = items[i];
-
 				var type = (string) item["type"];
 
 				switch (type)

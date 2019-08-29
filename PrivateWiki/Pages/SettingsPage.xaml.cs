@@ -1,24 +1,18 @@
 ﻿using PrivateWiki.Pages.SettingsPages;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
 using NavigationView = Microsoft.UI.Xaml.Controls.NavigationView;
 using NavigationViewBackRequestedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
 using NavigationViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs;
 using muxc = Microsoft.UI.Xaml.Controls;
+
+#nullable enable
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -35,60 +29,12 @@ namespace PrivateWiki.Pages
 			("navigation", typeof(NavigationSettingsPage)),
 			("rendering", typeof(RenderingSettingsPage)),
 			("developertools", typeof(DeveloperSettingsPage)),
+			("storage", typeof(StorageSettingsPage))
 		};
 
 		public SettingsPage()
 		{
 			this.InitializeComponent();
-
-			var generalItem = new SettingsItem(SettingItems.General, SettingHeaders.Site);
-			var navigationItem = new SettingsItem(SettingItems.Navigation, SettingHeaders.Site);
-			var pagesItem = new SettingsItem(SettingItems.Pages, SettingHeaders.Site);
-			var themeItem = new SettingsItem(SettingItems.Theme, SettingHeaders.Site);
-			var renderingItem = new SettingsItem(SettingItems.Rendering, SettingHeaders.Modules);
-			var storageItem = new SettingsItem(SettingItems.Storage, SettingHeaders.Modules);
-			var developerToolsItem = new SettingsItem(SettingItems.DeveloperTools, SettingHeaders.System) { ItemString = "Developer Tools" };
-
-			List<SettingsItem> settingsItems = new List<SettingsItem>
-			{
-				generalItem,
-				navigationItem,
-				pagesItem,
-				themeItem,
-				renderingItem,
-				storageItem,
-				developerToolsItem
-			};
-
-			var groupedItems = settingsItems.GroupBy(s => s.HeaderString);
-
-			cvs.Source = groupedItems;
-		}
-
-		private void SettingsMenuClick(object sender, ItemClickEventArgs args)
-		{
-			var clickedItem = (SettingsItem)args.ClickedItem;
-
-			switch (clickedItem.Item)
-			{
-				case SettingItems.General:
-					break;
-				case SettingItems.Navigation:
-					SettingsContentFrame.Navigate(typeof(NavigationSettingsPage));
-					break;
-				case SettingItems.Pages:
-					break;
-				case SettingItems.Theme:
-					break;
-				case SettingItems.Rendering:
-					SettingsContentFrame.Navigate(typeof(RenderingSettingsPage));
-					break;
-				case SettingItems.Storage:
-					break;
-				case SettingItems.DeveloperTools:
-					SettingsContentFrame.Navigate(typeof(DeveloperSettingsPage));
-					break;
-			}
 		}
 
 		private void NavView_Loaded(object sender, RoutedEventArgs e)
@@ -169,41 +115,5 @@ namespace PrivateWiki.Pages
 		{
 			if (Frame.CanGoBack) Frame.GoBack();
 		}
-	}
-
-	public class SettingsItem
-	{
-		public SettingItems Item { get; set; }
-
-		public string ItemString { get; set; }
-		public SettingHeaders Header { get; set; }
-
-		public String HeaderString { get; set; }
-
-		public SettingsItem(SettingItems item, SettingHeaders header)
-		{
-			Item = item;
-			Header = header;
-			ItemString = item.ToString();
-			HeaderString = header.ToString();
-		}
-	}
-
-	public enum SettingItems
-	{
-		General,
-		Navigation,
-		Rendering,
-		Pages,
-		Theme,
-		Storage,
-		DeveloperTools
-	}
-
-	public enum SettingHeaders
-	{
-		Site = 0,
-		Modules = 1,
-		System = 2
 	}
 }

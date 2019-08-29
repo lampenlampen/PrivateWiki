@@ -131,6 +131,9 @@
     <Compile Include="Controls\Settings\Rendering\TableControl.xaml.cs">
       <DependentUpon>TableControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Settings\Storage\LFSControl.xaml.cs">
+      <DependentUpon>LFSControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\DataAccess\DataAccessLibrary.DataAccessImpl.cs" />
     <Compile Include="Data\DataAccess\IDataAccess.cs" />
     <Compile Include="Data\DefaultPages.cs" />
@@ -150,7 +153,13 @@
       <DependentUpon>WikiLinkDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\DissmissableDialog.cs" />
-    <Compile Include="DiffMatchPatchAlg.cs" />
+    <Compile Include="Models\LFSModel.cs" />
+    <Compile Include="Pages\SettingsPages\StorageSettingsPage.xaml.cs">
+      <DependentUpon>StorageSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingStorageTemplateSelector.cs" />
+    <Compile Include="Settings\StorageModelHandler.cs" />
+    <Compile Include="Utilities\DiffMatchPatchAlg.cs" />
     <Compile Include="ImagePickerDialogModel.cs" />
     <Compile Include="Models\DeveloperSettingsModel.cs" />
     <Compile Include="Models\NavigationItem.cs" />
@@ -220,6 +229,7 @@
     <Compile Include="Utilities\BoolToColorConverter.cs" />
     <Compile Include="Utilities\ColorExtension.cs" />
     <Compile Include="Utilities\FullyObservableCollection.cs" />
+    <Compile Include="Utilities\SyncFrequencyToRadioButtonConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -309,6 +319,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Settings\Storage\LFSControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\ExportDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -370,6 +384,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\SettingsPages\RenderingSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPages\StorageSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -10,10 +10,6 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Page.Resources>
-        <CollectionViewSource x:Key="cvs" x:Name="cvs" IsSourceGrouped="True"/>
-    </Page.Resources>
-
     <Grid>
         
         <muxc:NavigationView x:Name="NavView"
