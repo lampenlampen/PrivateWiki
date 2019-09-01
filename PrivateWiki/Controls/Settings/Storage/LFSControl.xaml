@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:utilities="using:PrivateWiki.Utilities"
+    xmlns:models="using:PrivateWiki.Models"
     mc:Ignorable="d"
     d:DesignHeight="1000"
     d:DesignWidth="1000">
@@ -74,9 +75,10 @@
                         Text="Sync Configuration" Style="{ThemeResource BaseTextBlockStyle}" />
 
                     <StackPanel>
-                        <RadioButton Content="Hourly" Checked="SyncFrequencyChecked" IsChecked="{Binding Model.SyncFrequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}}"/>
-                        <RadioButton Content="Daily" Checked="SyncFrequencyChecked" />
-                        <RadioButton Content="Weekly" Checked="SyncFrequencyChecked" />
+                        <RadioButton Content="Never" Checked="SyncFrequencyChecked" IsChecked="{x:Bind Model.SyncFrequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Never}"/>
+                        <RadioButton Content="Hourly" Checked="SyncFrequencyChecked" IsChecked="{x:Bind Model.SyncFrequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Hourly}"/>
+                        <RadioButton Content="Daily" Checked="SyncFrequencyChecked" IsChecked="{x:Bind Model.SyncFrequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Daily}"/>
+                        <RadioButton Content="Weekly" Checked="SyncFrequencyChecked" IsChecked="{x:Bind Model.SyncFrequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Weekly}"/>
                     </StackPanel>
 
                     <Border

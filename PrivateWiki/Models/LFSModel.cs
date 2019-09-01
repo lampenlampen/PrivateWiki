@@ -60,6 +60,7 @@ namespace PrivateWiki.Models
 
 	public enum SyncFrequency
 	{
+		Never,
 		Hourly,
 		Daily,
 		Weekly

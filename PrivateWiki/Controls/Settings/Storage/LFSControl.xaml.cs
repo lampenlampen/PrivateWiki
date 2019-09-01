@@ -4,6 +4,7 @@ using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using PrivateWiki.Models;
+using PrivateWiki.Settings;
 
 #nullable enable
 
@@ -52,6 +53,9 @@ namespace PrivateWiki.Controls.Settings.Storage
 
 			switch (radiobutton.Content)
 			{
+				case "Never":
+					Model.SyncFrequency = SyncFrequency.Never;
+					break;
 				case "Hourly":
 					Model.SyncFrequency = SyncFrequency.Hourly;
 					break;
@@ -65,6 +69,8 @@ namespace PrivateWiki.Controls.Settings.Storage
 		private void DoForceSync(object sender, RoutedEventArgs e)
 		{
 			// TODO Force Sync
+
+			var task = new LFSStorageActions().ForceSyncTask(Model);
 		}
 
 		private void DoLightSync(object sender, RoutedEventArgs e)

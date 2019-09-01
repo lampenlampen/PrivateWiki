@@ -70,7 +70,7 @@ namespace PrivateWiki.Settings
 							Subtitle = (string) item["subtitle"],
 							TargetToken = (string) item["target_token"],
 							TargetPath = (string) item["target_path"],
-							SyncFrequency = (SyncFrequency) Enum.Parse(typeof(SyncFrequency), (string) item["sync_frequency"])
+							SyncFrequency = Enum.Parse<SyncFrequency>((string) item["sync_frequency"])
 						};
 						models.Add(model);
 						break;
