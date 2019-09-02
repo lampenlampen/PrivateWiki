@@ -170,6 +170,17 @@
             </Grid>
 
         </PivotItem>
+        
+        <PivotItem
+            Header="Html">
+            
+            <GridView>
+                <TextBlock
+                    x:Name="Preview_Html"
+                    IsTextSelectionEnabled="True"/>
+            </GridView>
+            
+        </PivotItem>
 
         <PivotItem
             Header="Metadaten">

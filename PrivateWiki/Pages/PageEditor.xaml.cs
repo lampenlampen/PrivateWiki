@@ -177,6 +177,23 @@ namespace PrivateWiki.Pages
 
 			if (Pivot.SelectedIndex == 2)
 			{
+				var parser = new MarkdigParser();
+				var html = await parser.ToHtmlString(PageEditorTextBox.Text);
+				
+				try
+				{
+					html = System.Xml.Linq.XElement.Parse(html).ToString();
+				}
+				catch
+				{
+					// isn't well-formed xml
+				}
+				
+				Preview_Html.Text = html;
+			}
+
+			if (Pivot.SelectedIndex == 3)
+			{
 				/*
 					foreach (var tag in Page.Tags)
 						ListView.Items.Add(tag.Name);

@@ -154,19 +154,22 @@ namespace PrivateWiki.Pages
 			ShowLastVisitedPages2();
 
 			// Show TOC
+			// Only possible if CoreRenderModel.IsAutoIdentifierEnabled is true
+			var handler = new RenderingModelHandler();
+			var model = handler.LoadCoreModel(handler.GetRenderingSettingsContainer());
 
-			// TODO Show TOC
-			/*
-			var doc = parser.Parse(Page);
-			var toc = new HeadersParser().ParseHeaders(doc);
-
-			foreach (var header in toc.Children)
+			if (model.IsAutoIdentifierEnabled)
 			{
-				Treeview.RootNodes.Add(header);
+				var doc = parser.Parse(Page);
+				var toc = new HeadersParser().ParseHeaders(doc);
+	
+				foreach (var header in toc.Children)
+				{
+					Treeview.RootNodes.Add(header);
+				}
 			}
 
-			*/
-
+			
 			// Show Page
 
 			var html = await parser.ToHtmlString(Page);
