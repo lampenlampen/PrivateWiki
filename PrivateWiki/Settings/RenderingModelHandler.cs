@@ -175,7 +175,7 @@ namespace PrivateWiki.Settings
 			return models;
 		}
 
-		private CoreRenderModel LoadCoreModel(ApplicationDataContainer container)
+		internal CoreRenderModel LoadCoreModel(ApplicationDataContainer container)
 		{
 			var model = new CoreRenderModel
 			{
@@ -304,7 +304,7 @@ namespace PrivateWiki.Settings
 			return model;
 		}
 
-		private ApplicationDataContainer GetRenderingSettingsContainer()
+		internal ApplicationDataContainer GetRenderingSettingsContainer()
 		{
 			var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
 			var settingsContainer =
