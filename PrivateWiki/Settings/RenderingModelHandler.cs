@@ -158,7 +158,7 @@ namespace PrivateWiki.Settings
 		public IEnumerable<RenderModel> LoadRenderingModels()
 		{
 			// TODO default model if not saved yet
-		
+
 			var renderingContainer = GetRenderingSettingsContainer();
 
 			var models = new List<RenderModel>
@@ -177,129 +177,183 @@ namespace PrivateWiki.Settings
 
 		internal CoreRenderModel LoadCoreModel(ApplicationDataContainer container)
 		{
-			var model = new CoreRenderModel
+			CoreRenderModel model;
+
+			try
 			{
-				FontGlyph = (string) container.Values["core_fontglyph"],
-				FontFamily = (string) container.Values["core_fontfamily"],
-				Title = (string) container.Values["core_title"],
-				Subtitle = (string) container.Values["core_subtitle"],
-				IsEnabled = (bool) container.Values["core_enabled"],
-				IsHtmlTagEnabled = (bool) container.Values["core_is_html_enabled"],
-				IsAbbreviationEnabled = (bool) container.Values["core_is_abbreviation_enabled"],
-				IsAutoIdentifierEnabled = (bool) container.Values["core_is_autoidentifier_enabled"],
-				IsAutoLinkEnabled = (bool) container.Values["core_is_autolink_enabled"],
-				IsBootstrapEnabled = (bool) container.Values["core_is_bootstrap_enabled"],
-				IsCitationEnabled = (bool) container.Values["core_is_citation_enabled"],
-				IsDefinitionListEnabled = (bool) container.Values["core_is_definitionlist_enabled"],
-				IsEmojiSmileyEnabled = (bool) container.Values["core_is_emojismiley_enabled"],
-				IsFigureEnabled = (bool) container.Values["core_is_figure_enabled"],
-				IsFooterEnabled = (bool) container.Values["core_is_footer_enabled"],
-				IsFootnoteEnabled = (bool) container.Values["core_is_footnote_enabled"],
-				IsMediaLinkEnabled = (bool) container.Values["core_is_medialink_enabled"],
-				IsSoftLineAsHardlineBreakEnabled =
-					(bool) container.Values["core_is_softlineashardlinebreak_enabled"],
-				IsSmartyPantEnabled = (bool) container.Values["core_is_smartypant_enabled"],
-				IsGenericAttributeEnabled = (bool) container.Values["core_is_genericattribute_enabled"]
-			};
+				model = new CoreRenderModel
+				{
+					FontGlyph = (string) container.Values["core_fontglyph"],
+					FontFamily = (string) container.Values["core_fontfamily"],
+					Title = (string) container.Values["core_title"],
+					Subtitle = (string) container.Values["core_subtitle"],
+					IsEnabled = (bool) container.Values["core_enabled"],
+					IsHtmlTagEnabled = (bool) container.Values["core_is_html_enabled"],
+					IsAbbreviationEnabled = (bool) container.Values["core_is_abbreviation_enabled"],
+					IsAutoIdentifierEnabled = (bool) container.Values["core_is_autoidentifier_enabled"],
+					IsAutoLinkEnabled = (bool) container.Values["core_is_autolink_enabled"],
+					IsBootstrapEnabled = (bool) container.Values["core_is_bootstrap_enabled"],
+					IsCitationEnabled = (bool) container.Values["core_is_citation_enabled"],
+					IsDefinitionListEnabled = (bool) container.Values["core_is_definitionlist_enabled"],
+					IsEmojiSmileyEnabled = (bool) container.Values["core_is_emojismiley_enabled"],
+					IsFigureEnabled = (bool) container.Values["core_is_figure_enabled"],
+					IsFooterEnabled = (bool) container.Values["core_is_footer_enabled"],
+					IsFootnoteEnabled = (bool) container.Values["core_is_footnote_enabled"],
+					IsMediaLinkEnabled = (bool) container.Values["core_is_medialink_enabled"],
+					IsSoftLineAsHardlineBreakEnabled =
+						(bool) container.Values["core_is_softlineashardlinebreak_enabled"],
+					IsSmartyPantEnabled = (bool) container.Values["core_is_smartypant_enabled"],
+					IsGenericAttributeEnabled = (bool) container.Values["core_is_genericattribute_enabled"]
+				};
+			}
+			catch (Exception e)
+			{
+				model = new CoreRenderModel();
+			}
 
 			return model;
 		}
 
 		private DiagramRenderModel LoadDiagramModel(ApplicationDataContainer container)
 		{
-			var model = new DiagramRenderModel
-			{
-				FontGlyph = (string) container.Values["diagram_fontglyph"],
-				FontFamily = (string) container.Values["diagram_fontfamily"],
-				Title = (string) container.Values["diagram_title"],
-				Subtitle = (string) container.Values["diagram_subtitle"],
-				IsEnabled = (bool) container.Values["diagram_enabled"],
-				IsMermaidEnabled = (bool) container.Values["diagram_is_mermaid_enabled"],
-				IsNomnomlEnabled = (bool) container.Values["diagram_is_nomnoml_enabled"]
-			};
+			DiagramRenderModel model;
 
+			try
+			{
+				model = new DiagramRenderModel
+				{
+					FontGlyph = (string) container.Values["diagram_fontglyph"],
+					FontFamily = (string) container.Values["diagram_fontfamily"],
+					Title = (string) container.Values["diagram_title"],
+					Subtitle = (string) container.Values["diagram_subtitle"],
+					IsEnabled = (bool) container.Values["diagram_enabled"],
+					IsMermaidEnabled = (bool) container.Values["diagram_is_mermaid_enabled"],
+					IsNomnomlEnabled = (bool) container.Values["diagram_is_nomnoml_enabled"]
+				};
+			}
+			catch (Exception e)
+			{
+				model = new DiagramRenderModel();
+			}
 
 			return model;
 		}
 
 		private EmphasisExtraRenderModel LoadEmphasisExtraModel(ApplicationDataContainer container)
 		{
-			var model = new EmphasisExtraRenderModel
+			EmphasisExtraRenderModel model;
+			try
 			{
-				FontGlyph = (string) container.Values["emphasis_fontglyph"],
-				FontFamily = (string) container.Values["emphasis_fontfamily"],
-				Title = (string) container.Values["emphasis_title"],
-				Subtitle = (string) container.Values["emphasis_subtitle"],
-				IsEnabled = (bool) container.Values["emphasis_enabled"],
-				IsStrikethroughEnabled = (bool) container.Values["emphasis_is_strikethrough_enabled"],
-				IsSuperSubScriptEnabled = (bool) container.Values["emphasis_is_supersubscript_enabled"],
-				IsInsertedEnabled = (bool) container.Values["emphasis_is_inserted_enabled"],
-				IsMarkedEnabled = (bool) container.Values["emphasis_is_marked_enabled"]
-			};
-
+				model = new EmphasisExtraRenderModel
+				{
+					FontGlyph = (string) container.Values["emphasis_fontglyph"],
+					FontFamily = (string) container.Values["emphasis_fontfamily"],
+					Title = (string) container.Values["emphasis_title"],
+					Subtitle = (string) container.Values["emphasis_subtitle"],
+					IsEnabled = (bool) container.Values["emphasis_enabled"],
+					IsStrikethroughEnabled = (bool) container.Values["emphasis_is_strikethrough_enabled"],
+					IsSuperSubScriptEnabled = (bool) container.Values["emphasis_is_supersubscript_enabled"],
+					IsInsertedEnabled = (bool) container.Values["emphasis_is_inserted_enabled"],
+					IsMarkedEnabled = (bool) container.Values["emphasis_is_marked_enabled"]
+				};
+			}
+			catch (Exception e)
+			{
+				model = new EmphasisExtraRenderModel();
+			}
 
 			return model;
 		}
 
 		private ListRenderModel LoadListModel(ApplicationDataContainer container)
 		{
-			var model = new ListRenderModel
+			ListRenderModel model;
+			try
 			{
-				FontGlyph = (string) container.Values["list_fontglyph"],
-				FontFamily = (string) container.Values["list_fontfamily"],
-				Title = (string) container.Values["list_title"],
-				Subtitle = (string) container.Values["list_subtitle"],
-				IsEnabled = (bool) container.Values["list_enabled"],
-				IsTaskListEnabled = (bool) container.Values["list_is_tasklist_enabled"],
-				IsListExtraEnabled = (bool) container.Values["list_is_listextra_enabled"]
-			};
-
+				model = new ListRenderModel
+				{
+					FontGlyph = (string) container.Values["list_fontglyph"],
+					FontFamily = (string) container.Values["list_fontfamily"],
+					Title = (string) container.Values["list_title"],
+					Subtitle = (string) container.Values["list_subtitle"],
+					IsEnabled = (bool) container.Values["list_enabled"],
+					IsTaskListEnabled = (bool) container.Values["list_is_tasklist_enabled"],
+					IsListExtraEnabled = (bool) container.Values["list_is_listextra_enabled"]
+				};
+			}
+			catch (Exception e)
+			{
+				model = new ListRenderModel();
+			}
 
 			return model;
 		}
 
 		private MathRenderModel LoadMathModel(ApplicationDataContainer container)
 		{
-			var model = new MathRenderModel
+			MathRenderModel model;
+			try
 			{
-				FontGlyph = (string) container.Values["math_fontglyph"],
-				FontFamily = (string) container.Values["math_fontfamily"],
-				Title = (string) container.Values["math_title"],
-				Subtitle = (string) container.Values["math_subtitle"],
-				IsEnabled = (bool) container.Values["math_enabled"]
-			};
-
+				model = new MathRenderModel
+				{
+					FontGlyph = (string) container.Values["math_fontglyph"],
+					FontFamily = (string) container.Values["math_fontfamily"],
+					Title = (string) container.Values["math_title"],
+					Subtitle = (string) container.Values["math_subtitle"],
+					IsEnabled = (bool) container.Values["math_enabled"]
+				};
+			}
+			catch (Exception e)
+			{
+				model = new MathRenderModel();
+			}
 
 			return model;
 		}
 
 		private SyntaxHighlightingRenderModel LoadSyntaxHighlightingModel(ApplicationDataContainer container)
 		{
-			var model = new SyntaxHighlightingRenderModel
-			{
-				FontGlyph = (string) container.Values["syntaxhighlighting_fontglyph"],
-				FontFamily = (string) container.Values["syntaxhighlighting_fontfamily"],
-				Title = (string) container.Values["syntaxhighlighting_title"],
-				Subtitle = (string) container.Values["syntaxhighlighting_subtitle"],
-				IsEnabled = (bool) container.Values["syntaxhighlighting_enabled"]
-			};
+			SyntaxHighlightingRenderModel model;
 
+			try
+			{
+				model = new SyntaxHighlightingRenderModel
+				{
+					FontGlyph = (string) container.Values["syntaxhighlighting_fontglyph"],
+					FontFamily = (string) container.Values["syntaxhighlighting_fontfamily"],
+					Title = (string) container.Values["syntaxhighlighting_title"],
+					Subtitle = (string) container.Values["syntaxhighlighting_subtitle"],
+					IsEnabled = (bool) container.Values["syntaxhighlighting_enabled"]
+				};
+			}
+			catch (Exception e)
+			{
+				model = new SyntaxHighlightingRenderModel();
+			}
 
 			return model;
 		}
 
 		private TableRenderModel LoadTableModel(ApplicationDataContainer container)
 		{
-			var model = new TableRenderModel
+			TableRenderModel model;
+			try
 			{
-				FontGlyph = (string) container.Values["table_fontglyph"],
-				FontFamily = (string) container.Values["table_fontfamily"],
-				Title = (string) container.Values["table_title"],
-				Subtitle = (string) container.Values["table_subtitle"],
-				IsEnabled = (bool) container.Values["table_enabled"],
-				IsGridTableEnabled = (bool) container.Values["table_is_gridtable_enabled"],
-				IsPipeTableEnabled = (bool) container.Values["table_is_pipetable_enabled"]
-			};
+				model = new TableRenderModel
+				{
+					FontGlyph = (string) container.Values["table_fontglyph"],
+					FontFamily = (string) container.Values["table_fontfamily"],
+					Title = (string) container.Values["table_title"],
+					Subtitle = (string) container.Values["table_subtitle"],
+					IsEnabled = (bool) container.Values["table_enabled"],
+					IsGridTableEnabled = (bool) container.Values["table_is_gridtable_enabled"],
+					IsPipeTableEnabled = (bool) container.Values["table_is_pipetable_enabled"]
+				};
+			}
+			catch (Exception e)
+			{
+				model = new TableRenderModel();
+			}
 
 			return model;
 		}

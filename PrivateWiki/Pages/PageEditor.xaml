@@ -128,14 +128,20 @@
                         </CommandBar.Content>
                     </CommandBar>
 
+                    <Grid
+                        x:Name="PageEditorTextBoxGrid">
+                        <TextBox
+                            Name="PageEditorTextBox"
+                            Text="Lorem Ipsum"
+                            AcceptsReturn="True"
+                            TextWrapping="Wrap"
+                            MinHeight="400"
+                            MaxHeight="{x:Bind PageEditorTextBoxGrid.Height}"
+                            Background="White"/>
+                    </Grid>
 
-                    <TextBox
-                        Name="PageEditorTextBox"
-                        Text="Lorem Ipsum"
-                        AcceptsReturn="True"
-                        TextWrapping="Wrap"
-                        MaxHeight="500"
-                        Background="White" />
+
+                    
 
                 </StackPanel>
 
