@@ -27,6 +27,7 @@ namespace PrivateWiki.Pages
 		private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
 		{
 			("navigation", typeof(NavigationSettingsPage)),
+			("assets", typeof(AssetsSettingsPage)),
 			("rendering", typeof(RenderingSettingsPage)),
 			("developertools", typeof(DeveloperSettingsPage)),
 			("storage", typeof(StorageSettingsPage))

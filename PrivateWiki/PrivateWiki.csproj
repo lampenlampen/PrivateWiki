@@ -140,6 +140,9 @@
     <Compile Include="Data\MarkdownImport.cs" />
     <Compile Include="Data\MediaAccess.cs" />
     <Compile Include="Data\PageExporter.cs" />
+    <Compile Include="Dialogs\EditorImagePickerDialog.xaml.cs">
+      <DependentUpon>EditorImagePickerDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ExportDialog.xaml.cs">
       <DependentUpon>ExportDialog.xaml</DependentUpon>
     </Compile>
@@ -154,6 +157,9 @@
     </Compile>
     <Compile Include="Dialogs\DissmissableDialog.cs" />
     <Compile Include="Models\LFSModel.cs" />
+    <Compile Include="Pages\SettingsPages\AssetsSettingsPage.xaml.cs">
+      <DependentUpon>AssetsSettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SettingsPages\StorageSettingsPage.xaml.cs">
       <DependentUpon>StorageSettingsPage.xaml</DependentUpon>
     </Compile>
@@ -243,6 +249,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="PrivateWiki_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\en-US\Settings.resw" />
     <PRIResource Include="Strings\fr-FR\PageViewer.resw" />
     <PRIResource Include="Strings\de-DE\PageViewer.resw" />
     <PRIResource Include="Strings\en-US\PageViewer.resw" />
@@ -329,6 +336,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dialogs\EditorImagePickerDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dialogs\ExportDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -378,6 +389,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPages\AssetsSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

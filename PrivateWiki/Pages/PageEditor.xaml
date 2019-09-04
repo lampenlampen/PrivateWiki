@@ -22,7 +22,7 @@
 
     <Pivot
         Name="Pivot"
-        Title="Pivot"
+        Title="Editor"
         SelectionChanged="Pivot_SelectionChanged">
 
         <PivotItem

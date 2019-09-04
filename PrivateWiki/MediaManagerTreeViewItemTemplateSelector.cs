@@ -1,6 +1,7 @@
 ﻿using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using muxc=Microsoft.UI.Xaml.Controls;
 
 namespace PrivateWiki
 {
@@ -11,7 +12,7 @@ namespace PrivateWiki
 
 		protected override DataTemplate SelectTemplateCore(object item)
 		{
-			var node = (TreeViewNode)item;
+			var node = (muxc.TreeViewNode)item;
 
 			if (node.Content is StorageFolder) return FolderTemplate;
 

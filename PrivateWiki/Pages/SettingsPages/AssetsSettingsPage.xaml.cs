@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,39 +6,35 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewCollapsedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewCollapsedEventArgs;
 using TreeViewExpandingEventArgs = Microsoft.UI.Xaml.Controls.TreeViewExpandingEventArgs;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
 using muxc = Microsoft.UI.Xaml.Controls;
 
-#nullable enable
-
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace PrivateWiki.Pages
+namespace PrivateWiki.Pages.SettingsPages
 {
 	/// <summary>
-	///     An empty page that can be used on its own or navigated to within a Frame.
+	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class MediaManager : Page
+	public sealed partial class AssetsSettingsPage : Page
 	{
-		public MediaManager()
+		public AssetsSettingsPage()
 		{
-			InitializeComponent();
-		}
+			this.InitializeComponent();
 
-		protected override async void OnNavigatedTo(NavigationEventArgs e)
-		{
 			// Init TreeView
 			var localFolder = ApplicationData.Current.LocalFolder;
-			var mediaFolder = await localFolder.CreateFolderAsync("media", CreationCollisionOption.OpenIfExists);
+			var task = localFolder.CreateFolderAsync("media", CreationCollisionOption.OpenIfExists).AsTask();
+			task.Wait();
+			var mediaFolder = task.Result;
 
 			//var folder = await PickFolder();
 			var folder = mediaFolder;
 
-			var mediaNode = new muxc.TreeViewNode
+			var mediaNode = new Microsoft.UI.Xaml.Controls.TreeViewNode
 			{
 				Content = folder,
 				IsExpanded = true,
@@ -50,7 +45,7 @@ namespace PrivateWiki.Pages
 			FillTreeNode(mediaNode);
 		}
 
-		private async void FillTreeNode(muxc.TreeViewNode node)
+		private async void FillTreeNode(Microsoft.UI.Xaml.Controls.TreeViewNode node)
 		{
 			// Only process the node if it's a folder and has unrealized children.
 			StorageFolder folder;
@@ -63,7 +58,7 @@ namespace PrivateWiki.Pages
 
 			foreach (var item in itemsList)
 			{
-				var newNode = new muxc.TreeViewNode { Content = item };
+				var newNode = new Microsoft.UI.Xaml.Controls.TreeViewNode { Content = item };
 
 				if (item is StorageFolder) newNode.HasUnrealizedChildren = true;
 
@@ -74,12 +69,12 @@ namespace PrivateWiki.Pages
 			node.HasUnrealizedChildren = false;
 		}
 
-		private void TreeViewMedia_OnExpanding(muxc.TreeView treeView, TreeViewExpandingEventArgs args)
+		private void TreeViewMedia_OnExpanding(Microsoft.UI.Xaml.Controls.TreeView treeView, TreeViewExpandingEventArgs args)
 		{
 			if (args.Node.HasUnrealizedChildren) FillTreeNode(args.Node);
 		}
 
-		private void TreeViewMedia_OnCollapsed(muxc.TreeView treeView, TreeViewCollapsedEventArgs args)
+		private void TreeViewMedia_OnCollapsed(Microsoft.UI.Xaml.Controls.TreeView treeView, TreeViewCollapsedEventArgs args)
 		{
 			args.Node.Children.Clear();
 			args.Node.HasUnrealizedChildren = true;
@@ -87,7 +82,7 @@ namespace PrivateWiki.Pages
 
 		private void TreeViewMedia_OnItemInvoked(TreeView treeView, TreeViewItemInvokedEventArgs args)
 		{
-			var node = args.InvokedItem as TreeViewNode;
+			var node = (muxc.TreeViewNode) args.InvokedItem;
 
 			if (node.Content is IStorageItem item)
 			{
@@ -110,8 +105,8 @@ namespace PrivateWiki.Pages
 
 		private async void MediaTreeView_CreateFolder(object sender, RoutedEventArgs e)
 		{
-			var node = (muxc.TreeViewNode) ((MenuFlyoutItem) sender).DataContext;
-			var folder = (StorageFolder) node.Content;
+			var node = (Microsoft.UI.Xaml.Controls.TreeViewNode)((MenuFlyoutItem)sender).DataContext;
+			var folder = (StorageFolder)node.Content;
 
 			var panel = new StackPanel { Orientation = Orientation.Vertical };
 			var textBlock = new TextBlock
@@ -149,8 +144,8 @@ namespace PrivateWiki.Pages
 
 		private async void MediaTreeView_DeleteFolder(object sender, RoutedEventArgs e)
 		{
-			var node = (muxc.TreeViewNode) ((MenuFlyoutItem) sender).DataContext;
-			var folder = (StorageFolder) node.Content;
+			var node = (Microsoft.UI.Xaml.Controls.TreeViewNode)((MenuFlyoutItem)sender).DataContext;
+			var folder = (StorageFolder)node.Content;
 
 			var dialog = new ContentDialog
 			{
@@ -176,8 +171,8 @@ namespace PrivateWiki.Pages
 
 		private async void MediaTreeView_RenameFolder(object sender, RoutedEventArgs e)
 		{
-			var node = (muxc.TreeViewNode) ((MenuFlyoutItem) sender).DataContext;
-			var folder = (StorageFolder) node.Content;
+			var node = (Microsoft.UI.Xaml.Controls.TreeViewNode)((MenuFlyoutItem)sender).DataContext;
+			var folder = (StorageFolder)node.Content;
 
 			var panel = new StackPanel { Orientation = Orientation.Vertical };
 			var textBlock = new TextBlock
@@ -218,8 +213,8 @@ namespace PrivateWiki.Pages
 
 		private async void MediaTreeView_DeleteFile(object sender, RoutedEventArgs e)
 		{
-			var node = (muxc.TreeViewNode) ((MenuFlyoutItem) sender).DataContext;
-			var file = (StorageFile) node.Content;
+			var node = (Microsoft.UI.Xaml.Controls.TreeViewNode)((MenuFlyoutItem)sender).DataContext;
+			var file = (StorageFile)node.Content;
 
 			var dialog = new ContentDialog
 			{
@@ -245,8 +240,8 @@ namespace PrivateWiki.Pages
 
 		private async void MediaTreeView_RenameFile(object sender, RoutedEventArgs e)
 		{
-			var node = (muxc.TreeViewNode) ((MenuFlyoutItem) sender).DataContext;
-			var file = (StorageFile) node.Content;
+			var node = (Microsoft.UI.Xaml.Controls.TreeViewNode)((MenuFlyoutItem)sender).DataContext;
+			var file = (StorageFile)node.Content;
 
 			var panel = new StackPanel { Orientation = Orientation.Vertical };
 			var textBlock = new TextBlock
@@ -287,8 +282,8 @@ namespace PrivateWiki.Pages
 
 		private async void MediaTreeView_AddFiles(object sender, RoutedEventArgs e)
 		{
-			var node = (muxc.TreeViewNode) ((MenuFlyoutItem) sender).DataContext;
-			var folder = (StorageFolder) node.Content;
+			var node = (Microsoft.UI.Xaml.Controls.TreeViewNode)((MenuFlyoutItem)sender).DataContext;
+			var folder = (StorageFolder)node.Content;
 
 			var picker = new FileOpenPicker
 			{
@@ -332,6 +327,17 @@ namespace PrivateWiki.Pages
 				parent.IsExpanded = false;
 				parent.IsExpanded = true;
 			}
+		}
+
+		private void SettingsHeader_OnApplyClick(object sender, RoutedEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void SettingsHeader_OnResetClick(object sender, RoutedEventArgs e)
+		{
+			
+
 		}
 	}
 }
