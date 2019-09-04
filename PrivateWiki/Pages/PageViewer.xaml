@@ -44,70 +44,55 @@
             Height="Auto"
             Background="{ThemeResource SystemControlBackgroundAccentBrush}">
 
-            <AppBarButton Label="To Top" Icon="Up" Click="Top_Click" />
-            <AppBarButton Label="PDF" Icon="Print" Click="Pdf_Click">
+            <AppBarButton x:Uid="/PageViewer/ToTopButton" Icon="Up" Click="Top_Click" />
+            <AppBarButton x:Uid="/PageViewer/PDFButton" Icon="Print" Click="Pdf_Click">
                 <AppBarButton.KeyboardAccelerators>
                     <KeyboardAccelerator
                         Modifiers="Control"
                         Key="P" />
                 </AppBarButton.KeyboardAccelerators>
             </AppBarButton>
-            <AppBarButton Label="Favorite" Icon="Favorite" Click="Favorite_Click">
+            <AppBarButton x:Uid="/PageViewer/FavoriteButton" Icon="Favorite" Click="Favorite_Click">
                 <AppBarButton.KeyboardAccelerators>
                     <KeyboardAccelerator
                         Modifiers="Control"
                         Key="D" />
                 </AppBarButton.KeyboardAccelerators>
             </AppBarButton>
-            <AppBarButton Icon="Edit" Label="Edit" Click="Edit_Click">
+            <AppBarButton x:Uid="/PageViewer/EditButton" Icon="Edit" Click="Edit_Click">
                 <AppBarButton.KeyboardAccelerators>
                     <KeyboardAccelerator
                         Modifiers="Control"
                         Key="E" />
                 </AppBarButton.KeyboardAccelerators>
             </AppBarButton>
-            <AppBarButton Icon="Find" Label="Search" Click="Search_Click">
+            <AppBarButton x:Uid="/PageViewer/SearchButton" Icon="Find" Click="Search_Click">
                 <AppBarButton.KeyboardAccelerators>
                     <KeyboardAccelerator
                         Modifiers="Control"
                         Key="F" />
                 </AppBarButton.KeyboardAccelerators>
             </AppBarButton>
-            <AppBarButton Label="History" Icon="Clock" Click="Revision_Click" />
+            <AppBarButton x:Uid="/PageViewer/HistoryButton" Icon="Clock" Click="Revision_Click" />
 
             <CommandBar.SecondaryCommands>
 
-                <AppBarButton
-                    Icon="Fullscreen"
-                    Label="Fullscreen"
-                    Click="Fullscreen_Click">
+                <AppBarButton x:Uid="/PageViewer/FullscreenButton" Icon="Fullscreen" Click="Fullscreen_Click">
                     <AppBarButton.KeyboardAccelerators>
-                        <KeyboardAccelerator
-                            Key="F11" />
+                        <KeyboardAccelerator Key="F11" />
                     </AppBarButton.KeyboardAccelerators>
                 </AppBarButton>
-                <AppBarButton
-                    Label="Toogle"
-                    Click="Toggle_Click" />
+                <AppBarButton x:Uid="/PageViewer/ToggleButton" Click="Toggle_Click" />
 
-                <AppBarButton
-                    Label="Export"
-                    Click="Export_Click" />
+                <AppBarButton x:Uid="/PageViewer/ExportButton" Click="Export_Click" />
 
-                <AppBarButton
-                    Label="Import"
-                    Click="Import_Click"
-                    Icon="Import" />
+                <AppBarButton x:Uid="/PageViewer/ImportButton" Click="Import_Click" Icon="Import" />
 
-                <AppBarButton
-                    Label="Media Manager"
-                    Click="MediaManager_Click" />
+                <AppBarButton x:Uid="/PageViewer/MediaManagerButton" Click="MediaManager_Click" />
 
-                <AppBarButton
-                    Label="Site Manager"
-                    Click="SiteManager_Click" />
+                <AppBarButton x:Uid="/PageViewer/SiteManagerButton" Click="SiteManager_Click" />
 
-                <AppBarButton Label="Settings" Icon="Setting" Click="Setting_Click" />
+                <AppBarButton x:Uid="/PageViewer/SettingsButton" Icon="Setting" Click="Setting_Click" />
 
             </CommandBar.SecondaryCommands>
 
@@ -154,8 +139,8 @@
             Background="#EEEEEE">
 
             <TextBlock
+                x:Uid="/PageViewer/TOC"
                 Name="TOCHeader"
-                Text="Table of Contents"
                 HorizontalAlignment="Left"
                 FontSize="16"
                 TextDecorations="Underline"

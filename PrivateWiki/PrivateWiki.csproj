@@ -243,6 +243,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="PrivateWiki_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\fr-FR\PageViewer.resw" />
+    <PRIResource Include="Strings\de-DE\PageViewer.resw" />
+    <PRIResource Include="Strings\en-US\PageViewer.resw" />
     <PRIResource Include="Strings\de-DE\Resources.resw" />
     <PRIResource Include="Strings\fr-FR\Resources.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw" />

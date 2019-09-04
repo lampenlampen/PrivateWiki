@@ -12,6 +12,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.System;
@@ -365,8 +366,8 @@ namespace PrivateWiki.Pages
 			{
 				Title = resourceLoader.GetString("PrintPDF/Dialog/Title"),
 				Content = resourceLoader.GetString("PrintPDF/Dialog/Content"),
-				PrimaryButtonText = "Open in Browser",
-				CloseButtonText = "Close",
+				PrimaryButtonText = resourceLoader.GetString("PrintPDF/Dialog/OpenInBrowser"),
+				CloseButtonText = resourceLoader.GetString("Close"),
 				DefaultButton = ContentDialogButton.Primary
 			};
 
@@ -465,19 +466,21 @@ namespace PrivateWiki.Pages
 		{
 			// TODO Import Markdown File
 			// TODO Import Images
+			// TODO Diff old vs new Page
 
 			var file = MediaAccess.PickMarkdownFileAsync();
 
 			var importer = new MarkdownImport();
 
 			var page = await importer.ImportMarkdownFileAsync(await file);
+			var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
 
 			var dialog = new ContentDialog
 			{
-				Name = "Import Page",
-				Content = "If a page with the same id exists already, it will be overriden by the imported one.",
-				PrimaryButtonText = "Import",
-				CloseButtonText = "Abort",
+				Title = resourceLoader.GetString("ImportPage/Dialog/Title"),
+				Content = resourceLoader.GetString("ImportPage/Dialog/Content"),
+				PrimaryButtonText = resourceLoader.GetString("Import"),
+				CloseButtonText = resourceLoader.GetString("Close"),
 				DefaultButton = ContentDialogButton.Primary
 			};
 

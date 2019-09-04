@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="ImportPage.Dialog.Content" xml:space="preserve">
+    <value>Eine vorhandene Seite mit gleicher id wird dabei überschrieben.</value>
+  </data>
+  <data name="ImportPage.Dialog.Title" xml:space="preserve">
+    <value>Import Page</value>
+  </data>
   <data name="PrintPDF.Dialog.Content" xml:space="preserve">
     <value>Diese App unterstützt zurzeit keinen PDF-Druck. Sie können aber die Seite im Browser öffnen und dessen Druck Funktion nutzen.</value>
+  </data>
+  <data name="PrintPDF.Dialog.OpenInBrowser" xml:space="preserve">
+    <value>Im Browser öffnen</value>
   </data>
   <data name="PrintPDF.Dialog.Title" xml:space="preserve">
     <value>Druck Dialog</value>
