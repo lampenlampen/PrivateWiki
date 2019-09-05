@@ -408,23 +408,6 @@ namespace PrivateWiki.Pages
 			}
 		}
 
-		private void Toggle_Click(object sender, RoutedEventArgs e)
-		{
-			switch (RightMenu.Visibility)
-			{
-				case Visibility.Visible:
-					RightMenu.Visibility = Visibility.Collapsed;
-					RightMenu.MinWidth = 0;
-					break;
-				case Visibility.Collapsed:
-					RightMenu.Visibility = Visibility.Visible;
-					RightMenu.MinWidth = 300;
-					break;
-				default:
-					throw new ArgumentOutOfRangeException();
-			}
-		}
-
 		private void Setting_Click(object sender, RoutedEventArgs e)
 		{
 			Frame.Navigate(typeof(SettingsPage));

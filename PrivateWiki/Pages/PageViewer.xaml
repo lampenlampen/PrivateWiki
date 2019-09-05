@@ -82,7 +82,6 @@
                         <KeyboardAccelerator Key="F11" />
                     </AppBarButton.KeyboardAccelerators>
                 </AppBarButton>
-                <AppBarButton x:Uid="/PageViewer/ToggleButton" Click="Toggle_Click" />
 
                 <AppBarButton x:Uid="/PageViewer/ExportButton" Click="Export_Click" />
 
