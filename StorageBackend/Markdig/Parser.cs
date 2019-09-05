@@ -1,21 +1,12 @@
-using DataAccessLibrary.PageAST;
-using DataAccessLibrary.PageAST.Blocks;
 using Markdig;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using System;
-
-/* Unmerged change from project 'DataAccessLibrary (netcoreapp3.0)'
-Before:
-using MarkdigHeadingBlock = Markdig.Syntax.HeadingBlock;
-After:
-using System;
 using System.Collections.Generic;
-using MarkdigHeadingBlock = Markdig.Syntax.HeadingBlock;
-*/
-using System.Collections.Generic;
+using StorageBackend.PageAST;
+using StorageBackend.PageAST.Blocks;
 
-namespace DataAccessLibrary.Markdig
+namespace StorageBackend.Markdig
 {
 	public class Parser
 	{

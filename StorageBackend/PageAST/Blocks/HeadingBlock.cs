@@ -1,7 +1,7 @@
 using System;
 using MarkdigHeadingBlock = Markdig.Syntax.HeadingBlock;
 
-namespace DataAccessLibrary.PageAST.Blocks
+namespace StorageBackend.PageAST.Blocks
 {
 	public class HeadingBlock : IPageBlock
 	{

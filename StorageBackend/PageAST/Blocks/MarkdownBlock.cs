@@ -1,7 +1,7 @@
 using Markdig.Syntax;
 using System;
 
-namespace DataAccessLibrary.PageAST.Blocks
+namespace StorageBackend.PageAST.Blocks
 {
 	public class MarkdownBlock : IPageBlock
 	{

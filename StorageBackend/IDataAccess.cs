@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataAccessLibrary
+namespace StorageBackend
 {
 	public interface IDataAccess
 	{

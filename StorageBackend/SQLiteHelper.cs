@@ -1,22 +1,6 @@
-﻿
-/* Unmerged change from project 'DataAccessLibrary (netcoreapp3.0)'
-Before:
-using System;
-After:
-using Microsoft.Data.Sqlite;
-using System;
-*/
-using
-/* Unmerged change from project 'DataAccessLibrary (netcoreapp3.0)'
-Before:
-using System.Text;
-using Microsoft.Data.Sqlite;
-After:
-using System.Text;
-*/
-Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 
-namespace DataAccessLibrary
+namespace StorageBackend
 {
 	public static class SQLiteHelper
 	{

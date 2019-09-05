@@ -1,7 +1,4 @@
-﻿using DataAccessLibrary;
-using JetBrains.Annotations;
-using NodaTime;
-using PrivateWiki.Data;
+﻿using JetBrains.Annotations;
 using PrivateWiki.Data.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -13,6 +10,7 @@ using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using StorageBackend;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 

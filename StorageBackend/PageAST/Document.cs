@@ -1,27 +1,10 @@
+using JetBrains.Annotations;
+using NodaTime;
+using System;
+using System.Collections.Generic;
+using StorageBackend.PageAST.Blocks;
 
-/* Unmerged change from project 'DataAccessLibrary (netcoreapp3.0)'
-Before:
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using DataAccessLibrary.PageAST.Blocks;
-using JetBrains.Annotations;
-using NodaTime;
-After:
-using DataAccessLibrary.PageAST.Blocks;
-using JetBrains.Annotations;
-using NodaTime;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-*/
-using DataAccessLibrary.PageAST.Blocks;
-using JetBrains.Annotations;
-using NodaTime;
-using System;
-using System.Collections.Generic;
-
-namespace DataAccessLibrary.PageAST
+namespace StorageBackend.PageAST
 {
 	public class Document
 	{

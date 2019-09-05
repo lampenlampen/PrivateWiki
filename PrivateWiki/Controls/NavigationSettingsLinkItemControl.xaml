@@ -6,9 +6,9 @@
     xmlns:local="using:PrivateWiki.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:dataAccessLibrary="using:DataAccessLibrary"
     xmlns:composition="using:Windows.UI.Composition"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:storageBackend="using:StorageBackend"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
@@ -54,7 +54,7 @@
                     SelectionChanged="LinkCombo_OnSelectionChanged"
                     ItemsSource="{x:Bind Pages}">
                     <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="dataAccessLibrary:PageModel">
+                        <DataTemplate x:DataType="storageBackend:PageModel">
                             <TextBlock Text="{x:Bind Link}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>

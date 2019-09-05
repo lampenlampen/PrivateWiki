@@ -2,7 +2,7 @@ using Markdig.Syntax.Inlines;
 using System.IO;
 using MarkdigHtmlRenderer = Markdig.Renderers.HtmlRenderer;
 
-namespace DataAccessLibrary.Renderer.Html
+namespace StorageBackend.Renderer.Html
 {
 	public class InlineRenderer
 	{

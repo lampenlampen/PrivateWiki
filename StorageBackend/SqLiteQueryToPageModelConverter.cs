@@ -1,23 +1,8 @@
-﻿
-/* Unmerged change from project 'DataAccessLibrary (netcoreapp3.0)'
-Before:
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Data.Sqlite;
-using NodaTime;
-After:
-using Microsoft.Data.Sqlite;
-using NodaTime;
-using System;
-using Microsoft.Data.Generic;
-using System.Text;
-*/
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using NodaTime;
 using System.Collections.Generic;
 
-namespace DataAccessLibrary
+namespace StorageBackend
 {
 	public static class SQLiteQueryToPageModelConverter
 	{

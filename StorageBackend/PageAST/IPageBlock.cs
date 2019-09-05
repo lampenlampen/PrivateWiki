@@ -1,4 +1,4 @@
-namespace DataAccessLibrary.PageAST
+namespace StorageBackend.PageAST
 {
 	public interface IPageBlock
 	{

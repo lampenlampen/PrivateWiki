@@ -1,5 +1,4 @@
-﻿using DataAccessLibrary;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using NodaTime;
 using PrivateWiki.Data;
 using PrivateWiki.Data.DataAccess;
@@ -10,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using StorageBackend;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 namespace PrivateWiki.Pages

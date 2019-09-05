@@ -1,7 +1,7 @@
-using DataAccessLibrary.PageAST;
+using StorageBackend.PageAST;
 using MarkdigHtmlRenderer = Markdig.Renderers.HtmlRenderer;
 
-namespace DataAccessLibrary.Renderer.Html
+namespace StorageBackend.Renderer.Html
 {
 	public class TitleBlockRenderer : IHtmlRenderer
 	{

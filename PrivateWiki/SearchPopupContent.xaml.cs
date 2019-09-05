@@ -1,7 +1,4 @@
-﻿using DataAccessLibrary;
-using NodaTime;
-using PrivateWiki.Data;
-using PrivateWiki.Data.DataAccess;
+﻿using PrivateWiki.Data.DataAccess;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -9,6 +6,7 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using StorageBackend;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 

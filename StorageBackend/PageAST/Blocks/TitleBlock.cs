@@ -1,20 +1,9 @@
 using System;
 
-namespace DataAccessLibrary.PageAST.Blocks
+namespace StorageBackend.PageAST.Blocks
 {
 	public class TitleBlock : IPageBlock
 	{
-
-		/* Unmerged change from project 'DataAccessLibrary (netcoreapp3.0)'
-		Before:
-				public Guid Id { get; set; }
-
-				public string Title { get; set; }
-		After:
-				public Guid Id { get; set; }
-
-				public string Title { get; set; }
-		*/
 		public Guid Id { get; set; }
 
 		public string Title { get; set; }

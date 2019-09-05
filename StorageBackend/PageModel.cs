@@ -1,19 +1,8 @@
 ﻿using JetBrains.Annotations;
 using NodaTime;
-
-/* Unmerged change from project 'DataAccessLibrary (netcoreapp3.0)'
-Before:
-using System.Text;
-using JetBrains.Annotations;
-using NodaTime;
-After:
-using System;
-using System.Collections.Generic;
-using System.Text;
-*/
 using System;
 
-namespace DataAccessLibrary
+namespace StorageBackend
 {
 	public class PageModel
 	{

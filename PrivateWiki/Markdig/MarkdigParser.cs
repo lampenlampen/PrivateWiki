@@ -1,5 +1,4 @@
-﻿using DataAccessLibrary;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Markdig;
 using Markdig.Renderers;
 using Markdig.Syntax;
@@ -7,12 +6,12 @@ using PrivateWiki.Markdig.Extensions.CodeBlockExtension;
 using PrivateWiki.Markdig.Extensions.MathExtension;
 using System;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Markdig.Extensions.EmphasisExtras;
 using PrivateWiki.Models;
 using PrivateWiki.Settings;
+using StorageBackend;
 
 namespace PrivateWiki.Markdig
 {

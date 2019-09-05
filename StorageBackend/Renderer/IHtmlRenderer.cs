@@ -1,7 +1,7 @@
-using DataAccessLibrary.PageAST;
+using StorageBackend.PageAST;
 using MarkdigHtmlRenderer = Markdig.Renderers.HtmlRenderer;
 
-namespace DataAccessLibrary.Renderer
+namespace StorageBackend.Renderer
 {
 	public interface IHtmlRenderer
 	{

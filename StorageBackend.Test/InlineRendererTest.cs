@@ -1,11 +1,11 @@
-using DataAccessLibrary.Renderer.Html;
 using Markdig;
 using Markdig.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using StorageBackend.Renderer.Html;
 using MarkdigHtmlRenderer = Markdig.Renderers.HtmlRenderer;
 
-namespace DataAccessLibrary.Test
+namespace StorageBackend.Test
 {
 	[TestClass]
 	public class InlineRendererTest

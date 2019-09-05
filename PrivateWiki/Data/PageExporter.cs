@@ -1,10 +1,8 @@
-﻿using DataAccessLibrary;
-using PrivateWiki.Markdig;
+﻿using PrivateWiki.Markdig;
 using System;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Services.TargetedContent;
 using Windows.Storage;
+using StorageBackend;
 
 namespace PrivateWiki.Data
 {

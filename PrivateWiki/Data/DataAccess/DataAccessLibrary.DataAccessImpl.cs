@@ -1,17 +1,17 @@
-﻿using DataAccessLibrary;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using StorageBackend;
 using SystemClock = NodaTime.SystemClock;
 
 namespace PrivateWiki.Data.DataAccess
 {
-	class DataAccessImpl : DataAccessLibrary.IDataAccess
+	class DataAccessImpl : IDataAccess
 	{
-		private readonly DataAccessLibrary.IDataAccess _dataAccess;
+		private readonly StorageBackend.IDataAccess _dataAccess;
 
 		public DataAccessImpl()
 		{
-			_dataAccess = new DataAccessLibrary.DataAccess(SQLiteHelper.GetDBConnection(), SystemClock.Instance);
+			_dataAccess = new StorageBackend.DataAccess(SQLiteHelper.GetDBConnection(), SystemClock.Instance);
 		}
 
 		public void InitializeDatabase()

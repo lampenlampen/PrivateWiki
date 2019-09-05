@@ -1,17 +1,6 @@
-/* Unmerged change from project 'DataAccessLibrary (netcoreapp3.0)'
-Before:
-using System.Reflection;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
-After:
-using Markdig.Syntax.Inlines;
-using System;
-using System.Reflection;
-*/
-
 using System;
 
-namespace DataAccessLibrary.PageAST.Blocks
+namespace StorageBackend.PageAST.Blocks
 {
 	public class CodeBlock : IPageBlock
 	{
