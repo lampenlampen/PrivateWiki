@@ -131,7 +131,7 @@
     <Compile Include="Controls\Settings\Rendering\TableControl.xaml.cs">
       <DependentUpon>TableControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Settings\Storage\LFSControl.xaml.cs">
+    <Compile Include="Controls\Settings\Sync\LFSControl.xaml.cs">
       <DependentUpon>LFSControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\DataAccess\DataAccessLibrary.DataAccessImpl.cs" />
@@ -160,12 +160,12 @@
     <Compile Include="Pages\SettingsPages\AssetsSettingsPage.xaml.cs">
       <DependentUpon>AssetsSettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SettingsPages\StorageSettingsPage.xaml.cs">
-      <DependentUpon>StorageSettingsPage.xaml</DependentUpon>
+    <Compile Include="Pages\SettingsPages\SyncSettingsPage.xaml.cs">
+      <DependentUpon>SyncSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingStorageTemplateSelector.cs" />
-    <Compile Include="Settings\LFSStorageActions.cs" />
-    <Compile Include="Settings\StorageModelHandler.cs" />
+    <Compile Include="Settings\LFSSyncActions.cs" />
+    <Compile Include="Settings\SyncModelHandler.cs" />
     <Compile Include="Utilities\DiffMatchPatchAlg.cs" />
     <Compile Include="ImagePickerDialogModel.cs" />
     <Compile Include="Models\DeveloperSettingsModel.cs" />
@@ -332,7 +332,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Settings\Storage\LFSControl.xaml">
+    <Page Include="Controls\Settings\Sync\LFSControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -408,7 +408,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SettingsPages\StorageSettingsPage.xaml">
+    <Page Include="Pages\SettingsPages\SyncSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -463,9 +463,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataAccessLibrary\DataAccessLibrary.csproj">
+    <ProjectReference Include="..\StorageBackend\StorageBackend.csproj">
       <Project>{9D7A3C2D-31DC-4D9E-AFD0-2E1FE0631044}</Project>
-      <Name>DataAccessLibrary</Name>
+      <Name>StorageBackend</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

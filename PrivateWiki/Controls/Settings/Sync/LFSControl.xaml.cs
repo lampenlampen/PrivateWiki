@@ -10,7 +10,7 @@ using PrivateWiki.Settings;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace PrivateWiki.Controls.Settings.Storage
+namespace PrivateWiki.Controls.Settings.Sync
 {
 	public sealed partial class LFSControl : UserControl
 	{
@@ -70,7 +70,7 @@ namespace PrivateWiki.Controls.Settings.Storage
 		{
 			// TODO Force Sync
 
-			var task = new LFSStorageActions().ForceSyncTask(Model);
+			var task = new LFSSyncActions().ForceSyncTask(Model);
 		}
 
 		private void DoLightSync(object sender, RoutedEventArgs e)

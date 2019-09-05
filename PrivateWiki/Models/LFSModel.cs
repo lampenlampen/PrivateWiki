@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace PrivateWiki.Models
 {
-	public class StorageModel
+	public class SyncModel
 	{
 		public string Title { get; set; }
 
@@ -19,7 +19,7 @@ namespace PrivateWiki.Models
 	}
 
 
-	public class LFSModel : StorageModel, INotifyPropertyChanged
+	public class LFSModel : SyncModel, INotifyPropertyChanged
 	{
 		private string _targetToken;
 		private string _targetPath;

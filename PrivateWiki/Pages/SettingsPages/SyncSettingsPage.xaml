@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="PrivateWiki.Pages.SettingsPages.StorageSettingsPage"
+    x:Class="PrivateWiki.Pages.SettingsPages.SyncSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PrivateWiki.Pages.SettingsPages"
@@ -13,18 +13,8 @@
     Background="#EEEEEE">
 
     <Page.Resources>
-        <DataTemplate x:Key="NavigationDividerTemplate">
-            <Border
-                BorderThickness="1"
-                BorderBrush="LightGray"
-                Height="1"
-                Width="50" />
-        </DataTemplate>
-        <DataTemplate x:Key="NavigationHeaderTemplate" x:DataType="models:HeaderItem">
-            <TextBlock Text="{x:Bind Label}" />
-        </DataTemplate>
         <!-- ReSharper disable once InconsistentNaming -->
-        <DataTemplate x:Key="StorageLFSTemplate" x:DataType="models:LFSModel">
+        <DataTemplate x:Key="SyncLFSTemplate" x:DataType="models:LFSModel">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="{x:Bind Title}" FontSize="16"/>
                 <TextBlock Text="{x:Bind Subtitle}" />
@@ -32,11 +22,9 @@
             
         </DataTemplate>
 
-        <privateWiki:SettingStorageTemplateSelector
-            x:Key="SettingStorageTemplateSelector"
-            DividerTemplate="{StaticResource NavigationDividerTemplate}"
-            HeaderTemplate="{StaticResource NavigationHeaderTemplate}"
-            LFSTemplate="{StaticResource StorageLFSTemplate}" />
+        <privateWiki:SettingSyncTemplateSelector
+            x:Key="SettingSyncTemplateSelector"
+            LFSTemplate="{StaticResource SyncLFSTemplate}" />
 
     </Page.Resources>
 
@@ -48,7 +36,7 @@
 
         <controls:SettingsHeader
             Grid.Row="0"
-            Title="Storage"
+            Title="Backup &amp; Sync"
             Subtitle="Set backup and sync targets for your content"
             ApplyClick="SettingsHeader_OnApplyClick"
             ResetClick="SettingsHeader_OnResetClick">
@@ -103,9 +91,9 @@
                             <ListView x:Name="Listview"
                                       Padding="8"
                                       MinWidth="256"
-                                      ItemsSource="{x:Bind storageItems}"
+                                      ItemsSource="{x:Bind syncItems}"
                                       SelectionChanged="Listview_SelectionChanged"
-                                      ItemTemplateSelector="{StaticResource SettingStorageTemplateSelector}" />
+                                      ItemTemplateSelector="{StaticResource SettingSyncTemplateSelector}" />
 
                             <Button
                                 Height="Auto"
@@ -124,8 +112,6 @@
                                 <Button.Flyout>
                                     <MenuFlyout>
                                         <MenuFlyoutItem Text="Local File System" Click="AddLFSItem"/>
-                                        <MenuFlyoutItem Text="Header" />
-                                        <MenuFlyoutItem Text="Divider" />
                                     </MenuFlyout>
                                 </Button.Flyout>
                             </Button>
@@ -135,7 +121,7 @@
 
                 <Grid
                     Grid.Column="1"
-                    x:Name="StorageSettingsContent" />
+                    x:Name="SyncSettingsContent" />
             </Grid>
         </ScrollViewer>
     </Grid>

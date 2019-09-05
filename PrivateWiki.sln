@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.28606.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrivateWiki", "PrivateWiki\PrivateWiki.csproj", "{E1B1092A-EEE8-4C60-BD47-86BBDE74B775}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLibrary", "DataAccessLibrary\DataAccessLibrary.csproj", "{9D7A3C2D-31DC-4D9E-AFD0-2E1FE0631044}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageBackend", "StorageBackend\StorageBackend.csproj", "{9D7A3C2D-31DC-4D9E-AFD0-2E1FE0631044}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLibrary.Test", "DataAccessLibrary.Test\DataAccessLibrary.Test.csproj", "{5EEF2C11-E9C1-4C6B-935C-E8447CC23FF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageBackend.Test", "StorageBackend.Test\StorageBackend.Test.csproj", "{5EEF2C11-E9C1-4C6B-935C-E8447CC23FF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

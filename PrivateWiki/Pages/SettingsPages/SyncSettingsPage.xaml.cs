@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using PrivateWiki.Controls.Settings.Storage;
+using PrivateWiki.Controls.Settings.Sync;
 using PrivateWiki.Models;
 using PrivateWiki.Settings;
 
@@ -14,11 +14,11 @@ namespace PrivateWiki.Pages.SettingsPages
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class StorageSettingsPage : Page
+	public sealed partial class SyncSettingsPage : Page
 	{
-		private ObservableCollection<StorageModel> storageItems = new ObservableCollection<StorageModel>();
+		private ObservableCollection<SyncModel> syncItems = new ObservableCollection<SyncModel>();
 
-		public StorageSettingsPage()
+		public SyncSettingsPage()
 		{
 			this.InitializeComponent();
 			LoadStorageModels();
@@ -31,8 +31,8 @@ namespace PrivateWiki.Pages.SettingsPages
 
 		private void SaveStorageModels()
 		{
-			var handler = new StorageModelHandler();
-			handler.SaveStorageModels(storageItems);
+			var handler = new SyncModelHandler();
+			handler.SaveSyncModels(syncItems);
 		}
 
 		private void SettingsHeader_OnResetClick(object sender, RoutedEventArgs e)
@@ -42,19 +42,19 @@ namespace PrivateWiki.Pages.SettingsPages
 
 		private async void LoadStorageModels()
 		{
-			var handler = new StorageModelHandler();
-			List<StorageModel> models;
+			var handler = new SyncModelHandler();
+			List<SyncModel> models;
 			try
 			{
-				models = await handler.LoadStorageModels();
+				models = await handler.LoadSyncModels();
 			}
 			catch (Exception e)
 			{
-				models = new List<StorageModel>();
+				models = new List<SyncModel>();
 			}
 
-			storageItems.Clear();
-			foreach (var model in models) storageItems.Add(model);
+			syncItems.Clear();
+			foreach (var model in models) syncItems.Add(model);
 		}
 
 		private void Listview_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -66,14 +66,14 @@ namespace PrivateWiki.Pages.SettingsPages
 				case LFSModel model:
 					var control = new LFSControl();
 					control.Init(model);
-					StorageSettingsContent.Children.Add(control);
+					SyncSettingsContent.Children.Add(control);
 					break;
 			}
 		}
 
 		private void AddLFSItem(object sender, RoutedEventArgs e)
 		{
-			storageItems.Add(new LFSModel());
+			syncItems.Add(new LFSModel());
 		}
 	}
 }

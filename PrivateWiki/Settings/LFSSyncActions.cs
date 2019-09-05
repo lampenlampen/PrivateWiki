@@ -8,7 +8,7 @@ using PrivateWiki.Models;
 
 namespace PrivateWiki.Settings
 {
-	class LFSStorageActions
+	class LFSSyncActions
 	{
 		public async void ForceSyncAsync(LFSModel model)
 		{

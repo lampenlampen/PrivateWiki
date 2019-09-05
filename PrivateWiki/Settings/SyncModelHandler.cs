@@ -12,9 +12,9 @@ using PrivateWiki.Models;
 
 namespace PrivateWiki.Settings
 {
-	class StorageModelHandler
+	class SyncModelHandler
 	{
-		public async void SaveStorageModels(IEnumerable<StorageModel> models)
+		public async void SaveSyncModels(IEnumerable<SyncModel> models)
 		{
 			var storageSettingsFile = await GetStorageFile();
 			using var stream = await storageSettingsFile.OpenStreamForWriteAsync();
@@ -28,7 +28,7 @@ namespace PrivateWiki.Settings
 			writer.WritePropertyName("storage_items");
 			writer.WriteStartArray();
 
-			var storageItemSerializer = new StorageModelJsonSerializer(writer);
+			var storageItemSerializer = new SyncModelJsonSerializer(writer);
 
 			foreach (var item in models)
 			{
@@ -41,9 +41,9 @@ namespace PrivateWiki.Settings
 			writer.Flush();
 		}
 
-		public async Task<List<StorageModel>> LoadStorageModels()
+		public async Task<List<SyncModel>> LoadSyncModels()
 		{
-			var models = new List<StorageModel>();
+			var models = new List<SyncModel>();
 
 			var localFolder = ApplicationData.Current.LocalFolder;
 			var settingsFolder = await localFolder.CreateFolderAsync("settings", CreationCollisionOption.OpenIfExists);
@@ -89,16 +89,16 @@ namespace PrivateWiki.Settings
 		}
 	}
 
-	class StorageModelJsonSerializer
+	class SyncModelJsonSerializer
 	{
 		private JsonWriter Writer { get; set; }
 
-		public StorageModelJsonSerializer(JsonWriter writer)
+		public SyncModelJsonSerializer(JsonWriter writer)
 		{
 			Writer = writer;
 		}
 
-		public JsonWriter WriteJson(StorageModel model)
+		public JsonWriter WriteJson(SyncModel model)
 		{
 			switch (model)
 			{
@@ -126,10 +126,5 @@ namespace PrivateWiki.Settings
 			writer.WritePropertyName("sync_frequency");
 			writer.WriteValue(model.SyncFrequency.ToString());
 		}
-	}
-
-	class StorageModelJsonDeserializer
-	{
-
 	}
 }
