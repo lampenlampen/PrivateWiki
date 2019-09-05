@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageBackend", "StorageBa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageBackend.Test", "StorageBackend.Test\StorageBackend.Test.csproj", "{5EEF2C11-E9C1-4C6B-935C-E8447CC23FF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,26 @@ Global
 		{5EEF2C11-E9C1-4C6B-935C-E8447CC23FF2}.Release|x64.Build.0 = Release|Any CPU
 		{5EEF2C11-E9C1-4C6B-935C-E8447CC23FF2}.Release|x86.ActiveCfg = Release|Any CPU
 		{5EEF2C11-E9C1-4C6B-935C-E8447CC23FF2}.Release|x86.Build.0 = Release|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Debug|ARM.Build.0 = Debug|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Debug|x64.Build.0 = Debug|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Debug|x86.Build.0 = Debug|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Release|ARM.ActiveCfg = Release|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Release|ARM.Build.0 = Release|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Release|ARM64.Build.0 = Release|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Release|x64.ActiveCfg = Release|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Release|x64.Build.0 = Release|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Release|x86.ActiveCfg = Release|Any CPU
+		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
