@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageBackend", "StorageBa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageBackend.Test", "StorageBackend.Test\StorageBackend.Test.csproj", "{5EEF2C11-E9C1-4C6B-935C-E8447CC23FF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{21481A91-0E12-420E-9949-22432B5FD316}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,6 +111,26 @@ Global
 		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Release|x64.Build.0 = Release|Any CPU
 		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Release|x86.ActiveCfg = Release|Any CPU
 		{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}.Release|x86.Build.0 = Release|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Debug|ARM.Build.0 = Debug|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Debug|x64.Build.0 = Debug|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Debug|x86.Build.0 = Debug|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Release|ARM.ActiveCfg = Release|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Release|ARM.Build.0 = Release|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Release|ARM64.Build.0 = Release|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Release|x64.ActiveCfg = Release|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Release|x64.Build.0 = Release|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Release|x86.ActiveCfg = Release|Any CPU
+		{21481A91-0E12-420E-9949-22432B5FD316}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

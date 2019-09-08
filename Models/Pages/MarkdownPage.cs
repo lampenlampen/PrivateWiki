@@ -6,5 +6,8 @@ namespace Models.Pages
 {
 	class MarkdownPage : Page
 	{
+		public MarkdownPage(WikiLink link, Guid id) : base(link, id)
+		{
+		}
 	}
 }

@@ -12,6 +12,8 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Models.Storage;
+using StorageBackend.SQLite;
 
 namespace PrivateWiki
 {
@@ -28,6 +30,14 @@ namespace PrivateWiki
 		{
 			InitializeComponent();
 			Suspending += OnSuspending;
+			
+			var storage = new SqLiteStorage("test");
+
+			var sqliteBackend = new SqLiteBackend(storage, SystemClock.Instance);
+
+			var task = sqliteBackend.CreateTablesAsync();
+			task.Wait();
+			var conn = sqliteBackend.Connection;
 
 			var dataAccess = new DataAccessImpl();
 			dataAccess.InitializeDatabase();

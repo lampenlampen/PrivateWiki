@@ -42,7 +42,7 @@
 
                             <StackPanel
                                 Orientation="Horizontal">
-                                
+
                                 <AppBarButton
                                     Icon="Pictures"
                                     IsCompact="True"
@@ -51,12 +51,14 @@
                                     Tapped="Image_Tapped">
                                     <FlyoutBase.AttachedFlyout>
                                         <MenuFlyout Placement="Bottom">
-                                            <MenuFlyoutItem Text="Add Existing Image" Icon="Pictures" Click="PageEditor_AddExistingImage"/>
-                                            <MenuFlyoutItem Text="Add New Image" Icon="Pictures" Click="PageEditor_AddNewImage"/>
+                                            <MenuFlyoutItem Text="Add Existing Image" Icon="Pictures"
+                                                            Click="PageEditor_AddExistingImage" />
+                                            <MenuFlyoutItem Text="Add New Image" Icon="Pictures"
+                                                            Click="PageEditor_AddNewImage" />
                                         </MenuFlyout>
                                     </FlyoutBase.AttachedFlyout>
                                 </AppBarButton>
-                                
+
                                 <AppBarButton
                                     Name="Bold"
                                     Content="Bold"
@@ -136,12 +138,9 @@
                             AcceptsReturn="True"
                             TextWrapping="Wrap"
                             MinHeight="400"
-                            MaxHeight="{x:Bind PageEditorTextBoxGrid.Height}"
-                            Background="White"/>
+                            Background="White" />
                     </Grid>
 
-
-                    
 
                 </StackPanel>
 
@@ -176,16 +175,21 @@
             </Grid>
 
         </PivotItem>
-        
+
         <PivotItem
             Header="Html">
-            
-            <GridView>
-                <TextBlock
-                    x:Name="Preview_Html"
-                    IsTextSelectionEnabled="True"/>
-            </GridView>
-            
+            <ScrollViewer
+                VerticalScrollMode="Auto">
+                <GridView>
+
+                    <TextBlock
+                        x:Name="Preview_Html"
+                        IsTextSelectionEnabled="True" 
+                        VerticalAlignment="Stretch"/>
+
+
+                </GridView>
+            </ScrollViewer>
         </PivotItem>
 
         <PivotItem

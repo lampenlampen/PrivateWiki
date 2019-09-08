@@ -87,7 +87,7 @@ namespace PrivateWiki.Pages
 
 		private void TreeViewMedia_OnItemInvoked(TreeView treeView, TreeViewItemInvokedEventArgs args)
 		{
-			var node = args.InvokedItem as TreeViewNode;
+			var node = (TreeViewNode) args.InvokedItem;
 
 			if (node.Content is IStorageItem item)
 			{
