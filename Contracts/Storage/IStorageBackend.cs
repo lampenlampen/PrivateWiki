@@ -15,20 +15,20 @@ namespace Contracts.Storage
 		/// </summary>
 		/// <returns></returns>
 		Task<bool> ExistsAsync();
-		
+
 		/// <summary>
 		/// Returns a Page with the given <paramref name="id"/>
 		/// </summary>
 		/// <param name="id">The page id</param>
 		/// <returns></returns>
-		Page GetPageAsync(Guid id);
+		Task<T> GetPageAsync<T>(Guid id) where T : Page;
 
 		/// <summary>
 		/// Returns a page with the given <paramref name="link"/>
 		/// </summary>
 		/// <param name="link">The page wikilink</param>
 		/// <returns></returns>
-		Page GetPageAsync(WikiLink link);
+		Page GetPageAsync(string link);
 
 		/// <summary>
 		/// Returns all pages stored in the <see cref="IStorageBackend"/>.
@@ -75,6 +75,12 @@ namespace Contracts.Storage
 		/// </summary>
 		/// <param name="page"></param>
 		/// <returns></returns>
-		bool ContainsPageAsync(WikiLink link);
+		bool ContainsPageAsync(string link);
+
+		/// <summary>
+		/// Deletes the <see cref="IStorageBackend"/>
+		/// </summary>
+		/// <returns></returns>
+		bool Delete();
 	}
 }

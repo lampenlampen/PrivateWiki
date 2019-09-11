@@ -23,7 +23,13 @@ namespace StorageBackend.SQLite
 		{
 			_sqLite = sqLite;
 			_clock = clock;
-			_conn = new SqliteConnection($"FILENAME={_sqLite.Filename}.db");
+			
+			var connString = new SqliteConnectionStringBuilder
+			{
+				DataSource = $"{_sqLite.Filename}.db",
+				Mode = SqliteOpenMode.ReadWriteCreate
+			};
+			_conn = new SqliteConnection(connString.ToString());
 		}
 
 		public Task<bool> ExistsAsync()
@@ -48,14 +54,97 @@ namespace StorageBackend.SQLite
 			return Task.Run(Action);
 		}
 
-		public Page GetPageAsync(Guid id)
+		public Task<T> GetPageAsync<T>(Guid id) where T : Page
 		{
-			throw new NotImplementedException();
+			T Action()
+			{
+				using var conn = _conn;
+
+				try
+				{
+					var command = new SqliteCommand
+					{
+						Connection = conn,
+						CommandText = "SELECT * FROM 'markdown_pages' WHERE id = @Id",
+					};
+					command.Parameters.AddWithValue("@Id", id);
+
+					var reader = command.ExecuteReader();
+
+					var page = SqliteDataReaderToMarkdownPageConverter.Instance.ConvertToPageModel(reader);
+
+					return page;
+				}
+				catch (SqliteException e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}	
+			}
+
+			return Task.Run(Action);
 		}
 
-		public Page GetPageAsync(WikiLink link)
+		public Task<MarkdownPage> GetPageAsync(Guid id)
 		{
-			throw new NotImplementedException();
+			MarkdownPage Action()
+			{
+				using var conn = _conn;
+
+				try
+				{
+					var command = new SqliteCommand
+					{
+						Connection = conn,
+						CommandText = "SELECT * FROM 'markdown_pages' WHERE id = @Id",
+					};
+					command.Parameters.AddWithValue("@Id", id);
+
+					var reader = command.ExecuteReader();
+
+					var page = SqliteDataReaderToMarkdownPageConverter.Instance.ConvertToPageModel(reader);
+
+					return page;
+				}
+				catch (SqliteException e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}	
+			}
+
+			return Task.Run(Action);
+		}
+
+		public Page GetPageAsync(string link)
+		{
+			MarkdownPage Action()
+			{
+				using var conn = _conn;
+
+				try
+				{
+					var command = new SqliteCommand
+					{
+						Connection = conn,
+						CommandText = "SELECT * FROM 'markdown_pages' WHERE link = @Link",
+					};
+					command.Parameters.AddWithValue("@Link", link);
+
+					var reader = command.ExecuteReader();
+
+					var page = SqliteDataReaderToMarkdownPageConverter.Instance.ConvertToPageModel(reader);
+
+					return page;
+				}
+				catch (SqliteException e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}	
+			}
+
+			return Task.Run(Action);
 		}
 
 		public IEnumerable<Page> GetAllPagesAsync()
@@ -88,7 +177,7 @@ namespace StorageBackend.SQLite
 			throw new NotImplementedException();
 		}
 
-		public bool ContainsPageAsync(WikiLink link)
+		public bool ContainsPageAsync(string link)
 		{
 			throw new NotImplementedException();
 		}
@@ -126,6 +215,11 @@ namespace StorageBackend.SQLite
 			var task = command.ExecuteNonQueryAsync();
 
 			return task;
+		}
+
+		public bool Delete()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

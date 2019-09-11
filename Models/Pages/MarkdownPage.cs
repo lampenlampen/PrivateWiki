@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NodaTime;
 
 namespace Models.Pages
 {
-	class MarkdownPage : Page
+	public class MarkdownPage : Page
 	{
-		public MarkdownPage(WikiLink link, Guid id) : base(link, id)
+		public MarkdownPage(string link, Guid id, string content, Instant created, Instant lastChanged, bool isLocked) : base(link, id, content, created, lastChanged, isLocked)
 		{
 		}
 	}

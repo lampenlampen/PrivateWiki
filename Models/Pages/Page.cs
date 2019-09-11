@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using NodaTime;
 
 namespace Models.Pages
 {
 	public abstract class Page
 	{
-		protected Page(WikiLink link, Guid id)
+		protected Page(string link, Guid id, string content, Instant created, Instant lastChanged, bool isLocked)
 		{
-			Id = id;
 			Link = link;
+			Id = id;
+			Content = content;
+			Created = created;
+			LastChanged = lastChanged;
+			IsLocked = isLocked;
 		}
 
-		public WikiLink Link { get; }
+		public string Link { get; }
 		
 		public Guid Id { get; }
 		
 		public string Content { get; }
 		
-		public DateTimeOffset Created { get; }
+		public Instant Created { get; }
 		
-		public DateTimeOffset LastChanged { get; }
+		public Instant LastChanged { get; }
 		
 		public bool IsLocked { get; }
-
-		public CultureInfo locale { get; }
 	}
 }
