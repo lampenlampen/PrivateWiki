@@ -21,40 +21,47 @@ namespace Contracts.Storage
 		/// </summary>
 		/// <param name="id">The page id</param>
 		/// <returns></returns>
-		Task<T> GetPageAsync<T>(Guid id) where T : Page;
+		Task<Page> GetPageAsync(Guid id);
 
 		/// <summary>
 		/// Returns a page with the given <paramref name="link"/>
 		/// </summary>
 		/// <param name="link">The page wikilink</param>
 		/// <returns></returns>
-		Page GetPageAsync(string link);
+		Task<Page> GetPageAsync(string link);
 
 		/// <summary>
 		/// Returns all pages stored in the <see cref="IStorageBackend"/>.
 		/// </summary>
 		/// <returns></returns>
-		IEnumerable<Page> GetAllPagesAsync();
+		Task<IEnumerable<Page>> GetAllPagesAsync();
+
+		/// <summary>
+		/// Updates a page in the <see cref="IStorageBackend"/>.
+		/// </summary>
+		/// <param name="page"></param>
+		/// <returns></returns>
+		Task<bool> UpdatePage(Page page);
 
 		/// <summary>
 		/// Deletes a page.
 		/// </summary>
 		/// <returns>True if successful.</returns>
-		bool DeletePageAsync(Page page);
+		Task<bool> DeletePageAsync(Page page);
 
 		/// <summary>
 		/// Deletes the page with the <paramref name="id"/>
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		bool DeletePageAsync(Guid id);
+		Task<bool> DeletePageAsync(Guid id);
 
 		/// <summary>
 		/// Inserts a new page.
 		/// </summary>
 		/// <param name="page"></param>
 		/// <returns></returns>
-		Guid InsertPageAsync(Page page);
+		Task<bool> InsertPageAsync(Page page);
 
 		/// <summary>
 		/// Checks if the <see cref="IStorageBackend"/> contains a page.

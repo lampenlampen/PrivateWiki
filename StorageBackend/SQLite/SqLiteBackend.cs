@@ -23,7 +23,7 @@ namespace StorageBackend.SQLite
 		{
 			_sqLite = sqLite;
 			_clock = clock;
-			
+
 			var connString = new SqliteConnectionStringBuilder
 			{
 				DataSource = $"{_sqLite.Filename}.db",
@@ -36,7 +36,8 @@ namespace StorageBackend.SQLite
 		{
 			bool Action()
 			{
-				var sqliteConnectionString = new SqliteConnectionStringBuilder {Mode = SqliteOpenMode.ReadOnly, DataSource = $"{_sqLite.Filename}.db"};
+				var sqliteConnectionString = new SqliteConnectionStringBuilder
+					{Mode = SqliteOpenMode.ReadOnly, DataSource = $"{_sqLite.Filename}.db"};
 
 				try
 				{
@@ -54,9 +55,9 @@ namespace StorageBackend.SQLite
 			return Task.Run(Action);
 		}
 
-		public Task<T> GetPageAsync<T>(Guid id) where T : Page
+		public Task<Page> GetPageAsync(Guid id)
 		{
-			T Action()
+			Page Action()
 			{
 				using var conn = _conn;
 
@@ -79,46 +80,15 @@ namespace StorageBackend.SQLite
 				{
 					Console.WriteLine(e);
 					throw;
-				}	
-			}
-
-			return Task.Run(Action);
-		}
-
-		public Task<MarkdownPage> GetPageAsync(Guid id)
-		{
-			MarkdownPage Action()
-			{
-				using var conn = _conn;
-
-				try
-				{
-					var command = new SqliteCommand
-					{
-						Connection = conn,
-						CommandText = "SELECT * FROM 'markdown_pages' WHERE id = @Id",
-					};
-					command.Parameters.AddWithValue("@Id", id);
-
-					var reader = command.ExecuteReader();
-
-					var page = SqliteDataReaderToMarkdownPageConverter.Instance.ConvertToPageModel(reader);
-
-					return page;
 				}
-				catch (SqliteException e)
-				{
-					Console.WriteLine(e);
-					throw;
-				}	
 			}
 
 			return Task.Run(Action);
 		}
 
-		public Page GetPageAsync(string link)
+		public Task<Page> GetPageAsync(string link)
 		{
-			MarkdownPage Action()
+			Page Action()
 			{
 				using var conn = _conn;
 
@@ -141,30 +111,142 @@ namespace StorageBackend.SQLite
 				{
 					Console.WriteLine(e);
 					throw;
-				}	
+				}
 			}
 
 			return Task.Run(Action);
 		}
 
-		public IEnumerable<Page> GetAllPagesAsync()
+		public Task<IEnumerable<Page>> GetAllPagesAsync()
 		{
-			throw new NotImplementedException();
+			IEnumerable<Page> Action()
+			{
+				using var conn = _conn;
+
+				try
+				{
+					var command = new SqliteCommand
+					{
+						Connection = conn,
+						CommandText = "SELECT * FROM 'markdown_pages'",
+					};
+
+					var reader = command.ExecuteReader();
+
+					var pages = SqliteDataReaderToMarkdownPageConverter.Instance.ConvertToPageModels(reader);
+
+					return pages;
+				}
+				catch (SqliteException e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
+			}
+
+			return Task.Run(Action);
 		}
 
-		public bool DeletePageAsync(Page page)
+		public Task<bool> DeletePageAsync(Page page)
 		{
-			throw new NotImplementedException();
+			return DeletePageAsync(page.Id);
 		}
 
-		public bool DeletePageAsync(Guid id)
+		public Task<bool> DeletePageAsync(Guid id)
 		{
-			throw new NotImplementedException();
+			// TODO history
+
+			bool Action()
+			{
+				using var conn = _conn;
+
+				try
+				{
+					var command = new SqliteCommand
+					{
+						Connection = conn,
+						CommandText =
+							"UPDATE 'markdown_pages_history' SET valid_to = @Now WHERE id = @Id AND valid_to = NULL;" +
+							"INSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, deleted) SELECT id, link, content, created, changed, locked, @Now, null, true FROM 'markdown_pages' WHERE id = @Id;" +
+							"DELETE FROM 'markdown_pages' WHERE id = @Id"
+					};
+					command.Parameters.AddWithValue("@Id", id.ToString());
+					command.Parameters.AddWithValue("@Now", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
+
+					var result = command.ExecuteNonQuery();
+
+					var a = result == 1;
+
+					return true;
+				}
+				catch (SqliteException e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
+			}
+
+			return Task.Run(Action);
 		}
 
-		public Guid InsertPageAsync(Page page)
+		public Task<bool> InsertPageAsync(Page page)
 		{
-			throw new NotImplementedException();
+			// TODO Markdown Page
+			
+			bool MarkdownPageAction(MarkdownPage page)
+			{
+				var mPage = (MarkdownPage) page;
+				
+				using var conn = _conn;
+
+				try
+				{
+					var command = new SqliteCommand
+					{
+						Connection = conn,
+						CommandText =
+							"INSERT INTO 'markdown_pages' (id, link, content, created, changed, locked) VALUES (@Id, @Link, @Content, @Created, @Changed, @Locked)"
+					};
+					command.Parameters.AddWithValue("@Id", mPage.Id.ToString());
+					command.Parameters.AddWithValue("@Link", mPage.Link);
+					command.Parameters.AddWithValue("@Content", mPage.Content);
+					command.Parameters.AddWithValue("@Created", mPage.Created.ToUnixTimeMilliseconds());
+					command.Parameters.AddWithValue("@Changed", mPage.LastChanged.ToUnixTimeMilliseconds());
+					command.Parameters.AddWithValue("@Locked", mPage.IsLocked);
+
+					var result = command.ExecuteNonQuery();
+
+					return true;
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
+			}
+
+			return page switch
+			{
+				MarkdownPage mPage => new TaskFactory<bool>().StartNew((page) => MarkdownPageAction((MarkdownPage) page), mPage),
+				_ => Task.FromResult(false)
+			};
+		}
+
+		public Task<bool> UpdatePage(Page page)
+		{
+			bool MarkdownPageAction(MarkdownPage page)
+			{
+				using var conn = _conn;
+				
+				var command = new SqliteCommand
+				{
+					Connection = conn,
+					CommandText = 
+						"UPDATE 'markdown_pages_history' SET valid_to = @Now WHERE id = @Id AND valid_to = NULL;" +
+						"INSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, deleted) SELECT id, link, content, created, changed, locked, @Now, null, true FROM 'markdown_pages' WHERE id = @Id;" +
+						"UPDATE 'markdown_pages' SET id = @Id, link = @Link, content = @Content, "
+				};
+			}
 		}
 
 		public bool ContainsPageAsync(Page page)
