@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Models.Pages;
 using Models.Storage;
 using NodaTime;
 using StorageBackend.SQLite;
@@ -10,17 +12,33 @@ namespace StorageBackend.Test.SqLite
 	[TestClass]
 	public class SqLiteBackendTest
 	{
+		private SqLiteBackend sqliteBackend;
+		private IClock clock;
+
+		[TestInitialize]
+		public void Initialize()
+		{
+			File.Delete("test.db");
+			clock = SystemClock.Instance;
+			var storage = new SqLiteStorage("test");
+			sqliteBackend = new SqLiteBackend(storage, clock);
+			sqliteBackend.CreateTablesAsync().Wait();
+
+		}
+		
+		/*[TestCleanup]
+		public void DeleteTestDatabase()
+		{
+			File.Delete(sqliteBackend.Connection.DataSource);
+		}*/
+		
 		[TestMethod]
 		public void CreateTablesAsync()
 		{
-			var storage = new SqLiteStorage("test");
-
-			var sqliteBackend = new SqLiteBackend(storage, SystemClock.Instance);
-
 			var task = sqliteBackend.CreateTablesAsync();
 			task.Wait();
 
-			using var conn = new SqliteConnection($"FILENAME={storage.Filename}.db");
+			using var conn = sqliteBackend.Connection;
 			conn.Open();
 
 			var command = new SqliteCommand
@@ -45,10 +63,6 @@ namespace StorageBackend.Test.SqLite
 		[TestMethod]
 		public void ExistsTest()
 		{
-			var storage = new SqLiteStorage("test");
-
-			var sqliteBackend = new SqLiteBackend(storage, SystemClock.Instance);
-
 			var task =  sqliteBackend.ExistsAsync();
 			task.Wait();
 			
@@ -58,14 +72,43 @@ namespace StorageBackend.Test.SqLite
 		[TestMethod]
 		public void ExistsNotTest()
 		{
-			var storage = new SqLiteStorage("test2");
-
-			var sqliteBackend = new SqLiteBackend(storage, SystemClock.Instance);
-
 			var task = sqliteBackend.ExistsAsync();
 			task.Wait();
 			
 			Assert.IsFalse(task.Result);
+		}
+
+		[TestMethod]
+		public void InsertPageTest()
+		{
+			var page = new MarkdownPage(Guid.NewGuid(), "testlink", "test", clock.GetCurrentInstant(), clock.GetCurrentInstant(), false);
+			var task = sqliteBackend.InsertMarkdownPageAsync(page);
+			task.Wait();
+
+			var result = task.Result;
+		}
+
+		[TestMethod]
+		public void ContainsPageTest()
+		{
+			var page = new MarkdownPage(Guid.NewGuid(), "testlink5", "test", clock.GetCurrentInstant(), clock.GetCurrentInstant(), false);
+			var task = sqliteBackend.InsertMarkdownPageAsync(page);
+			task.Wait();
+
+			page.Content = "test2";
+
+			var task2 = sqliteBackend.UpdateMarkdownPage(page);
+			task2.Wait();
+
+			page.Content = "test3";
+
+			var task3 = sqliteBackend.UpdateMarkdownPage(page);
+			task3.Wait();
+			
+			Assert.IsTrue(task2.Result);
+			
+			var task4 = sqliteBackend.DeleteMarkdownPageAsync(page);
+			task4.Wait();
 		}
 	}
 }

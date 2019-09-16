@@ -4,6 +4,8 @@ using PrivateWiki.Data.DataAccess;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
+using Models.Storage;
+using StorageBackend.SQLite;
 
 #nullable enable
 
@@ -16,13 +18,16 @@ namespace PrivateWiki.Dialogs
 		public WikiLinkDialog()
 		{
 			InitializeComponent();
+			Initialize();
+		}
 
-			Pages = new DataAccessImpl().GetPages().Select(p => p.Link).ToList();
-
+		private async void Initialize()
+		{
+			Pages = (await new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance).GetAllMarkdownPagesAsync()).Select(p => p.Link).ToList();
 			WikiLinkComboBox.ItemsSource = Pages;
 		}
 
-		private List<string> Pages { get; }
+		private List<string> Pages { get; set; }
 
 		public string WikiLink { get; private set; }
 

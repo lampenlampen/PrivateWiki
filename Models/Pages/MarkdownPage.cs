@@ -7,7 +7,11 @@ namespace Models.Pages
 {
 	public class MarkdownPage : Page
 	{
-		public MarkdownPage(string link, Guid id, string content, Instant created, Instant lastChanged, bool isLocked) : base(link, id, content, created, lastChanged, isLocked)
+		public MarkdownPage()
+		{
+		}
+
+		public MarkdownPage(Guid id, string link, string content, Instant created, Instant lastChanged, bool isLocked) : base(link, id, content, created, lastChanged, isLocked)
 		{
 		}
 	}

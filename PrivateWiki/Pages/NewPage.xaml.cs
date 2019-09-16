@@ -6,10 +6,13 @@ using System;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using Models.Pages;
+using Models.Storage;
 using StorageBackend;
+using StorageBackend.SQLite;
+using Page = Windows.UI.Xaml.Controls.Page;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 namespace PrivateWiki.Pages
@@ -21,12 +24,9 @@ namespace PrivateWiki.Pages
 	{
 		[CanBeNull] private string _pageId;
 
-		private readonly DataAccessImpl dataAccess;
-
 		public NewPage()
 		{
 			InitializeComponent();
-			dataAccess = new DataAccessImpl();
 
 			KeyboardAccelerator GoBack = new KeyboardAccelerator();
 			GoBack.Key = VirtualKey.GoBack;
@@ -49,7 +49,7 @@ namespace PrivateWiki.Pages
 		protected override void OnNavigatedTo([NotNull] NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
-			_pageId = (string)e.Parameter;
+			_pageId = (string) e.Parameter;
 		}
 
 		private void CreatePage_Click([NotNull] object sender, [NotNull] RoutedEventArgs e)
@@ -59,22 +59,23 @@ namespace PrivateWiki.Pages
 
 		private async void ImportPage_Click(object sender, RoutedEventArgs e)
 		{
+			var backend = new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance);
 			var file = await MediaAccess.PickMarkdownFileAsync();
 
 			if (file == null) return;
 
 			var content = await FileIO.ReadTextAsync(file);
 
-			var page = new PageModel(Guid.NewGuid(), _pageId, content, SystemClock.Instance);
+			var page = new MarkdownPage(Guid.NewGuid(), _pageId, content, SystemClock.Instance.GetCurrentInstant(), SystemClock.Instance.GetCurrentInstant(), false);
 
-			dataAccess.InsertPage(page);
+			await backend.InsertMarkdownPageAsync(page);
 
 			NavigateToPage();
 		}
 
 		private void NavigateToPage()
 		{
-			Frame.Navigate(typeof(PageEditor), _pageId);
+			Frame.Navigate(typeof(PageEditor), _pageId.ToString());
 		}
 
 		private void CloseBtn_Click(object sender, RoutedEventArgs e)

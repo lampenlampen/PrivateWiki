@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.Foundation.Metadata;
 using StorageBackend;
 using SystemClock = NodaTime.SystemClock;
 
 namespace PrivateWiki.Data.DataAccess
 {
+	[Obsolete("Use StorageBackends instead", true)]
 	class DataAccessImpl : IDataAccess
 	{
 		private readonly StorageBackend.IDataAccess _dataAccess;

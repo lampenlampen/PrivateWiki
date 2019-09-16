@@ -1,33 +1,15 @@
-﻿using JetBrains.Annotations;
 using Markdig;
-using Markdig.Renderers;
-using Markdig.Syntax;
+using Markdig.Extensions.EmphasisExtras;
 using PrivateWiki.Markdig.Extensions.CodeBlockExtension;
 using PrivateWiki.Markdig.Extensions.MathExtension;
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using Windows.Storage;
-using Markdig.Extensions.EmphasisExtras;
 using PrivateWiki.Models;
 using PrivateWiki.Settings;
-using StorageBackend;
 
 namespace PrivateWiki.Markdig
 {
-	public class MarkdigParser : IPageParser, IPageRenderer
+	public static class MarkdigPipelineBuilder
 	{
-		[NotNull] private readonly MarkdownPipeline _pipeline;
-		[NotNull] private readonly HtmlRenderer _renderer;
-
-		public MarkdigParser()
-		{
-			_pipeline = BuildMarkdownPipeline();
-
-			_renderer = new HtmlRenderer(new StringWriter());
-		}
-
-		private MarkdownPipeline BuildMarkdownPipeline()
+		public static MarkdownPipeline GetMarkdownPipeline()
 		{
 			var pipelineBuilder = new MarkdownPipelineBuilder();
 
@@ -114,51 +96,6 @@ namespace PrivateWiki.Markdig
 			}
 
 			return pipelineBuilder.Build();
-		}
-
-		private string ToHtmlCustom(string markdown)
-		{
-			var writer = _renderer.Writer as StringWriter;
-
-			_pipeline.Setup(_renderer);
-
-			var document = Parse(markdown);
-			_renderer.Render(document);
-			writer.Flush();
-
-			var html = writer.ToString();
-
-			return html;
-		}
-
-		public MarkdownDocument Parse(string markdown)
-		{
-			var dom = Markdown.Parse(markdown, _pipeline);
-			return dom;
-		}
-
-		public MarkdownDocument Parse(PageModel page)
-		{
-			return Parse(page.Content);
-		}
-
-		public async Task<string> ToHtmlString(string markdown)
-		{
-			var webViewFolder =
-				await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\WebView");
-
-			var file = await webViewFolder.GetFileAsync("head.html");
-
-			var htmlHead = await FileIO.ReadTextAsync(file);
-
-			var html = $"<!DOCTYPE html>\n<html>\n{htmlHead}\n<body>\n{ToHtmlCustom(markdown)}\n</body></html>";
-
-			return html;
-		}
-
-		public async Task<string> ToHtmlString(PageModel page)
-		{
-			return await ToHtmlString(page.Content);
 		}
 	}
 }

@@ -32,16 +32,9 @@ namespace PrivateWiki
 			Suspending += OnSuspending;
 			
 			var storage = new SqLiteStorage("test");
-
 			var sqliteBackend = new SqLiteBackend(storage, SystemClock.Instance);
 
-			var task = sqliteBackend.CreateTablesAsync();
-			task.Wait();
-			var conn = sqliteBackend.Connection;
-
-			var dataAccess = new DataAccessImpl();
-			dataAccess.InitializeDatabase();
-			DefaultPages.InsertDefaultPagesAsync();
+			DefaultPages.InsertDefaultMarkdownPagesAsync(sqliteBackend, SystemClock.Instance);
 		}
 
 		/// <summary>

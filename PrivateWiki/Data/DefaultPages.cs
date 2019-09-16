@@ -3,42 +3,27 @@ using PrivateWiki.Data.DataAccess;
 using System;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Contracts.Storage;
+using Models.Pages;
 using StorageBackend;
 
 namespace PrivateWiki.Data
 {
 	public static class DefaultPages
 	{
-		public static async void InsertDefaultPagesAsync()
+		public static async void InsertDefaultMarkdownPagesAsync(IMarkdownPageStorage backend, IClock clock)
 		{
-			var dataAccess = new DataAccessImpl();
+			var syntaxPage = await LoadSyntaxPage(clock);
+			if (!await backend.ContainsMarkdownPageAsync(syntaxPage.Link)) backend.InsertMarkdownPageAsync(syntaxPage);
 
-			var syntaxPage = await LoadSyntaxPage();
-			//syntaxPageTask.RunSynchronously();
-			//var syntaxPage = syntaxPageTask.Result;
-			if (!dataAccess.ContainsPage(syntaxPage))
-			{
-				dataAccess.InsertPage(syntaxPage);
-			}
+			var startPage = await LoadStartPage(clock);
+			if (!await backend.ContainsMarkdownPageAsync(startPage.Link)) backend.InsertMarkdownPageAsync(startPage);
 
-			var startPage = await LoadStartPage();
-			// startPageTask.RunSynchronously();
-			// var startPage = startPageTask.Result;
-			if (!dataAccess.ContainsPage(startPage))
-			{
-				dataAccess.InsertPage(startPage);
-			}
-
-			var testPage = await LoadExamplePage();
-			// testPageTask.RunSynchronously();
-			// var testPage = testPageTask.Result;
-			if (!dataAccess.ContainsPage(testPage))
-			{
-				dataAccess.InsertPage(testPage);
-			}
+			var testPage = await LoadExamplePage(clock);
+			if (!await backend.ContainsMarkdownPageAsync(testPage.Link)) backend.InsertMarkdownPageAsync(testPage);
 		}
 
-		private static async Task<PageModel> LoadSyntaxPage()
+		private static async Task<MarkdownPage> LoadSyntaxPage(IClock clock)
 		{
 			var defaultPagesDir = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\DefaultPages");
 
@@ -46,10 +31,10 @@ namespace PrivateWiki.Data
 
 			var content = await FileIO.ReadTextAsync(syntaxFile);
 
-			return new PageModel(Guid.NewGuid(), "syntax", content, SystemClock.Instance);
+			return new MarkdownPage(Guid.NewGuid(), "syntax", content, clock.GetCurrentInstant(), clock.GetCurrentInstant(), false);
 		}
 
-		private static async Task<PageModel> LoadStartPage()
+		private static async Task<MarkdownPage> LoadStartPage(IClock clock)
 		{
 			var defaultPagesDir = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\DefaultPages");
 
@@ -57,10 +42,10 @@ namespace PrivateWiki.Data
 
 			var content = await FileIO.ReadTextAsync(startFile);
 
-			return new PageModel(Guid.NewGuid(), "start", content, SystemClock.Instance);
+			return new MarkdownPage(Guid.NewGuid(), "start", content, clock.GetCurrentInstant(), clock.GetCurrentInstant(), false);
 		}
 
-		private static async Task<PageModel> LoadExamplePage()
+		private static async Task<MarkdownPage> LoadExamplePage(IClock clock)
 		{
 			var defaultPagesDir = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\DefaultPages");
 
@@ -68,7 +53,7 @@ namespace PrivateWiki.Data
 
 			var content = await FileIO.ReadTextAsync(exampleFile);
 
-			return new PageModel(Guid.NewGuid(), "test", content, SystemClock.Instance);
+			return new MarkdownPage(Guid.NewGuid(), "test", content, clock.GetCurrentInstant(), clock.GetCurrentInstant(), false);
 		}
 	}
 }

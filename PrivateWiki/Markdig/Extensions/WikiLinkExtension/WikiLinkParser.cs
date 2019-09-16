@@ -1,9 +1,9 @@
-﻿using Markdig.Helpers;
-using Markdig.Parsers;
-using Markdig.Syntax.Inlines;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Markdig.Helpers;
+using Markdig.Parsers;
+using Markdig.Syntax.Inlines;
 
 namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 {

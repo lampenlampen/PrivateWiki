@@ -9,7 +9,7 @@ using NodaTime;
 
 namespace StorageBackend.SQLite
 {
-	public class SqLiteBackend : ISqLiteBackend
+	public class SqLiteBackend : ISqLiteBackend, IMarkdownPageStorage
 	{
 		private readonly SqLiteStorage _sqLite;
 
@@ -30,8 +30,12 @@ namespace StorageBackend.SQLite
 				Mode = SqliteOpenMode.ReadWriteCreate
 			};
 			_conn = new SqliteConnection(connString.ToString());
+
+			CreateTablesAsync().Wait();
 		}
 
+		#region ISqLiteBackend Members
+		
 		public Task<bool> ExistsAsync()
 		{
 			bool Action()
@@ -55,9 +59,53 @@ namespace StorageBackend.SQLite
 			return Task.Run(Action);
 		}
 
-		public Task<Page> GetPageAsync(Guid id)
+		public Task<int> CreateTablesAsync()
 		{
-			Page Action()
+			using var conn = _conn;
+
+			var command = new SqliteCommand
+			{
+				Connection = conn,
+				CommandText = @"CREATE TABLE IF NOT EXISTS markdown_pages (
+				              id TEXT PRIMARY KEY, 
+				              link Text UNIQUE,
+							  content TEXT,
+							  created INTEGER,
+							  changed INTEGER,
+							  locked INTEGER
+				              );
+				              CREATE TABLE IF NOT EXISTS markdown_pages_history (
+				              id TEXT, 
+				              link Text,
+							  content TEXT,
+							  created INTEGER,
+							  changed INTEGER,
+							  locked INTEGER,
+							  valid_from INTEGER,
+							  valid_to INTEGER,
+							  deleted INTEGER,
+							  PRIMARY KEY (id, valid_from, valid_to)
+				              );"
+			};
+
+			conn.Open();
+			var task = command.ExecuteNonQueryAsync();
+
+			return task;
+		}
+
+		public bool Delete()
+		{
+			throw new NotImplementedException();
+		}
+		
+		#endregion
+
+		#region IMarkdownPageStorage members
+
+		public Task<MarkdownPage> GetMarkdownPageAsync(Guid id)
+		{
+			MarkdownPage Action()
 			{
 				using var conn = _conn;
 
@@ -68,11 +116,13 @@ namespace StorageBackend.SQLite
 						Connection = conn,
 						CommandText = "SELECT * FROM 'markdown_pages' WHERE id = @Id",
 					};
-					command.Parameters.AddWithValue("@Id", id);
+					command.Parameters.AddWithValue("@Id", id.ToString());
 
+					conn.Open();
 					var reader = command.ExecuteReader();
 
-					var page = SqliteDataReaderToMarkdownPageConverter.Instance.ConvertToPageModel(reader);
+					var page = new MarkdownPage();
+					SqliteDataReaderToMarkdownPageConverter.Instance.ConvertToMarkdownPageModel(reader, page);
 
 					return page;
 				}
@@ -86,9 +136,9 @@ namespace StorageBackend.SQLite
 			return Task.Run(Action);
 		}
 
-		public Task<Page> GetPageAsync(string link)
+		public Task<MarkdownPage> GetMarkdownPageAsync(string link)
 		{
-			Page Action()
+			MarkdownPage Action()
 			{
 				using var conn = _conn;
 
@@ -101,9 +151,11 @@ namespace StorageBackend.SQLite
 					};
 					command.Parameters.AddWithValue("@Link", link);
 
+					conn.Open();
 					var reader = command.ExecuteReader();
 
-					var page = SqliteDataReaderToMarkdownPageConverter.Instance.ConvertToPageModel(reader);
+					var page = new MarkdownPage();
+					SqliteDataReaderToMarkdownPageConverter.Instance.ConvertToMarkdownPageModel(reader, page);
 
 					return page;
 				}
@@ -117,9 +169,9 @@ namespace StorageBackend.SQLite
 			return Task.Run(Action);
 		}
 
-		public Task<IEnumerable<Page>> GetAllPagesAsync()
+		public Task<IEnumerable<MarkdownPage>> GetAllMarkdownPagesAsync()
 		{
-			IEnumerable<Page> Action()
+			IEnumerable<MarkdownPage> Action()
 			{
 				using var conn = _conn;
 
@@ -131,6 +183,7 @@ namespace StorageBackend.SQLite
 						CommandText = "SELECT * FROM 'markdown_pages'",
 					};
 
+					conn.Open();
 					var reader = command.ExecuteReader();
 
 					var pages = SqliteDataReaderToMarkdownPageConverter.Instance.ConvertToPageModels(reader);
@@ -147,15 +200,42 @@ namespace StorageBackend.SQLite
 			return Task.Run(Action);
 		}
 
-		public Task<bool> DeletePageAsync(Page page)
+		public Task<bool> UpdateMarkdownPage(MarkdownPage page)
 		{
-			return DeletePageAsync(page.Id);
+			bool MarkdownPageAction(MarkdownPage page)
+			{
+				using var conn = _conn;
+
+				var command = new SqliteCommand
+				{
+					Connection = conn,
+					CommandText =
+						"INSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, deleted) SELECT id, link, content, created, changed, locked, @Now, changed, false FROM 'markdown_pages' WHERE id = @Id;\nUPDATE 'markdown_pages' SET id = @Id, link = @Link, content = @Content, created = @Created, changed = @Changed, locked = @Locked WHERE id = @Id;"
+				};
+				command.Parameters.AddWithValue("@Id", page.Id.ToString());
+				command.Parameters.AddWithValue("@Link", page.Link);
+				command.Parameters.AddWithValue("@Content", page.Content);
+				command.Parameters.AddWithValue("@Created", page.Created.ToUnixTimeMilliseconds());
+				command.Parameters.AddWithValue("@Changed", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
+				command.Parameters.AddWithValue("@Locked", page.IsLocked);
+				command.Parameters.AddWithValue("@Now", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
+
+				conn.Open();
+				var result = command.ExecuteNonQuery();
+
+				return true;
+			}
+
+			return new TaskFactory<bool>().StartNew((page) => MarkdownPageAction((MarkdownPage) page), page);
 		}
 
-		public Task<bool> DeletePageAsync(Guid id)
+		public Task<bool> DeleteMarkdownPageAsync(MarkdownPage page)
 		{
-			// TODO history
+			return DeleteMarkdownPageAsync(page.Id);
+		}
 
+		public Task<bool> DeleteMarkdownPageAsync(Guid id)
+		{
 			bool Action()
 			{
 				using var conn = _conn;
@@ -166,13 +246,12 @@ namespace StorageBackend.SQLite
 					{
 						Connection = conn,
 						CommandText =
-							"UPDATE 'markdown_pages_history' SET valid_to = @Now WHERE id = @Id AND valid_to = NULL;" +
-							"INSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, deleted) SELECT id, link, content, created, changed, locked, @Now, null, true FROM 'markdown_pages' WHERE id = @Id;" +
-							"DELETE FROM 'markdown_pages' WHERE id = @Id"
+							"INSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, deleted) SELECT id, link, content, created, changed, locked, @Now, changed, true FROM 'markdown_pages' WHERE id = @Id;\nDELETE FROM 'markdown_pages' WHERE id = @Id"
 					};
 					command.Parameters.AddWithValue("@Id", id.ToString());
 					command.Parameters.AddWithValue("@Now", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
 
+					conn.Open();
 					var result = command.ExecuteNonQuery();
 
 					var a = result == 1;
@@ -189,14 +268,12 @@ namespace StorageBackend.SQLite
 			return Task.Run(Action);
 		}
 
-		public Task<bool> InsertPageAsync(Page page)
+		public Task<bool> InsertMarkdownPageAsync(MarkdownPage page)
 		{
-			// TODO Markdown Page
-			
 			bool MarkdownPageAction(MarkdownPage page)
 			{
 				var mPage = (MarkdownPage) page;
-				
+
 				using var conn = _conn;
 
 				try
@@ -210,10 +287,11 @@ namespace StorageBackend.SQLite
 					command.Parameters.AddWithValue("@Id", mPage.Id.ToString());
 					command.Parameters.AddWithValue("@Link", mPage.Link);
 					command.Parameters.AddWithValue("@Content", mPage.Content);
-					command.Parameters.AddWithValue("@Created", mPage.Created.ToUnixTimeMilliseconds());
-					command.Parameters.AddWithValue("@Changed", mPage.LastChanged.ToUnixTimeMilliseconds());
+					command.Parameters.AddWithValue("@Created", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
+					command.Parameters.AddWithValue("@Changed", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
 					command.Parameters.AddWithValue("@Locked", mPage.IsLocked);
 
+					conn.Open();
 					var result = command.ExecuteNonQuery();
 
 					return true;
@@ -225,14 +303,10 @@ namespace StorageBackend.SQLite
 				}
 			}
 
-			return page switch
-			{
-				MarkdownPage mPage => new TaskFactory<bool>().StartNew((page) => MarkdownPageAction((MarkdownPage) page), mPage),
-				_ => Task.FromResult(false)
-			};
+			return new TaskFactory<bool>().StartNew((page) => MarkdownPageAction((MarkdownPage) page), page);
 		}
 
-		public Task<bool> UpdatePage(Page page)
+		public Task<bool> ContainsMarkdownPageAsync(MarkdownPage page)
 		{
 			bool MarkdownPageAction(MarkdownPage page)
 			{
@@ -241,67 +315,88 @@ namespace StorageBackend.SQLite
 				var command = new SqliteCommand
 				{
 					Connection = conn,
-					CommandText = 
-						"UPDATE 'markdown_pages_history' SET valid_to = @Now WHERE id = @Id AND valid_to = NULL;" +
-						"INSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, deleted) SELECT id, link, content, created, changed, locked, @Now, null, true FROM 'markdown_pages' WHERE id = @Id;" +
-						"UPDATE 'markdown_pages' SET id = @Id, link = @Link, content = @Content, "
+					CommandText = "SELECT * FROM 'markdown_pages' WHERE id = @Id"
 				};
+				command.Parameters.AddWithValue("@Id", page.Id.ToString());
+
+				conn.Open();
+				var result = command.ExecuteNonQuery();
+
+				return result == 1;
 			}
+
+			return new TaskFactory<bool>().StartNew(page => MarkdownPageAction((MarkdownPage) page), page);
 		}
 
-		public bool ContainsPageAsync(Page page)
+		public Task<bool> ContainsMarkdownPageAsync(Guid id)
 		{
-			throw new NotImplementedException();
-		}
-
-		public bool ContainsPageAsync(Guid id)
-		{
-			throw new NotImplementedException();
-		}
-
-		public bool ContainsPageAsync(string link)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<int> CreateTablesAsync()
-		{
-			using var conn = _conn;
-
-			conn.Open();
-
-			var command = new SqliteCommand
+			bool MarkdownPageAction(Guid id)
 			{
-				Connection = conn,
-				CommandText = @"CREATE TABLE IF NOT EXISTS markdown_pages (
-				              id TEXT PRIMARY KEY, 
-				              link Text UNIQUE,
-							  content TEXT,
-							  created INTEGER,
-							  changed INTEGER,
-							  locked INTEGER
-				              );
-				              CREATE TABLE IF NOT EXISTS markdown_pages_history (
-				              id TEXT PRIMARY KEY, 
-				              link Text UNIQUE,
-							  content TEXT,
-							  created INTEGER,
-							  changed INTEGER,
-							  locked INTEGER,
-							  valid_from INTEGER,
-							  valid_to INTEGER,
-							  deleted INTEGER
-				              );"
-			};
+				using var conn = _conn;
+				
+				var command = new SqliteCommand
+				{
+					Connection = conn,
+					CommandText = "SELECT * FROM 'markdown_pages' WHERE id = @Id"
+				};
+				command.Parameters.AddWithValue("@Id", id.ToString());
 
-			var task = command.ExecuteNonQueryAsync();
+				conn.Open();
+				var result = command.ExecuteNonQuery();
 
-			return task;
+				return result == 1;
+			}
+
+			return new TaskFactory<bool>().StartNew(id => MarkdownPageAction((Guid) id), id);
 		}
 
-		public bool Delete()
+		public Task<bool> ContainsMarkdownPageAsync(string link)
 		{
-			throw new NotImplementedException();
+			bool MarkdownPageAction(string link)
+			{
+				using var conn = _conn;
+				
+				var command = new SqliteCommand
+				{
+					Connection = conn,
+					CommandText = "SELECT * FROM 'markdown_pages' WHERE link = @Link"
+				};
+				command.Parameters.AddWithValue("@Link", link);
+
+				conn.Open();
+				var result = command.ExecuteScalar();
+
+				return result != null;
+			}
+
+			return new TaskFactory<bool>().StartNew(link => MarkdownPageAction((string) link), link);
 		}
+
+		public Task<IEnumerable<HistoryMarkdownPage>> GetHistory(string pageLink)
+		{
+			IEnumerable<HistoryMarkdownPage> Action(string pageLink)
+			{
+				using var conn = _conn;
+
+				var command = new SqliteCommand
+				{
+					Connection = conn,
+					CommandText = "SELECT * FROM 'markdown_pages_history' WHERE link = @Link"
+				};
+				command.Parameters.AddWithValue("@Link", pageLink);
+
+				conn.Open();
+
+				var result = command.ExecuteReader();
+
+				var pages = SqliteDataReaderToHistoryMarkdownPageConverter.Instance.ConvertToHistoryMarkdownPageModels(result);
+
+				return pages;
+			}
+
+			return new TaskFactory<IEnumerable<HistoryMarkdownPage>>().StartNew(page => Action((string) page), pageLink);
+		}
+
+		#endregion
 	}
 }

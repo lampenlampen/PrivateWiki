@@ -2,7 +2,6 @@
 using PrivateWiki.Data;
 using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Dialogs;
-using PrivateWiki.Markdig;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -17,11 +16,21 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Contracts.Storage;
+using Models.Pages;
+using Models.Storage;
+using NodaTime;
+using PrivateWiki.Markdig;
 using PrivateWiki.Settings;
+using PrivateWiki.Storage;
 using PrivateWiki.Utilities;
 using StorageBackend;
+using StorageBackend.SQLite;
+using Page = Windows.UI.Xaml.Controls.Page;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
+
+#nullable enable
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -34,21 +43,20 @@ namespace PrivateWiki.Pages
 	{
 		private readonly string CodeButtonCopy = "codeButtonCopy";
 
-		private DataAccessImpl dataAccess;
+		private IMarkdownPageStorage _storage;
 
-		private string contentPageId { get; set; }
-
-		private PageModel Page { get; set; }
+		private MarkdownPage Page { get; set; }
 
 		public PageViewer()
 		{
 			InitializeComponent();
-			dataAccess = new DataAccessImpl();
+			_storage = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
 			Init();
 		}
 
 		private void Init()
 		{
+			// Acrylic Background
 			var handler = new DeveloperSettingsModelHandler();
 			var acrylicBackground = handler.LoadDeveloperSettingsModel().IsAcrylicBackgroundEnabled;
 
@@ -120,35 +128,35 @@ namespace PrivateWiki.Pages
 		{
 			base.OnNavigatedTo(e);
 
-			contentPageId = (string)e.Parameter;
-			Debug.WriteLine($"Id: {contentPageId}");
+			var pageId = (string) e.Parameter;
+			Debug.WriteLine($"Id: {pageId}");
 
-			if (contentPageId == null) throw new ArgumentNullException(contentPageId);
+			if (pageId == null) throw new ArgumentNullException(nameof(pageId));
 
-			DisplayPage();
+			DisplayPage(pageId);
 		}
 
-		private async void DisplayPage()
+		private async void DisplayPage(string pageId)
 		{
-			if (!dataAccess.ContainsPage(contentPageId))
+			if (!await _storage.ContainsMarkdownPageAsync(pageId))
 				if (Frame.CanGoBack)
 				{
 					Frame.GoBack();
 					return;
 				}
 
-			Page = dataAccess.GetPageOrNull(contentPageId);
-			Debug.WriteLine($"Page Some: {contentPageId}");
-			var parser = new MarkdigParser();
-
-
-			// Show Page Title
-			//PageTitle.Text = Page.Id;
+			Page = await _storage.GetMarkdownPageAsync(pageId);
+			Debug.WriteLine($"Page Some: {pageId}");
+			var parser = new Markdig.Markdig();
+			var doc = parser.Parse(Page);
 
 			// Show Last Visited Pages
-			NavigationHandler.AddPage(Page);
-			Debug.WriteLine($"Last Visited Pages: {NavigationHandler.Pages.Count}");
-			ShowLastVisitedPages2();
+			if (Page != null)
+			{
+				NavigationHandler.AddPage(Page);
+				Debug.WriteLine($"Last Visited Pages: {NavigationHandler.Pages.Count}");
+				ShowLastVisitedPages2();
+			}
 
 			// Show TOC
 			// Only possible if CoreRenderModel.IsAutoIdentifierEnabled is true
@@ -157,19 +165,13 @@ namespace PrivateWiki.Pages
 
 			if (model.IsAutoIdentifierEnabled)
 			{
-				var doc = parser.Parse(Page);
 				var toc = new HeadersParser().ParseHeaders(doc);
-	
-				foreach (var header in toc.Children)
-				{
-					Treeview.RootNodes.Add(header);
-				}
+
+				foreach (var header in toc.Children) Treeview.RootNodes.Add(header);
 			}
 
-			
 			// Show Page
-
-			var html = await parser.ToHtmlString(Page);
+			var html = await parser.ToHtmlCustom(doc);
 			var localFolder = ApplicationData.Current.LocalFolder;
 			var mediaFolder = await localFolder.CreateFolderAsync("media", CreationCollisionOption.OpenIfExists);
 			var file = await mediaFolder.CreateFileAsync("index.html", CreationCollisionOption.ReplaceExisting);
@@ -195,48 +197,9 @@ namespace PrivateWiki.Pages
 			*/
 		}
 
-		private async void CheckExternalPage()
-		{
-			if (Page.ExternalFileToken == null)
-			{
-				return;
-			}
-
-			var token = Page.ExternalFileToken;
-			var importDate = Page.ExternalFileImportDate;
-
-			var file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
-
-			var fileProperties = await file.GetBasicPropertiesAsync();
-			var modifiedDate = fileProperties.DateModified;
-		}
-
-		private void ShowLastVisitedPages()
-		{
-			var stack = NavigationHandler.Pages;
-
-			if (stack.Count <= 0) return;
-
-			switch (stack.Count)
-			{
-				case 4:
-
-
-					break;
-				case 3:
-					break;
-				case 2:
-					break;
-				case 1:
-					break;
-				case 0:
-					break;
-			}
-		}
-
 		private void ShowLastVisitedPages2()
 		{
-			var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+			var stackPanel = new StackPanel {Orientation = Orientation.Horizontal};
 			var stack = NavigationHandler.Pages;
 
 			if (stack.Count <= 0) return;
@@ -287,17 +250,17 @@ namespace PrivateWiki.Pages
 
 		private void Btn_Click([NotNull] object sender, RoutedEventArgs e)
 		{
-			var id = (string)((Button)sender).Content;
+			var id = (string) ((Button) sender).Content;
 			Debug.WriteLine($"Page Clicked: {id}");
 
 			NavigateToPage(id);
 		}
 
-		private void NavigateToPage([NotNull] string link)
+		private async void NavigateToPage(string link)
 		{
 			if (Page.Link.Equals(link)) return;
 
-			if (dataAccess.ContainsPage(link))
+			if (await _storage.ContainsMarkdownPageAsync(link))
 				Frame.Navigate(typeof(PageViewer), link);
 			else
 				Frame.Navigate(typeof(NewPage), link);
@@ -306,12 +269,12 @@ namespace PrivateWiki.Pages
 		private void Edit_Click(object sender, RoutedEventArgs e)
 		{
 			Debug.WriteLine("Edit Page");
-			Frame.Navigate(typeof(PageEditor), contentPageId);
+			Frame.Navigate(typeof(PageEditor), Page.Link);
 		}
 
 		private async void Revision_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			Frame.Navigate(typeof(HistoryPage), Page.Link);
 		}
 
 		/// <summary>
@@ -322,28 +285,17 @@ namespace PrivateWiki.Pages
 		/// <param name="args"></param>
 		private async void TreeView_ItemInvoked(TreeView treeView, TreeViewItemInvokedEventArgs args)
 		{
-			var node = (MyTreeViewNode)args.InvokedItem;
-			var header = (string)node.Content;
+			var node = (MyTreeViewNode) args.InvokedItem;
+			var header = (string) node.Content;
 			var headerId = node.Tag;
 			var scrollTo = $"document.getElementById(\"{headerId}\").scrollIntoView();";
 
-			await Webview.InvokeScriptAsync("eval", new[] { scrollTo });
-		}
-
-		private async void Print_Click(object sender, RoutedEventArgs e)
-		{
-			// TODO Print Page
-			Debug.WriteLine("Print Page");
-
-			await Webview.InvokeScriptAsync("eval", new[]
-			{
-				$"document.getElementById(\"codeCopy\").click();"
-			});
+			await Webview.InvokeScriptAsync("eval", new[] {scrollTo});
 		}
 
 		private async void Top_Click(object sender, RoutedEventArgs e)
 		{
-			await Webview.InvokeScriptAsync("eval", new[] { "window.scrollTo(0,0);" });
+			await Webview.InvokeScriptAsync("eval", new[] {"window.scrollTo(0,0);"});
 		}
 
 		/// <summary>
@@ -378,30 +330,11 @@ namespace PrivateWiki.Pages
 			}
 		}
 
-		private void Favorite_Click(object sender, RoutedEventArgs e)
-		{
-			Page.IsFavorite = true;
-			dataAccess.UpdatePage(Page);
-		}
-
 		private void Fullscreen_Click(object sender, RoutedEventArgs e)
 		{
 			var view = ApplicationView.GetForCurrentView();
-			if (view.IsFullScreenMode)
-			{
-				view.ExitFullScreenMode();
-				RightMenu.Visibility = Visibility.Visible;
-				RightMenu.MinWidth = 300;
-			}
-			else
-			{
-				view.TryEnterFullScreenMode();
-				if (view.IsFullScreenMode)
-				{
-					RightMenu.Visibility = Visibility.Collapsed;
-					RightMenu.MinWidth = 0;
-				}
-			}
+			if (view.IsFullScreenMode) view.ExitFullScreenMode();
+			else view.TryEnterFullScreenMode();
 		}
 
 		private void Setting_Click(object sender, RoutedEventArgs e)
@@ -414,11 +347,6 @@ namespace PrivateWiki.Pages
 			SearchPopup.IsOpen = true;
 		}
 
-		private void MediaManager_Click(object sender, RoutedEventArgs e)
-		{
-			Frame.Navigate(typeof(MediaManager));
-		}
-
 		/// <summary>
 		/// Called when the user clicks the "Export"-Button.
 		/// </summary>
@@ -429,11 +357,6 @@ namespace PrivateWiki.Pages
 			_ = new ExportDialog(Page.Link).ShowAsync();
 		}
 
-		private async void SiteManager_Click(object sender, RoutedEventArgs e)
-		{
-			// TODO Site Manager
-		}
-
 		/// <summary>
 		/// This method is called, if the user clicked the "Import"-Button.
 		///
@@ -441,49 +364,9 @@ namespace PrivateWiki.Pages
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private async void Import_Click(object sender, RoutedEventArgs e)
+		private void Import_Click(object sender, RoutedEventArgs e)
 		{
-			// TODO Import Markdown File
-			// TODO Import Images
-			// TODO Diff old vs new Page
-
-			var file = MediaAccess.PickMarkdownFileAsync();
-
-			var importer = new MarkdownImport();
-
-			var page = await importer.ImportMarkdownFileAsync(await file);
-			var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-
-			var dialog = new ContentDialog
-			{
-				Title = resourceLoader.GetString("ImportPage/Dialog/Title"),
-				Content = resourceLoader.GetString("ImportPage/Dialog/Content"),
-				PrimaryButtonText = resourceLoader.GetString("Import"),
-				CloseButtonText = resourceLoader.GetString("Close"),
-				DefaultButton = ContentDialogButton.Primary
-			};
-
-			var result = dialog.ShowAsync();
-
-			if (await result == ContentDialogResult.Primary)
-			{
-				// Import Button Clicked
-				if (dataAccess.ContainsPage(page))
-				{
-					// Page already exists in db
-					// Update Page (override)
-					// TODO Update existing Page
-
-					dataAccess.UpdatePage(page);
-				}
-				else
-				{
-					// Page does not exists already in db
-					// Insert Page
-
-					dataAccess.InsertPage(page);
-				}
-			}
+			throw new NotImplementedException();
 		}
 	}
 }

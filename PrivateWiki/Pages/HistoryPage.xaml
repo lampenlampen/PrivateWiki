@@ -1,0 +1,72 @@
+﻿<Page
+    x:Class="PrivateWiki.Pages.HistoryPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PrivateWiki.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="using:Models.Pages"
+    xmlns:utilities="using:PrivateWiki.Utilities"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance Type=utilities:DesignHistoryMarkdownPage, IsDesignTimeCreatable=True}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <utilities:InstantToReadableDateTimeConverter x:Key="InstantToReadableDateTimeConverter" />
+
+        <DataTemplate x:Key="CreatedTemplate" x:DataType="pages:HistoryMarkdownPage">
+            <Grid />
+
+        </DataTemplate>
+        <DataTemplate x:Key="EditedTemplate" x:DataType="pages:HistoryMarkdownPage">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           Text="{x:Bind LastChanged, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DeletedTemplate" x:DataType="pages:HistoryMarkdownPage">
+            <Grid />
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <RelativePanel
+            Grid.Row="0">
+
+            <TextBlock
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignVerticalCenterWithPanel="True"
+                Margin="16, 16, 16, 16"
+                Text="History"
+                FontSize="18" />
+
+            <Button
+                RelativePanel.AlignRightWithPanel="True"
+                Margin="16, 16, 16, 16"
+                Background="Transparent"
+                Click="CloseBtn_Click">
+
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
+
+            </Button>
+        </RelativePanel>
+
+        <ListView
+            d:DataContext="{d:DesignInstance Type=utilities:DesignHistoryMarkdownPage, IsDesignTimeCreatable=True}"
+            ItemsSource="{x:Bind Pages}"
+            x:Name="Listview"
+            Grid.Row="1"
+            ItemTemplate="{StaticResource EditedTemplate}" />
+    </Grid>
+</Page>

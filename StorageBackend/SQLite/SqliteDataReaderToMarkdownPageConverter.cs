@@ -10,23 +10,26 @@ namespace StorageBackend.SQLite
 	{
 		public static SqliteDataReaderToMarkdownPageConverter Instance => new SqliteDataReaderToMarkdownPageConverter();
 
-		public MarkdownPage? ConvertToPageModel(SqliteDataReader reader)
+		public bool ConvertToMarkdownPageModel(SqliteDataReader reader, MarkdownPage page)
 		{
 			while (reader.Read())
 			{
-				var id = Guid.Parse(reader.GetString(reader.GetOrdinal("id")));
-				var link = reader.GetString(reader.GetOrdinal("link"));
-				var content = reader.GetString(reader.GetOrdinal("content"));
-				var created = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("created")));
-				var changed = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("changed")));
-				var locked = reader.GetBoolean(reader.GetOrdinal("locked"));
-				var page = new MarkdownPage(link, id, content, created, changed, locked);
-
-				return page;
-
+				return SqliteDataToMarkdownModel(reader, page);
 			}
 
-			return null;
+			return false;
+		}
+
+		protected bool SqliteDataToMarkdownModel(SqliteDataReader reader, MarkdownPage page)
+		{
+			page.Id = Guid.Parse(reader.GetString(reader.GetOrdinal("id")));
+			page.Link = reader.GetString(reader.GetOrdinal("link"));
+			page.Content = reader.GetString(reader.GetOrdinal("content"));
+			page.Created = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("created")));
+			page.LastChanged = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("changed")));
+			page.IsLocked = reader.GetBoolean(reader.GetOrdinal("locked"));
+
+			return true;
 		}
 
 		public IList<MarkdownPage> ConvertToPageModels(SqliteDataReader reader)
@@ -35,15 +38,8 @@ namespace StorageBackend.SQLite
 			
 			while (reader.Read())
 			{
-				var id = Guid.Parse(reader.GetString(reader.GetOrdinal("id")));
-				var link = reader.GetString(reader.GetOrdinal("link"));
-				var content = reader.GetString(reader.GetOrdinal("content"));
-				var created = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("created")));
-				var changed = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("changed")));
-				var locked = reader.GetBoolean(reader.GetOrdinal("locked"));
-				var page = new MarkdownPage(link, id, content, created, changed, locked);
-				
-				pages.Add(page);
+				var page = new MarkdownPage();
+				if (SqliteDataToMarkdownModel(reader, page)) pages.Add(page);
 			}
 
 			return pages;

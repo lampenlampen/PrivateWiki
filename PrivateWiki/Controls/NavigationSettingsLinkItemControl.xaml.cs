@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Contracts.Storage;
+using Models.Pages;
+using Models.Storage;
+using NodaTime;
 using PrivateWiki.Data.DataAccess;
 using StorageBackend;
+using StorageBackend.SQLite;
 
 #nullable enable
 
@@ -15,14 +21,16 @@ namespace PrivateWiki.Controls
 {
 	public sealed partial class NavigationSettingsLinkItemControl : UserControl
 	{
-		public ObservableCollection<PageModel> Pages { get; private set; } = new ObservableCollection<PageModel>();
+		public ObservableCollection<MarkdownPage> Pages { get; private set; }
 
 		public string Label => Text.Text;
 
 		public NavigationSettingsLinkItemControl()
 		{
 			this.InitializeComponent();
-			LoadPages();
+			var storage = new SqLiteStorage("test");
+			var backend = new SqLiteBackend(storage, SystemClock.Instance);
+			LoadPages(backend);
 		}
 
 		public void InitControl(string? label, Guid? id)
@@ -35,11 +43,11 @@ namespace PrivateWiki.Controls
 			}
 		}
 
-		private void LoadPages()
+		private async void LoadPages(IMarkdownPageStorage storage)
 		{
-			var dataAccess = new DataAccessImpl();
-			var pages = dataAccess.GetPages();
-			Pages = new ObservableCollection<PageModel>(pages);
+			var pages = await storage.GetAllMarkdownPagesAsync();
+			
+			Pages = new ObservableCollection<MarkdownPage>(pages);
 		}
 
 		public event TextChangedEventHandler LabelChanged;

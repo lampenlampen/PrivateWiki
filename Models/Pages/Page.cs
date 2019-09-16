@@ -8,6 +8,10 @@ namespace Models.Pages
 {
 	public abstract class Page
 	{
+		protected Page()
+		{
+		}
+
 		protected Page(string link, Guid id, string content, Instant created, Instant lastChanged, bool isLocked)
 		{
 			Link = link;
@@ -18,16 +22,16 @@ namespace Models.Pages
 			IsLocked = isLocked;
 		}
 
-		public string Link { get; }
-		
-		public Guid Id { get; }
-		
-		public string Content { get; }
-		
-		public Instant Created { get; }
-		
-		public Instant LastChanged { get; }
-		
-		public bool IsLocked { get; }
+		public string Link { get; set; }
+
+		public Guid Id { get; set; }
+
+		public string Content { get; set; }
+
+		public Instant Created { get; set; }
+
+		public Instant LastChanged { get; set; }
+
+		public bool IsLocked { get; set; }
 	}
 }

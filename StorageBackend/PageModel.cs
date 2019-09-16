@@ -4,6 +4,7 @@ using System;
 
 namespace StorageBackend
 {
+	[Obsolete]
 	public class PageModel
 	{
 		/// <summary>

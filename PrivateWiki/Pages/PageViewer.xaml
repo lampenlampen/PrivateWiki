@@ -52,13 +52,6 @@
                         Key="P" />
                 </AppBarButton.KeyboardAccelerators>
             </AppBarButton>
-            <AppBarButton x:Uid="/PageViewer/FavoriteButton" Icon="Favorite" Click="Favorite_Click">
-                <AppBarButton.KeyboardAccelerators>
-                    <KeyboardAccelerator
-                        Modifiers="Control"
-                        Key="D" />
-                </AppBarButton.KeyboardAccelerators>
-            </AppBarButton>
             <AppBarButton x:Uid="/PageViewer/EditButton" Icon="Edit" Click="Edit_Click">
                 <AppBarButton.KeyboardAccelerators>
                     <KeyboardAccelerator
@@ -86,10 +79,6 @@
                 <AppBarButton x:Uid="/PageViewer/ExportButton" Click="Export_Click" />
 
                 <AppBarButton x:Uid="/PageViewer/ImportButton" Click="Import_Click" Icon="Import" />
-
-                <AppBarButton x:Uid="/PageViewer/MediaManagerButton" Click="MediaManager_Click" />
-
-                <AppBarButton x:Uid="/PageViewer/SiteManagerButton" Click="SiteManager_Click" />
 
                 <AppBarButton x:Uid="/PageViewer/SettingsButton" Icon="Setting" Click="Setting_Click" />
 

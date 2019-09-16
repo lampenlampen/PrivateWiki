@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Models.Pages;
 using StorageBackend;
+
+#nullable enable
 
 namespace PrivateWiki
 {
@@ -12,7 +15,7 @@ namespace PrivateWiki
 
 		internal static List<string> Pages { get; set; } = new List<string>();
 
-		public static bool AddPage([NotNull] PageModel page)
+		public static bool AddPage( MarkdownPage page)
 		{
 			Pages.Remove(page.Link);
 			Pages.Add(page.Link);
@@ -20,7 +23,7 @@ namespace PrivateWiki
 			return true;
 		}
 
-		public static bool RemovePage([NotNull] PageModel page)
+		public static bool RemovePage(MarkdownPage page)
 		{
 			Pages.Remove(page.Link);
 

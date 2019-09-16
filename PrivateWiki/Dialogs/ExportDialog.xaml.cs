@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
+using Contracts.Storage;
 using JetBrains.Annotations;
+using Models.Pages;
+using Models.Storage;
+using NodaTime;
 using PrivateWiki.Data;
 using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Markdig;
 using StorageBackend;
+using StorageBackend.SQLite;
 
 // Die Elementvorlage "Inhaltsdialogfeld" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -17,24 +22,22 @@ namespace PrivateWiki.Dialogs
 	{
 		[NotNull] private readonly string _id;
 
-		private readonly DataAccessImpl dataAccess;
-
 		public ExportDialog(string id)
 		{
 			InitializeComponent();
 			_id = id;
-			dataAccess = new DataAccessImpl();
 		}
 
 		private async void Export_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
+			var backend = new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance);
 			var folder = await MediaAccess.PickFolderAsync();
 
-			var pages = new List<PageModel>();
+			var pages = new List<MarkdownPage>();
 
 			if (ExportAllPages.IsChecked == true)
-				pages.AddRange(dataAccess.GetPages());
-			else if (ExportSinglePage.IsChecked == true) pages.Add(dataAccess.GetPageOrNull(_id));
+				pages.AddRange((IEnumerable<MarkdownPage>) await backend.GetAllMarkdownPagesAsync());
+			else if (ExportSinglePage.IsChecked == true) pages.Add((MarkdownPage) await backend.GetMarkdownPageAsync(_id));
 
 			var exportHtml = ExportHtml.IsChecked == true;
 			var exportMarkdown = ExportMarkdown.IsChecked == true;
@@ -43,7 +46,7 @@ namespace PrivateWiki.Dialogs
 			{
 				if (exportHtml)
 				{
-					var parser = new MarkdigParser();
+					var parser = new Markdig.Markdig();
 
 					var file = await folder.CreateFileAsync($"{page.Link.Replace(':', '_')}.html",
 						CreationCollisionOption.ReplaceExisting);

@@ -3,7 +3,6 @@ using NodaTime;
 using PrivateWiki.Data;
 using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Dialogs;
-using PrivateWiki.Markdig;
 using System;
 using System.Diagnostics;
 using Windows.Storage;
@@ -12,7 +11,15 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using Contracts.Storage;
+using Models.Pages;
+using Models.Storage;
+using PrivateWiki.Markdig;
 using StorageBackend;
+using StorageBackend.SQLite;
+using Page = Windows.UI.Xaml.Controls.Page;
+
+#nullable enable
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -24,16 +31,17 @@ namespace PrivateWiki.Pages
 	public sealed partial class PageEditor : Page
 	{
 
-		private DataAccessImpl dataAccess;
+		private IMarkdownPageStorage _storage;
+		
+		private MarkdownPage Page { get; set; }
+		
+		private bool NewPage { get; set; }
+
 		public PageEditor()
 		{
 			InitializeComponent();
-			dataAccess = new DataAccessImpl();
-
+			_storage = new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance);
 		}
-
-		[NotNull] private PageModel Page { get; set; }
-		private bool NewPage { get; set; }
 
 		private void PreviewWebviewNavigationStartedAsync(WebView sender,
 			[NotNull] WebViewNavigationStartingEventArgs args)
@@ -52,20 +60,20 @@ namespace PrivateWiki.Pages
 			args.Cancel = true;
 		}
 
-		protected override void OnNavigatedTo([NotNull] NavigationEventArgs e)
+		protected override async void OnNavigatedTo([NotNull] NavigationEventArgs e)
 		{
-			var pageId = (string)e.Parameter;
-			Debug.WriteLine($"Id: {pageId}");
-			if (pageId == null) throw new ArgumentNullException("Page id must be nonnull!");
+			var pageLink = (string)e.Parameter;
+			Debug.WriteLine($"Id: {pageLink}");
+			if (pageLink == null) throw new ArgumentNullException(nameof(pageLink));
 
-			if (dataAccess.ContainsPage(pageId))
+			if (await _storage.ContainsMarkdownPageAsync(pageLink))
 			{
-				Page = dataAccess.GetPageOrNull(pageId);
+				Page = await _storage.GetMarkdownPageAsync(pageLink);
 			}
 			else
 			{
 				NewPage = true;
-				Page = new PageModel(Guid.NewGuid(), pageId, "", SystemClock.Instance);
+				Page = new MarkdownPage(Guid.NewGuid(), pageLink, "", SystemClock.Instance.GetCurrentInstant(), SystemClock.Instance.GetCurrentInstant(), false);
 			}
 
 			ShowPageInEditor();
@@ -105,22 +113,22 @@ namespace PrivateWiki.Pages
 			}
 		}
 
-		private void Save_Click(object sender, RoutedEventArgs e)
+		private async void Save_Click(object sender, RoutedEventArgs e)
 		{
 			Page.Content = PageEditorTextBox.Text;
 
 			if (NewPage)
 			{
 				// TODO Error while Inserting Page
-				dataAccess.InsertPage(Page);
+				await _storage.InsertMarkdownPageAsync(Page);
 
-				Frame.Navigate(typeof(PageViewer), Page.Id);
+				Frame.Navigate(typeof(PageViewer), Page.Id.ToString());
 				RemoveEditorPageFromBackStack();
 			}
 			else
 			{
 				// TODO Error while Updating Page
-				dataAccess.UpdatePage(Page);
+				await _storage.UpdateMarkdownPage(Page);
 
 				if (Frame.CanGoBack) Frame.GoBack();
 			}
@@ -149,11 +157,10 @@ namespace PrivateWiki.Pages
 			{
 				// Delete the page.
 				Debug.WriteLine("Delete");
-				dataAccess.DeletePage(Page);
+				_storage.DeleteMarkdownPageAsync(Page);
 
 				if (Frame.CanGoBack)
 				{
-					Frame.GoBack();
 					Frame.GoBack();
 				}
 			}
@@ -164,7 +171,7 @@ namespace PrivateWiki.Pages
 			if (Pivot.SelectedIndex == 1)
 			{
 				var htmlFileName = "index_preview.html";
-				var parser = new MarkdigParser();
+				var parser = new Markdig.Markdig();
 				var html = parser.ToHtmlString(PageEditorTextBox.Text);
 				var localFolder = ApplicationData.Current.LocalFolder;
 				var mediaFolder = await localFolder.GetFolderAsync("media");
@@ -176,7 +183,7 @@ namespace PrivateWiki.Pages
 
 			if (Pivot.SelectedIndex == 2)
 			{
-				var parser = new MarkdigParser();
+				var parser = new Markdig.Markdig();
 				var html = await parser.ToHtmlString(PageEditorTextBox.Text);
 				
 				try

@@ -10,7 +10,13 @@ using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Contracts.Storage;
+using Models.Pages;
+using Models.Storage;
+using NodaTime;
 using StorageBackend;
+using StorageBackend.SQLite;
+using Page = Windows.UI.Xaml.Controls.Page;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -21,25 +27,26 @@ namespace PrivateWiki.Pages
 	/// </summary>
 	public sealed partial class ExternalEditor : Page
 	{
-		private PageModel Page;
+		private MarkdownPage Page;
 		private readonly string TMP_FILE_FUTURE_ACCESS_LIST = "tmp_file_future_access_list";
 		private string VSCODE_PATH = "C:\\Software\\Microsoft VS Code\\bin\\code.cmd";
 
-		private DataAccessImpl dataAccess;
+		private IMarkdownPageStorage _storage;
 
 		public ExternalEditor()
 		{
 			InitializeComponent();
-			dataAccess = new DataAccessImpl();
+			var storage = new SqLiteStorage("test");
+			_storage = new SqLiteBackend(storage, SystemClock.Instance);
 		}
 
-		protected override void OnNavigatedTo([NotNull] NavigationEventArgs e)
+		protected override async void OnNavigatedTo([NotNull] NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
 
 			var pageId = (string)e.Parameter;
 
-			Page = dataAccess.GetPageOrNull(pageId);
+			Page = await _storage.GetMarkdownPageAsync(pageId);
 
 			LaunchExternalEditor();
 		}
@@ -98,7 +105,7 @@ namespace PrivateWiki.Pages
 
 				Page.Content = content;
 
-				dataAccess.UpdatePage(Page);
+				_storage.UpdateMarkdownPage(Page);
 
 				file.DeleteAsync();
 			}
@@ -106,7 +113,7 @@ namespace PrivateWiki.Pages
 			//if (Frame.CanGoBack) Frame.GoBack();
 		}
 
-		private void GenerateDiff(PageModel page, string newPage)
+		private void GenerateDiff(MarkdownPage page, string newPage)
 		{
 			var diffEngine = new diff_match_patch();
 

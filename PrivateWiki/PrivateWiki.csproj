@@ -137,7 +137,6 @@
     <Compile Include="Data\DataAccess\DataAccessLibrary.DataAccessImpl.cs" />
     <Compile Include="Data\DataAccess\IDataAccess.cs" />
     <Compile Include="Data\DefaultPages.cs" />
-    <Compile Include="Data\MarkdownImport.cs" />
     <Compile Include="Data\MediaAccess.cs" />
     <Compile Include="Data\PageExporter.cs" />
     <Compile Include="Dialogs\EditorImagePickerDialog.xaml.cs">
@@ -156,7 +155,11 @@
       <DependentUpon>WikiLinkDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\DissmissableDialog.cs" />
+    <Compile Include="Markdig\MarkdigPipelineBuilder.cs" />
     <Compile Include="Models\LFSModel.cs" />
+    <Compile Include="Pages\HistoryPage.xaml.cs">
+      <DependentUpon>HistoryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SettingsPages\AssetsSettingsPage.xaml.cs">
       <DependentUpon>AssetsSettingsPage.xaml</DependentUpon>
     </Compile>
@@ -166,6 +169,8 @@
     <Compile Include="SettingStorageTemplateSelector.cs" />
     <Compile Include="Settings\LFSSyncActions.cs" />
     <Compile Include="Settings\SyncModelHandler.cs" />
+    <Compile Include="Storage\DefaultStorageBackends.cs" />
+    <Compile Include="Utilities\DesignHistoryMarkdownPage.cs" />
     <Compile Include="Utilities\DiffMatchPatchAlg.cs" />
     <Compile Include="ImagePickerDialogModel.cs" />
     <Compile Include="Models\DeveloperSettingsModel.cs" />
@@ -183,9 +188,6 @@
     <Compile Include="Markdig\IPageRenderer.cs" />
     <Compile Include="Pages\ImportDiffPage.xaml.cs">
       <DependentUpon>ImportDiffPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\MediaManager.xaml.cs">
-      <DependentUpon>MediaManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="MediaManagerTreeViewItemTemplateSelector.cs" />
     <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockExtension.cs" />
@@ -209,7 +211,7 @@
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Markdig\MarkdigParser.cs" />
+    <Compile Include="Markdig\Markdig.cs" />
     <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkExtension.cs" />
     <Compile Include="Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
@@ -236,6 +238,7 @@
     <Compile Include="Utilities\BoolToColorConverter.cs" />
     <Compile Include="Utilities\ColorExtension.cs" />
     <Compile Include="Utilities\FullyObservableCollection.cs" />
+    <Compile Include="Utilities\InstantToReadableDateTimeConverter.cs" />
     <Compile Include="Utilities\SyncFrequencyToRadioButtonConverter.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -364,11 +367,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ImportDiffPage.xaml">
+    <Page Include="Pages\HistoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MediaManager.xaml">
+    <Page Include="Pages\ImportDiffPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -463,6 +466,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Contracts\Contracts.csproj">
+      <Project>{21481a91-0e12-420e-9949-22432b5fd316}</Project>
+      <Name>Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{112efb3b-66ae-47eb-889d-1d6c876c9ecd}</Project>
       <Name>Models</Name>
@@ -471,9 +478,6 @@
       <Project>{9D7A3C2D-31DC-4D9E-AFD0-2E1FE0631044}</Project>
       <Name>StorageBackend</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Storage" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

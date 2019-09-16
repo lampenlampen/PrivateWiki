@@ -6,7 +6,12 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Contracts.Storage;
+using Models.Pages;
+using Models.Storage;
+using NodaTime;
 using StorageBackend;
+using StorageBackend.SQLite;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -14,29 +19,30 @@ namespace PrivateWiki
 {
 	public sealed partial class SearchPopupContent : UserControl
 	{
-		private readonly List<PageModel> _pages;
-		private ObservableCollection<PageModel> Pages = new ObservableCollection<PageModel>();
-
-		private DataAccessImpl dataAccess;
+		private IEnumerable<MarkdownPage> _pages;
+		private ObservableCollection<MarkdownPage> Pages = new ObservableCollection<MarkdownPage>();
 
 
 		public SearchPopupContent()
 		{
 			InitializeComponent();
-			dataAccess = new DataAccessImpl();
-
-			_pages = dataAccess.GetPages();
+			var backend = new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance);
 
 
 			SearchResultsBox.ItemsSource = Pages;
 			//SearchBox.ItemsSource = Pages;
 		}
 
+		private async void LoadPagesAsync(IMarkdownPageStorage storage)
+		{
+			_pages = await storage.GetAllMarkdownPagesAsync();
+		}
+
 		private void Filter(string text)
 		{
 			var pages = _pages.Where(p => p.Link.Contains(text));
 
-			Pages = new ObservableCollection<PageModel>(pages);
+			Pages = new ObservableCollection<MarkdownPage>(pages);
 		}
 
 		private void SearchBox_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

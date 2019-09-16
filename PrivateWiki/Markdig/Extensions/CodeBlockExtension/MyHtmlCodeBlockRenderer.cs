@@ -1,11 +1,11 @@
-﻿using ColorCode;
+﻿using System.IO;
+using System.Text;
+using ColorCode;
 using Markdig.Parsers;
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Markdig.SyntaxHighlighting;
-using System.IO;
-using System.Text;
 
 namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 {
