@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="using:Models.Pages"
     xmlns:utilities="using:PrivateWiki.Utilities"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance Type=utilities:DesignHistoryMarkdownPage, IsDesignTimeCreatable=True}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -15,23 +16,191 @@
         <utilities:InstantToReadableDateTimeConverter x:Key="InstantToReadableDateTimeConverter" />
 
         <DataTemplate x:Key="CreatedTemplate" x:DataType="pages:HistoryMarkdownPage">
-            <Grid />
+            <controls:DropShadowPanel
+                Color="Black"
+                OffsetX="3"
+                OffsetY="3"
+                BlurRadius="5"
+                ShadowOpacity=".3"
+                Height="Auto"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch">
 
+                <Grid Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel
+                        Background="Gray"
+                        Grid.Row="0"
+                        Orientation="Horizontal"
+                        Padding="16, 8, 0, 8">
+
+                        <TextBlock Text="Page was created at: " />
+                        <TextBlock
+                            Text="{x:Bind Created, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
+
+                    </StackPanel>
+                </Grid>
+            </controls:DropShadowPanel>
         </DataTemplate>
         <DataTemplate x:Key="EditedTemplate" x:DataType="pages:HistoryMarkdownPage">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0"
-                           Text="{x:Bind LastChanged, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
-            </Grid>
+
+            <controls:DropShadowPanel
+                Grid.Row="0"
+                Color="Black"
+                OffsetX="3"
+                OffsetY="3"
+                BlurRadius="5"
+                ShadowOpacity=".3"
+                Height="Auto"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch">
+
+                <Grid Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel
+                        Background="Gray"
+                        Grid.Row="0"
+                        Orientation="Horizontal"
+                        Padding="16, 8, 0, 8">
+
+                        <TextBlock Text="Changed at: " />
+                        <TextBlock
+                            Text="{x:Bind LastChanged, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
+
+                        <TextBlock Text="Locked: " />
+                        <TextBlock Text="{x:Bind IsLocked}" />
+
+                    </StackPanel>
+
+                    <controls:Expander
+                        x:Name="stackpanel"
+                        Grid.Row="1"
+                        Background="White"
+                        Padding="16,8,16,8"
+                        Header="Content">
+
+                        <TextBlock
+                            Text="{x:Bind Content}"
+                            TextWrapping="WrapWholeWords"
+                            HorizontalAlignment="Stretch" />
+
+                    </controls:Expander>
+                </Grid>
+            </controls:DropShadowPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="LockedTemplate" x:DataType="pages:LockedHistoryMarkdownPage">
+            <controls:DropShadowPanel
+                Color="Black"
+                OffsetX="3"
+                OffsetY="3"
+                BlurRadius="5"
+                ShadowOpacity=".3"
+                Height="Auto"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch">
+
+                <Grid Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel
+                        Background="Gray"
+                        Grid.Row="0"
+                        Orientation="Horizontal"
+                        Padding="16, 8, 0, 8">
+
+                        <TextBlock Text="Page was locked at: " />
+                        <TextBlock
+                            Text="{x:Bind Created, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
+
+                    </StackPanel>
+                </Grid>
+            </controls:DropShadowPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="UnlockedTemplate" x:DataType="pages:UnlockedHistoryMarkdownPage">
+            <controls:DropShadowPanel
+                Color="Black"
+                OffsetX="3"
+                OffsetY="3"
+                BlurRadius="5"
+                ShadowOpacity=".3"
+                Height="Auto"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch">
+
+                <Grid Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel
+                        Background="Gray"
+                        Grid.Row="0"
+                        Orientation="Horizontal"
+                        Padding="16, 8, 0, 8">
+
+                        <TextBlock Text="Page was unlocked at: " />
+                        <TextBlock
+                            Text="{x:Bind LastChanged, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
+
+                    </StackPanel>
+                </Grid>
+            </controls:DropShadowPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="DeletedTemplate" x:DataType="pages:HistoryMarkdownPage">
-            <Grid />
+            <controls:DropShadowPanel
+                Color="Black"
+                OffsetX="3"
+                OffsetY="3"
+                BlurRadius="5"
+                ShadowOpacity=".3"
+                Height="Auto"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch">
+
+                <Grid Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel
+                        Background="Gray"
+                        Grid.Row="0"
+                        Orientation="Horizontal"
+                        Padding="16, 8, 0, 8">
+
+                        <TextBlock Text="Page was deleted at: " />
+                        <TextBlock
+                            Text="{x:Bind LastChanged, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
+
+                    </StackPanel>
+                </Grid>
+            </controls:DropShadowPanel>
         </DataTemplate>
+
+        <utilities:PageHistoryTemplateSelector
+            x:Key="PageHistoryTempSelector"
+            CreatedTemplate="{StaticResource CreatedTemplate}"
+            LockedTemplate="{StaticResource LockedTemplate}"
+            UnlockedTemplate="{StaticResource UnlockedTemplate}"
+            EditedTemplate="{StaticResource EditedTemplate}"
+            DeletedTemplate="{StaticResource DeletedTemplate}" />
+
     </Page.Resources>
 
     <Grid>
@@ -45,10 +214,17 @@
             Grid.Row="0">
 
             <TextBlock
+                x:Name="historyText"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignVerticalCenterWithPanel="True"
                 Margin="16, 16, 16, 16"
-                Text="History"
+                Text="History of:"
+                FontSize="18" />
+
+            <TextBlock
+                Text="{x:Bind _link}"
+                RelativePanel.RightOf="historyText"
+                RelativePanel.AlignVerticalCenterWithPanel="True"
                 FontSize="18" />
 
             <Button
@@ -62,11 +238,24 @@
             </Button>
         </RelativePanel>
 
-        <ListView
-            d:DataContext="{d:DesignInstance Type=utilities:DesignHistoryMarkdownPage, IsDesignTimeCreatable=True}"
-            ItemsSource="{x:Bind Pages}"
-            x:Name="Listview"
-            Grid.Row="1"
-            ItemTemplate="{StaticResource EditedTemplate}" />
+        <ScrollViewer Grid.Row="1">
+
+            <ListView
+                d:DataContext="{d:DesignInstance Type=utilities:DesignHistoryMarkdownPage, IsDesignTimeCreatable=True}"
+                ItemsSource="{x:Bind Pages}"
+                x:Name="Listview"
+                Grid.Row="1"
+                SelectionMode="None"
+                ItemTemplateSelector="{StaticResource PageHistoryTempSelector}">
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="Padding" Value="8" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+            </ListView>
+        </ScrollViewer>
     </Grid>
 </Page>
