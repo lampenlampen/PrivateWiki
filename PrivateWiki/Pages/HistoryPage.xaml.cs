@@ -34,19 +34,16 @@ namespace PrivateWiki.Pages
 			_link = pageLink;
 
 			// For developing purposes
-			// Init(pageLink);
-			InitTest();
+			 Init(pageLink);
+			//InitTest();
 		}
 
 		private async void Init(string pageLink)
 		{
 			var storage = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
-			var oldPages = new ObservableCollection<PageHistory<MarkdownPage>>(await storage.GetMarkdownPageHistoryAsync(pageLink));
-			var actualPage = await storage.GetMarkdownPageAsync(pageLink);
+			var pages = new ObservableCollection<PageHistory<MarkdownPage>>(await storage.GetMarkdownPageHistoryAsync(pageLink));
 
-
-
-			Listview.ItemsSource = Pages;
+			Listview.ItemsSource = pages;
 		}
 
 		private async void InitTest()

@@ -211,7 +211,7 @@ namespace StorageBackend.SQLite
 				{
 					Connection = conn,
 					CommandText =
-						"INSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, action) SELECT id, link, content, created, changed, locked, @Now, changed, @Action FROM 'markdown_pages' WHERE id = @Id;\nUPDATE 'markdown_pages' SET id = @Id, link = @Link, content = @Content, created = @Created, changed = @Changed, locked = @Locked WHERE id = @Id;"
+						"UPDATE 'markdown_pages_history' SET valid_to = @Now WHERE valid_to = -1;\nINSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, action) VALUES (@Id, @Link, @Content, @Created, @Changed, @Locked, @Now, -1, @Action);\nUPDATE 'markdown_pages' SET id = @Id, link = @Link, content = @Content, created = @Created, changed = @Changed, locked = @Locked WHERE id = @Id;"
 				};
 				command.Parameters.AddWithValue("@Id", page.Id.ToString());
 				command.Parameters.AddWithValue("@Link", page.Link);
@@ -220,7 +220,7 @@ namespace StorageBackend.SQLite
 				command.Parameters.AddWithValue("@Changed", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
 				command.Parameters.AddWithValue("@Locked", page.IsLocked);
 				command.Parameters.AddWithValue("@Now", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
-				command.Parameters.AddWithValue("@Action", action.ToString());
+				command.Parameters.AddWithValue("@Action", action);
 
 				conn.Open();
 				var result = command.ExecuteNonQuery();
@@ -248,7 +248,7 @@ namespace StorageBackend.SQLite
 					{
 						Connection = conn,
 						CommandText =
-							"INSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, action) SELECT id, link, content, created, changed, locked, @Now, changed, @Action FROM 'markdown_pages' WHERE id = @Id;\nDELETE FROM 'markdown_pages' WHERE id = @Id"
+							"UPDATE 'markdown_pages_history' SET valid_to = @Now WHERE valid_to = -1;\nINSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, action) SELECT id, link, content, created, changed, locked, -1, @Now, @Action FROM 'markdown_pages' WHERE id = @Id;\nDELETE FROM 'markdown_pages' WHERE id = @Id"
 					};
 					command.Parameters.AddWithValue("@Id", id.ToString());
 					command.Parameters.AddWithValue("@Now", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
@@ -285,7 +285,7 @@ namespace StorageBackend.SQLite
 					{
 						Connection = conn,
 						CommandText =
-							"INSERT INTO 'markdown_pages' (id, link, content, created, changed, locked) VALUES (@Id, @Link, @Content, @Created, @Changed, @Locked)"
+							"INSERT INTO 'markdown_pages' (id, link, content, created, changed, locked) VALUES (@Id, @Link, @Content, @Created, @Changed, @Locked);\nINSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, action) VALUES (@Id, @Link, @Content, @Created, @Changed, @Locked, -1, @Now, @Action);"
 					};
 					command.Parameters.AddWithValue("@Id", mPage.Id.ToString());
 					command.Parameters.AddWithValue("@Link", mPage.Link);
@@ -293,6 +293,8 @@ namespace StorageBackend.SQLite
 					command.Parameters.AddWithValue("@Created", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
 					command.Parameters.AddWithValue("@Changed", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
 					command.Parameters.AddWithValue("@Locked", mPage.IsLocked);
+					command.Parameters.AddWithValue("@Now", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
+					command.Parameters.AddWithValue("@Action", PageAction.Created);
 
 					conn.Open();
 					var result = command.ExecuteNonQuery();
@@ -384,21 +386,13 @@ namespace StorageBackend.SQLite
 				var command = new SqliteCommand
 				{
 					Connection = conn,
-					CommandText = "SELECT * FROM 'markdown_pages_history' WHERE link = @Link ORDER BY valid_from ASC"
+					CommandText = "SELECT * FROM 'markdown_pages_history' WHERE link = @Link ORDER BY valid_from"
 				};
 				command.Parameters.AddWithValue("@Link", pageLink);
 
-				var pageTask = GetMarkdownPageAsync(pageLink);
-				
 				conn.Open();
 				var result = command.ExecuteReader();
-				var oldPages = SqliteDataReaderToHistoryMarkdownPageConverter.Instance.ConvertToHistoryMarkdownPageModels(result);
-
-				pageTask.Wait();
-				var newestPage = pageTask.Result;
-
-				var pages = new List<PageHistory<MarkdownPage>>();
-
+				var pages = SqliteDataReaderToHistoryMarkdownPageConverter.Instance.ConvertToHistoryMarkdownPageModels(result);
 
 				return pages;
 			}
