@@ -33,13 +33,13 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel
-                        Background="Gray"
+                        Background="{ThemeResource SystemControlBackgroundAccentBrush}"
                         Grid.Row="0"
                         Orientation="Horizontal"
                         Padding="16, 8, 0, 8">
 
-                        <TextBlock Text="Page was created at: " />
-                        <TextBlock
+                        <TextBlock Text="Page was created at:" />
+                        <TextBlock Margin="6, 0, 0, 0"
                             Text="{x:Bind Created, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
 
                     </StackPanel>
@@ -66,17 +66,14 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel
-                        Background="Gray"
+                        Background="{ThemeResource SystemControlBackgroundAccentBrush}"
                         Grid.Row="0"
                         Orientation="Horizontal"
                         Padding="16, 8, 0, 8">
 
-                        <TextBlock Text="Changed at: " />
+                        <TextBlock Text="Page was edited at: " />
                         <TextBlock
                             Text="{x:Bind LastChanged, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
-
-                        <TextBlock Text="Locked: " />
-                        <TextBlock Text="{x:Bind IsLocked}" />
 
                     </StackPanel>
 
@@ -115,7 +112,7 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel
-                        Background="Gray"
+                        Background="{ThemeResource SystemControlBackgroundAccentBrush}"
                         Grid.Row="0"
                         Orientation="Horizontal"
                         Padding="16, 8, 0, 8">
@@ -147,7 +144,7 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel
-                        Background="Gray"
+                        Background="{ThemeResource SystemControlBackgroundAccentBrush}"
                         Grid.Row="0"
                         Orientation="Horizontal"
                         Padding="16, 8, 0, 8">
@@ -179,7 +176,7 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel
-                        Background="Gray"
+                        Background="{ThemeResource SystemControlBackgroundAccentBrush}"
                         Grid.Row="0"
                         Orientation="Horizontal"
                         Padding="16, 8, 0, 8">
@@ -246,6 +243,7 @@
                 x:Name="Listview"
                 Grid.Row="1"
                 SelectionMode="None"
+                Margin="12"
                 ItemTemplateSelector="{StaticResource PageHistoryTempSelector}">
 
                 <ListView.ItemContainerStyle>

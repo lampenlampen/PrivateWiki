@@ -170,7 +170,6 @@
     <Compile Include="Settings\LFSSyncActions.cs" />
     <Compile Include="Settings\SyncModelHandler.cs" />
     <Compile Include="Storage\DefaultStorageBackends.cs" />
-    <Compile Include="Utilities\DesignHistoryMarkdownPage.cs" />
     <Compile Include="Utilities\DiffMatchPatchAlg.cs" />
     <Compile Include="ImagePickerDialogModel.cs" />
     <Compile Include="Models\DeveloperSettingsModel.cs" />

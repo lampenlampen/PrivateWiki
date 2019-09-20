@@ -372,7 +372,7 @@ namespace StorageBackend.SQLite
 			return new TaskFactory<bool>().StartNew(link => MarkdownPageAction((string) link), link);
 		}
 
-		public Task<IEnumerable<HistoryMarkdownPage>> GetHistory(string pageLink)
+		public Task<IEnumerable<HistoryMarkdownPage>> GetMarkdownPageHistoryAsync(string pageLink)
 		{
 			IEnumerable<HistoryMarkdownPage> Action(string pageLink)
 			{
@@ -384,6 +384,10 @@ namespace StorageBackend.SQLite
 					CommandText = "SELECT * FROM 'markdown_pages_history' WHERE link = @Link"
 				};
 				command.Parameters.AddWithValue("@Link", pageLink);
+
+				var pageTask = GetMarkdownPageAsync(pageLink);
+				pageTask.Wait();
+				var page = pageTask.Result;
 
 				conn.Open();
 

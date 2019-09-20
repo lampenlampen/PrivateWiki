@@ -82,6 +82,6 @@ namespace Contracts.Storage
 		/// </summary>
 		/// <param name="pageLink"></param>
 		/// <returns></returns>
-		Task<IEnumerable<HistoryMarkdownPage>> GetHistory(string pageLink);
+		Task<IEnumerable<HistoryMarkdownPage>> GetMarkdownPageHistoryAsync(string pageLink);
 	}
 }
