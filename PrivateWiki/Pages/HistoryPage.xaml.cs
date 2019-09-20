@@ -17,7 +17,7 @@ namespace PrivateWiki.Pages
 	/// </summary>
 	public sealed partial class HistoryPage : Page
 	{
-		private ObservableCollection<HistoryMarkdownPage> Pages { get; set; }
+		private ObservableCollection<PageHistory<MarkdownPage>> Pages { get; set; }
 
 		private string _link;
 
@@ -41,7 +41,7 @@ namespace PrivateWiki.Pages
 		private async void Init(string pageLink)
 		{
 			var storage = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
-			var oldPages = new ObservableCollection<HistoryMarkdownPage>(await storage.GetMarkdownPageHistoryAsync(pageLink));
+			var oldPages = new ObservableCollection<PageHistory<MarkdownPage>>(await storage.GetMarkdownPageHistoryAsync(pageLink));
 			var actualPage = await storage.GetMarkdownPageAsync(pageLink);
 
 
@@ -53,113 +53,146 @@ namespace PrivateWiki.Pages
 		{
 			// Create dummy data.
 
-			var pages = new ObservableCollection<HistoryMarkdownPage>();
+			var pages = new ObservableCollection<PageHistory<MarkdownPage>>();
 
 			var id = Guid.NewGuid();
 			var id2 = Guid.NewGuid();
 
-			var created = new CreatedHistoryMarkdownPage
+			var createdPage = new MarkdownPage
 			{
 				Created = Instant.FromUnixTimeMilliseconds(1567296000),
-				ValidFrom = Instant.FromUnixTimeMilliseconds(1567296000),
 				Content = "",
 				Id = id,
 				Link = "test1",
 				IsLocked = false,
-				IsDeleted = false,
-				LastChanged = Instant.FromUnixTimeMilliseconds(1567296000),
-				ValidTo = Instant.FromUnixTimeMilliseconds(1567468840)
+				LastChanged = Instant.FromUnixTimeMilliseconds(1567296000)
 			};
 
-			var edited = new EditedHistoryMarkdownPage
+			var created = new MarkdownPageHistory(createdPage)
 			{
-				Created = Instant.FromUnixTimeMilliseconds(1567296000),
+				ValidFrom = Instant.FromUnixTimeMilliseconds(1567296000),
+				ValidTo = Instant.FromUnixTimeMilliseconds(1567468840),
+				Action = PageAction.Created
+			};
+
+			var editedPage = new MarkdownPage
+				{
+					Created = Instant.FromUnixTimeMilliseconds(1567296000),
+					Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
+					Id = id,
+					Link = "test1",
+					IsLocked = false,
+					LastChanged = Instant.FromUnixTimeMilliseconds(1567468840)
+			};
+
+			var edited = new MarkdownPageHistory(editedPage)
+			{
+				
 				ValidFrom = Instant.FromUnixTimeMilliseconds(1567468840),
-				Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
-				Id = id,
-				Link = "test1",
-				IsLocked = false,
-				IsDeleted = false,
-				LastChanged = Instant.FromUnixTimeMilliseconds(1567468840),
-				ValidTo = Instant.FromUnixTimeMilliseconds(1567555220)
+				ValidTo = Instant.FromUnixTimeMilliseconds(1567555220),
+				Action = PageAction.Edited
 			};
 
-			var locked = new LockedHistoryMarkdownPage
+			var lockedPage = new MarkdownPage
 			{
 				Created = Instant.FromUnixTimeMilliseconds(1567296000),
-				ValidFrom = Instant.FromUnixTimeMilliseconds(1567555220),
 				Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
 				Id = id,
 				Link = "test1",
 				IsLocked = true,
-				IsDeleted = false,
 				LastChanged = Instant.FromUnixTimeMilliseconds(1567555220),
-				ValidTo = Instant.FromUnixTimeMilliseconds(1567641650)
 			};
 
-			var unlocked = new UnlockedHistoryMarkdownPage
+			var locked = new MarkdownPageHistory(lockedPage)
 			{
-				Created = Instant.FromUnixTimeMilliseconds(1567296000),
+				ValidFrom = Instant.FromUnixTimeMilliseconds(1567555220),
+				ValidTo = Instant.FromUnixTimeMilliseconds(1567641650),
+				Action = PageAction.Locked
+			};
+
+			var unlockedPage = new MarkdownPage
+				{
+					Created = Instant.FromUnixTimeMilliseconds(1567296000),
+					Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
+					Id = id,
+					Link = "test1",
+					IsLocked = false,
+					LastChanged = Instant.FromUnixTimeMilliseconds(1567641650)
+			};
+
+			var unlocked = new MarkdownPageHistory(unlockedPage)
+			{
 				ValidFrom = Instant.FromUnixTimeMilliseconds(1567641650),
-				Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
-				Id = id,
-				Link = "test1",
-				IsLocked = false,
-				IsDeleted = false,
-				LastChanged = Instant.FromUnixTimeMilliseconds(1567641650),
-				ValidTo = Instant.FromUnixTimeMilliseconds(1567728450)
+				ValidTo = Instant.FromUnixTimeMilliseconds(1567728450),
+				Action = PageAction.Unlocked
 			};
 
-			var edited2 = new EditedHistoryMarkdownPage
+			var edited2Page = new MarkdownPage
 			{
 				Created = Instant.FromUnixTimeMilliseconds(1567296000),
-				ValidFrom = Instant.FromUnixTimeMilliseconds(1567728450),
 				Content = "# Test Heading 1\ntesfsdgkjasbfadfsg\n## Heading 2\nsdfkljnhasdf",
 				Id = id,
 				Link = "test1",
 				IsLocked = false,
-				IsDeleted = false,
 				LastChanged = Instant.FromUnixTimeMilliseconds(1567728450),
-				ValidTo = Instant.FromUnixTimeMilliseconds(1567814570)
 			};
 
-			var deleted = new DeletedHistoryMarkdownPage
+			var edited2 = new MarkdownPageHistory(edited2Page)
+			{
+				ValidFrom = Instant.FromUnixTimeMilliseconds(1567728450),
+				ValidTo = Instant.FromUnixTimeMilliseconds(1567814570),
+				Action = PageAction.Edited
+			};
+
+			var deletedPage = new MarkdownPage
 			{
 				Created = Instant.FromUnixTimeMilliseconds(1567296000),
-				ValidFrom = Instant.FromUnixTimeMilliseconds(1567814570),
 				Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
 				Id = id,
 				Link = "test1",
 				IsLocked = false,
-				IsDeleted = true,
 				LastChanged = Instant.FromUnixTimeMilliseconds(1567814570),
-				ValidTo = Instant.FromUnixTimeMilliseconds(1567900820)
 			};
 
-			var created2 = new CreatedHistoryMarkdownPage
+			var deleted = new MarkdownPageHistory(deletedPage)
+			{
+				ValidFrom = Instant.FromUnixTimeMilliseconds(1567814570),
+				ValidTo = Instant.FromUnixTimeMilliseconds(1567900820),
+				Action = PageAction.Deleted
+			};
+
+			var created2Page = new MarkdownPage
 			{
 				Created = Instant.FromUnixTimeMilliseconds(1567296000),
-				ValidFrom = Instant.FromUnixTimeMilliseconds(1567900820),
 				Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
 				Id = id2,
 				Link = "test1",
 				IsLocked = false,
-				IsDeleted = false,
-				LastChanged = Instant.FromUnixTimeMilliseconds(1567900820),
-				ValidTo = Instant.FromUnixTimeMilliseconds(1567987200)
+				LastChanged = Instant.FromUnixTimeMilliseconds(1567900820)
 			};
 
-			var edited3 = new EditedHistoryMarkdownPage
+			var created2 = new MarkdownPageHistory(created2Page)
+			{
+				ValidFrom = Instant.FromUnixTimeMilliseconds(1567900820),
+				ValidTo = Instant.FromUnixTimeMilliseconds(1567987200),
+				Action = PageAction.Created
+			};
+
+			var edited3Page = new MarkdownPage
 			{
 				Created = Instant.FromUnixTimeMilliseconds(1567296000),
-				ValidFrom = Instant.FromUnixTimeMilliseconds(1567987200),
 				Content = "# asfökjhasdf",
 				Id = id2,
 				Link = "test1",
 				IsLocked = false,
-				IsDeleted = false,
-				LastChanged = Instant.FromUnixTimeMilliseconds(1567987200),
-				ValidTo = Instant.FromUnixTimeMilliseconds(0)
+				LastChanged = Instant.FromUnixTimeMilliseconds(1567987200)
+			};
+
+			var edited3 = new MarkdownPageHistory(edited3Page)
+			{
+				ValidFrom = Instant.FromUnixTimeMilliseconds(1567987200),
+				ValidTo = Instant.FromUnixTimeMilliseconds(0),
+				Action = PageAction.Edited
 			};
 
 			pages.Add(created);

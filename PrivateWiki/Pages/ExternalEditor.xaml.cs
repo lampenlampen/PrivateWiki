@@ -105,7 +105,7 @@ namespace PrivateWiki.Pages
 
 				Page.Content = content;
 
-				_storage.UpdateMarkdownPage(Page);
+				_storage.UpdateMarkdownPage(Page, PageAction.Edited);
 
 				file.DeleteAsync();
 			}

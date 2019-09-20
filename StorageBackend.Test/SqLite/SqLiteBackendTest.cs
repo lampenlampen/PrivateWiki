@@ -97,12 +97,12 @@ namespace StorageBackend.Test.SqLite
 
 			page.Content = "test2";
 
-			var task2 = sqliteBackend.UpdateMarkdownPage(page);
+			var task2 = sqliteBackend.UpdateMarkdownPage(page, PageAction.Edited);
 			task2.Wait();
 
 			page.Content = "test3";
 
-			var task3 = sqliteBackend.UpdateMarkdownPage(page);
+			var task3 = sqliteBackend.UpdateMarkdownPage(page, PageAction.Edited);
 			task3.Wait();
 			
 			Assert.IsTrue(task2.Result);

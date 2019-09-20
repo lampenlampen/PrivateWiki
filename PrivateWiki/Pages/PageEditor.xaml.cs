@@ -128,7 +128,7 @@ namespace PrivateWiki.Pages
 			else
 			{
 				// TODO Error while Updating Page
-				await _storage.UpdateMarkdownPage(Page);
+				await _storage.UpdateMarkdownPage(Page, PageAction.Edited);
 
 				if (Frame.CanGoBack) Frame.GoBack();
 			}

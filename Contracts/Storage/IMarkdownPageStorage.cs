@@ -31,8 +31,9 @@ namespace Contracts.Storage
 		/// Updates a page in the <see cref="IStorageBackend"/>.
 		/// </summary>
 		/// <param name="page"></param>
+		/// <param name="action"></param>
 		/// <returns></returns>
-		Task<bool> UpdateMarkdownPage(MarkdownPage page);
+		Task<bool> UpdateMarkdownPage(MarkdownPage page, PageAction action);
 
 		/// <summary>
 		/// Deletes a page.
@@ -82,6 +83,6 @@ namespace Contracts.Storage
 		/// </summary>
 		/// <param name="pageLink"></param>
 		/// <returns></returns>
-		Task<IEnumerable<HistoryMarkdownPage>> GetMarkdownPageHistoryAsync(string pageLink);
+		Task<IEnumerable<PageHistory<MarkdownPage>>> GetMarkdownPageHistoryAsync(string pageLink);
 	}
 }

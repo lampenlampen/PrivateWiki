@@ -9,37 +9,29 @@ namespace StorageBackend.SQLite
 {
 	class SqliteDataReaderToHistoryMarkdownPageConverter : SqliteDataReaderToMarkdownPageConverter
 	{
-		public new static SqliteDataReaderToHistoryMarkdownPageConverter Instance => new SqliteDataReaderToHistoryMarkdownPageConverter();
+		public new static SqliteDataReaderToHistoryMarkdownPageConverter Instance =>
+			new SqliteDataReaderToHistoryMarkdownPageConverter();
 
-		public bool ConvertToHistoryMarkdownPageModel(SqliteDataReader reader, HistoryMarkdownPage page)
+		public List<MarkdownPageHistory> ConvertToHistoryMarkdownPageModels(SqliteDataReader reader)
 		{
-			while (reader.Read())
-			{
-				if (SqliteDataToMarkdownModel(reader, page))
-				{
-					page.ValidFrom = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("valid_from")));
-					page.ValidTo = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("valid_to")));
-
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		public IList<HistoryMarkdownPage> ConvertToHistoryMarkdownPageModels(SqliteDataReader reader)
-		{
-			var pages = new List<HistoryMarkdownPage>();
+			var pages = new List<MarkdownPageHistory>();
 
 			while (reader.Read())
 			{
-				var page = new HistoryMarkdownPage();
+				var page = new MarkdownPage();
 				if (SqliteDataToMarkdownModel(reader, page))
 				{
-					page.ValidFrom = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("valid_from")));
-					page.ValidTo = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("valid_to")));
+					var mdPageHistory = new MarkdownPageHistory(page)
+					{
+						ValidFrom =
+							Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("valid_from"))),
+						ValidTo = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("valid_to"))),
+						Action = (PageAction) Enum.Parse(typeof(PageAction),
+							reader.GetString(reader.GetOrdinal("action")))
+					};
 
-					pages.Add(page);
+
+					pages.Add(mdPageHistory);
 				}
 			}
 

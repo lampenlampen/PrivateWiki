@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Contracts.Storage;
 using Microsoft.Data.Sqlite;
@@ -83,7 +84,7 @@ namespace StorageBackend.SQLite
 							  locked INTEGER,
 							  valid_from INTEGER,
 							  valid_to INTEGER,
-							  deleted INTEGER,
+							  action Integer,
 							  PRIMARY KEY (id, valid_from, valid_to)
 				              );"
 			};
@@ -200,7 +201,7 @@ namespace StorageBackend.SQLite
 			return Task.Run(Action);
 		}
 
-		public Task<bool> UpdateMarkdownPage(MarkdownPage page)
+		public Task<bool> UpdateMarkdownPage(MarkdownPage page, PageAction action)
 		{
 			bool MarkdownPageAction(MarkdownPage page)
 			{
@@ -210,7 +211,7 @@ namespace StorageBackend.SQLite
 				{
 					Connection = conn,
 					CommandText =
-						"INSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, deleted) SELECT id, link, content, created, changed, locked, @Now, changed, false FROM 'markdown_pages' WHERE id = @Id;\nUPDATE 'markdown_pages' SET id = @Id, link = @Link, content = @Content, created = @Created, changed = @Changed, locked = @Locked WHERE id = @Id;"
+						"INSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, action) SELECT id, link, content, created, changed, locked, @Now, changed, @Action FROM 'markdown_pages' WHERE id = @Id;\nUPDATE 'markdown_pages' SET id = @Id, link = @Link, content = @Content, created = @Created, changed = @Changed, locked = @Locked WHERE id = @Id;"
 				};
 				command.Parameters.AddWithValue("@Id", page.Id.ToString());
 				command.Parameters.AddWithValue("@Link", page.Link);
@@ -219,6 +220,7 @@ namespace StorageBackend.SQLite
 				command.Parameters.AddWithValue("@Changed", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
 				command.Parameters.AddWithValue("@Locked", page.IsLocked);
 				command.Parameters.AddWithValue("@Now", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
+				command.Parameters.AddWithValue("@Action", action.ToString());
 
 				conn.Open();
 				var result = command.ExecuteNonQuery();
@@ -246,10 +248,11 @@ namespace StorageBackend.SQLite
 					{
 						Connection = conn,
 						CommandText =
-							"INSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, deleted) SELECT id, link, content, created, changed, locked, @Now, changed, true FROM 'markdown_pages' WHERE id = @Id;\nDELETE FROM 'markdown_pages' WHERE id = @Id"
+							"INSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, action) SELECT id, link, content, created, changed, locked, @Now, changed, @Action FROM 'markdown_pages' WHERE id = @Id;\nDELETE FROM 'markdown_pages' WHERE id = @Id"
 					};
 					command.Parameters.AddWithValue("@Id", id.ToString());
 					command.Parameters.AddWithValue("@Now", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
+					command.Parameters.AddWithValue("@Action", PageAction.Deleted.ToString());
 
 					conn.Open();
 					var result = command.ExecuteNonQuery();
@@ -372,33 +375,35 @@ namespace StorageBackend.SQLite
 			return new TaskFactory<bool>().StartNew(link => MarkdownPageAction((string) link), link);
 		}
 
-		public Task<IEnumerable<HistoryMarkdownPage>> GetMarkdownPageHistoryAsync(string pageLink)
+		public Task<IEnumerable<PageHistory<MarkdownPage>>> GetMarkdownPageHistoryAsync(string pageLink)
 		{
-			IEnumerable<HistoryMarkdownPage> Action(string pageLink)
+			IEnumerable<PageHistory<MarkdownPage>> Action(string pageLink)
 			{
 				using var conn = _conn;
 
 				var command = new SqliteCommand
 				{
 					Connection = conn,
-					CommandText = "SELECT * FROM 'markdown_pages_history' WHERE link = @Link"
+					CommandText = "SELECT * FROM 'markdown_pages_history' WHERE link = @Link ORDER BY valid_from ASC"
 				};
 				command.Parameters.AddWithValue("@Link", pageLink);
 
 				var pageTask = GetMarkdownPageAsync(pageLink);
-				pageTask.Wait();
-				var page = pageTask.Result;
-
+				
 				conn.Open();
-
 				var result = command.ExecuteReader();
+				var oldPages = SqliteDataReaderToHistoryMarkdownPageConverter.Instance.ConvertToHistoryMarkdownPageModels(result);
 
-				var pages = SqliteDataReaderToHistoryMarkdownPageConverter.Instance.ConvertToHistoryMarkdownPageModels(result);
+				pageTask.Wait();
+				var newestPage = pageTask.Result;
+
+				var pages = new List<PageHistory<MarkdownPage>>();
+
 
 				return pages;
 			}
 
-			return new TaskFactory<IEnumerable<HistoryMarkdownPage>>().StartNew(page => Action((string) page), pageLink);
+			return new TaskFactory<IEnumerable<PageHistory<MarkdownPage>>>().StartNew(page => Action((string) page), pageLink);
 		}
 
 		#endregion

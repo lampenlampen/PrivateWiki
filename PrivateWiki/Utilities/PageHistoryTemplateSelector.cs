@@ -23,13 +23,15 @@ namespace PrivateWiki.Utilities
 
 		protected override DataTemplate SelectTemplateCore(object item)
 		{
-			return item switch
+			var page = (MarkdownPageHistory) item;
+
+			return page.Action switch
 			{
-				CreatedHistoryMarkdownPage _=> CreatedTemplate,
-				LockedHistoryMarkdownPage _ => LockedTemplate,
-				UnlockedHistoryMarkdownPage _ => UnlockedTemplate,
-				EditedHistoryMarkdownPage _ => EditedTemplate,
-				DeletedHistoryMarkdownPage _ => DeletedTemplate,
+				PageAction.Created => CreatedTemplate,
+				PageAction.Locked => LockedTemplate,
+				PageAction.Unlocked => UnlockedTemplate,
+				PageAction.Edited => EditedTemplate,
+				PageAction.Deleted => DeletedTemplate,
 				_ => EditedTemplate
 			};
 		}
