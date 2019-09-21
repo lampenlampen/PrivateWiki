@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Models.Storage;
 using NodaTime;
-using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Models;
 using StorageBackend.SQLite;
 

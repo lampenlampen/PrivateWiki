@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
-using Contracts.Storage;
 using JetBrains.Annotations;
 using Models.Pages;
 using Models.Storage;
 using NodaTime;
 using PrivateWiki.Data;
-using PrivateWiki.Data.DataAccess;
-using PrivateWiki.Markdig;
-using StorageBackend;
 using StorageBackend.SQLite;
 
 // Die Elementvorlage "Inhaltsdialogfeld" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.

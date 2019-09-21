@@ -1,14 +1,9 @@
 ﻿using NodaTime;
 using PrivateWiki.Data;
-using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Pages;
-using PrivateWiki.Pages.SettingsPages;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;

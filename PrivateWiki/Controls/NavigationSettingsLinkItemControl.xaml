@@ -9,6 +9,7 @@
     xmlns:composition="using:Windows.UI.Composition"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:storageBackend="using:StorageBackend"
+    xmlns:pages="using:Models.Pages"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
@@ -54,7 +55,7 @@
                     SelectionChanged="LinkCombo_OnSelectionChanged"
                     ItemsSource="{x:Bind Pages}">
                     <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="storageBackend:PageModel">
+                        <DataTemplate x:DataType="pages:Page">
                             <TextBlock Text="{x:Bind Link}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>

@@ -2,8 +2,6 @@
 using System.Threading.Tasks;
 using Windows.Storage;
 using Models.Pages;
-using PrivateWiki.Markdig;
-using StorageBackend;
 
 namespace PrivateWiki.Data
 {

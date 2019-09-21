@@ -1,5 +1,4 @@
-﻿using PrivateWiki.Data.DataAccess;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -10,7 +9,6 @@ using Contracts.Storage;
 using Models.Pages;
 using Models.Storage;
 using NodaTime;
-using StorageBackend;
 using StorageBackend.SQLite;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236

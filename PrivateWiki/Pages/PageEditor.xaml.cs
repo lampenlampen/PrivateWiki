@@ -1,7 +1,6 @@
 ﻿using JetBrains.Annotations;
 using NodaTime;
 using PrivateWiki.Data;
-using PrivateWiki.Data.DataAccess;
 using PrivateWiki.Dialogs;
 using System;
 using System.Diagnostics;
@@ -14,8 +13,6 @@ using Windows.UI.Xaml.Navigation;
 using Contracts.Storage;
 using Models.Pages;
 using Models.Storage;
-using PrivateWiki.Markdig;
-using StorageBackend;
 using StorageBackend.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;
 

@@ -1,5 +1,4 @@
 ﻿using JetBrains.Annotations;
-using PrivateWiki.Data.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,7 +13,6 @@ using Contracts.Storage;
 using Models.Pages;
 using Models.Storage;
 using NodaTime;
-using StorageBackend;
 using StorageBackend.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;
 

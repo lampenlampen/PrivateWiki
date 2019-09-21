@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -9,9 +8,8 @@ using Contracts.Storage;
 using Models.Pages;
 using Models.Storage;
 using NodaTime;
-using PrivateWiki.Data.DataAccess;
-using StorageBackend;
 using StorageBackend.SQLite;
+using Page = Models.Pages.Page;
 
 #nullable enable
 
@@ -68,7 +66,7 @@ namespace PrivateWiki.Controls
 
 		private void LinkCombo_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			var link = (PageModel) e.AddedItems.First();
+			var link = (Page) e.AddedItems.First();
 			LinkSelected?.Invoke(link.Id);
 		}
 	}

@@ -134,8 +134,6 @@
     <Compile Include="Controls\Settings\Sync\LFSControl.xaml.cs">
       <DependentUpon>LFSControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\DataAccess\DataAccessLibrary.DataAccessImpl.cs" />
-    <Compile Include="Data\DataAccess\IDataAccess.cs" />
     <Compile Include="Data\DefaultPages.cs" />
     <Compile Include="Data\MediaAccess.cs" />
     <Compile Include="Data\PageExporter.cs" />

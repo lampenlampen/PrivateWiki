@@ -1,11 +1,9 @@
 using NodaTime;
-using PrivateWiki.Data.DataAccess;
 using System;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Contracts.Storage;
 using Models.Pages;
-using StorageBackend;
 
 namespace PrivateWiki.Data
 {
