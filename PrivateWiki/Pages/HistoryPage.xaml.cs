@@ -43,7 +43,8 @@ namespace PrivateWiki.Pages
 			var storage = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
 			var pages = new ObservableCollection<PageHistory<MarkdownPage>>(await storage.GetMarkdownPageHistoryAsync(pageLink));
 
-			Listview.ItemsSource = pages;
+			Pages = pages;
+			Bindings.Update();
 		}
 
 		private async void InitTest()

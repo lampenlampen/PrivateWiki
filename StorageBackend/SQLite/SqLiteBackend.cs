@@ -211,7 +211,7 @@ namespace StorageBackend.SQLite
 				{
 					Connection = conn,
 					CommandText =
-						"UPDATE 'markdown_pages_history' SET valid_to = @Now WHERE valid_to = -1;\nINSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, action) VALUES (@Id, @Link, @Content, @Created, @Changed, @Locked, @Now, -1, @Action);\nUPDATE 'markdown_pages' SET id = @Id, link = @Link, content = @Content, created = @Created, changed = @Changed, locked = @Locked WHERE id = @Id;"
+						"UPDATE 'markdown_pages_history' SET valid_to = @Now WHERE valid_to = -1 AND id = @Id;\nINSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, action) VALUES (@Id, @Link, @Content, @Created, @Changed, @Locked, -1, @Now, @Action);\nUPDATE 'markdown_pages' SET id = @Id, link = @Link, content = @Content, created = @Created, changed = @Changed, locked = @Locked WHERE id = @Id;"
 				};
 				command.Parameters.AddWithValue("@Id", page.Id.ToString());
 				command.Parameters.AddWithValue("@Link", page.Link);
@@ -248,7 +248,7 @@ namespace StorageBackend.SQLite
 					{
 						Connection = conn,
 						CommandText =
-							"UPDATE 'markdown_pages_history' SET valid_to = @Now WHERE valid_to = -1;\nINSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, action) SELECT id, link, content, created, changed, locked, -1, @Now, @Action FROM 'markdown_pages' WHERE id = @Id;\nDELETE FROM 'markdown_pages' WHERE id = @Id"
+							"UPDATE 'markdown_pages_history' SET valid_to = @Now WHERE valid_to = -1 AND id = @Id;\nINSERT INTO 'markdown_pages_history' (id, link, content, created, changed, locked, valid_to, valid_from, action) SELECT id, link, content, created, changed, locked, -1, @Now, @Action FROM 'markdown_pages' WHERE id = @Id;\nDELETE FROM 'markdown_pages' WHERE id = @Id"
 					};
 					command.Parameters.AddWithValue("@Id", id.ToString());
 					command.Parameters.AddWithValue("@Now", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
