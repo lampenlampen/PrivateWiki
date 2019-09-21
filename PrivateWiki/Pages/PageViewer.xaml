@@ -31,7 +31,7 @@
             IsLightDismissEnabled="True"
             LightDismissOverlayMode="On">
 
-            <privateWiki:SearchPopupContent />
+            <privateWiki:SearchPopupContent x:Name="SearchPopupContentName" />
 
         </Popup>
 

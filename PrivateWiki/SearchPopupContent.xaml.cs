@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -9,7 +10,9 @@ using Contracts.Storage;
 using Models.Pages;
 using Models.Storage;
 using NodaTime;
+using PrivateWiki.Storage;
 using StorageBackend.SQLite;
+using Page = Models.Pages.Page;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -20,32 +23,41 @@ namespace PrivateWiki
 		private IEnumerable<MarkdownPage> _pages;
 		private ObservableCollection<MarkdownPage> Pages = new ObservableCollection<MarkdownPage>();
 
+		public string SelectedPageLink { get; private set; }
+
 
 		public SearchPopupContent()
 		{
 			InitializeComponent();
-			var backend = new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance);
-
+			Init();
 
 			SearchResultsBox.ItemsSource = Pages;
 			//SearchBox.ItemsSource = Pages;
 		}
 
-		private async void LoadPagesAsync(IMarkdownPageStorage storage)
+
+
+		private async void Init()
 		{
-			_pages = await storage.GetAllMarkdownPagesAsync();
+			var backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
+			_pages = await backend.GetAllMarkdownPagesAsync();
 		}
 
-		private void Filter(string text)
+		private void FilterPages(string text)
 		{
 			var pages = _pages.Where(p => p.Link.Contains(text));
 
-			Pages = new ObservableCollection<MarkdownPage>(pages);
+			Pages.Clear();
+
+			foreach (var page in pages)
+			{
+				Pages.Add(page);
+			}
 		}
 
 		private void SearchBox_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
 		{
-			Filter(SearchBox.Text);
+			FilterPages(SearchBox.Text);
 		}
 
 		private void SearchBox_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
@@ -57,6 +69,26 @@ namespace PrivateWiki
 			while (!(p is Popup)) p = p.Parent as FrameworkElement;
 
 			(p as Popup).IsOpen = false;
+		}
+
+		private void SearchResultsBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			var page = (Page) SearchResultsBox.SelectedItem;
+			SelectedPageLink = page.Link;
+
+			var p = Parent as FrameworkElement;
+
+			while (!(p is Popup)) p = p.Parent as FrameworkElement;
+
+			(p as Popup).IsOpen = false;
+		}
+
+		private void SearchBox_OnSizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			if (e.PreviousSize.Height == 0 && e.PreviousSize.Width == 0)
+			{
+				SearchBox.Focus(FocusState.Programmatic);
+			}
 		}
 	}
 }

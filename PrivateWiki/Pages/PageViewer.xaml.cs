@@ -341,6 +341,15 @@ namespace PrivateWiki.Pages
 		private void Search_Click(object sender, RoutedEventArgs e)
 		{
 			SearchPopup.IsOpen = true;
+			SearchPopup.Closed += (sender, e) =>
+			{
+				var link = SearchPopupContentName.SelectedPageLink;
+
+				if (link != null)
+				{
+					NavigateToPage(link);
+				}
+			};
 		}
 
 		/// <summary>

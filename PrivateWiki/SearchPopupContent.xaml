@@ -5,20 +5,20 @@
     xmlns:local="using:PrivateWiki"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="using:Models.Pages"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid>
+    <Grid MinWidth="500" Width="Auto">
         <Border
             BorderBrush="{StaticResource ApplicationForegroundThemeBrush}"
-            BorderThickness="2"
+            BorderThickness="1"
             Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
             Padding="5, 5, 5, 5">
 
             <StackPanel
                 Orientation="Vertical">
-
 
                 <AutoSuggestBox
                     Name="SearchBox"
@@ -27,31 +27,25 @@
                     TextChanged="SearchBox_OnTextChanged"
                     QuerySubmitted="SearchBox_OnQuerySubmitted"
                     FontSize="30"
-                    MinWidth="300" />
+                    MinWidth="300"
+                    SizeChanged="SearchBox_OnSizeChanged"/>
 
                 <ListView
-                    Name="SearchResultsBox">
+                    Name="SearchResultsBox"
+                    SelectionMode="Single"
+                    SelectionChanged="SearchResultsBox_OnSelectionChanged">
 
                     <ListView.ItemTemplate>
-                        <DataTemplate>
-
-                            <StackPanel
-                                Background="LightGray">
+                        <DataTemplate x:DataType="pages:Page">
+                            <StackPanel>
                                 <TextBlock
-                                    FontSize="30" />
-                                <TextBlock
-                                    FontSize="20" />
-
+                                    FontSize="30"
+                                    Text="{x:Bind Link}"/>
                             </StackPanel>
-
                         </DataTemplate>
                     </ListView.ItemTemplate>
-
                 </ListView>
-
             </StackPanel>
-
         </Border>
-
     </Grid>
 </UserControl>
