@@ -58,7 +58,7 @@ namespace PrivateWiki.Pages
 		private async void ImportPage_Click(object sender, RoutedEventArgs e)
 		{
 			var backend = new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance);
-			var file = await MediaAccess.PickMarkdownFileAsync();
+			var file = await FileSystemAccess.PickMarkdownFileAsync();
 
 			if (file == null) return;
 

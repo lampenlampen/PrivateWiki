@@ -7,7 +7,7 @@ using Windows.Storage.Pickers;
 
 namespace PrivateWiki.Data
 {
-	internal class MediaAccess
+	internal class FileSystemAccess
 	{
 		public static async Task<StorageFolder> GetImageFolder()
 		{

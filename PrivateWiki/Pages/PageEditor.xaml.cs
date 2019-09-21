@@ -230,11 +230,11 @@ namespace PrivateWiki.Pages
 
 		private async void PageEditor_AddNewImage(object sender, RoutedEventArgs e)
 		{
-			var file = await MediaAccess.PickImageFileAsync();
+			var file = await FileSystemAccess.PickImageFileAsync();
 
 			if (file != null)
 			{
-				var imageFolder = await MediaAccess.GetImageFolder();
+				var imageFolder = await FileSystemAccess.GetImageFolder();
 
 				// Copy image to imageFolder
 				// Throws AggregateException if file already exists.

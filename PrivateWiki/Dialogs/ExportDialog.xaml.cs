@@ -27,7 +27,7 @@ namespace PrivateWiki.Dialogs
 		private async void Export_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
 			var backend = new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance);
-			var folder = await MediaAccess.PickFolderAsync();
+			var folder = await FileSystemAccess.PickFolderAsync();
 
 			var pages = new List<MarkdownPage>();
 
