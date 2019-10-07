@@ -1,0 +1,49 @@
+﻿<html>
+<head>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/diff2html/2.12.1/diff2html.min.css">
+
+    <!-- Javascripts -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/diff2html/2.12.1/diff2html.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/4.0.1/diff.min.js"></script>
+    <script type="text/javascript">
+        
+        
+        function showDiff() {
+            if (model == undefined) return;
+
+            var diffString = Diff.createTwoFilesPatch(model.oldFilename,
+                model.newFilename,
+                model.old,
+                model.new,
+                model.oldHeader,
+                model.newHeader,
+                { context: model.context });
+
+            var diffHtml = Diff2Html.getPrettyHtml(
+                diffString,
+                {
+                    inputFormat: model.inputFormat,
+                    showFiles: model.showFiles,
+                    matching: model.matching,
+                    outputFormat: model.outputFormat,
+                    diffStyle: model.diffStyle
+                }
+            );
+            var div = document.createElement("div");
+            div.innerHTML = diffHtml;
+            document.body.appendChild(div);
+        }
+    </script>
+    <style>
+        .dd2h-files-diff {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<div id="patch-string"></div>
+</body>
+</html>
