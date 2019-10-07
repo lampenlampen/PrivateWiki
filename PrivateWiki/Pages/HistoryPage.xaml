@@ -15,178 +15,187 @@
         <utilities:InstantToReadableDateTimeConverter x:Key="InstantToReadableDateTimeConverter" />
 
         <DataTemplate x:Key="CreatedTemplate" x:DataType="pages:MarkdownPageHistory">
-            <controls:DropShadowPanel
-                Color="Black"
-                OffsetX="3"
-                OffsetY="3"
-                BlurRadius="5"
-                ShadowOpacity=".3"
-                Height="Auto"
-                HorizontalContentAlignment="Stretch"
-                VerticalContentAlignment="Stretch">
+            <Grid Height="Auto">
+                <controls:DropShadowPanel
+                    Color="Black"
+                    OffsetX="3"
+                    OffsetY="3"
+                    BlurRadius="5"
+                    ShadowOpacity=".3"
+                    Height="Auto"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch">
 
-                <Grid Background="White">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
 
-                    <StackPanel
-                        Background="{ThemeResource SystemControlBackgroundAccentBrush}"
-                        Grid.Row="0"
-                        Orientation="Horizontal"
-                        Padding="16, 8, 0, 8">
+                        <StackPanel
+                            Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            Padding="16, 8, 0, 8">
 
-                        <TextBlock Text="Page was created at:" />
-                        <TextBlock Margin="6, 0, 0, 0"
-                            Text="{x:Bind Page.Created, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
+                            <TextBlock Text="Page was created at:" />
+                            <TextBlock Margin="6, 0, 0, 0"
+                                       Text="{x:Bind Page.Created, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
 
-                    </StackPanel>
-                </Grid>
-            </controls:DropShadowPanel>
+                        </StackPanel>
+                    </Grid>
+                </controls:DropShadowPanel>
+            </Grid>
         </DataTemplate>
         <DataTemplate x:Key="EditedTemplate" x:DataType="pages:MarkdownPageHistory">
+            <Grid Height="Auto">
+                <controls:DropShadowPanel
+                    Grid.Row="0"
+                    Color="Black"
+                    OffsetX="3"
+                    OffsetY="3"
+                    BlurRadius="5"
+                    ShadowOpacity=".3"
+                    Height="Auto"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch">
 
-            <controls:DropShadowPanel
-                Grid.Row="0"
-                Color="Black"
-                OffsetX="3"
-                OffsetY="3"
-                BlurRadius="5"
-                ShadowOpacity=".3"
-                Height="Auto"
-                HorizontalContentAlignment="Stretch"
-                VerticalContentAlignment="Stretch">
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
 
-                <Grid Background="White">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+                        <StackPanel
+                            Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            Padding="16, 8, 0, 8">
 
-                    <StackPanel
-                        Background="{ThemeResource SystemControlBackgroundAccentBrush}"
-                        Grid.Row="0"
-                        Orientation="Horizontal"
-                        Padding="16, 8, 0, 8">
+                            <TextBlock Text="Page was edited at: " />
+                            <TextBlock
+                                Text="{x:Bind Page.LastChanged, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
 
-                        <TextBlock Text="Page was edited at: " />
-                        <TextBlock
-                            Text="{x:Bind Page.LastChanged, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
+                        </StackPanel>
 
-                    </StackPanel>
+                        <controls:Expander
+                            x:Name="stackpanel"
+                            Grid.Row="1"
+                            Background="White"
+                            Padding="16,8,16,8"
+                            Header="Content">
 
-                    <controls:Expander
-                        x:Name="stackpanel"
-                        Grid.Row="1"
-                        Background="White"
-                        Padding="16,8,16,8"
-                        Header="Content">
+                            <TextBlock
+                                Text="{x:Bind Page.Content}"
+                                TextWrapping="WrapWholeWords"
+                                HorizontalAlignment="Stretch" />
 
-                        <TextBlock
-                            Text="{x:Bind Page.Content}"
-                            TextWrapping="WrapWholeWords"
-                            HorizontalAlignment="Stretch" />
-
-                    </controls:Expander>
-                </Grid>
-            </controls:DropShadowPanel>
+                        </controls:Expander>
+                    </Grid>
+                </controls:DropShadowPanel>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="LockedTemplate" x:DataType="pages:MarkdownPageHistory">
-            <controls:DropShadowPanel
-                Color="Black"
-                OffsetX="3"
-                OffsetY="3"
-                BlurRadius="5"
-                ShadowOpacity=".3"
-                Height="Auto"
-                HorizontalContentAlignment="Stretch"
-                VerticalContentAlignment="Stretch">
+            <Grid Height="Auto">
+                <controls:DropShadowPanel
+                    Color="Black"
+                    OffsetX="3"
+                    OffsetY="3"
+                    BlurRadius="5"
+                    ShadowOpacity=".3"
+                    Height="Auto"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch">
 
-                <Grid Background="White">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
 
-                    <StackPanel
-                        Background="{ThemeResource SystemControlBackgroundAccentBrush}"
-                        Grid.Row="0"
-                        Orientation="Horizontal"
-                        Padding="16, 8, 0, 8">
+                        <StackPanel
+                            Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            Padding="16, 8, 0, 8">
 
-                        <TextBlock Text="Page was locked at: " />
-                        <TextBlock
-                            Text="{x:Bind Page.Created, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
+                            <TextBlock Text="Page was locked at: " />
+                            <TextBlock
+                                Text="{x:Bind Page.Created, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
 
-                    </StackPanel>
-                </Grid>
-            </controls:DropShadowPanel>
+                        </StackPanel>
+                    </Grid>
+                </controls:DropShadowPanel>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="UnlockedTemplate" x:DataType="pages:MarkdownPageHistory">
-            <controls:DropShadowPanel
-                Color="Black"
-                OffsetX="3"
-                OffsetY="3"
-                BlurRadius="5"
-                ShadowOpacity=".3"
-                Height="Auto"
-                HorizontalContentAlignment="Stretch"
-                VerticalContentAlignment="Stretch">
+            <Grid Height="Auto">
+                <controls:DropShadowPanel
+                    Color="Black"
+                    OffsetX="3"
+                    OffsetY="3"
+                    BlurRadius="5"
+                    ShadowOpacity=".3"
+                    Height="Auto"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch">
 
-                <Grid Background="White">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
 
-                    <StackPanel
-                        Background="{ThemeResource SystemControlBackgroundAccentBrush}"
-                        Grid.Row="0"
-                        Orientation="Horizontal"
-                        Padding="16, 8, 0, 8">
+                        <StackPanel
+                            Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            Padding="16, 8, 0, 8">
 
-                        <TextBlock Text="Page was unlocked at: " />
-                        <TextBlock
-                            Text="{x:Bind Page.LastChanged, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
+                            <TextBlock Text="Page was unlocked at: " />
+                            <TextBlock
+                                Text="{x:Bind Page.LastChanged, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
 
-                    </StackPanel>
-                </Grid>
-            </controls:DropShadowPanel>
+                        </StackPanel>
+                    </Grid>
+                </controls:DropShadowPanel>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="DeletedTemplate" x:DataType="pages:MarkdownPageHistory">
-            <controls:DropShadowPanel
-                Color="Black"
-                OffsetX="3"
-                OffsetY="3"
-                BlurRadius="5"
-                ShadowOpacity=".3"
-                Height="Auto"
-                HorizontalContentAlignment="Stretch"
-                VerticalContentAlignment="Stretch">
+            <Grid Height="Auto">
+                <controls:DropShadowPanel
+                    Color="Black"
+                    OffsetX="3"
+                    OffsetY="3"
+                    BlurRadius="5"
+                    ShadowOpacity=".3"
+                    Height="Auto"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch">
 
-                <Grid Background="White">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
 
-                    <StackPanel
-                        Background="{ThemeResource SystemControlBackgroundAccentBrush}"
-                        Grid.Row="0"
-                        Orientation="Horizontal"
-                        Padding="16, 8, 0, 8">
+                        <StackPanel
+                            Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            Padding="16, 8, 0, 8">
 
-                        <TextBlock Text="Page was deleted at: " />
-                        <TextBlock
-                            Text="{x:Bind Page.LastChanged, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
+                            <TextBlock Text="Page was deleted at: " />
+                            <TextBlock
+                                Text="{x:Bind Page.LastChanged, Converter={StaticResource InstantToReadableDateTimeConverter}}" />
 
-                    </StackPanel>
-                </Grid>
-            </controls:DropShadowPanel>
+                        </StackPanel>
+                    </Grid>
+                </controls:DropShadowPanel>
+            </Grid>
         </DataTemplate>
 
         <utilities:PageHistoryTemplateSelector
@@ -201,9 +210,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition
-                Height="Auto" />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <RelativePanel
@@ -234,24 +242,23 @@
             </Button>
         </RelativePanel>
 
-        <ScrollViewer Grid.Row="1">
+        <ListView
+            Height="Auto"
+            ItemsSource="{x:Bind Pages}"
+            x:Name="Listview"
+            Grid.Row="1"
+            ScrollViewer.VerticalScrollBarVisibility="Visible"
+            SelectionMode="None"
+            Margin="12"
+            ItemTemplateSelector="{StaticResource PageHistoryTempSelector}">
 
-            <ListView
-                ItemsSource="{x:Bind Pages}"
-                x:Name="Listview"
-                Grid.Row="1"
-                SelectionMode="None"
-                Margin="12"
-                ItemTemplateSelector="{StaticResource PageHistoryTempSelector}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Padding" Value="8" />
+                </Style>
+            </ListView.ItemContainerStyle>
 
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        <Setter Property="Padding" Value="8" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-
-            </ListView>
-        </ScrollViewer>
+        </ListView>
     </Grid>
 </Page>

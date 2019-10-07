@@ -9,6 +9,11 @@ namespace PrivateWiki.Data
 {
 	internal class FileSystemAccess
 	{
+		public static Task<StorageFolder> GetAssetsFolderAsync()
+		{
+			return Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets").AsTask();
+		}
+
 		public static async Task<StorageFolder> GetImageFolder()
 		{
 			var localFolder = ApplicationData.Current.LocalFolder;

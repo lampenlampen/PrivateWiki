@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
@@ -42,7 +43,7 @@ namespace PrivateWiki.Pages
 		{
 			base.OnNavigatedTo(e);
 
-			var pageId = (string)e.Parameter;
+			var pageId = (Guid)e.Parameter;
 
 			Page = await _storage.GetMarkdownPageAsync(pageId);
 
@@ -99,7 +100,7 @@ namespace PrivateWiki.Pages
 
 				var content = await FileIO.ReadTextAsync(file);
 
-				GenerateDiff(Page, content);
+				//GenerateDiff(Page, content);
 
 				Page.Content = content;
 
@@ -108,7 +109,22 @@ namespace PrivateWiki.Pages
 				file.DeleteAsync();
 			}
 
-			//if (Frame.CanGoBack) Frame.GoBack();
+			RemovePageEditorFromBackStack();
+			if (Frame.CanGoBack) Frame.GoBack();
+		}
+
+		private void RemovePageEditorFromBackStack()
+		{
+			if (Frame.CanGoBack)
+			{
+				var backstack = Frame.BackStack;
+				var lastEntry = backstack[Frame.BackStackDepth - 1];
+				if (lastEntry.SourcePageType == typeof(PageEditor))
+				{
+					Debug.WriteLine("Remove PageEditor from BackStack");
+					backstack.Remove(lastEntry);
+				}
+			}
 		}
 
 		private void GenerateDiff(MarkdownPage page, string newPage)
