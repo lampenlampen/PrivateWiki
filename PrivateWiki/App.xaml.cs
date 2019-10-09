@@ -61,7 +61,7 @@ namespace PrivateWiki
 
 			if (e.PrelaunchActivated == false)
 			{
-				if (rootFrame.Content == null) rootFrame.Navigate(typeof(PageViewer), e.Arguments);
+				if (rootFrame.Content == null) rootFrame.Navigate(typeof(PageViewer), "start");
 
 				// Sicherstellen, dass das aktuelle Fenster aktiv ist
 				Window.Current.Activate();

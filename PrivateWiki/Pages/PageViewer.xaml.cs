@@ -127,7 +127,7 @@ namespace PrivateWiki.Pages
 			var pageId = (string) e.Parameter;
 			Debug.WriteLine($"Id: {pageId}");
 
-			if (pageId == null) throw new ArgumentNullException(nameof(pageId));
+			if (pageId == null || pageId.Equals("")) throw new ArgumentNullException(nameof(pageId));
 
 			DisplayPage(pageId);
 		}
