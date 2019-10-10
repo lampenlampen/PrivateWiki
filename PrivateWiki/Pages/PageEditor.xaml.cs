@@ -218,6 +218,8 @@ namespace PrivateWiki.Pages
 			Frame.Navigate(typeof(ExternalEditor), Page.Id);
 		}
 
+		#region Toolbar
+
 		/// <summary>
 		/// Shows the FlyoutMenu if the Image Button is tapped.
 		/// </summary>
@@ -429,5 +431,7 @@ namespace PrivateWiki.Pages
 			var dialog = new GridViewDialog();
 			await dialog.ShowAsync();
 		}
+		
+		#endregion
 	}
 }

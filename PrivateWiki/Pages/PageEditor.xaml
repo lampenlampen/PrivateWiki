@@ -22,7 +22,6 @@
 
     <Pivot
         Name="Pivot"
-        Title="Editor"
         SelectionChanged="Pivot_SelectionChanged">
 
         <PivotItem
@@ -62,68 +61,84 @@
                                 <AppBarButton
                                     Name="Bold"
                                     Content="Bold"
+                                    ToolTipService.ToolTip="Bold"
                                     Icon="Bold"
                                     Click="PageEditorToolbar_Bold" />
 
                                 <AppBarButton
                                     Name="Underline"
-                                    Content="Underline"
+                                    IsEnabled="False"
+                                    ToolTipService.ToolTip="Underline"
                                     Icon="Underline"
                                     Click="PageEditorToolbar_Underline" />
 
                                 <AppBarButton
                                     Name="Italic"
-                                    Content="Italic"
+                                    ToolTipService.ToolTip="Italic"
                                     Icon="Italic"
                                     Click="PageEditorToolbar_Italic" />
 
                                 <AppBarButton
                                     Name="HyperLink"
-                                    Content="HyperLink"
+                                    ToolTipService.ToolTip="HyperLink"
                                     Icon="Link"
                                     Click="PageEditorToolbar_HyperLink" />
 
                                 <AppBarButton
                                     Name="WikiLink"
-                                    Content="WikiLink"
+                                    ToolTipService.ToolTip="WikiLink"
                                     Icon="Link"
                                     Click="PageEditorToolbar_Wikilink" />
 
                                 <AppBarButton
                                     Name="NumberedList"
-                                    Content="Numbered List"
+                                    IsEnabled="False"
+                                    ToolTipService.ToolTip="Numbered List"
                                     Icon="List"
                                     Click="PageEditorToolbar_NumberedList" />
+
                                 <AppBarButton
                                     Name="List"
-                                    Content="List"
+                                    IsEnabled="False"
+                                    ToolTipService.ToolTip="List"
                                     Icon="List"
                                     Click="PageEditorToolbar_List" />
 
                                 <AppBarButton
                                     Name="Quote"
+                                    IsEnabled="False"
                                     Content="Quote"
+                                    ToolTipService.ToolTip="Quote"
                                     Click="PageEditorToolbar_Quote" />
 
                                 <AppBarButton
                                     Name="HorizontalRule"
                                     Content="Horizontal Rule"
+                                    ToolTipService.ToolTip="Horizontal Rule"
                                     Click="PageEditorToolbar_HorizontalRule" />
 
                                 <AppBarButton
                                     Name="Code"
+                                    IsEnabled="False"
                                     Content="Code"
+                                    ToolTipService.ToolTip="Code"
                                     Click="PageEditorToolbar_Code" />
 
                                 <AppBarButton
                                     Name="Strikethrough"
                                     Content="Strikethrough"
+                                    ToolTipService.ToolTip="Strikethrough"
                                     Click="PageEditorToolbar_Strikethrough" />
 
                                 <AppBarButton
                                     Name="Table"
-                                    Content="Table"
-                                    Click="PageEditorToolbar_Table" />
+                                    ToolTipService.ToolTip="Table"
+                                    Click="PageEditorToolbar_Table" 
+                                    IsEnabled="False">
+                                    <AppBarButton.Icon>
+                                        <fa:FontAwesome Icon="Table"/>
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
 
                             </StackPanel>
 
@@ -246,10 +261,10 @@
                     </AppBarButton.KeyboardAccelerators>
                 </AppBarButton>
                 <AppBarButton
-                    Label="VS Code"
+                    Label="Default Editor"
                     Click="VS_Code_Click">
                     <AppBarButton.Icon>
-                        <BitmapIcon UriSource="Assets/Visual_Studio_Code_1.18_icon.png" />
+                        <BitmapIcon UriSource="ms-appx:///Assets/Visual_Studio_Code_1.18_icon.png" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar>
