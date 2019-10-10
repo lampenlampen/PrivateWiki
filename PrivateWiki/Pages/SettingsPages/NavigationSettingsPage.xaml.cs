@@ -63,6 +63,8 @@ namespace PrivateWiki.Pages.SettingsPages
 		{
 			var roamingFolder = ApplicationData.Current.RoamingFolder;
 			var settingsFolder = await roamingFolder.CreateFolderAsync("settings", CreationCollisionOption.OpenIfExists);
+			
+			// Bug FileNotFound
 			var navSettingsFile = await settingsFolder.GetFileAsync("nav_settings.json");
 			var json = await FileIO.ReadTextAsync(navSettingsFile);
 
