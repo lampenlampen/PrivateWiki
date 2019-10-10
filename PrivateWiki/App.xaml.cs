@@ -2,12 +2,14 @@
 using PrivateWiki.Data;
 using PrivateWiki.Pages;
 using System;
+using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Models.Storage;
+using RavinduL.LocalNotifications;
 using StorageBackend.SQLite;
 
 namespace PrivateWiki
@@ -17,12 +19,18 @@ namespace PrivateWiki
 	/// </summary>
 	sealed partial class App : Application
 	{
+		// By default, current is an instance of the Application class, which needs to be changed to be an instance of the App class.
+		public static new App Current;
+
+		public LocalNotificationManager manager;
+
 		/// <summary>
 		///     Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code
 		///     und daher das logische Äquivalent von main() bzw. WinMain().
 		/// </summary>
 		public App()
 		{
+			Current = this;
 			InitializeComponent();
 			Suspending += OnSuspending;
 			
@@ -39,24 +47,24 @@ namespace PrivateWiki
 		/// <param name="e">Details über Startanforderung und -prozess.</param>
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
-			var rootFrame = Window.Current.Content as Frame;
+			Grid rootGrid = Window.Current.Content as Grid;
+			Frame rootFrame = rootGrid?.Children.Where((c) => c is Frame).Cast<Frame>().FirstOrDefault();
 
-			// App-Initialisierung nicht wiederholen, wenn das Fenster bereits Inhalte enthält.
-			// Nur sicherstellen, dass das Fenster aktiv ist.
-			if (rootFrame == null)
+			if (rootGrid == null)
 			{
-				// Frame erstellen, der als Navigationskontext fungiert und zum Parameter der ersten Seite navigieren
+				rootGrid = new Grid();
 				rootFrame = new Frame();
 
-				rootFrame.NavigationFailed += OnNavigationFailed;
+				var notificationGrid = new Grid();
 
-				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-				{
-					//TODO: Zustand von zuvor angehaltener Anwendung laden
-				}
+				manager = new LocalNotificationManager(notificationGrid);
 
-				// Den Frame im aktuellen Fenster platzieren
-				Window.Current.Content = rootFrame;
+				rootGrid.Children.Add(rootFrame);
+				rootGrid.Children.Add(notificationGrid);
+
+				// ...
+
+				Window.Current.Content = rootGrid;
 			}
 
 			if (e.PrelaunchActivated == false)

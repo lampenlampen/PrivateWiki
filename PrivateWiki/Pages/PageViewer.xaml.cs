@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using Windows.Storage;
 using Windows.System;
+using Windows.UI.Popups;
 using Windows.UI.Text;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -21,6 +22,7 @@ using PrivateWiki.Markdig;
 using PrivateWiki.Settings;
 using PrivateWiki.Storage;
 using PrivateWiki.Utilities;
+using RavinduL.LocalNotifications.Notifications;
 using StorageBackend.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
@@ -265,7 +267,22 @@ namespace PrivateWiki.Pages
 		private void Edit_Click(object sender, RoutedEventArgs e)
 		{
 			Debug.WriteLine("Edit Page");
-			Frame.Navigate(typeof(PageEditor), Page.Link);
+
+			if (Page.IsLocked)
+			{
+				App.Current.manager.Show(new SimpleNotification
+				{
+					TimeSpan = TimeSpan.FromSeconds(3),
+					Text = "Page cannot be edited.",
+					Glyph = "\uE1F6",
+					VerticalAlignment = VerticalAlignment.Bottom,
+					Background = new SolidColorBrush(Color.Red.ToWindowsUiColor())
+				});
+			}
+			else
+			{
+				Frame.Navigate(typeof(PageEditor), Page.Link);
+			}
 		}
 
 		private async void Revision_Click(object sender, RoutedEventArgs e)

@@ -29,7 +29,7 @@ namespace PrivateWiki.Data
 
 			var content = await FileIO.ReadTextAsync(syntaxFile);
 
-			return new MarkdownPage(Guid.NewGuid(), "syntax", content, clock.GetCurrentInstant(), clock.GetCurrentInstant(), false);
+			return new MarkdownPage(Guid.NewGuid(), "syntax", content, clock.GetCurrentInstant(), clock.GetCurrentInstant(), true);
 		}
 
 		private static async Task<MarkdownPage> LoadStartPage(IClock clock)
