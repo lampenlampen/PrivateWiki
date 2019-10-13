@@ -140,6 +140,9 @@
                 MinWidth="250"
                 VerticalAlignment="Top" />
 
+            <TextBlock
+                x:Name="path"/>
+
         </StackPanel>
 
     </Grid>

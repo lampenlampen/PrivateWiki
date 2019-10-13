@@ -29,6 +29,21 @@ namespace StorageBackend.SQLite
 			page.LastChanged = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("changed")));
 			page.IsLocked = reader.GetBoolean(reader.GetOrdinal("locked"));
 
+			var link = reader.GetString(reader.GetOrdinal("link"));
+			var path = link.Split(new[] {':'}, StringSplitOptions.RemoveEmptyEntries);
+
+			if (path.Length > 1)
+			{
+				string[] path2 = new string[path.Length-1];
+				Array.Copy(path, path2, path.Length-1);
+
+				page.Path = new Path(path2, path[path.Length - 1]);
+			}
+			else
+			{
+				page.Path = new Path(link);
+			}
+
 			return true;
 		}
 

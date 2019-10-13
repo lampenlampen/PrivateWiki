@@ -30,5 +30,7 @@ namespace Models.Pages
 		public Instant LastChanged { get; set; }
 
 		public bool IsLocked { get; set; }
+
+		public Path? Path { get; set; }
 	}
 }

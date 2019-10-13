@@ -193,6 +193,9 @@ namespace PrivateWiki.Pages
 				foreach (var tag in Page.Tags)
 					ListView.Items.Add(tag.Name);
 			*/
+
+			// TODO Remove
+			if (Page?.Path != null) path.Text = Page.Path.FullPath;
 		}
 
 		private void ShowLastVisitedPages2()
