@@ -7,22 +7,22 @@ namespace Models.Pages
 {
 	public class Path
 	{
-		private string[] _path;
+		private string[] _namespaces;
 
-		private string _name;
+		private string _title;
 
-		public string FullPath => _path.Aggregate((acc, el) => acc + ":" + el) + ":" + _name;
+		public string FullPath => _namespaces.Aggregate((acc, el) => acc + ":" + el) + ":" + _title;
 
 		public Path(string[] path, string name)
 		{
-			_path = path;
-			_name = name;
+			_namespaces = path;
+			_title = name;
 		}
 
 		public Path(string name)
 		{
-			_path = new[] {"wiki"};
-			_name = name;
+			_namespaces = new[] {"wiki"};
+			_title = name;
 		}
 	}
 }
