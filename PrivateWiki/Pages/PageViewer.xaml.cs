@@ -2,13 +2,11 @@
 using PrivateWiki.Data;
 using PrivateWiki.Dialogs;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using Windows.Storage;
 using Windows.System;
-using Windows.UI.Popups;
 using Windows.UI.Text;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -17,6 +15,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Contracts.Storage;
 using Models.Pages;
+using NLog;
 using NodaTime;
 using PrivateWiki.Markdig;
 using PrivateWiki.Settings;
@@ -39,6 +38,8 @@ namespace PrivateWiki.Pages
 	/// </summary>
 	public sealed partial class PageViewer : Page
 	{
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
 		private readonly string CodeButtonCopy = "codeButtonCopy";
 
 		private IMarkdownPageStorage _storage;
@@ -87,7 +88,7 @@ namespace PrivateWiki.Pages
 
 				var wikilink = builder.ToString();
 
-				Debug.WriteLine($"WikiLink: {wikilink}");
+				Logger.Debug($"WikiLink: {wikilink}");
 				args.Cancel = true;
 
 				NavigateToPage(wikilink);
@@ -96,26 +97,26 @@ namespace PrivateWiki.Pages
 			// Local Link in Document
 			if (uri.AbsoluteUri.StartsWith("about:"))
 			{
-				Debug.WriteLine($"Local Link: {uri.AbsoluteUri}");
+				Logger.Debug($"Local Link: {uri.AbsoluteUri}");
 				return;
 			}
 
 			if (uri.AbsoluteUri.StartsWith("ms-local-stream:"))
 			{
-				Debug.WriteLine($"Local HtmlFile: {uri.AbsoluteUri}");
+				Logger.Debug($"Local HtmlFile: {uri.AbsoluteUri}");
 				return;
 			}
 
 			// Normal Link
-			Debug.WriteLine($"Link: {uri.AbsoluteUri}");
-			var success = Launcher.LaunchUriAsync(uri);
+			Logger.Debug($"Link: {uri.AbsoluteUri}");
+			Launcher.LaunchUriAsync(uri);
 			args.Cancel = true;
 		}
 
 		private void Webview_OnScriptNotify(object sender, NotifyEventArgs e)
 		{
-			Debug.WriteLine("WebView Script");
-			if (e.Value == CodeButtonCopy) Debug.WriteLine("Copy Button clicked.");
+			Logger.Debug("WebView Script");
+			if (e.Value == CodeButtonCopy) Logger.Debug("Copy Button clicked.");
 		}
 
 		private async void Webview_OnLoadCompleted(object sender, NavigationEventArgs e)
@@ -127,7 +128,7 @@ namespace PrivateWiki.Pages
 			base.OnNavigatedTo(e);
 
 			var pageId = (string) e.Parameter;
-			Debug.WriteLine($"Id: {pageId}");
+			Logger.Debug($"Id: {pageId}");
 
 			if (pageId == null || pageId.Equals("")) throw new ArgumentNullException(nameof(pageId));
 
@@ -144,7 +145,7 @@ namespace PrivateWiki.Pages
 				}
 
 			Page = await _storage.GetMarkdownPageAsync(pageId);
-			Debug.WriteLine($"Page Some: {pageId}");
+			Logger.Debug($"Page Some: {pageId}");
 			var parser = new Markdig.Markdig();
 			var doc = parser.Parse(Page);
 
@@ -152,7 +153,7 @@ namespace PrivateWiki.Pages
 			if (Page != null)
 			{
 				NavigationHandler.AddPage(Page);
-				Debug.WriteLine($"Last Visited Pages: {NavigationHandler.Pages.Count}");
+				Logger.Debug($"Last Visited Pages: {NavigationHandler.Pages.Count}");
 				ShowLastVisitedPages2();
 			}
 
@@ -252,7 +253,7 @@ namespace PrivateWiki.Pages
 		private void Btn_Click([NotNull] object sender, RoutedEventArgs e)
 		{
 			var id = (string) ((Button) sender).Content;
-			Debug.WriteLine($"Page Clicked: {id}");
+			Logger.Debug($"Page Clicked: {id}");
 
 			NavigateToPage(id);
 		}
@@ -269,7 +270,7 @@ namespace PrivateWiki.Pages
 
 		private void Edit_Click(object sender, RoutedEventArgs e)
 		{
-			Debug.WriteLine("Edit Page");
+			Logger.Debug("Edit Page");
 
 			if (Page.IsLocked)
 			{
@@ -391,7 +392,16 @@ namespace PrivateWiki.Pages
 		/// <param name="e"></param>
 		private void Import_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			// TODO Import Dialog
+
+			App.Current.manager.Show(new SimpleNotification
+			{
+				TimeSpan = TimeSpan.FromSeconds(3),
+				Text = "This feature is not yet implemented!",
+				Glyph = "\uE783",
+				VerticalAlignment = VerticalAlignment.Bottom,
+				Background = Color.Red.ToBrush()
+			});
 		}
 	}
 }

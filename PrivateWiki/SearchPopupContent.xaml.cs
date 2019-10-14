@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Contracts.Storage;
 using Models.Pages;
 using Models.Storage;
+using NLog;
 using NodaTime;
 using PrivateWiki.Storage;
 using StorageBackend.SQLite;
@@ -20,6 +21,8 @@ namespace PrivateWiki
 {
 	public sealed partial class SearchPopupContent : UserControl
 	{
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
 		private IEnumerable<MarkdownPage> _pages;
 		private ObservableCollection<MarkdownPage> Pages = new ObservableCollection<MarkdownPage>();
 
@@ -62,7 +65,7 @@ namespace PrivateWiki
 
 		private void SearchBox_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
 		{
-			Debug.WriteLine($"Search: {SearchBox.Text}");
+			Logger.Debug($"Search: {SearchBox.Text}");
 
 			var p = Parent as FrameworkElement;
 

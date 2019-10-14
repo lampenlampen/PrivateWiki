@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using NLog;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -18,6 +19,8 @@ namespace PrivateWiki.Pages
 	/// </summary>
 	public sealed partial class ImportDiffPage : Page
 	{
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
 		public static List<Diff> Diff = null;
 
 		public ImportDiffPage()
@@ -92,7 +95,7 @@ namespace PrivateWiki.Pages
 				var lastEntry = backstack[Frame.BackStackDepth - 1];
 				if (lastEntry.SourcePageType == typeof(ExternalEditor))
 				{
-					Debug.WriteLine("Remove ExternalEditor from BackStack");
+					Logger.Debug("Remove ExternalEditor from BackStack");
 					backstack.Remove(lastEntry);
 				}
 			}

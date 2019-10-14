@@ -6,6 +6,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using NLog;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewCollapsedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewCollapsedEventArgs;
 using TreeViewExpandingEventArgs = Microsoft.UI.Xaml.Controls.TreeViewExpandingEventArgs;
@@ -21,6 +22,8 @@ namespace PrivateWiki.Pages.SettingsPages
 	/// </summary>
 	public sealed partial class AssetsSettingsPage : Page
 	{
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
 		public AssetsSettingsPage()
 		{
 			this.InitializeComponent();
@@ -86,7 +89,7 @@ namespace PrivateWiki.Pages.SettingsPages
 
 			if (node.Content is IStorageItem item)
 			{
-				Debug.WriteLine($"Media: {item.Path}/{item.Name}");
+				Logger.Debug($"Media: {item.Path}/{item.Name}");
 				ClickedItem.Text = $"Media: {item.Path}/{item.Name}";
 
 				if (node.Content is StorageFolder) node.IsExpanded = !node.IsExpanded;
@@ -100,7 +103,7 @@ namespace PrivateWiki.Pages.SettingsPages
 
 		private void TreeViewMedia_OnDropCompleted(UIElement sender, DropCompletedEventArgs args)
 		{
-			Debug.WriteLine($"Drop Completed DropResult: {args.DropResult}");
+			Logger.Debug($"Drop Completed DropResult: {args.DropResult}");
 		}
 
 		private async void MediaTreeView_CreateFolder(object sender, RoutedEventArgs e)
@@ -138,7 +141,7 @@ namespace PrivateWiki.Pages.SettingsPages
 				parent.IsExpanded = false;
 				parent.IsExpanded = true;
 
-				Debug.WriteLine($"Create folder: {name}");
+				Logger.Debug($"Create folder: {name}");
 			}
 		}
 
@@ -165,7 +168,7 @@ namespace PrivateWiki.Pages.SettingsPages
 				var parent = node.Parent;
 				parent.IsExpanded = false;
 				parent.IsExpanded = true;
-				Debug.WriteLine("Delete folder");
+				Logger.Debug("Delete folder");
 			}
 		}
 
@@ -207,7 +210,7 @@ namespace PrivateWiki.Pages.SettingsPages
 				parent.IsExpanded = false;
 				parent.IsExpanded = true;
 
-				Debug.WriteLine($"Rename folder to {newName}");
+				Logger.Debug($"Rename folder to {newName}");
 			}
 		}
 
@@ -234,7 +237,7 @@ namespace PrivateWiki.Pages.SettingsPages
 				var parent = node.Parent;
 				parent.IsExpanded = false;
 				parent.IsExpanded = true;
-				Debug.WriteLine($"Delete file: {file.Name}");
+				Logger.Debug($"Delete file: {file.Name}");
 			}
 		}
 
@@ -276,7 +279,7 @@ namespace PrivateWiki.Pages.SettingsPages
 				parent.IsExpanded = false;
 				parent.IsExpanded = true;
 
-				Debug.WriteLine($"Rename file to {newName}");
+				Logger.Debug($"Rename file to {newName}");
 			}
 		}
 

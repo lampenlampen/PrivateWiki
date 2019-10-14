@@ -9,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Models.Storage;
+using NLog;
 using RavinduL.LocalNotifications;
 using StorageBackend.SQLite;
 
@@ -19,6 +20,8 @@ namespace PrivateWiki
 	/// </summary>
 	sealed partial class App : Application
 	{
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
 		// By default, current is an instance of the Application class, which needs to be changed to be an instance of the App class.
 		public static new App Current;
 
@@ -38,6 +41,20 @@ namespace PrivateWiki
 			var sqliteBackend = new SqLiteBackend(storage, SystemClock.Instance);
 
 			DefaultPages.InsertDefaultMarkdownPagesAsync(sqliteBackend, SystemClock.Instance);
+
+			Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+			NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
+
+			RegisterUncaughtExceptionLoggerAsync();
+		}
+
+		private void RegisterUncaughtExceptionLoggerAsync()
+		{
+			UnhandledException += (sender, args) =>
+			{
+				Logger.Error(args.Exception);
+				Logger.Error(args.Message);
+			};
 		}
 
 		/// <summary>

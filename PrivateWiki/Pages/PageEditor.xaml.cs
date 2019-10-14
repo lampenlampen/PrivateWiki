@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Navigation;
 using Contracts.Storage;
 using Models.Pages;
 using Models.Storage;
+using NLog;
 using StorageBackend.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;
 
@@ -27,6 +28,7 @@ namespace PrivateWiki.Pages
 	/// </summary>
 	public sealed partial class PageEditor : Page
 	{
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
 		private IMarkdownPageStorage _storage;
 		
@@ -44,13 +46,13 @@ namespace PrivateWiki.Pages
 			[NotNull] WebViewNavigationStartingEventArgs args)
 		{
 			var uri = args.Uri;
-			Debug.WriteLine($"Link Clicked: {uri}");
+			Logger.Debug($"Link Clicked: {uri}");
 
 			InAppNotification.Show($"Link Clicked: {uri.AbsoluteUri}", 5000);
 
 			if (uri.AbsoluteUri.StartsWith("ms-local-stream:"))
 			{
-				Debug.WriteLine($"Local HtmlFile: {uri.AbsoluteUri}");
+				Logger.Debug($"Local HtmlFile: {uri.AbsoluteUri}");
 				return;
 			}
 
@@ -60,7 +62,7 @@ namespace PrivateWiki.Pages
 		protected override async void OnNavigatedTo([NotNull] NavigationEventArgs e)
 		{
 			var pageLink = (string)e.Parameter;
-			Debug.WriteLine($"Id: {pageLink}");
+			Logger.Debug($"Id: {pageLink}");
 			if (pageLink == null) throw new ArgumentNullException(nameof(pageLink));
 
 			if (await _storage.ContainsMarkdownPageAsync(pageLink))
@@ -90,7 +92,7 @@ namespace PrivateWiki.Pages
 				var lastEntry = backstack[Frame.BackStackDepth - 1];
 				if (lastEntry.SourcePageType == typeof(NewPage))
 				{
-					Debug.WriteLine("Remove NewPage from BackStack");
+					Logger.Debug("Remove NewPage from BackStack");
 					backstack.Remove(lastEntry);
 				}
 			}
@@ -104,7 +106,7 @@ namespace PrivateWiki.Pages
 				var lastEntry = backstack[Frame.BackStackDepth - 1];
 				if (lastEntry.SourcePageType == typeof(PageEditor))
 				{
-					Debug.WriteLine("Remove EditorPage from BackStack");
+					Logger.Debug("Remove EditorPage from BackStack");
 					backstack.Remove(lastEntry);
 				}
 			}
@@ -153,7 +155,7 @@ namespace PrivateWiki.Pages
 			if (result == ContentDialogResult.Primary)
 			{
 				// Delete the page.
-				Debug.WriteLine("Delete");
+				Logger.Debug("Delete");
 				_storage.DeleteMarkdownPageAsync(Page);
 
 				if (Frame.CanGoBack)
@@ -334,7 +336,7 @@ namespace PrivateWiki.Pages
 				Uri link;
 				Uri.TryCreate(dialog.Hyperlink, UriKind.Absolute, out link);
 				var isValid = link.Scheme == Uri.UriSchemeHttp || link.Scheme == Uri.UriSchemeHttps;
-				Debug.WriteLine($"Link isValid: {isValid}, {link}");
+				Logger.Debug($"Link isValid: {isValid}, {link}");
 
 				if (isValid && PageEditorTextBox.SelectionLength == 0)
 				{

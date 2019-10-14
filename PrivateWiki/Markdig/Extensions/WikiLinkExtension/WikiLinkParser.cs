@@ -4,14 +4,17 @@ using System.Diagnostics;
 using Markdig.Helpers;
 using Markdig.Parsers;
 using Markdig.Syntax.Inlines;
+using NLog;
 
 namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 {
 	public class WikiLinkParser : InlineParser
 	{
+		private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
 		public WikiLinkParser()
 		{
-			Debug.WriteLine("WikiLinkParser");
+			Logger.Debug("WikiLinkParser");
 			OpeningCharacters = new[]
 			{
 				'['
@@ -20,12 +23,12 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 
 		public override bool Match(InlineProcessor processor, ref StringSlice slice)
 		{
-			Debug.WriteLine($"Current Char: ${slice.CurrentChar}");
+			Logger.Debug($"Current Char: ${slice.CurrentChar}");
 
 			// Check if next char is '['
 			var nextChar = slice.NextChar();
 
-			Debug.WriteLine($"Next Char: ${nextChar}");
+			Logger.Debug($"Next Char: ${nextChar}");
 
 			return false;
 		}

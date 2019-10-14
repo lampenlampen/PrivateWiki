@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
+using NLog;
 
 // Die Elementvorlage "Inhaltsdialogfeld" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -11,6 +12,8 @@ namespace PrivateWiki.Dialogs
 {
 	public sealed partial class PageEditorImagePickerDialog : DissmissableDialog
 	{
+		private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
 		public ObservableCollection<ImagePickerDialogModel> Images { get; private set; } = new ObservableCollection<ImagePickerDialogModel>();
 
 		public string PickedImage = "";
@@ -40,7 +43,7 @@ namespace PrivateWiki.Dialogs
 
 			ImageView.ItemsSource = Images;
 
-			Debug.WriteLine($"Images: {Images.Count}");
+			Logger.Debug($"Images: {Images.Count}");
 		}
 
 		private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

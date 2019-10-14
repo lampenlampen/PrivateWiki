@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Navigation;
 using Contracts.Storage;
 using Models.Pages;
 using Models.Storage;
+using NLog;
 using NodaTime;
 using StorageBackend.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;
@@ -26,6 +27,8 @@ namespace PrivateWiki.Pages
 	/// </summary>
 	public sealed partial class ExternalEditor : Page
 	{
+		private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
 		private MarkdownPage Page;
 		private readonly string TMP_FILE_FUTURE_ACCESS_LIST = "tmp_file_future_access_list";
 		private string VSCODE_PATH = "C:\\Software\\Microsoft VS Code\\bin\\code.cmd";
@@ -121,7 +124,7 @@ namespace PrivateWiki.Pages
 				var lastEntry = backstack[Frame.BackStackDepth - 1];
 				if (lastEntry.SourcePageType == typeof(PageEditor))
 				{
-					Debug.WriteLine("Remove PageEditor from BackStack");
+					Logger.Debug("Remove PageEditor from BackStack");
 					backstack.Remove(lastEntry);
 				}
 			}
