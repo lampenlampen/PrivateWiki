@@ -22,4 +22,13 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 				normalizeRenderer.ObjectRenderers.InsertBefore<LinkInlineRenderer>(new NormalizeAutoLinkRenderer());
 		}
 	}
+
+	public static class WikiLinkPipelineExtension
+	{
+		public static MarkdownPipelineBuilder UseMyWikiLinkExtension(this MarkdownPipelineBuilder pipeline)
+		{
+			pipeline.Extensions.AddIfNotAlready<WikiLinkExtension>();
+			return pipeline;
+		}
+	}
 }
