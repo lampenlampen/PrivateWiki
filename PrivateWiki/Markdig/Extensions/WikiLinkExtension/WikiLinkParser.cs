@@ -27,6 +27,41 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 
 			// Check if next char is '['
 			var nextChar = slice.NextChar();
+			if (nextChar != '[') return false;
+
+			var buffer = StringBuilderCache.Local();
+
+			// Parse link
+			while (true)
+			{
+				if (slice.CurrentChar == ' ' || slice.CurrentChar == '|') break;
+
+				buffer.Append(slice.CurrentChar);
+
+				slice.NextChar();
+			}
+
+			var link = buffer.ToString();
+
+			if (slice.CurrentChar == '|')
+			{
+				// Parse link text
+
+				buffer = StringBuilderCache.Local();
+
+				while (true)
+				{
+					if (slice.CurrentChar == ' ') break;
+
+					buffer.Append(slice.CurrentChar);
+
+					slice.NextChar();
+				}
+
+				var linkText = buffer.ToString();
+				// Cut the last ']]' of.
+				linkText = linkText.Substring(0, linkText.Length - 2);
+			}
 
 			Logger.Debug($"Next Char: ${nextChar}");
 
