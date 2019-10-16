@@ -221,17 +221,21 @@ namespace PrivateWiki.Pages
 
 			CommandBar.Content = stackPanel;
 
-			Button GetTextBlock(string text)
+			Button GetTextBlock(Path path)
 			{
 				var button = new Button
 				{
-					Content = text,
+					Content = path.Title,
 					FontSize = 20,
 					VerticalAlignment = VerticalAlignment.Center,
 					Background = new RevealBackgroundBrush(),
 					BorderBrush = new RevealBorderBrush(),
 					FontStyle = FontStyle.Italic
 				};
+
+				var tooltip = new ToolTip();
+				tooltip.Content = path.FullPath;
+				ToolTipService.SetToolTip(button, tooltip);
 
 				button.Click += Btn_Click;
 

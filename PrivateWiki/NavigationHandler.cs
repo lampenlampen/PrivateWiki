@@ -14,19 +14,19 @@ namespace PrivateWiki
 
 		public static int MaxItems { get; set; } = 4;
 
-		internal static List<string> Pages { get; set; } = new List<string>();
+		internal static List<Path> Pages { get; set; } = new List<Path>();
 
 		public static bool AddPage( MarkdownPage page)
 		{
-			Pages.Remove(page.Link);
-			Pages.Add(page.Link);
+			Pages.Remove(page.Path);
+			Pages.Add(page.Path);
 			Normalize();
 			return true;
 		}
 
 		public static bool RemovePage(MarkdownPage page)
 		{
-			Pages.Remove(page.Link);
+			Pages.Remove(page.Path);
 
 			return true;
 		}
