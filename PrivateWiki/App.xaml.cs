@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Models.Storage;
 using NLog;
+using PrivateWiki.Storage;
 using RavinduL.LocalNotifications;
 using StorageBackend.SQLite;
 
@@ -36,19 +37,16 @@ namespace PrivateWiki
 			Current = this;
 			InitializeComponent();
 			Suspending += OnSuspending;
-			
-			var storage = new SqLiteStorage("test");
-			var sqliteBackend = new SqLiteBackend(storage, SystemClock.Instance);
-
-			DefaultPages.InsertDefaultMarkdownPagesAsync(sqliteBackend, SystemClock.Instance);
 
 			Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 			NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
 
-			RegisterUncaughtExceptionLoggerAsync();
+			RegisterUncaughtExceptionLogger();
 		}
 
-		private void RegisterUncaughtExceptionLoggerAsync()
+
+
+		private void RegisterUncaughtExceptionLogger()
 		{
 			UnhandledException += (sender, args) =>
 			{
@@ -86,11 +84,18 @@ namespace PrivateWiki
 
 			if (e.PrelaunchActivated == false)
 			{
-				if (rootFrame.Content == null) rootFrame.Navigate(typeof(PageViewer), "start");
+				if (rootFrame.Content == null) ShowPage(rootFrame);
 
 				// Sicherstellen, dass das aktuelle Fenster aktiv ist
 				Window.Current.Activate();
 			}
+		}
+
+		private async void ShowPage(Frame rootFrame)
+		{
+			await DefaultPages.InsertDefaultMarkdownPagesAsync( new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), SystemClock.Instance);
+
+			rootFrame.Navigate(typeof(PageViewer), "start");
 		}
 
 		/// <summary>

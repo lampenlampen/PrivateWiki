@@ -9,13 +9,13 @@ namespace PrivateWiki.Data
 {
 	public static class DefaultPages
 	{
-		public static async void InsertDefaultMarkdownPagesAsync(IMarkdownPageStorage backend, IClock clock)
+		public static async Task InsertDefaultMarkdownPagesAsync(IMarkdownPageStorage backend, IClock clock)
 		{
 			var syntaxPage = await LoadSyntaxPage(clock);
 			if (!await backend.ContainsMarkdownPageAsync(syntaxPage.Link)) backend.InsertMarkdownPageAsync(syntaxPage);
 
 			var startPage = await LoadStartPage(clock);
-			if (!await backend.ContainsMarkdownPageAsync(startPage.Link)) backend.InsertMarkdownPageAsync(startPage);
+			if (!await backend.ContainsMarkdownPageAsync(startPage.Link)) await backend.InsertMarkdownPageAsync(startPage);
 
 			var testPage = await LoadExamplePage(clock);
 			if (!await backend.ContainsMarkdownPageAsync(testPage.Link)) backend.InsertMarkdownPageAsync(testPage);
