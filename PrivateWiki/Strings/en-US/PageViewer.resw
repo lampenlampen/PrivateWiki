@@ -150,6 +150,9 @@
   <data name="SiteManagerButton.Label" xml:space="preserve">
     <value>Site Manager</value>
   </data>
+  <data name="Tags.Text" xml:space="preserve">
+    <value>Tags</value>
+  </data>
   <data name="TOC.Text" xml:space="preserve">
     <value>Table of Contents</value>
   </data>

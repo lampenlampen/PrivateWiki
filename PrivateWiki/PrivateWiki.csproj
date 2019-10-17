@@ -156,6 +156,11 @@
       <DependentUpon>WikiLinkDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\DissmissableDialog.cs" />
+    <Compile Include="Markdig\Extensions\TagExtension\TagExtension.cs" />
+    <Compile Include="Markdig\Extensions\TagExtension\TagGroup.cs" />
+    <Compile Include="Markdig\Extensions\TagExtension\TagInline.cs" />
+    <Compile Include="Markdig\Extensions\TagExtension\TagParser.cs" />
+    <Compile Include="Markdig\Extensions\TagExtension\MarkdigTagExtension.cs" />
     <Compile Include="Markdig\MarkdigPipelineBuilder.cs" />
     <Compile Include="Models\LFSModel.cs" />
     <Compile Include="Pages\HistoryPage.xaml.cs">
@@ -236,7 +241,8 @@
     <Compile Include="Settings\DeveloperSettingsModelHandler.cs" />
     <Compile Include="Settings\RenderingModelHandler.cs" />
     <Compile Include="Utilities\BoolToColorConverter.cs" />
-    <Compile Include="Utilities\ColorExtension.cs" />
+    <Compile Include="Utilities\ExtensionFunctions\ColorExtension.cs" />
+    <Compile Include="Utilities\ExtensionFunctions\LocalNotifications.cs" />
     <Compile Include="Utilities\FullyObservableCollection.cs" />
     <Compile Include="Utilities\InstantToReadableDateTimeConverter.cs" />
     <Compile Include="Utilities\PageHistoryTemplateSelector.cs" />
@@ -482,6 +488,9 @@
     <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3">
       <Version>1.1.14</Version>
     </PackageReference>
+    <PackageReference Include="UWPChipsX">
+      <Version>1.0.3</Version>
+    </PackageReference>
     <PackageReference Include="XamlFlair.UWP">
       <Version>1.0.22</Version>
     </PackageReference>
@@ -504,7 +513,6 @@
       <Name>StorageBackend</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -2,6 +2,7 @@
 using PrivateWiki.Data;
 using PrivateWiki.Dialogs;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -18,11 +19,14 @@ using Models.Pages;
 using NLog;
 using NodaTime;
 using PrivateWiki.Markdig;
+using PrivateWiki.Markdig.Extensions.TagExtension;
 using PrivateWiki.Settings;
 using PrivateWiki.Storage;
 using PrivateWiki.Utilities;
+using PrivateWiki.Utilities.ExtensionFunctions;
 using RavinduL.LocalNotifications.Notifications;
 using StorageBackend.SQLite;
+using UWPChipsX;
 using Page = Windows.UI.Xaml.Controls.Page;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
@@ -45,6 +49,8 @@ namespace PrivateWiki.Pages
 		private IMarkdownPageStorage _storage;
 
 		private MarkdownPage Page { get; set; }
+
+		private string _uri;
 
 		public PageViewer()
 		{
@@ -78,6 +84,13 @@ namespace PrivateWiki.Pages
 			// Preview Button Clicked; Do nothing
 			if (uri == null || string.IsNullOrEmpty(uri.AbsoluteUri)) return;
 
+			// First navigation to page
+			if (uri.AbsoluteUri.Equals(_uri)) return;
+
+			
+			// TODO Refactor Link Handling; Use "link"
+			var link = uri.AbsoluteUri.Substring(_uri.Length);
+			
 			// WikiLink
 			var splittedLink = uri.AbsoluteUri.Split(':', StringSplitOptions.RemoveEmptyEntries);
 			if (splittedLink.Length >= 3)
@@ -149,12 +162,33 @@ namespace PrivateWiki.Pages
 			var parser = new Markdig.Markdig();
 			var doc = parser.Parse(Page);
 
+			// Show Tags
+			var tags = doc.GetTags();
+			
+			foreach (var tag in tags)
+			{
+				var border = new Border();
+				border.CornerRadius = new CornerRadius(12);
+				border.BorderThickness = new Thickness(0);
+				border.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 224, 224, 224));
+				border.Margin = new Thickness(5, 5, 5, 5);
+				border.Padding = new Thickness(10,5,10,5);
+				
+				var textblock = new TextBlock();
+				textblock.Text = tag.Content;
+
+				border.Child = textblock;
+				
+				TagsPanel.Children.Add(border);
+			}
+
+			
 			// Show Last Visited Pages
 			if (Page != null)
 			{
 				NavigationHandler.AddPage(Page);
 				Logger.Debug($"Last Visited Pages: {NavigationHandler.Pages.Count}");
-				ShowLastVisitedPages2();
+				ShowLastVisitedPages();
 			}
 
 			// Show TOC
@@ -185,21 +219,12 @@ namespace PrivateWiki.Pages
 			await javascriptFile.CopyAsync(mediaFolder, javascriptFile.Name, NameCollisionOption.ReplaceExisting);
 
 			var uri = Webview.BuildLocalStreamUri("MyTag", "/media/index.html");
+			_uri = uri.AbsoluteUri;
 			var uriResolver = new MyUriToStreamResolver();
 			Webview.NavigateToLocalStreamUri(uri, uriResolver);
-
-			// Show Tags
-			/*
-			if (Page.Tags != null)
-				foreach (var tag in Page.Tags)
-					ListView.Items.Add(tag.Name);
-			*/
-
-			// TODO Remove
-			if (Page?.Path != null) path.Text = Page.Path.FullPath;
 		}
 
-		private void ShowLastVisitedPages2()
+		private void ShowLastVisitedPages()
 		{
 			var stackPanel = new StackPanel {Orientation = Orientation.Horizontal};
 			var stack = NavigationHandler.Pages;
@@ -398,14 +423,21 @@ namespace PrivateWiki.Pages
 		{
 			// TODO Import Dialog
 
-			App.Current.manager.Show(new SimpleNotification
+			App.Current.manager.ShowNotImplementedNotification();
+		}
+
+		private void Webview_OnContainsFullScreenElementChanged(WebView sender, object args)
+		{
+			var applicationView = ApplicationView.GetForCurrentView();
+
+			if (sender.ContainsFullScreenElement)
 			{
-				TimeSpan = TimeSpan.FromSeconds(3),
-				Text = "This feature is not yet implemented!",
-				Glyph = "\uE783",
-				VerticalAlignment = VerticalAlignment.Bottom,
-				Background = Color.Red.ToBrush()
-			});
+				applicationView.TryEnterFullScreenMode();
+			}
+			else if (applicationView.IsFullScreenMode)
+			{
+				applicationView.ExitFullScreenMode();
+			}
 		}
 	}
 }

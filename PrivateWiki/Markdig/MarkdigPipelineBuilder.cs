@@ -2,6 +2,7 @@ using Markdig;
 using Markdig.Extensions.EmphasisExtras;
 using PrivateWiki.Markdig.Extensions.CodeBlockExtension;
 using PrivateWiki.Markdig.Extensions.MathExtension;
+using PrivateWiki.Markdig.Extensions.TagExtension;
 using PrivateWiki.Markdig.Extensions.WikiLinkExtension;
 using PrivateWiki.Models;
 using PrivateWiki.Settings;
@@ -97,7 +98,8 @@ namespace PrivateWiki.Markdig
 			}
 
 			pipelineBuilder.UseMyWikiLinkExtension();
-
+			pipelineBuilder.UseTagExtension();
+			
 			return pipelineBuilder.Build();
 		}
 	}

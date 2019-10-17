@@ -53,13 +53,11 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 			// Cut the last ']]' of.
 			link = link.Substring(0, link.Length - 2);
 
-			int line;
-			int column;
 			var inline = new LinkInline
 			{
 				Span =
 				{
-					Start = processor.GetSourcePosition(startPosition, out line, out column)
+					Start = processor.GetSourcePosition(startPosition, out var line, out var column)
 				},
 				Line = line,
 				Column = column,

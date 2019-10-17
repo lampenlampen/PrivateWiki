@@ -9,6 +9,7 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:muxm="using:Microsoft.UI.Xaml.Media"
     xmlns:privateWiki="using:PrivateWiki"
+    xmlns:uwpChipsX="using:UWPChipsX"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -100,6 +101,7 @@
                 Width="Auto"
                 Height="Auto"
                 NavigationStarting="WebView_OnNavigationStarting"
+                ContainsFullScreenElementChanged="Webview_OnContainsFullScreenElementChanged"
                 ScriptNotify="Webview_OnScriptNotify"
                 LoadCompleted="Webview_OnLoadCompleted" 
                 DefaultBackgroundColor="White"/>
@@ -139,11 +141,18 @@
                 ItemInvoked="TreeView_ItemInvoked"
                 MinWidth="250"
                 VerticalAlignment="Top" />
-
+            
             <TextBlock
-                x:Name="path"/>
+                x:Uid="/PageViewer/Tags"
+                Name="TagsHeader"
+                HorizontalAlignment="Left"
+                FontSize="16"
+                TextDecorations="Underline"
+                Padding="10, 0, 0, 20" />
+
+          <controls:WrapPanel
+                x:Name="TagsPanel"/>
 
         </StackPanel>
-
     </Grid>
 </Page>

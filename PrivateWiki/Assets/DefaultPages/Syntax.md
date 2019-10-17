@@ -3,10 +3,10 @@
 ## Links
 ### Internal / Wikilinks
 #### Internal Links
-Intrnal links to other wikipages are created like a normal link but prefixed with a colon.
+Internal links to other wikipages are created like normal links but prefixed with a colon.
 
 ``` md
-This is a internal link [Link Text](:pagelink).
+This is an internal link [Link Text](:pagelink).
 ```
 
 #### Wikilinks 
@@ -14,7 +14,7 @@ This is a internal link [Link Text](:pagelink).
 Wikilinks are also supported:
 
 ``` md
-This is also a internal link [[pagelink]].
+This is also an internal link [[pagelink]].
 ```
 
 ## Headings
@@ -23,4 +23,9 @@ This is also a internal link [[pagelink]].
 ## Mathblock
 ## Textblock
 ### InlineMath
-### Links
+
+## Optional Extensions
+
+### Tags
+
+If enabled hashtags `#this_is_a_tag` are recognized as tags. Tags can be written everywhere in the document.
