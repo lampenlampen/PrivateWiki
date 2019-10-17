@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NodaTime;
 
 namespace Models.Pages
@@ -33,5 +34,7 @@ namespace Models.Pages
 		public bool IsLocked { get; set; }
 
 		public Path? Path { get; set; }
+		
+		public List<Tag>? Tags { get; set; }
 	}
 }

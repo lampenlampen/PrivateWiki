@@ -87,10 +87,10 @@ namespace PrivateWiki.Pages
 			// First navigation to page
 			if (uri.AbsoluteUri.Equals(_uri)) return;
 
-			
+
 			// TODO Refactor Link Handling; Use "link"
 			var link = uri.AbsoluteUri.Substring(_uri.Length);
-			
+
 			// WikiLink
 			var splittedLink = uri.AbsoluteUri.Split(':', StringSplitOptions.RemoveEmptyEntries);
 			if (splittedLink.Length >= 3)
@@ -164,24 +164,23 @@ namespace PrivateWiki.Pages
 
 			// Show Tags
 			var tags = doc.GetTags();
-			
+
 			foreach (var tag in tags)
 			{
-				var border = new Border();
-				border.CornerRadius = new CornerRadius(12);
-				border.BorderThickness = new Thickness(0);
-				border.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 224, 224, 224));
-				border.Margin = new Thickness(5, 5, 5, 5);
-				border.Padding = new Thickness(10,5,10,5);
-				
-				var textblock = new TextBlock();
-				textblock.Text = tag.Content;
+				var textblock = new TextBlock {Text = tag.Content};
 
-				border.Child = textblock;
+				var border = new Border
+				{
+					CornerRadius = new CornerRadius(12),
+					BorderThickness = new Thickness(0),
+					Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 224, 224, 224)),
+					Margin = new Thickness(5, 5, 5, 5),
+					Padding = new Thickness(10, 5, 10, 5),
+					Child = textblock
+				};
 				
 				TagsPanel.Children.Add(border);
 			}
-
 			
 			// Show Last Visited Pages
 			if (Page != null)
