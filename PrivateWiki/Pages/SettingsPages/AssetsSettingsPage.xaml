@@ -48,6 +48,10 @@
                             Text="Add Files"
                             Click="MediaTreeView_AddFiles"
                             Icon="Add" />
+                        <MenuFlyoutSubItem>
+                            <MenuFlyoutItem
+                                Text="Add DB" />
+                        </MenuFlyoutSubItem>
                     </MenuFlyout>
 
                 </muxc:TreeViewItem.ContextFlyout>
@@ -120,39 +124,39 @@
     </Page.Resources>
 
     <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
-            <controls:SettingsHeader
+        <controls:SettingsHeader
             Grid.Row="0"
             Title="Assets"
             Subtitle="Manage your assets"
             ApplyClick="SettingsHeader_OnApplyClick"
             ResetClick="SettingsHeader_OnResetClick">
-                <controls:SettingsHeader.Icon>
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE158;" FontSize="32"/>
-                </controls:SettingsHeader.Icon>
-            </controls:SettingsHeader>
+            <controls:SettingsHeader.Icon>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE158;" FontSize="32" />
+            </controls:SettingsHeader.Icon>
+        </controls:SettingsHeader>
 
-            <ScrollViewer
+        <ScrollViewer
             Grid.Row="1">
 
-                <Grid
+            <Grid
                 Padding="32, 16, 32, 32"
                 Height="Auto">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="256" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="256" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
 
-                    <Grid x:Name="grid" Grid.Column="0" Margin="0, 0, 32, 0" Height="Auto">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
+                <Grid x:Name="grid" Grid.Column="0" Margin="0, 0, 32, 0" Height="Auto">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                        <controls1:DropShadowPanel
+                    <controls1:DropShadowPanel
                         Grid.Row="0"
                         Color="Black"
                         OffsetX="3"
@@ -160,10 +164,11 @@
                         BlurRadius="5"
                         ShadowOpacity=".3"
                         Height="Auto"
+                        HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch">
 
-                            <StackPanel x:Name="stackpanel" Background="White" Padding="8">
+                        <StackPanel x:Name="stackpanel" Background="White" Padding="8">
 
                             <TextBlock
                                 Grid.Row="3"
@@ -180,16 +185,16 @@
 
                         </StackPanel>
 
-                        </controls1:DropShadowPanel>
+                    </controls1:DropShadowPanel>
 
-                    </Grid>
-
-                    <Grid
-                    Grid.Column="1"
-                    x:Name="NavigationSettingsItemContent" />
                 </Grid>
 
-            </ScrollViewer>
+                <Grid
+                    Grid.Column="1"
+                    x:Name="NavigationSettingsItemContent" />
+            </Grid>
 
-        </Grid>
+        </ScrollViewer>
+
+    </Grid>
 </Page>

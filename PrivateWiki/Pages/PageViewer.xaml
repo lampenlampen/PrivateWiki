@@ -9,7 +9,6 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:muxm="using:Microsoft.UI.Xaml.Media"
     xmlns:privateWiki="using:PrivateWiki"
-    xmlns:uwpChipsX="using:UWPChipsX"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 

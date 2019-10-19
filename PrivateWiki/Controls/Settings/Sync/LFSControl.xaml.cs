@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using PrivateWiki.Models;
 using PrivateWiki.Settings;
+using PrivateWiki.Utilities.ExtensionFunctions;
 
 #nullable enable
 
@@ -33,7 +34,7 @@ namespace PrivateWiki.Controls.Settings.Sync
 			picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
 			picker.FileTypeFilter.Add("*");
 
-			
+
 			StorageFolder? folder = await picker.PickSingleFolderAsync();
 
 			if (folder != null)
@@ -43,27 +44,20 @@ namespace PrivateWiki.Controls.Settings.Sync
 				Model.TargetPath = folder.Path;
 				//TargetPath.Text = Model.TargetPath;
 			}
-
-
 		}
 
 		private void SyncFrequencyChecked(object sender, RoutedEventArgs e)
 		{
 			var radiobutton = (RadioButton) sender;
 
-			switch (radiobutton.Content)
+			Model.SyncFrequency = radiobutton.Content switch
 			{
-				case "Never":
-					Model.SyncFrequency = SyncFrequency.Never;
-					break;
-				case "Hourly":
-					Model.SyncFrequency = SyncFrequency.Hourly;
-					break;
-				case "Daily": Model.SyncFrequency = SyncFrequency.Daily;
-					break;
-				case "Weekly": Model.SyncFrequency = SyncFrequency.Weekly;
-					break;
-			}
+				"Never" => SyncFrequency.Never,
+				"Hourly" => SyncFrequency.Hourly,
+				"Daily" => SyncFrequency.Daily,
+				"Weekly" => SyncFrequency.Weekly,
+				_ => Model.SyncFrequency
+			};
 		}
 
 		private void DoForceSync(object sender, RoutedEventArgs e)
@@ -73,9 +67,12 @@ namespace PrivateWiki.Controls.Settings.Sync
 			var task = new LFSSyncActions().ForceSyncTask(Model);
 		}
 
-		private void DoLightSync(object sender, RoutedEventArgs e)
+		private async void DoLightSync(object sender, RoutedEventArgs e)
 		{
 			// TODO Light Sync
+			await new LFSSyncActions().ExportTask(Model);
+			
+			App.Current.manager.ShowOperationFinishedNotification();
 		}
 	}
 }

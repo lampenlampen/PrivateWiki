@@ -1,11 +1,17 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
 using Windows.Storage.Streams;
 using Models.Storage;
 using NodaTime;
 using PrivateWiki.Models;
+using PrivateWiki.Storage;
 using StorageBackend.SQLite;
+using YamlDotNet.Core;
+using YamlDotNet.Core.Events;
+using YamlDotNet.Serialization;
 
 namespace PrivateWiki.Settings
 {
@@ -31,6 +37,54 @@ namespace PrivateWiki.Settings
 
 			var task = Task.Factory.StartNew(Action, model);
 			return task;
+		}
+
+		public async Task ExportTask(LFSModel model)
+		{
+			var storage = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
+			var pages = storage.GetAllMarkdownPagesAsync();
+
+			var folder = StorageApplicationPermissions.FutureAccessList.GetFolderAsync(model.TargetToken);
+
+			foreach (var page in await pages)
+			{
+				var file = (await folder).CreateFileAsync($"{page.Link.Replace(':', '_')}.yml", CreationCollisionOption.ReplaceExisting);
+
+				var serializer = new SerializerBuilder()
+					.WithTypeConverter(new InstantYamlConverter())
+					.Build();
+
+				var a = serializer.Serialize(page);
+				await FileIO.WriteTextAsync(await file, a);
+			}
+		}
+	}
+
+	class InstantYamlConverter : IYamlTypeConverter
+	{
+		public bool Accepts(Type type)
+		{
+			if (typeof(Instant) == type)
+			{
+				return true;
+			}
+
+			return false;
+		}
+
+		public object ReadYaml(IParser parser, Type type)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void WriteYaml(IEmitter emitter, object value, Type type)
+		{
+			if (type == typeof(Instant))
+			{
+				var instant = (Instant) value;
+
+				emitter.Emit(new Scalar(instant.ToUnixTimeMilliseconds().ToString()));
+			}
 		}
 	}
 }

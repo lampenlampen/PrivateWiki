@@ -30,6 +30,7 @@ namespace PrivateWiki.Pages
 			("pages", typeof(PagesSettingsPage)),
 			("assets", typeof(AssetsSettingsPage)),
 			("rendering", typeof(RenderingSettingsPage)),
+			("storage", typeof(StorageSettingsPage)),
 			("developertools", typeof(DeveloperSettingsPage)),
 			("sync", typeof(SyncSettingsPage))
 		};

@@ -172,6 +172,9 @@
     <Compile Include="Pages\SettingsPages\PagesSettingsPage.xaml.cs">
       <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SettingsPages\StorageSettingsPage.xaml.cs">
+      <DependentUpon>StorageSettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SettingsPages\SyncSettingsPage.xaml.cs">
       <DependentUpon>SyncSettingsPage.xaml</DependentUpon>
     </Compile>
@@ -430,6 +433,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\SettingsPages\StorageSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\SettingsPages\SyncSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -488,11 +495,11 @@
     <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3">
       <Version>1.1.14</Version>
     </PackageReference>
-    <PackageReference Include="UWPChipsX">
-      <Version>1.0.3</Version>
-    </PackageReference>
     <PackageReference Include="XamlFlair.UWP">
       <Version>1.0.22</Version>
+    </PackageReference>
+    <PackageReference Include="YamlDotNet">
+      <Version>7.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

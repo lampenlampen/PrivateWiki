@@ -2,7 +2,6 @@
 using PrivateWiki.Data;
 using PrivateWiki.Dialogs;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -25,8 +24,8 @@ using PrivateWiki.Storage;
 using PrivateWiki.Utilities;
 using PrivateWiki.Utilities.ExtensionFunctions;
 using RavinduL.LocalNotifications.Notifications;
+using RuntimeComponent;
 using StorageBackend.SQLite;
-using UWPChipsX;
 using Page = Windows.UI.Xaml.Controls.Page;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
@@ -56,6 +55,7 @@ namespace PrivateWiki.Pages
 		{
 			InitializeComponent();
 			_storage = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
+
 			Init();
 		}
 
@@ -89,7 +89,7 @@ namespace PrivateWiki.Pages
 
 
 			// TODO Refactor Link Handling; Use "link"
-			var link = uri.AbsoluteUri.Substring(_uri.Length);
+			//var link = uri.AbsoluteUri.Substring(_uri.Length);
 
 			// WikiLink
 			var splittedLink = uri.AbsoluteUri.Split(':', StringSplitOptions.RemoveEmptyEntries);
@@ -128,8 +128,20 @@ namespace PrivateWiki.Pages
 
 		private void Webview_OnScriptNotify(object sender, NotifyEventArgs e)
 		{
-			Logger.Debug("WebView Script");
+			Logger.Debug($"WebView Script+ {e.Value}");
 			if (e.Value == CodeButtonCopy) Logger.Debug("Copy Button clicked.");
+			else if (e.Value == "key:strg+e")
+			{
+				Edit_Click(sender, new RoutedEventArgs());
+			}
+			else if (e.Value == "key:strg+p")
+			{
+				Pdf_Click(sender, new RoutedEventArgs());
+			}
+			else if (e.Value == "key:strg+s")
+			{
+				Search_Click(sender, new RoutedEventArgs());
+			}
 		}
 
 		private async void Webview_OnLoadCompleted(object sender, NavigationEventArgs e)
@@ -165,23 +177,26 @@ namespace PrivateWiki.Pages
 			// Show Tags
 			var tags = doc.GetTags();
 
-			foreach (var tag in tags)
+			if (tags != null)
 			{
-				var textblock = new TextBlock {Text = tag.Content};
-
-				var border = new Border
+				foreach (var tag in tags)
 				{
-					CornerRadius = new CornerRadius(12),
-					BorderThickness = new Thickness(0),
-					Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 224, 224, 224)),
-					Margin = new Thickness(5, 5, 5, 5),
-					Padding = new Thickness(10, 5, 10, 5),
-					Child = textblock
-				};
-				
-				TagsPanel.Children.Add(border);
+					var textblock = new TextBlock { Text = tag.Content };
+
+					var border = new Border
+					{
+						CornerRadius = new CornerRadius(12),
+						BorderThickness = new Thickness(0),
+						Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 224, 224, 224)),
+						Margin = new Thickness(5, 5, 5, 5),
+						Padding = new Thickness(10, 5, 10, 5),
+						Child = textblock
+					};
+
+					TagsPanel.Children.Add(border);
+				}
 			}
-			
+
 			// Show Last Visited Pages
 			if (Page != null)
 			{

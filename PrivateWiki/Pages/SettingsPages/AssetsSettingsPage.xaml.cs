@@ -137,9 +137,8 @@ namespace PrivateWiki.Pages.SettingsPages
 				var name = textBox.Text;
 				await folder.CreateFolderAsync(name, CreationCollisionOption.OpenIfExists);
 
-				var parent = node.Parent;
-				parent.IsExpanded = false;
-				parent.IsExpanded = true;
+				node.IsExpanded = false;
+				node.IsExpanded = true;
 
 				Logger.Debug($"Create folder: {name}");
 			}
@@ -326,9 +325,8 @@ namespace PrivateWiki.Pages.SettingsPages
 
 				await dialog.ShowAsync();
 
-				var parent = node.Parent;
-				parent.IsExpanded = false;
-				parent.IsExpanded = true;
+				node.IsExpanded = false;
+				node.IsExpanded = true;
 			}
 		}
 

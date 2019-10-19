@@ -141,6 +141,9 @@
   <data name="Site.Content" xml:space="preserve">
     <value>Site</value>
   </data>
+  <data name="Storage.Content" xml:space="preserve">
+    <value>Storage</value>
+  </data>
   <data name="Sync.Content" xml:space="preserve">
     <value>Backup &amp; Sync</value>
   </data>

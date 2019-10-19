@@ -23,5 +23,16 @@ namespace PrivateWiki.Utilities.ExtensionFunctions
 				Background = Color.Red.ToBrush()
 			});
 		}
+		
+		public static void ShowOperationFinishedNotification(this LocalNotificationManager manager)
+		{
+			manager.Show(new SimpleNotification
+			{
+				TimeSpan = TimeSpan.FromSeconds(3),
+				Text = "Operation Finished!",
+				Glyph = "\uE001",
+				VerticalAlignment = VerticalAlignment.Bottom,
+			});
+		}
 	}
 }

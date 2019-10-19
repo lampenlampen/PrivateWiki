@@ -72,13 +72,13 @@
                         Width="{x:Bind stackpanel.Width}" />
 
                     <TextBlock
-                        Text="Sync Configuration" Style="{ThemeResource BaseTextBlockStyle}" />
+                        Text="Sync Frequency" Style="{ThemeResource BaseTextBlockStyle}" />
 
                     <StackPanel>
                         <RadioButton Content="Never" Checked="SyncFrequencyChecked" IsChecked="{x:Bind Model.SyncFrequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Never}"/>
-                        <RadioButton Content="Hourly" Checked="SyncFrequencyChecked" IsChecked="{x:Bind Model.SyncFrequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Hourly}"/>
-                        <RadioButton Content="Daily" Checked="SyncFrequencyChecked" IsChecked="{x:Bind Model.SyncFrequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Daily}"/>
-                        <RadioButton Content="Weekly" Checked="SyncFrequencyChecked" IsChecked="{x:Bind Model.SyncFrequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Weekly}"/>
+                        <RadioButton IsEnabled="False" Content="Hourly" Checked="SyncFrequencyChecked" IsChecked="{x:Bind Model.SyncFrequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Hourly}"/>
+                        <RadioButton IsEnabled="False" Content="Daily" Checked="SyncFrequencyChecked" IsChecked="{x:Bind Model.SyncFrequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Daily}"/>
+                        <RadioButton IsEnabled="False" Content="Weekly" Checked="SyncFrequencyChecked" IsChecked="{x:Bind Model.SyncFrequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Weekly}"/>
                     </StackPanel>
 
                     <Border
