@@ -1,8 +1,14 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
+using Windows.Storage.Search;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Markdig.Extensions.Yaml;
+using Markdig.Syntax;
 using PrivateWiki.Models;
 using PrivateWiki.Settings;
 using PrivateWiki.Utilities.ExtensionFunctions;
@@ -60,19 +66,41 @@ namespace PrivateWiki.Controls.Settings.Sync
 			};
 		}
 
-		private void DoForceSync(object sender, RoutedEventArgs e)
-		{
-			// TODO Force Sync
-
-			var task = new LFSSyncActions().ForceSyncTask(Model);
-		}
-
 		private async void DoLightSync(object sender, RoutedEventArgs e)
 		{
 			// TODO Light Sync
-			await new LFSSyncActions().ExportTask(Model);
-			
+			await new LFSSyncActions().ExportTask2(Model);
+
 			App.Current.manager.ShowOperationFinishedNotification();
+		}
+
+		private async void ImportData(object sender, RoutedEventArgs e)
+		{
+			var deserializer = new MarkdownDocToMarkdownPageDeserializer();
+
+			var folder = StorageApplicationPermissions.FutureAccessList.GetFolderAsync(Model.TargetToken);
+
+			var files = (await folder).GetFilesAsync(CommonFileQuery.DefaultQuery);
+
+			foreach (var file in await files)
+			{
+				var content = await FileIO.ReadTextAsync(file);
+
+				var markdig = new Markdig.Markdig();
+				var doc = markdig.Parse(content);
+				var yamlBlock = doc.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
+
+				if (yamlBlock != null)
+				{
+					var yaml = content.Substring(yamlBlock.Span.Start, yamlBlock.Span.Length);
+					var a = deserializer.Deserialize(new StringReader(yaml));
+				}
+				
+				
+			}
+
+
+			
 		}
 	}
 }

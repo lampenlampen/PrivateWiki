@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
-using Windows.Storage.Streams;
+using Models.Pages;
 using Models.Storage;
 using NodaTime;
 using PrivateWiki.Models;
@@ -11,7 +12,9 @@ using PrivateWiki.Storage;
 using StorageBackend.SQLite;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
+using YamlDotNet.RepresentationModel;
 using YamlDotNet.Serialization;
+using UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding;
 
 namespace PrivateWiki.Settings
 {
@@ -51,40 +54,73 @@ namespace PrivateWiki.Settings
 				var file = (await folder).CreateFileAsync($"{page.Link.Replace(':', '_')}.yml", CreationCollisionOption.ReplaceExisting);
 
 				var serializer = new SerializerBuilder()
-					.WithTypeConverter(new InstantYamlConverter())
 					.Build();
 
 				var a = serializer.Serialize(page);
 				await FileIO.WriteTextAsync(await file, a);
 			}
 		}
+
+		public async Task ExportTask2(LFSModel model)
+		{
+			var storage = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
+			var pages = storage.GetAllMarkdownPagesAsync();
+
+			var folder = StorageApplicationPermissions.FutureAccessList.GetFolderAsync(model.TargetToken);
+
+			foreach (var page in await pages)
+			{
+				var file = (await folder).CreateFileAsync($"{page.Link.Replace(':', '_')}.md", CreationCollisionOption.ReplaceExisting);
+				
+				var writer = new StringWriter();
+				writer.WriteLine("---");
+				
+				new MarkdownPageToMarkdownDocSerializer().Serialize(writer, page);
+
+				var yaml = writer.ToString();
+				var yaml2 = $"{yaml.Substring(0, yaml.Length - 6)}\n---";
+
+				var stringBuilder = new StringBuilder();
+				stringBuilder.AppendLine(yaml2);
+				stringBuilder.Append(page.Content);
+
+				FileIO.WriteTextAsync(await file, stringBuilder.ToString());
+			}
+		}
 	}
 
-	class InstantYamlConverter : IYamlTypeConverter
+	class MarkdownPageToMarkdownDocSerializer
 	{
-		public bool Accepts(Type type)
+		public void Serialize(TextWriter writer, MarkdownPage page)
 		{
-			if (typeof(Instant) == type)
-			{
-				return true;
-			}
+			var yamlStream = new YamlStream(new YamlDocument(new YamlMappingNode(
+				new YamlScalarNode("id"), new YamlScalarNode(page.Id.ToString()),
+				new YamlScalarNode("created"), new YamlScalarNode(page.Created.ToUnixTimeMilliseconds().ToString()),
+				new YamlScalarNode("lastChanged"), new YamlScalarNode(page.LastChanged.ToUnixTimeMilliseconds().ToString()),
+				new YamlScalarNode("locked"), new YamlScalarNode(page.IsLocked.ToString()),
+				new YamlScalarNode("path"), new YamlScalarNode(page.Path.FullPath))));
 
-			return false;
+				yamlStream.Save(writer, assignAnchors:true);
 		}
+	}
 
-		public object ReadYaml(IParser parser, Type type)
+	class MarkdownDocToMarkdownPageDeserializer
+	{
+		public MarkdownPage Deserialize(TextReader reader)
 		{
-			throw new NotImplementedException();
-		}
+			var yamlStream = new YamlStream();
+			yamlStream.Load(reader);
 
-		public void WriteYaml(IEmitter emitter, object value, Type type)
-		{
-			if (type == typeof(Instant))
+			var mapping = (YamlMappingNode) yamlStream.Documents[0].RootNode;
+
+			var stringBuilder = new StringBuilder();
+			
+			foreach (var entry in mapping.Children)
 			{
-				var instant = (Instant) value;
-
-				emitter.Emit(new Scalar(instant.ToUnixTimeMilliseconds().ToString()));
+				stringBuilder.AppendLine(entry.ToString());
 			}
+			
+			return new MarkdownPage();
 		}
 	}
 }

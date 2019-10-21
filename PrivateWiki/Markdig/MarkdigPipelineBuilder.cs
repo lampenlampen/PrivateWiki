@@ -99,6 +99,7 @@ namespace PrivateWiki.Markdig
 
 			pipelineBuilder.UseMyWikiLinkExtension();
 			pipelineBuilder.UseTagExtension();
+			pipelineBuilder.UseYamlFrontMatter();
 			
 			return pipelineBuilder.Build();
 		}

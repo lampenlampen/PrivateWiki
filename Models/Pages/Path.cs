@@ -44,9 +44,14 @@ namespace Models.Pages
 			_title = name;
 		}
 
+		public Path()
+		{
+
+		}
+
 		public override bool Equals(object obj)
 		{
-			return obj != null && FullPath.Equals(((Path) obj).FullPath);
+			return obj is Path path && FullPath.Equals(path.FullPath);
 		}
 
 		public override int GetHashCode()

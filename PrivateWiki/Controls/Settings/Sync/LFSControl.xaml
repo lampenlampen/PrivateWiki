@@ -94,16 +94,16 @@
 
                         <Button Click="DoLightSync"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <StackPanel>
-                                <TextBlock Text="Sync missing content" Style="{ThemeResource BaseTextBlockStyle}" />
+                                <TextBlock Text="Export" Style="{ThemeResource BaseTextBlockStyle}" />
                                 <TextBlock
                                     Text="Sync all missing content to target. No existing content is overwritten."
                                     TextWrapping="WrapWholeWords" />
                             </StackPanel>
                         </Button>
 
-                        <Button Click="DoForceSync" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Button Click="ImportData" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <StackPanel>
-                                <TextBlock Text="Force Sync" Style="{ThemeResource BaseTextBlockStyle}" />
+                                <TextBlock Text="Import" Style="{ThemeResource BaseTextBlockStyle}" />
                                 <TextBlock
                                     Text="Sync all content to target. Existing content will be overwritten!"
                                     TextWrapping="Wrap" />
