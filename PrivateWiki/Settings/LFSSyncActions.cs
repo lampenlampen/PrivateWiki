@@ -77,6 +77,7 @@ namespace PrivateWiki.Settings
 				
 				new MarkdownPageToMarkdownDocSerializer().Serialize(writer, page);
 
+				// TODO Refactor see https://github.com/aaubry/YamlDotNet/issues/436#issuecomment-544276681
 				var yaml = writer.ToString();
 				var yaml2 = $"{yaml.Substring(0, yaml.Length - 6)}\n---";
 

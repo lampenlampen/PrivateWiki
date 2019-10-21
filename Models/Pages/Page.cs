@@ -36,5 +36,9 @@ namespace Models.Pages
 		public Path? Path { get; set; }
 		
 		public List<Tag>? Tags { get; set; }
+
+		public string ContentType => GetContentType();
+
+		public abstract string GetContentType();
 	}
 }

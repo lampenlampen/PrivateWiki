@@ -7,8 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:PrivateWiki.Controls"
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:utilities="using:PrivateWiki.Utilities"
     mc:Ignorable="d"
     Background="#EEEEEE">
+    
+    <Page.Resources>
+        <utilities:InstantToReadableDateTimeConverter x:Key="InstantToReadableDateTimeConverter" />
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -56,7 +61,51 @@
 
                         <StackPanel x:Name="stackpanel" Background="White" Padding="8">
 
-                            
+                            <controls1:DataGrid
+                                x:Name="PagesTable"
+                                ItemsSource="{x:Bind Pages}"
+                                AutoGenerateColumns="False"
+                                IsReadOnly="True"
+                                GridLinesVisibility="Horizontal">
+                                
+                                <controls1:DataGrid.Columns>
+                                    <controls1:DataGridTextColumn
+                                        Header="Title"
+                                        Width="SizeToHeader"
+                                        Binding="{Binding Path.Title}"
+                                        FontSize="16"/>
+                                    
+                                    <controls1:DataGridTextColumn
+                                        Header="Namespace"
+                                        Width="SizeToHeader"
+                                        Binding="{Binding Path.NamespaceString}"
+                                        FontSize="16"/>
+                                    
+                                    <controls1:DataGridTextColumn
+                                        Header="Created"
+                                        Width="SizeToHeader"
+                                        Binding="{Binding Created, Converter={StaticResource InstantToReadableDateTimeConverter}}"
+                                        FontSize="16"/>
+                                    
+                                    <controls1:DataGridTextColumn
+                                        Header="Last Changed"
+                                        Width="SizeToHeader"
+                                        Binding="{Binding LastChanged, Converter={StaticResource InstantToReadableDateTimeConverter}}"
+                                        FontSize="16"/>
+                                    
+                                    <controls1:DataGridCheckBoxColumn
+                                        Header="Locked"
+                                        Width="SizeToHeader"
+                                        Binding="{Binding IsLocked}"/>
+                                    
+                                    <controls1:DataGridTextColumn
+                                        Header="Content Type"
+                                        Width="SizeToHeader"
+                                        Binding="{Binding ContentType}"
+                                        FontSize="16"/>
+                                    
+                                </controls1:DataGrid.Columns>
+                            </controls1:DataGrid>
 
                         </StackPanel>
 

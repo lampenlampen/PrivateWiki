@@ -12,5 +12,7 @@ namespace Models.Pages
 		public MarkdownPage(Guid id, string link, string content, Instant created, Instant lastChanged, bool isLocked) : base(link, id, content, created, lastChanged, isLocked)
 		{
 		}
+
+		public override string GetContentType() => "Markdown";
 	}
 }
