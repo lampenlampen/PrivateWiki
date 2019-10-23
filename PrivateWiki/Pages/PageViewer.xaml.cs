@@ -212,9 +212,17 @@ namespace PrivateWiki.Pages
 
 			if (model.IsAutoIdentifierEnabled)
 			{
-				var toc = new HeadersParser().ParseHeaders(doc);
-
-				foreach (var header in toc.Children) Treeview.RootNodes.Add(header);
+				try
+				{
+					var toc = new HeadersParser().ParseHeaders(doc);
+					foreach (var header in toc.Children) Treeview.RootNodes.Add(header);
+				}
+				catch (Exception e)
+				{
+					Logger.Error(e, "Only one top level header allowed!");
+				}
+				
+				
 			}
 
 			// Show Page

@@ -61,6 +61,7 @@ namespace PrivateWiki.Markdig
 
 			if (rootHeader.Children.Count > 1)
 			{
+				// TODO Refactor
 				throw new Exception("Only 1 Top Level Heading allowed.");
 			}
 
