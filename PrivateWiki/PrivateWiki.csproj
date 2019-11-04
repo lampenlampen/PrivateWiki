@@ -516,9 +516,14 @@
       <Name>RuntimeComponent</Name>
     </ProjectReference>
     <ProjectReference Include="..\StorageBackend\StorageBackend.csproj">
-      <Project>{9D7A3C2D-31DC-4D9E-AFD0-2E1FE0631044}</Project>
+      <Project>{3ada0cdb-ffef-489c-9c72-8f99325d927e}</Project>
       <Name>StorageBackend</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsDesktop, Version=10.0.18362.0">
+      <Name>Windows Desktop Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

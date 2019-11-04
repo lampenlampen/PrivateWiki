@@ -12,6 +12,7 @@ using Models.Storage;
 using NLog;
 using PrivateWiki.Storage;
 using RavinduL.LocalNotifications;
+using StorageBackend.Git;
 using StorageBackend.SQLite;
 
 namespace PrivateWiki
@@ -42,6 +43,17 @@ namespace PrivateWiki
 			NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
 
 			RegisterUncaughtExceptionLogger();
+
+			/*
+			var gitBackend = new GitBackend(DefaultStorageBackends.testGitStorage);
+
+			var task = gitBackend.ExistsAsync();
+			task.Wait();
+			var result = task.Result;
+
+			Logger.Debug($"GitBackend: {result}");
+			*/
+			
 		}
 
 
