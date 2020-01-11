@@ -1,6 +1,6 @@
 namespace Models.Storage
 {
-	public class Storage
+	public interface IStorage
 	{
 		
 	}

@@ -1,6 +1,6 @@
 namespace Models.Storage
 {
-	public class SqLiteStorage : Storage
+	public class SqLiteStorage : IStorage
 	{
 		public SqLiteStorage(string filename)
 		{
