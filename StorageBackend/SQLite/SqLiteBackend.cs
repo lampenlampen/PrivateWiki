@@ -9,15 +9,15 @@ using NodaTime;
 
 namespace StorageBackend.SQLite
 {
-	public class SqLiteBackend : ISqLiteBackend, IMarkdownPageStorage
+	public class SqLiteBackend : ISqLiteBackend, IMarkdownPageStorage 
 	{
 		private readonly SqLiteStorage _sqLite;
 
-		private SqliteConnection _conn;
+		private readonly SqliteConnection _conn;
 
 		public SqliteConnection Connection => _conn;
 
-		private IClock _clock;
+		private readonly IClock _clock;
 
 		public SqLiteBackend(SqLiteStorage sqLite, IClock clock)
 		{
