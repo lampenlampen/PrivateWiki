@@ -110,6 +110,9 @@
     <Compile Include="Controls\NavigationSettingsLinkItemControl.xaml.cs">
       <DependentUpon>NavigationSettingsLinkItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PageViewerCommandBar.xaml.cs">
+      <DependentUpon>PageViewerCommandBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SettingsHeader.xaml.cs">
       <DependentUpon>SettingsHeader.xaml</DependentUpon>
     </Compile>
@@ -163,6 +166,10 @@
     <Compile Include="Markdig\Extensions\TagExtension\MarkdigTagExtension.cs" />
     <Compile Include="Markdig\MarkdigPipelineBuilder.cs" />
     <Compile Include="Models\LFSModel.cs" />
+    <Compile Include="Pages\ContentPages\ContentPage.cs" />
+    <Compile Include="Pages\ContentPages\HtmlPageViewer.xaml.cs">
+      <DependentUpon>HtmlPageViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\HistoryPage.xaml.cs">
       <DependentUpon>HistoryPage.xaml</DependentUpon>
     </Compile>
@@ -216,8 +223,8 @@
     <Compile Include="Pages\PageEditor.xaml.cs">
       <DependentUpon>PageEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\PageViewer.xaml.cs">
-      <DependentUpon>PageViewer.xaml</DependentUpon>
+    <Compile Include="Pages\MarkdownPageViewer.xaml.cs">
+      <DependentUpon>MarkdownPageViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -321,6 +328,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\PageViewerCommandBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SettingsHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -377,6 +388,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ContentPages\HtmlPageViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ExternalEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -401,7 +416,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\PageViewer.xaml">
+    <Page Include="Pages\MarkdownPageViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -525,6 +540,7 @@
       <Name>Windows Desktop Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

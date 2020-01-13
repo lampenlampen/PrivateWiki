@@ -21,7 +21,7 @@ namespace PrivateWiki
 	/// </summary>
 	sealed partial class App : Application
 	{
-		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+		 private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
 		// By default, current is an instance of the Application class, which needs to be changed to be an instance of the App class.
 		public static new App Current;
@@ -95,7 +95,7 @@ namespace PrivateWiki
 		{
 			await DefaultPages.InsertDefaultMarkdownPagesAsync( new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), SystemClock.Instance);
 
-			rootFrame.Navigate(typeof(PageViewer), "start");
+			rootFrame.Navigate(typeof(MarkdownPageViewer), "start");
 		}
 
 		/// <summary>

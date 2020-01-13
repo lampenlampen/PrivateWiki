@@ -19,6 +19,7 @@ using NLog;
 using NodaTime;
 using PrivateWiki.Markdig;
 using PrivateWiki.Markdig.Extensions.TagExtension;
+using PrivateWiki.Pages.ContentPages;
 using PrivateWiki.Settings;
 using PrivateWiki.Storage;
 using PrivateWiki.Utilities;
@@ -39,7 +40,7 @@ namespace PrivateWiki.Pages
 	/// <summary>
 	///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
 	/// </summary>
-	public sealed partial class PageViewer : Page
+	public sealed partial class MarkdownPageViewer : ContentPage
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -51,7 +52,7 @@ namespace PrivateWiki.Pages
 
 		private string _uri;
 
-		public PageViewer()
+		public MarkdownPageViewer()
 		{
 			InitializeComponent();
 			_storage = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
@@ -314,7 +315,7 @@ namespace PrivateWiki.Pages
 			if (Page.Link.Equals(link)) return;
 
 			if (await _storage.ContainsMarkdownPageAsync(link))
-				Frame.Navigate(typeof(PageViewer), link);
+				Frame.Navigate(typeof(MarkdownPageViewer), link);
 			else
 				Frame.Navigate(typeof(NewPage), link);
 		}

@@ -26,7 +26,7 @@ namespace PrivateWiki.Pages
 				new UISettings().GetColorValue(UIColorType.Accent);
 
 
-			EditorFrame.Navigate(typeof(PageViewer), "start");
+			EditorFrame.Navigate(typeof(MarkdownPageViewer), "start");
 		}
 
 		/// Extend acrylic into the title bar.

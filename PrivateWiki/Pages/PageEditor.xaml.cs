@@ -121,7 +121,7 @@ namespace PrivateWiki.Pages
 				// TODO Error while Inserting Page
 				await _storage.InsertMarkdownPageAsync(Page);
 
-				Frame.Navigate(typeof(PageViewer), Page.Id.ToString());
+				Frame.Navigate(typeof(MarkdownPageViewer), Page.Id.ToString());
 				RemoveEditorPageFromBackStack();
 			}
 			else
