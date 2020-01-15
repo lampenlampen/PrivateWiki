@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using PrivateWiki.Pages;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -24,49 +25,67 @@ namespace PrivateWiki.Controls
 			this.InitializeComponent();
 		}
 
+		public event RoutedEventHandler TopClick;
+
 		private void Top_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			TopClick?.Invoke(sender, e);
 		}
+
+		public event RoutedEventHandler PdfClick;
 
 		private void Pdf_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			PdfClick?.Invoke(sender, e);
 		}
+
+		public event RoutedEventHandler EditClick;
 
 		private void Edit_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			EditClick?.Invoke(sender, e);
 		}
+
+		public event RoutedEventHandler SearchClick;
 
 		private void Search_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			SearchClick?.Invoke(sender, e);
 		}
+
+		public event RoutedEventHandler HistoryClick;
 
 		private void History_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			HistoryClick?.Invoke(sender, e);
 		}
+
+		public event RoutedEventHandler FullscreenClick;
 
 		private void Fullscreen_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			FullscreenClick?.Invoke(sender, e);
 		}
+
+		public event RoutedEventHandler ExportClick;
 
 		private void Export_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			ExportClick?.Invoke(sender, e);
 		}
+
+		public event RoutedEventHandler ImportClick;
 
 		private void Import_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			ImportClick?.Invoke(sender, e);
 		}
+
+		public event RoutedEventHandler SettingsClick;
 
 		private void Setting_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			SettingsClick?.Invoke(sender, e);
 		}
 	}
 }

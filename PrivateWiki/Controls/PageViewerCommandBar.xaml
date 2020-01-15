@@ -10,11 +10,7 @@
     d:DesignWidth="400">
 
     <CommandBar
-            Name="CommandBar"
-            DefaultLabelPosition="Right"
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
+        DefaultLabelPosition="Right"
             Height="Auto"
             Background="{ThemeResource SystemControlBackgroundAccentBrush}">
 

@@ -30,6 +30,7 @@ using StorageBackend.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
+using PrivateWiki.Controls;
 
 #nullable enable
 
@@ -267,7 +268,7 @@ namespace PrivateWiki.Pages
 			var lastTextBox = GetTextBlock(stack.Last());
 			stackPanel.Children.Add(lastTextBox);
 
-			CommandBar.Content = stackPanel;
+			//CommandBar.Content = stackPanel;
 
 			Button GetTextBlock(Path path)
 			{

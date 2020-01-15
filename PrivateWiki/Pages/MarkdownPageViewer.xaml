@@ -10,6 +10,7 @@
     xmlns:muxm="using:Microsoft.UI.Xaml.Media"
     xmlns:privateWiki="using:PrivateWiki"
     xmlns:contentPages="using:PrivateWiki.Pages.ContentPages"
+    xmlns:controls1="using:PrivateWiki.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -35,57 +36,23 @@
             <privateWiki:SearchPopupContent x:Name="SearchPopupContentName" />
 
         </Popup>
-
-        <CommandBar
+        
+        <controls1:PageViewerCommandBar
             Name="CommandBar"
-            DefaultLabelPosition="Right"
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="3"
             Height="Auto"
-            Background="{ThemeResource SystemControlBackgroundAccentBrush}">
-
-            <AppBarButton x:Uid="/PageViewer/ToTopButton" Icon="Up" Click="Top_Click" />
-            <AppBarButton x:Uid="/PageViewer/PDFButton" Icon="Print" Click="Pdf_Click">
-                <AppBarButton.KeyboardAccelerators>
-                    <KeyboardAccelerator
-                        Modifiers="Control"
-                        Key="P" />
-                </AppBarButton.KeyboardAccelerators>
-            </AppBarButton>
-            <AppBarButton x:Uid="/PageViewer/EditButton" Icon="Edit" Click="Edit_Click">
-                <AppBarButton.KeyboardAccelerators>
-                    <KeyboardAccelerator
-                        Modifiers="Control"
-                        Key="E" />
-                </AppBarButton.KeyboardAccelerators>
-            </AppBarButton>
-            <AppBarButton x:Uid="/PageViewer/SearchButton" Icon="Find" Click="Search_Click">
-                <AppBarButton.KeyboardAccelerators>
-                    <KeyboardAccelerator
-                        Modifiers="Control"
-                        Key="F" />
-                </AppBarButton.KeyboardAccelerators>
-            </AppBarButton>
-            <AppBarButton x:Uid="/PageViewer/HistoryButton" Icon="Clock" Click="Revision_Click" />
-
-            <CommandBar.SecondaryCommands>
-
-                <AppBarButton x:Uid="/PageViewer/FullscreenButton" Icon="Fullscreen" Click="Fullscreen_Click">
-                    <AppBarButton.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="F11" />
-                    </AppBarButton.KeyboardAccelerators>
-                </AppBarButton>
-
-                <AppBarButton x:Uid="/PageViewer/ExportButton" Click="Export_Click" />
-
-                <AppBarButton x:Uid="/PageViewer/ImportButton" Click="Import_Click" Icon="Import" />
-
-                <AppBarButton x:Uid="/PageViewer/SettingsButton" Icon="Setting" Click="Setting_Click" />
-
-            </CommandBar.SecondaryCommands>
-
-        </CommandBar>
+            Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+            SettingsClick="Setting_Click"
+            TopClick="Top_Click"
+            PdfClick="Pdf_Click"
+            EditClick="Edit_Click"
+            SearchClick="Search_Click"
+            HistoryClick="Revision_Click"
+            FullscreenClick="Fullscreen_Click"
+            ExportClick="Export_Click"
+            ImportClick="Import_Click"/>
 
         <Border
             Grid.Row="1"
