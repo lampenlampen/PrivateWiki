@@ -13,6 +13,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Contracts;
 using Contracts.Storage;
 using Models.Pages;
 using NLog;
@@ -31,6 +32,7 @@ using Page = Windows.UI.Xaml.Controls.Page;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
 using PrivateWiki.Controls;
+using YamlDotNet.Core;
 
 #nullable enable
 
@@ -41,15 +43,13 @@ namespace PrivateWiki.Pages
 	/// <summary>
 	///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
 	/// </summary>
-	public sealed partial class MarkdownPageViewer : ContentPage
+	public sealed partial class MarkdownPageViewer : ContentPage, IPageViewerCommandBar
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
 		private readonly string CodeButtonCopy = "codeButtonCopy";
 
-		private IMarkdownPageStorage _storage;
-
-		private MarkdownPage Page { get; set; }
+		//private MarkdownPage Page { get; set; }
 
 		private string _uri;
 
@@ -106,7 +106,7 @@ namespace PrivateWiki.Pages
 				Logger.Debug($"WikiLink: {wikilink}");
 				args.Cancel = true;
 
-				NavigateToPage(wikilink);
+				NavigateToPage(Page, wikilink);
 			}
 
 			// Local Link in Document
@@ -174,7 +174,7 @@ namespace PrivateWiki.Pages
 			Page = await _storage.GetMarkdownPageAsync(pageId);
 			Logger.Debug($"Page Some: {pageId}");
 			var parser = new Markdig.Markdig();
-			var doc = parser.Parse(Page);
+			var doc = parser.Parse((MarkdownPage) Page);
 
 			// Show Tags
 			var tags = doc.GetTags();
@@ -197,14 +197,6 @@ namespace PrivateWiki.Pages
 
 					TagsPanel.Children.Add(border);
 				}
-			}
-
-			// Show Last Visited Pages
-			if (Page != null)
-			{
-				NavigationHandler.AddPage(Page);
-				Logger.Debug($"Last Visited Pages: {NavigationHandler.Pages.Count}");
-				ShowLastVisitedPages();
 			}
 
 			// Show TOC
@@ -248,6 +240,7 @@ namespace PrivateWiki.Pages
 			Webview.NavigateToLocalStreamUri(uri, uriResolver);
 		}
 
+		/*
 		private void ShowLastVisitedPages()
 		{
 			var stackPanel = new StackPanel {Orientation = Orientation.Horizontal};
@@ -305,47 +298,12 @@ namespace PrivateWiki.Pages
 
 		private void Btn_Click([NotNull] object sender, RoutedEventArgs e)
 		{
-			var id = (string) ((Button) sender).Content;
+			var id = (string)((Button)sender).Content;
 			Logger.Debug($"Page Clicked: {id}");
 
-			NavigateToPage(id);
+			NavigateToPage(Page, id);
 		}
-
-		private async void NavigateToPage(string link)
-		{
-			if (Page.Link.Equals(link)) return;
-
-			if (await _storage.ContainsMarkdownPageAsync(link))
-				Frame.Navigate(typeof(MarkdownPageViewer), link);
-			else
-				Frame.Navigate(typeof(NewPage), link);
-		}
-
-		private void Edit_Click(object sender, RoutedEventArgs e)
-		{
-			Logger.Debug("Edit Page");
-
-			if (Page.IsLocked)
-			{
-				App.Current.manager.Show(new SimpleNotification
-				{
-					TimeSpan = TimeSpan.FromSeconds(3),
-					Text = "Page cannot be edited.",
-					Glyph = "\uE1F6",
-					VerticalAlignment = VerticalAlignment.Bottom,
-					Background = new SolidColorBrush(Color.Red.ToWindowsUiColor())
-				});
-			}
-			else
-			{
-				Frame.Navigate(typeof(PageEditor), Page.Link);
-			}
-		}
-
-		private async void Revision_Click(object sender, RoutedEventArgs e)
-		{
-			Frame.Navigate(typeof(HistoryPage), Page.Link);
-		}
+		*/
 
 		/// <summary>
 		/// A Headeritem in the toc was invoked.
@@ -363,56 +321,12 @@ namespace PrivateWiki.Pages
 			await Webview.InvokeScriptAsync("eval", new[] {scrollTo});
 		}
 
-		private async void Top_Click(object sender, RoutedEventArgs e)
+		public override async void Top_Click(object sender, RoutedEventArgs e)
 		{
 			await Webview.InvokeScriptAsync("eval", new[] {"window.scrollTo(0,0);"});
 		}
 
-		/// <summary>
-		/// This method is called, when the user clicks the "Print"-Button.
-		///
-		/// Prints the current page to a pdf file.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private async void Pdf_Click(object sender, RoutedEventArgs e)
-		{
-			// TODO Print PDF
-			var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-
-			var dialog = new ContentDialog
-			{
-				Title = resourceLoader.GetString("PrintPDF/Dialog/Title"),
-				Content = resourceLoader.GetString("PrintPDF/Dialog/Content"),
-				PrimaryButtonText = resourceLoader.GetString("PrintPDF/Dialog/OpenInBrowser"),
-				CloseButtonText = resourceLoader.GetString("Close"),
-				DefaultButton = ContentDialogButton.Primary
-			};
-
-			var result = await dialog.ShowAsync();
-
-			if (result == ContentDialogResult.Primary)
-			{
-				var pageExporter = new PageExporter();
-				var file = await pageExporter.ExportPage(Page);
-
-				_ = Launcher.LaunchFileAsync(file);
-			}
-		}
-
-		private void Fullscreen_Click(object sender, RoutedEventArgs e)
-		{
-			var view = ApplicationView.GetForCurrentView();
-			if (view.IsFullScreenMode) view.ExitFullScreenMode();
-			else view.TryEnterFullScreenMode();
-		}
-
-		private void Setting_Click(object sender, RoutedEventArgs e)
-		{
-			Frame.Navigate(typeof(SettingsPage));
-		}
-
-		private void Search_Click(object sender, RoutedEventArgs e)
+		public override void Search_Click(object sender, RoutedEventArgs e)
 		{
 			SearchPopup.IsOpen = true;
 			SearchPopup.Closed += (sender, e) =>
@@ -421,33 +335,9 @@ namespace PrivateWiki.Pages
 
 				if (link != null)
 				{
-					NavigateToPage(link);
+					NavigateToPage(Page, link);
 				}
 			};
-		}
-
-		/// <summary>
-		/// Called when the user clicks the "Export"-Button.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Export_Click(object sender, RoutedEventArgs e)
-		{
-			_ = new ExportDialog(Page.Link).ShowAsync();
-		}
-
-		/// <summary>
-		/// This method is called, if the user clicked the "Import"-Button.
-		///
-		/// The method should import a markdown page into the database.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Import_Click(object sender, RoutedEventArgs e)
-		{
-			// TODO Import Dialog
-
-			App.Current.manager.ShowNotImplementedNotification();
 		}
 
 		private void Webview_OnContainsFullScreenElementChanged(WebView sender, object args)

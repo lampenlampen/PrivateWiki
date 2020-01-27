@@ -38,7 +38,7 @@
         </Popup>
         
         <controls1:PageViewerCommandBar
-            Name="CommandBar"
+            Name="commandBar"
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="3"
@@ -52,7 +52,8 @@
             HistoryClick="Revision_Click"
             FullscreenClick="Fullscreen_Click"
             ExportClick="Export_Click"
-            ImportClick="Import_Click"/>
+            ImportClick="Import_Click"
+            NavigateToPage="CommandBar_OnNavigateToPage"/>
 
         <Border
             Grid.Row="1"

@@ -16,7 +16,7 @@ namespace PrivateWiki
 
 		internal static List<Path> Pages { get; set; } = new List<Path>();
 
-		public static bool AddPage( MarkdownPage page)
+		public static bool AddPage( Page page)
 		{
 			Pages.Remove(page.Path);
 			Pages.Add(page.Path);
@@ -24,7 +24,7 @@ namespace PrivateWiki
 			return true;
 		}
 
-		public static bool RemovePage(MarkdownPage page)
+		public static bool RemovePage(Page page)
 		{
 			Pages.Remove(page.Path);
 
