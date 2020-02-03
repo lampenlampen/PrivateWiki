@@ -94,7 +94,7 @@ namespace PrivateWiki.Pages.ContentPages
 			if (result == ContentDialogResult.Primary)
 			{
 				var pageExporter = new PageExporter();
-				var file = await pageExporter.ExportPage((MarkdownPage)Page);
+				var file = await pageExporter.ExportPage((MarkdownPage) Page);
 
 				_ = Launcher.LaunchFileAsync(file);
 			}

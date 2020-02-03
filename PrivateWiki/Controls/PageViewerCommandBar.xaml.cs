@@ -1,22 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using JetBrains.Annotations;
-using Models.Pages;
 using NLog;
-using PrivateWiki.Pages;
 using Page = Models.Pages.Page;
 using Path = Models.Pages.Path;
 
@@ -28,9 +17,10 @@ namespace PrivateWiki.Controls
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-		public new Object Content
+		public new object Content
 		{
 			get => commandBar.Content;
+			set => commandBar.Content = value;
 		}
 
 		public PageViewerCommandBar()
@@ -162,11 +152,11 @@ namespace PrivateWiki.Controls
 			}
 		}
 
-		public delegate void NavigateToPageHandler(object sender, String id);
+		public delegate void NavigateToPageHandler(object sender, string id);
 
 		public event NavigateToPageHandler NavigateToPage;
 
-		private void Btn_Click([NotNull] object sender, RoutedEventArgs e)
+		private void Btn_Click(object sender, RoutedEventArgs e)
 		{
 			var id = (string)((Button)sender).Content;
 			Logger.Debug($"Page Clicked: {id}");
