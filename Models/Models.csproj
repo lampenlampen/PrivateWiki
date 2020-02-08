@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="NodaTime" Version="2.4.7" />
+    <PackageReference Include="ReactiveUI" Version="11.1.23" />
   </ItemGroup>
 
 </Project>

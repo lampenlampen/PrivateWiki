@@ -149,6 +149,9 @@
     <PackageReference Include="NodaTime">
       <Version>2.4.7</Version>
     </PackageReference>
+    <PackageReference Include="ReactiveUI">
+      <Version>11.1.23</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Contracts\Contracts.csproj">

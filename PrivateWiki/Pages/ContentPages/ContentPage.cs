@@ -32,7 +32,9 @@ namespace PrivateWiki.Pages.ContentPages
 
 		public async void NavigateToPage(Page page, string link)
 		{
-			if (page.Link.Equals(link)) return;
+			NavigationHandler.AddPage(page);
+
+				if (page.Link.Equals(link)) return;
 
 			if (await _storage.ContainsMarkdownPageAsync(link))
 				Frame.Navigate(typeof(MarkdownPageViewer), link);

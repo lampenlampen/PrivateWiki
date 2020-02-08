@@ -92,11 +92,6 @@ namespace PrivateWiki.Controls
 			SettingsClick?.Invoke(sender, e);
 		}
 
-		public void InsertPageIntoNavigationStack(Page page)
-		{
-			NavigationHandler.AddPage(page);
-		}
-
 		private void ShowLastVisitedPages()
 		{
 			var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };

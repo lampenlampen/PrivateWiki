@@ -43,7 +43,7 @@ namespace PrivateWiki.Pages
 	/// <summary>
 	///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
 	/// </summary>
-	public sealed partial class MarkdownPageViewer : ContentPage, IPageViewerCommandBar
+	public sealed partial class MarkdownPageViewer : ContentPage
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -239,71 +239,6 @@ namespace PrivateWiki.Pages
 			var uriResolver = new MyUriToStreamResolver();
 			Webview.NavigateToLocalStreamUri(uri, uriResolver);
 		}
-
-		/*
-		private void ShowLastVisitedPages()
-		{
-			var stackPanel = new StackPanel {Orientation = Orientation.Horizontal};
-			var stack = NavigationHandler.Pages;
-
-			if (stack.Count <= 0) return;
-
-			for (var index = 0; index < stack.Count - 1; index++)
-			{
-				var page = stack[index];
-				var textBlock = GetTextBlock(page);
-				stackPanel.Children.Add(textBlock);
-
-				var delimiterBox = GetDelimiterBlock();
-				stackPanel.Children.Add(delimiterBox);
-			}
-
-			var lastTextBox = GetTextBlock(stack.Last());
-			stackPanel.Children.Add(lastTextBox);
-
-			//CommandBar.Content = stackPanel;
-
-			Button GetTextBlock(Path path)
-			{
-				var button = new Button
-				{
-					Content = path.Title,
-					FontSize = 20,
-					VerticalAlignment = VerticalAlignment.Center,
-					Background = new RevealBackgroundBrush(),
-					BorderBrush = new RevealBorderBrush(),
-					FontStyle = FontStyle.Italic
-				};
-
-				var tooltip = new ToolTip();
-				tooltip.Content = path.FullPath;
-				ToolTipService.SetToolTip(button, tooltip);
-
-				button.Click += Btn_Click;
-
-				return button;
-			}
-
-			TextBlock GetDelimiterBlock()
-			{
-				return new TextBlock
-				{
-					Text = ">",
-					FontSize = 20,
-					VerticalAlignment = VerticalAlignment.Center,
-					Margin = new Thickness(2, 0, 2, 0)
-				};
-			}
-		}
-
-		private void Btn_Click([NotNull] object sender, RoutedEventArgs e)
-		{
-			var id = (string)((Button)sender).Content;
-			Logger.Debug($"Page Clicked: {id}");
-
-			NavigateToPage(Page, id);
-		}
-		*/
 
 		/// <summary>
 		/// A Headeritem in the toc was invoked.
