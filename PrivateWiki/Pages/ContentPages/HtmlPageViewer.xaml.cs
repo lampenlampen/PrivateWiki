@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Contracts;
+using Models.ViewModels;
+using ReactiveUI;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
 
@@ -24,15 +26,27 @@ namespace PrivateWiki.Pages.ContentPages
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class HtmlPageViewer : ContentPage
+	public sealed partial class HtmlPageViewer : ContentPage, IViewFor<HtmlPageViewerViewModel>
 	{
-		IObservable<RoutedEventArgs> a;
+		public static readonly DependencyProperty ViewModelProperty = DependencyProperty
+			.Register(nameof(ViewModel), typeof(HtmlPageViewerViewModel), typeof(HtmlPageViewer), new PropertyMetadata(null));
+
+		public HtmlPageViewerViewModel ViewModel
+		{
+			get => (HtmlPageViewerViewModel)GetValue(ViewModelProperty);
+			set => SetValue(ViewModelProperty, value);
+		}
+
+		object IViewFor.ViewModel
+		{
+			get => ViewModel;
+			set => ViewModel = (HtmlPageViewerViewModel)value;
+		}
+
 		public HtmlPageViewer()
 		{
 			this.InitializeComponent();
-			a = Observable.FromEvent<RoutedEventHandler, RoutedEventArgs>(
-				handler => commandBar.TopClick += handler,
-				handler => commandBar.TopClick -= handler);
+
 		}
 
 		public override void Top_Click(object sender, RoutedEventArgs e)
@@ -46,26 +60,6 @@ namespace PrivateWiki.Pages.ContentPages
 		}
 
 		private void TreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
-		{
-			throw new NotImplementedException();
-		}
-
-		private void WebView_OnNavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
-		{
-			throw new NotImplementedException();
-		}
-
-		private void Webview_OnContainsFullScreenElementChanged(WebView sender, object args)
-		{
-			throw new NotImplementedException();
-		}
-
-		private void Webview_OnScriptNotify(object sender, NotifyEventArgs e)
-		{
-			throw new NotImplementedException();
-		}
-
-		private void Webview_OnLoadCompleted(object sender, NavigationEventArgs e)
 		{
 			throw new NotImplementedException();
 		}
