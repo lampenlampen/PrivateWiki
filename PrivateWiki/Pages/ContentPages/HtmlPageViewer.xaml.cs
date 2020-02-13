@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Contracts;
+using Models.Pages;
 using Models.ViewModels;
 using ReactiveUI;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
@@ -47,6 +48,25 @@ namespace PrivateWiki.Pages.ContentPages
 		{
 			this.InitializeComponent();
 
+			// Test HtmlPage
+			var page = new HtmlPage
+			{
+				Content = "<h1>Heading 1</h1>"
+			};
+			
+			ViewModel = new HtmlPageViewerViewModel(page);
+
+			ShowPageInWebView();
+
+			this.WhenActivated(disposable =>
+			{
+				
+			});
+		}
+
+		private void ShowPageInWebView()
+		{
+			Webview.NavigateToString(ViewModel.Page.Content);
 		}
 
 		public override void Top_Click(object sender, RoutedEventArgs e)

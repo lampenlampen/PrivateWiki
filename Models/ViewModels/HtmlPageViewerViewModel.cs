@@ -7,7 +7,7 @@ using ReactiveUI;
 
 namespace Models.ViewModels
 {
-	class HtmlPageViewerViewModel : ReactiveObject
+	public class HtmlPageViewerViewModel : ReactiveObject
 	{
 		public HtmlPage Page { get; }
 

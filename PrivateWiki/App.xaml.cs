@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Models.Storage;
 using NLog;
+using PrivateWiki.Pages.ContentPages;
 using PrivateWiki.Storage;
 using RavinduL.LocalNotifications;
 using StorageBackend.SQLite;
@@ -95,7 +96,7 @@ namespace PrivateWiki
 		{
 			await DefaultPages.InsertDefaultMarkdownPagesAsync( new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), SystemClock.Instance);
 
-			rootFrame.Navigate(typeof(MarkdownPageViewer), "start");
+			rootFrame.Navigate(typeof(HtmlPageViewer), "start");
 		}
 
 		/// <summary>
