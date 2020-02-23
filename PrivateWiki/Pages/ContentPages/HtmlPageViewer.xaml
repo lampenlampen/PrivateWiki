@@ -69,6 +69,8 @@
                 DefaultBackgroundColor="White"/>
         </Border>
 
+        <!--
+
         <controls1:GridSplitter
             Grid.Row="1"
             Grid.Column="1"
@@ -116,6 +118,8 @@
                 x:Name="TagsPanel"/>
 
         </StackPanel>
+
+        -->
 
     </Grid>
 </local:ContentPage>

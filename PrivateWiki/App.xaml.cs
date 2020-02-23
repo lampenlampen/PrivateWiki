@@ -96,7 +96,7 @@ namespace PrivateWiki
 		{
 			await DefaultPages.InsertDefaultMarkdownPagesAsync( new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), SystemClock.Instance);
 
-			rootFrame.Navigate(typeof(HtmlPageViewer), "start");
+			rootFrame.Navigate(typeof(MarkdownPageViewer), "start");
 		}
 
 		/// <summary>

@@ -36,4 +36,15 @@ namespace Models.Pages
 		}
 	}
 
+	public class GenericPageHistory : PageHistory<GenericPage>
+	{
+		public GenericPageHistory(GenericPage page) : base(page)
+		{
+		}
+
+		public GenericPageHistory(GenericPage page, Instant validFrom, Instant validTo) : base(page, validFrom, validTo)
+		{
+		}
+	}
+
 }

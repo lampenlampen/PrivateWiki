@@ -9,11 +9,13 @@ namespace Models.ViewModels
 {
 	public class HtmlPageViewerViewModel : ReactiveObject
 	{
-		public HtmlPage Page { get; }
+		public string Content => _page.Content;
+
+		private HtmlPage _page { get; }
 
 		public HtmlPageViewerViewModel(HtmlPage page)
 		{
-			Page = page;
+			_page = page;
 		}
 	}
 }

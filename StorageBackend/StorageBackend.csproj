@@ -132,8 +132,11 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLite\SqLiteBackend.cs" />
+    <Compile Include="SQLite\SqliteDataReaderToHistoryPageConverter.cs" />
     <Compile Include="SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs" />
+    <Compile Include="SQLite\SqliteDataReaderToHtmlPageConverter.cs" />
     <Compile Include="SQLite\SqliteDataReaderToMarkdownPageConverter.cs" />
+    <Compile Include="SQLite\SqliteDataReaderToPageConverter.cs" />
     <EmbeddedResource Include="Properties\StorageBackend2.rd.xml" />
   </ItemGroup>
   <ItemGroup>

@@ -171,10 +171,11 @@ namespace PrivateWiki.Pages
 					return;
 				}
 
-			Page = await _storage.GetMarkdownPageAsync(pageId);
+			Page = await new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance).GetPageAsync(pageId);
+			// Page = await _storage.GetPageAsync(pageId);
 			Logger.Debug($"Page Some: {pageId}");
 			var parser = new Markdig.Markdig();
-			var doc = parser.Parse((MarkdownPage) Page);
+			var doc = parser.Parse(Page.Content);
 
 			// Show Tags
 			var tags = doc.GetTags();

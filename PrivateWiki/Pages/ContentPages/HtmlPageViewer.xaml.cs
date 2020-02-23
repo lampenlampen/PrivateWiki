@@ -48,6 +48,7 @@ namespace PrivateWiki.Pages.ContentPages
 		{
 			this.InitializeComponent();
 
+			// TODO Remove Test Page
 			// Test HtmlPage
 			var page = new HtmlPage
 			{
@@ -66,7 +67,7 @@ namespace PrivateWiki.Pages.ContentPages
 
 		private void ShowPageInWebView()
 		{
-			Webview.NavigateToString(ViewModel.Page.Content);
+			Webview.NavigateToString(ViewModel.Content);
 		}
 
 		public override void Top_Click(object sender, RoutedEventArgs e)
