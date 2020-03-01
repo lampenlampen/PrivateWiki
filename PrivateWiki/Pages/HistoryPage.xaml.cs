@@ -17,7 +17,7 @@ namespace PrivateWiki.Pages
 	/// </summary>
 	public sealed partial class HistoryPage : Page
 	{
-		private ObservableCollection<PageHistory<MarkdownPage>> Pages { get; set; }
+		private ObservableCollection<PageHistory<GenericPage>> Pages { get; set; }
 
 		private string _link;
 
@@ -41,7 +41,7 @@ namespace PrivateWiki.Pages
 		private async void Init(string pageLink)
 		{
 			var storage = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
-			var pages = new ObservableCollection<PageHistory<MarkdownPage>>(await storage.GetMarkdownPageHistoryAsync(pageLink));
+			var pages = new ObservableCollection<PageHistory<GenericPage>>(await storage.GetPageHistoryAsync(pageLink));
 
 			Pages = pages;
 			Bindings.Update();
@@ -51,12 +51,12 @@ namespace PrivateWiki.Pages
 		{
 			// Create dummy data.
 
-			var pages = new ObservableCollection<PageHistory<MarkdownPage>>();
+			var pages = new ObservableCollection<PageHistory<GenericPage>>();
 
 			var id = Guid.NewGuid();
 			var id2 = Guid.NewGuid();
 
-			var createdPage = new MarkdownPage
+			var createdPage = new GenericPage()
 			{
 				Created = Instant.FromUnixTimeMilliseconds(1567296000),
 				Content = "",
@@ -66,14 +66,14 @@ namespace PrivateWiki.Pages
 				LastChanged = Instant.FromUnixTimeMilliseconds(1567296000)
 			};
 
-			var created = new MarkdownPageHistory(createdPage)
+			var created = new GenericPageHistory(createdPage)
 			{
 				ValidFrom = Instant.FromUnixTimeMilliseconds(1567296000),
 				ValidTo = Instant.FromUnixTimeMilliseconds(1567468840),
 				Action = PageAction.Created
 			};
 
-			var editedPage = new MarkdownPage
+			var editedPage = new GenericPage()
 				{
 					Created = Instant.FromUnixTimeMilliseconds(1567296000),
 					Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
@@ -83,7 +83,7 @@ namespace PrivateWiki.Pages
 					LastChanged = Instant.FromUnixTimeMilliseconds(1567468840)
 			};
 
-			var edited = new MarkdownPageHistory(editedPage)
+			var edited = new GenericPageHistory(editedPage)
 			{
 				
 				ValidFrom = Instant.FromUnixTimeMilliseconds(1567468840),
@@ -91,7 +91,7 @@ namespace PrivateWiki.Pages
 				Action = PageAction.Edited
 			};
 
-			var lockedPage = new MarkdownPage
+			var lockedPage = new GenericPage()
 			{
 				Created = Instant.FromUnixTimeMilliseconds(1567296000),
 				Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
@@ -101,14 +101,14 @@ namespace PrivateWiki.Pages
 				LastChanged = Instant.FromUnixTimeMilliseconds(1567555220),
 			};
 
-			var locked = new MarkdownPageHistory(lockedPage)
+			var locked = new GenericPageHistory(lockedPage)
 			{
 				ValidFrom = Instant.FromUnixTimeMilliseconds(1567555220),
 				ValidTo = Instant.FromUnixTimeMilliseconds(1567641650),
 				Action = PageAction.Locked
 			};
 
-			var unlockedPage = new MarkdownPage
+			var unlockedPage = new GenericPage()
 				{
 					Created = Instant.FromUnixTimeMilliseconds(1567296000),
 					Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
@@ -118,14 +118,14 @@ namespace PrivateWiki.Pages
 					LastChanged = Instant.FromUnixTimeMilliseconds(1567641650)
 			};
 
-			var unlocked = new MarkdownPageHistory(unlockedPage)
+			var unlocked = new GenericPageHistory(unlockedPage)
 			{
 				ValidFrom = Instant.FromUnixTimeMilliseconds(1567641650),
 				ValidTo = Instant.FromUnixTimeMilliseconds(1567728450),
 				Action = PageAction.Unlocked
 			};
 
-			var edited2Page = new MarkdownPage
+			var edited2Page = new GenericPage()
 			{
 				Created = Instant.FromUnixTimeMilliseconds(1567296000),
 				Content = "# Test Heading 1\ntesfsdgkjasbfadfsg\n## Heading 2\nsdfkljnhasdf",
@@ -135,14 +135,14 @@ namespace PrivateWiki.Pages
 				LastChanged = Instant.FromUnixTimeMilliseconds(1567728450),
 			};
 
-			var edited2 = new MarkdownPageHistory(edited2Page)
+			var edited2 = new GenericPageHistory(edited2Page)
 			{
 				ValidFrom = Instant.FromUnixTimeMilliseconds(1567728450),
 				ValidTo = Instant.FromUnixTimeMilliseconds(1567814570),
 				Action = PageAction.Edited
 			};
 
-			var deletedPage = new MarkdownPage
+			var deletedPage = new GenericPage()
 			{
 				Created = Instant.FromUnixTimeMilliseconds(1567296000),
 				Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
@@ -152,14 +152,14 @@ namespace PrivateWiki.Pages
 				LastChanged = Instant.FromUnixTimeMilliseconds(1567814570),
 			};
 
-			var deleted = new MarkdownPageHistory(deletedPage)
+			var deleted = new GenericPageHistory(deletedPage)
 			{
 				ValidFrom = Instant.FromUnixTimeMilliseconds(1567814570),
 				ValidTo = Instant.FromUnixTimeMilliseconds(1567900820),
 				Action = PageAction.Deleted
 			};
 
-			var created2Page = new MarkdownPage
+			var created2Page = new GenericPage()
 			{
 				Created = Instant.FromUnixTimeMilliseconds(1567296000),
 				Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
@@ -169,14 +169,14 @@ namespace PrivateWiki.Pages
 				LastChanged = Instant.FromUnixTimeMilliseconds(1567900820)
 			};
 
-			var created2 = new MarkdownPageHistory(created2Page)
+			var created2 = new GenericPageHistory(created2Page)
 			{
 				ValidFrom = Instant.FromUnixTimeMilliseconds(1567900820),
 				ValidTo = Instant.FromUnixTimeMilliseconds(1567987200),
 				Action = PageAction.Created
 			};
 
-			var edited3Page = new MarkdownPage
+			var edited3Page = new GenericPage()
 			{
 				Created = Instant.FromUnixTimeMilliseconds(1567296000),
 				Content = "# asfökjhasdf",
@@ -186,7 +186,7 @@ namespace PrivateWiki.Pages
 				LastChanged = Instant.FromUnixTimeMilliseconds(1567987200)
 			};
 
-			var edited3 = new MarkdownPageHistory(edited3Page)
+			var edited3 = new GenericPageHistory(edited3Page)
 			{
 				ValidFrom = Instant.FromUnixTimeMilliseconds(1567987200),
 				ValidTo = Instant.FromUnixTimeMilliseconds(0),

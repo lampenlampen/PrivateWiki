@@ -14,12 +14,6 @@
     Height="Auto"
     Width="Auto">
 
-    <!--    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-            Height="Auto"
-            Width="Auto"
-    
-    -->
-
     <Pivot
         Name="Pivot"
         SelectionChanged="Pivot_SelectionChanged">

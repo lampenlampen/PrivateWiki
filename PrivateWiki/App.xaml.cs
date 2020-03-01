@@ -8,6 +8,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using Models.Storage;
 using NLog;
 using PrivateWiki.Pages.ContentPages;
@@ -25,9 +26,12 @@ namespace PrivateWiki
 		 private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
 		// By default, current is an instance of the Application class, which needs to be changed to be an instance of the App class.
-		public static new App Current;
+		public new static App Current;
 
+		[Obsolete]
 		public LocalNotificationManager manager;
+
+		public InAppNotification Notification;
 
 		/// <summary>
 		///     Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code
@@ -44,9 +48,7 @@ namespace PrivateWiki
 
 			RegisterUncaughtExceptionLogger();
 		}
-
-
-
+		
 		private void RegisterUncaughtExceptionLogger()
 		{
 			UnhandledException += (sender, args) =>
@@ -63,6 +65,8 @@ namespace PrivateWiki
 		/// <param name="e">Details über Startanforderung und -prozess.</param>
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
+			Logger.Info("App Launched");
+			
 			Grid rootGrid = Window.Current.Content as Grid;
 			Frame rootFrame = rootGrid?.Children.Where((c) => c is Frame).Cast<Frame>().FirstOrDefault();
 
@@ -74,13 +78,13 @@ namespace PrivateWiki
 				var notificationGrid = new Grid();
 
 				manager = new LocalNotificationManager(notificationGrid);
+				Notification = new InAppNotification();
 
 				rootGrid.Children.Add(rootFrame);
-				rootGrid.Children.Add(notificationGrid);
-
-				// ...
-
+				rootGrid.Children.Add(Notification);
+				
 				Window.Current.Content = rootGrid;
+				
 			}
 
 			if (e.PrelaunchActivated == false)
@@ -94,9 +98,10 @@ namespace PrivateWiki
 
 		private async void ShowPage(Frame rootFrame)
 		{
+			// TODO Run only on first app start.
 			await DefaultPages.InsertDefaultMarkdownPagesAsync( new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), SystemClock.Instance);
 
-			rootFrame.Navigate(typeof(MarkdownPageViewer), "start");
+			rootFrame.Navigate(typeof(HtmlPageViewer), "start");
 		}
 
 		/// <summary>

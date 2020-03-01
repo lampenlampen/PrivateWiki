@@ -29,11 +29,11 @@ namespace PrivateWiki.Dialogs
 			var backend = new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance);
 			var folder = await FileSystemAccess.PickFolderAsync();
 
-			var pages = new List<MarkdownPage>();
+			var pages = new List<GenericPage>();
 
 			if (ExportAllPages.IsChecked == true)
-				pages.AddRange((IEnumerable<MarkdownPage>) await backend.GetAllMarkdownPagesAsync());
-			else if (ExportSinglePage.IsChecked == true) pages.Add((MarkdownPage) await backend.GetMarkdownPageAsync(_id));
+				pages.AddRange(await backend.GetAllPagesAsync());
+			else if (ExportSinglePage.IsChecked == true) pages.Add(await backend.GetPageAsync(_id));
 
 			var exportHtml = ExportHtml.IsChecked == true;
 			var exportMarkdown = ExportMarkdown.IsChecked == true;

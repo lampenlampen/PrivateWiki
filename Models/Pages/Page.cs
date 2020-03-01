@@ -10,6 +10,7 @@ namespace Models.Pages
 		{
 		}
 
+		[Obsolete]
 		protected Page(string link, Guid id, string content, Instant created, Instant lastChanged, bool isLocked)
 		{
 			Link = link;
@@ -18,6 +19,29 @@ namespace Models.Pages
 			Created = created;
 			LastChanged = lastChanged;
 			IsLocked = isLocked;
+		}
+
+		protected Page(Path path, Guid id, string content, Instant created, Instant lastChanged, bool isLocked, List<Tag> tags = null)
+		{
+			Path = path;
+			Id = id;
+			Content = content;
+			Created = created;
+			LastChanged = lastChanged;
+			IsLocked = isLocked;
+			Tags = tags ?? new List<Tag>();
+		}
+		
+		protected Page(Path path, string content, Instant created, Instant lastChanged, bool isLocked, List<Tag> tags = null)
+		{
+			Path = path;
+			Id = Guid.NewGuid();
+			Content = content;
+			Created = created;
+			LastChanged = lastChanged;
+			IsLocked = isLocked;
+
+			Tags = tags ?? new List<Tag>();
 		}
 
 		[Obsolete]
@@ -35,7 +59,7 @@ namespace Models.Pages
 
 		public Path? Path { get; set; }
 		
-		public List<Tag>? Tags { get; set; }
+		public List<Tag> Tags { get; }
 
 		public string ContentType => GetContentType();
 

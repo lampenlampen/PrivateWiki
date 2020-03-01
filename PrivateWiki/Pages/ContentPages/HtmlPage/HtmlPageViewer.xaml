@@ -46,7 +46,6 @@
             TopClick="Top_Click"
             PdfClick="Pdf_Click"
             EditClick="Edit_Click"
-            SearchClick="Search_Click"
             HistoryClick="Revision_Click"
             FullscreenClick="Fullscreen_Click"
             ExportClick="Export_Click"

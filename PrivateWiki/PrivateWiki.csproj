@@ -165,9 +165,16 @@
     <Compile Include="Markdig\Extensions\TagExtension\TagParser.cs" />
     <Compile Include="Markdig\Extensions\TagExtension\MarkdigTagExtension.cs" />
     <Compile Include="Markdig\MarkdigPipelineBuilder.cs" />
+    <Compile Include="Models\GenericTextPageEditorViewModel.cs" />
     <Compile Include="Models\LFSModel.cs" />
     <Compile Include="Pages\ContentPages\ContentPage.cs" />
-    <Compile Include="Pages\ContentPages\HtmlPageViewer.xaml.cs">
+    <Compile Include="Pages\ContentPages\GenericTextPageEditor.xaml.cs">
+      <DependentUpon>GenericTextPageEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ContentPages\HtmlPage\HtmlPageEditor.xaml.cs">
+      <DependentUpon>HtmlPageEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ContentPages\HtmlPage\HtmlPageViewer.xaml.cs">
       <DependentUpon>HtmlPageViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\HistoryPage.xaml.cs">
@@ -388,7 +395,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ContentPages\HtmlPageViewer.xaml">
+    <Page Include="Pages\ContentPages\GenericTextPageEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ContentPages\HtmlPage\HtmlPageEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ContentPages\HtmlPage\HtmlPageViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

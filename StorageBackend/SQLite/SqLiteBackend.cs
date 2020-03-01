@@ -11,6 +11,8 @@ namespace StorageBackend.SQLite
 {
 	public class SqLiteBackend : ISqLiteBackend, IMarkdownPageStorage, IGenericPageStorage
 	{
+		private const bool IsObsoleteError = false;
+
 		private readonly SqLiteStorage _sqLite;
 
 		private readonly SqliteConnection _conn;
@@ -114,7 +116,7 @@ namespace StorageBackend.SQLite
 
 		#region IMarkdownPageStorage members
 
-		[Obsolete("Use generic methods", true)]
+		[Obsolete("Use generic methods", IsObsoleteError)]
 		public Task<MarkdownPage> GetMarkdownPageAsync(Guid id)
 		{
 			MarkdownPage Action()
@@ -148,7 +150,7 @@ namespace StorageBackend.SQLite
 			return Task.Run(Action);
 		}
 
-		[Obsolete("Use generic methods", true)]
+		[Obsolete("Use generic methods", IsObsoleteError)]
 		private Task<Page> GetPage2(string param, string value)
 		{
 			Page Action()
@@ -184,7 +186,7 @@ namespace StorageBackend.SQLite
 			return Task.Run(Action);
 		}
 
-		[Obsolete("Use generic methods", true)]
+		[Obsolete("Use generic methods", IsObsoleteError)]
 		public Task<MarkdownPage> GetMarkdownPageAsync(string link)
 		{
 			MarkdownPage Action()
@@ -218,7 +220,7 @@ namespace StorageBackend.SQLite
 			return Task.Run(Action);
 		}
 
-		[Obsolete("Use generic methods", true)]
+		[Obsolete("Use generic methods", IsObsoleteError)]
 		public Task<IEnumerable<MarkdownPage>> GetAllMarkdownPagesAsync()
 		{
 			IEnumerable<MarkdownPage> Action()
@@ -250,7 +252,7 @@ namespace StorageBackend.SQLite
 			return Task.Run(Action);
 		}
 
-		[Obsolete("Use generic methods", true)]
+		[Obsolete("Use generic methods", IsObsoleteError)]
 		public Task<bool> UpdateMarkdownPage(MarkdownPage page, PageAction action)
 		{
 			bool MarkdownPageAction(MarkdownPage page)
@@ -282,13 +284,13 @@ namespace StorageBackend.SQLite
 			return new TaskFactory<bool>().StartNew((page) => MarkdownPageAction((MarkdownPage) page), page);
 		}
 
-		[Obsolete("Use generic methods", true)]
+		[Obsolete("Use generic methods", IsObsoleteError)]
 		public Task<bool> DeleteMarkdownPageAsync(MarkdownPage page)
 		{
 			return DeleteMarkdownPageAsync(page.Id);
 		}
 
-		[Obsolete("Use generic methods", true)]
+		[Obsolete("Use generic methods", IsObsoleteError)]
 		public Task<bool> DeleteMarkdownPageAsync(Guid id)
 		{
 			bool Action()
@@ -324,7 +326,7 @@ namespace StorageBackend.SQLite
 			return Task.Run(Action);
 		}
 
-		[Obsolete("Use generic methods", true)]
+		[Obsolete("Use generic methods", IsObsoleteError)]
 		public Task<bool> InsertMarkdownPageAsync(MarkdownPage page)
 		{
 			bool MarkdownPageAction(MarkdownPage page)
@@ -366,7 +368,7 @@ namespace StorageBackend.SQLite
 			return new TaskFactory<bool>().StartNew((page) => MarkdownPageAction((MarkdownPage) page), page);
 		}
 
-		[Obsolete("Use generic methods", true)]
+		[Obsolete("Use generic methods", IsObsoleteError)]
 		public Task<bool> ContainsMarkdownPageAsync(MarkdownPage page)
 		{
 			bool MarkdownPageAction(MarkdownPage page)
@@ -389,7 +391,7 @@ namespace StorageBackend.SQLite
 			return new TaskFactory<bool>().StartNew(page => MarkdownPageAction((MarkdownPage) page), page);
 		}
 
-		[Obsolete("Use generic methods", true)]
+		[Obsolete("Use generic methods", IsObsoleteError)]
 		public Task<bool> ContainsMarkdownPageAsync(Guid id)
 		{
 			bool MarkdownPageAction(Guid id)
@@ -412,7 +414,7 @@ namespace StorageBackend.SQLite
 			return new TaskFactory<bool>().StartNew(id => MarkdownPageAction((Guid) id), id);
 		}
 
-		[Obsolete("Use generic methods", true)]
+		[Obsolete("Use generic methods", IsObsoleteError)]
 		public Task<bool> ContainsMarkdownPageAsync(string link)
 		{
 			bool MarkdownPageAction(string link)
@@ -435,7 +437,7 @@ namespace StorageBackend.SQLite
 			return new TaskFactory<bool>().StartNew(link => MarkdownPageAction((string) link), link);
 		}
 
-		[Obsolete("Use generic methods", true)]
+		[Obsolete("Use generic methods", IsObsoleteError)]
 		public Task<IEnumerable<PageHistory<MarkdownPage>>> GetMarkdownPageHistoryAsync(string pageLink)
 		{
 			IEnumerable<PageHistory<MarkdownPage>> Action(string pageLink)

@@ -64,9 +64,9 @@ namespace PrivateWiki.Pages
 
 			var content = await FileIO.ReadTextAsync(file);
 
-			var page = new MarkdownPage(Guid.NewGuid(), _pageId, content, SystemClock.Instance.GetCurrentInstant(), SystemClock.Instance.GetCurrentInstant(), false);
+			var page = new GenericPage(_pageId, Guid.NewGuid(), content, "markdown", SystemClock.Instance.GetCurrentInstant(), SystemClock.Instance.GetCurrentInstant(), false);
 
-			await backend.InsertMarkdownPageAsync(page);
+			await backend.InsertPageAsync(page);
 
 			NavigateToPage();
 		}

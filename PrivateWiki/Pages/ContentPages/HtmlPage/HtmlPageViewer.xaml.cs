@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
@@ -16,6 +19,9 @@ using Windows.UI.Xaml.Navigation;
 using Contracts;
 using Models.Pages;
 using Models.ViewModels;
+using NLog;
+using PrivateWiki.Utilities;
+using RavinduL.LocalNotifications.Notifications;
 using ReactiveUI;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
@@ -29,6 +35,8 @@ namespace PrivateWiki.Pages.ContentPages
 	/// </summary>
 	public sealed partial class HtmlPageViewer : ContentPage, IViewFor<HtmlPageViewerViewModel>
 	{
+		#region ViewModel
+		
 		public static readonly DependencyProperty ViewModelProperty = DependencyProperty
 			.Register(nameof(ViewModel), typeof(HtmlPageViewerViewModel), typeof(HtmlPageViewer), new PropertyMetadata(null));
 
@@ -43,6 +51,10 @@ namespace PrivateWiki.Pages.ContentPages
 			get => ViewModel;
 			set => ViewModel = (HtmlPageViewerViewModel)value;
 		}
+		
+		#endregion
+
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
 		public HtmlPageViewer()
 		{
@@ -50,7 +62,7 @@ namespace PrivateWiki.Pages.ContentPages
 
 			// TODO Remove Test Page
 			// Test HtmlPage
-			var page = new HtmlPage
+			var page = new global::Models.Pages.HtmlPage
 			{
 				Content = "<h1>Heading 1</h1>"
 			};
@@ -61,7 +73,9 @@ namespace PrivateWiki.Pages.ContentPages
 
 			this.WhenActivated(disposable =>
 			{
-				
+				Observable.FromEventPattern<RoutedEventHandler, RoutedEventArgs>(
+					handler => commandBar.SearchClick += handler,
+					handler => commandBar.SearchClick -= handler).Select(x => Unit.Default).InvokeCommand().DisposeWith(disposable);
 			});
 		}
 
@@ -72,7 +86,10 @@ namespace PrivateWiki.Pages.ContentPages
 
 		public override void Top_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			// Testing
+			// throw new NotImplementedException();
+			
+			Frame.Navigate(typeof(GenericTextPageEditor), "start");
 		}
 
 		public override void Search_Click(object sender, RoutedEventArgs e)
