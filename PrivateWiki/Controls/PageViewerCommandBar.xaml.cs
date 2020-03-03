@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Subjects;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -26,6 +28,9 @@ namespace PrivateWiki.Controls
 		public PageViewerCommandBar()
 		{
 			this.InitializeComponent();
+			
+			_showSettings = new Subject<Unit>();
+			
 			ShowLastVisitedPages();
 		}
 
@@ -89,8 +94,13 @@ namespace PrivateWiki.Controls
 
 		private void Setting_Click(object sender, RoutedEventArgs e)
 		{
-			SettingsClick?.Invoke(sender, e);
+			//SettingsClick?.Invoke(sender, e);
+			_showSettings.OnNext(Unit.Default);
 		}
+
+		private ISubject<Unit> _showSettings;
+
+		public IObservable<Unit> ShowSettings => _showSettings;
 
 		private void ShowLastVisitedPages()
 		{

@@ -33,7 +33,7 @@ namespace PrivateWiki.Pages.ContentPages
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class HtmlPageViewer : ContentPage, IViewFor<HtmlPageViewerViewModel>
+	public sealed partial class HtmlPageViewer : IViewFor<HtmlPageViewerViewModel>
 	{
 		#region ViewModel
 		
@@ -75,7 +75,14 @@ namespace PrivateWiki.Pages.ContentPages
 			{
 				Observable.FromEventPattern<RoutedEventHandler, RoutedEventArgs>(
 					handler => commandBar.SearchClick += handler,
-					handler => commandBar.SearchClick -= handler).Select(x => Unit.Default).InvokeCommand().DisposeWith(disposable);
+					handler => commandBar.SearchClick -= handler)
+					.Select(x => Unit.Default)
+					.Subscribe((_) => {  })
+					.DisposeWith(disposable);
+
+				commandBar.ShowSettings
+					.Subscribe((_) => { Frame.Navigate(typeof(SettingsPage)); })
+					.DisposeWith(disposable);
 			});
 		}
 
