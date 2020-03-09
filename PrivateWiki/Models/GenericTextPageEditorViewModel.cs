@@ -2,18 +2,16 @@ using System;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Contracts.Storage;
 using Models.Pages;
-using Models.Storage;
 using NLog;
 using NodaTime;
 using PrivateWiki.Storage;
 using ReactiveUI;
 using StorageBackend.SQLite;
 
-namespace Models.ViewModels
+namespace PrivateWiki.Models
 {
 	public class GenericTextPageEditorViewModel : ReactiveObject
 	{
@@ -33,60 +31,60 @@ namespace Models.ViewModels
 
 		public IObservable<Unit> GoBack => _goBack;
 
-		public ReactiveCommand<string, Unit> LoadPage;
+		public readonly ReactiveCommand<string, Unit> LoadPage;
 
-		public ReactiveCommand<string, Unit> SavePage;
+		public readonly ReactiveCommand<string, Unit> SavePage;
 
-		public ReactiveCommand<Unit, Unit> Abort;
+		public readonly ReactiveCommand<Unit, Unit> Abort;
 
-		public ReactiveCommand<Unit, Unit> DeletePage;
+		public readonly ReactiveCommand<Unit, Unit> DeletePage;
 
-		public ReactiveCommand<Unit, Unit> ExternalEditor;
+		public readonly ReactiveCommand<Unit, Unit> ExternalEditor;
 
 		private readonly Interaction<Unit, bool> confirmDelete;
 
-		public Interaction<Unit, bool> ConfirmDelete => this.confirmDelete;
+		public Interaction<Unit, bool> ConfirmDelete => confirmDelete;
 
 		public GenericTextPageEditorViewModel()
 		{
 			_goBack = new Subject<Unit>();
-			
+
 			// Init Commands
 			LoadPage = ReactiveCommand.CreateFromTask<string>(LoadPageAsync);
-			
+
 			SavePage = ReactiveCommand.Create<string>((content) =>
 			{
 				// TODO Save Page
 				Logger.Info($"Save Page: {Page.Link}");
 			});
-			
+
 			Abort = ReactiveCommand.Create(() =>
 			{
 				// TODO Abort
 				Logger.Info("Abort");
-				
+
 				_goBack.OnNext(Unit.Default);
 			});
-			
+
 			ExternalEditor = ReactiveCommand.Create(() =>
 			{
 				// TODO External Editor
 				Logger.Info("External Editor");
 			});
-			
+
 			DeletePage = ReactiveCommand.CreateFromTask(DeletePageAsync);
-			
-			
+
+
 			// Init Interactions
 			confirmDelete = new Interaction<Unit, bool>();
-			
+
 			_backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
 		}
 
-		public async Task DeletePageAsync()
+		private async Task DeletePageAsync()
 		{
 			var confirmation = await confirmDelete.Handle(Unit.Default);
-			
+
 			// Delete Page
 			Logger.Info($"Delete page: {Page.Link}");
 
@@ -100,10 +98,6 @@ namespace Models.ViewModels
 				_goBack.OnNext(Unit.Default);
 			}
 		}
-		
-		
-		
-		
 
 		public async Task LoadPageAsync(string pageLink)
 		{

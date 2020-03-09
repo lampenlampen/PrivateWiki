@@ -19,6 +19,7 @@ using Models.Pages;
 using Models.ViewModels;
 using NLog;
 using NodaTime;
+using PrivateWiki.Models;
 using ReactiveUI;
 using Page = Windows.UI.Xaml.Controls.Page;
 
