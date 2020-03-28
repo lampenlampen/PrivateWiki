@@ -63,6 +63,12 @@ namespace PrivateWiki.Pages
 
 			this.WhenActivated(disposable =>
 			{
+				this.WhenAnyValue(x => x.ViewModel.CommandBarViewModel)
+					.Where(x => x != null)
+					.Subscribe(x => commandBar.ViewModel = x)
+					.DisposeWith(disposable);
+				
+				
 				commandBar.ShowSettings.Subscribe(_ => Frame.Navigate(typeof(SettingsPage))).DisposeWith(disposable);
 
 				commandBar.ShowHistory.Subscribe(_ =>
@@ -110,6 +116,8 @@ namespace PrivateWiki.Pages
 				ViewModel.OnNavigateToExistingPage.Subscribe(NavigateToPage).DisposeWith(disposable);
 				ViewModel.OnNavigateToNewPage.Subscribe(NavigateToNewPage).DisposeWith(disposable);
 				ViewModel.OnEditPage.Subscribe(EditPage).DisposeWith(disposable);
+				ViewModel.OnNewPage.Subscribe(_ => NavigateToNewPage()).DisposeWith(disposable);
+				
 				ViewModel.ShowPageLockedNotification.RegisterHandler(interaction => App.Current.manager.ShowPageLockedNotification()).DisposeWith(disposable);
 				ViewModel.ShowPrintBrowserDialog.RegisterHandler(ShowPrintPdfBrowserDialog).DisposeWith(disposable);
 				
@@ -136,9 +144,10 @@ namespace PrivateWiki.Pages
 			Frame.Navigate(typeof(PageViewer), link.FullPath);
 		}
 
-		private void NavigateToNewPage(Path link)
+		private void NavigateToNewPage(Path? link = null)
 		{
-			Frame.Navigate(typeof(NewPage), link.FullPath);
+			if (link != null) Frame.Navigate(typeof(NewPage), link.FullPath);
+			else Frame.Navigate(typeof(NewPage));
 		}
 
 		private void EditPage(Path link)

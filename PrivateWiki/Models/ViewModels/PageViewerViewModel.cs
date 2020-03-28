@@ -27,14 +27,20 @@ namespace PrivateWiki.Models.ViewModels
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 		
-		private IContentPageViewerViewModel _pageContentViewer;
-
 		private SqLiteBackend _backend;
-
+		
+		private IContentPageViewerViewModel _pageContentViewer;
 		public IContentPageViewerViewModel PageContentViewer
 		{
 			get => _pageContentViewer;
 			private set => this.RaiseAndSetIfChanged(ref _pageContentViewer, value);
+		}
+
+		private PageViewerCommandBarViewModel _commandBarViewModel;
+		public PageViewerCommandBarViewModel CommandBarViewModel
+		{
+			get => _commandBarViewModel;
+			private set => this.RaiseAndSetIfChanged(ref _commandBarViewModel, value);
 		}
 
 		private GenericPage _page;
@@ -77,6 +83,8 @@ namespace PrivateWiki.Models.ViewModels
 		private readonly Interaction<Path, bool> _showPrintBrowserDialog;
 		public Interaction<Path, bool> ShowPrintBrowserDialog => _showPrintBrowserDialog;
 
+		public IObservable<Unit> OnNewPage => CommandBarViewModel.OnNewPage;
+
 		public GenericPage Page
 		{
 			get => _page;
@@ -86,8 +94,9 @@ namespace PrivateWiki.Models.ViewModels
 		public PageViewerViewModel()
 		{
 			_backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
+			CommandBarViewModel = new PageViewerCommandBarViewModel();
 
-			// Comannds
+			// Commands
 			LoadPage = ReactiveCommand.CreateFromTask<string>(LoadPageAsync);
 			ShowHistory = ReactiveCommand.CreateFromTask<Path>(ShowHistoryAsync);
 			Edit = ReactiveCommand.CreateFromTask<Path>(EditAsync);

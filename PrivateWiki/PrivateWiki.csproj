@@ -207,6 +207,7 @@
     <Compile Include="Settings\LFSSyncActions.cs" />
     <Compile Include="Settings\SyncModelHandler.cs" />
     <Compile Include="Storage\DefaultStorageBackends.cs" />
+    <Compile Include="Utilities\DebuggingService.cs" />
     <Compile Include="Utilities\DiffMatchPatchAlg.cs" />
     <Compile Include="ImagePickerDialogModel.cs" />
     <Compile Include="Models\DeveloperSettingsModel.cs" />
@@ -275,6 +276,7 @@
     <Compile Include="Utilities\InstantToReadableDateTimeConverter.cs" />
     <Compile Include="Utilities\PageHistoryTemplateSelector.cs" />
     <Compile Include="Utilities\SyncFrequencyToRadioButtonConverter.cs" />
+    <Compile Include="Utilities\XamlConverter\BoolVisibilityConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -588,6 +590,7 @@
       <Name>Windows Desktop Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

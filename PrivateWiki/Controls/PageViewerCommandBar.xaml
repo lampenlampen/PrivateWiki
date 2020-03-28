@@ -5,9 +5,14 @@
     xmlns:local="using:PrivateWiki.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xamlConverter="using:PrivateWiki.Utilities.XamlConverter"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+
+    <local:PageViewerCommandBarBase.Resources>
+        <xamlConverter:BoolVisibilityConverter x:Key="BoolToVisConverter"/>
+    </local:PageViewerCommandBarBase.Resources>
 
     <CommandBar
         x:Name="commandBar"
@@ -47,11 +52,23 @@
                 </AppBarButton.KeyboardAccelerators>
             </AppBarButton>
 
-            <AppBarButton x:Name="ExportBtn" x:Uid="/PageViewer/ExportButton" />
+            <AppBarButton x:Name="ExportBtn" x:Uid="/PageViewer/ExportButton"/>
 
             <AppBarButton x:Name="ImportBtn" x:Uid="/PageViewer/ImportButton" Icon="Import" />
 
             <AppBarButton x:Name="SettingsBtn" x:Uid="/PageViewer/SettingsButton" Icon="Setting" />
+
+            <AppBarButton x:Name="NewPageBtn" Label="New Page" Icon="Add"/>
+
+            <AppBarButton x:Name="DevOptBtn" Label="Developer Settings">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC7A;" FontSize="32"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
 
         </CommandBar.SecondaryCommands>
 

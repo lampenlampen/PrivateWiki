@@ -67,9 +67,8 @@ namespace PrivateWiki.Pages
 			args.Handled = true;
 		}
 
-		protected override void OnNavigatedTo([NotNull] NavigationEventArgs e)
+		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-			base.OnNavigatedTo(e);
 			_pageId = (string) e.Parameter;
 		}
 

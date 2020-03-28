@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
@@ -12,6 +13,8 @@ using Windows.UI.Xaml.Media;
 using JetBrains.Annotations;
 using NLog;
 using PrivateWiki.Models.ViewModels;
+using PrivateWiki.Utilities;
+using PrivateWiki.Utilities.XamlConverter;
 using ReactiveUI;
 using Page = Models.Pages.Page;
 using Path = Models.Pages.Path;
@@ -34,42 +37,35 @@ namespace PrivateWiki.Controls
 			set => commandBar.Content = value;
 		}
 
-		private ISubject<Unit> _showSettings;
 		public IObservable<Unit> ShowSettings => _showSettings;
+		private readonly ISubject<Unit> _showSettings;
 
-		private ISubject<Unit> _scrollToTop;
 		public IObservable<Unit> ScrollToTop => _scrollToTop;
+		private readonly ISubject<Unit> _scrollToTop;
 
-		private ISubject<Unit> _printPdf;
 		public IObservable<Unit> PrintPdf => _printPdf;
+		private readonly ISubject<Unit> _printPdf;
 
-		private ISubject<Unit> _edit;
 		public IObservable<Unit> Edit => _edit;
-
-		private ISubject<Unit> _search;
+		private readonly ISubject<Unit> _edit;
 
 		public IObservable<Unit> Search => _search;
-
-		private ISubject<Unit> _showHistory;
+		private readonly ISubject<Unit> _search;
 
 		public IObservable<Unit> ShowHistory => _showHistory;
-
-		private ISubject<Unit> _toggleFullscreen;
+		private readonly ISubject<Unit> _showHistory;
 
 		public IObservable<Unit> ToggleFullscreen => _toggleFullscreen;
-
-		private ISubject<Unit> _import;
+		private readonly ISubject<Unit> _toggleFullscreen;
 
 		public IObservable<Unit> Import => _import;
-
-		private ISubject<Unit> _export;
+		private readonly ISubject<Unit> _import;
 
 		public IObservable<Unit> Export => _export;
-		
-		private ISubject<string> _navigateToPage;
+		private readonly ISubject<Unit> _export;
 
 		public IObservable<string> NavigateToPage2 => _navigateToPage;
-
+		private readonly ISubject<string> _navigateToPage;
 
 		public PageViewerCommandBar()
 		{
@@ -88,6 +84,11 @@ namespace PrivateWiki.Controls
 
 			this.WhenActivated(disposable =>
 			{
+				this.OneWayBind(ViewModel,
+						vm => vm.DevOptsEnabled,
+						view => view.DevOptBtn.Visibility)
+					.DisposeWith(disposable);
+
 				SettingsBtn.Events().Click
 					.Select(x => Unit.Default)
 					.Subscribe(x =>
@@ -159,6 +160,16 @@ namespace PrivateWiki.Controls
 						_edit.OnNext(Unit.Default);
 						EditClick?.Invoke(this, new RoutedEventArgs());
 					}).DisposeWith(disposable);
+
+				NewPageBtn.Events().Click
+					.Select(_ => Unit.Default)
+					.InvokeCommand(ViewModel.NewPageClick)
+					.DisposeWith(disposable);
+
+				DevOptBtn.Events().Click
+					.Select(_ => Unit.Default)
+					.InvokeCommand(ViewModel.DevOptionsClick)
+					.DisposeWith(disposable);
 			});
 
 			ShowLastVisitedPages();
@@ -223,7 +234,7 @@ namespace PrivateWiki.Controls
 				button.Click += (sender, args) =>
 				{
 					var id = (string) ((Button) sender).Content;
-					
+
 					_navigateToPage.OnNext(id);
 					NavigateToPage?.Invoke(sender, id);
 				};
@@ -245,7 +256,7 @@ namespace PrivateWiki.Controls
 
 		public delegate void NavigateToPageHandler(object sender, string id);
 
+		[Obsolete]
 		public event NavigateToPageHandler NavigateToPage;
-
 	}
 }
