@@ -13,7 +13,7 @@ namespace Models.Pages
 		[Obsolete]
 		protected Page(string link, Guid id, string content, Instant created, Instant lastChanged, bool isLocked)
 		{
-			Link = link;
+			//Link = link;
 			Id = id;
 			Content = content;
 			Created = created;
@@ -46,7 +46,7 @@ namespace Models.Pages
 		}
 
 		[Obsolete]
-		public string Link { get; set; }
+		public string Link => Path.FullPath;
 
 		public Guid Id { get; set; }
 
@@ -58,7 +58,7 @@ namespace Models.Pages
 
 		public bool IsLocked { get; set; }
 
-		public Path? Path { get; set; }
+		public Path Path { get; set; }
 		
 		public List<Tag> Tags { get; }
 

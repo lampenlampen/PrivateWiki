@@ -26,7 +26,6 @@ namespace StorageBackend.SQLite
 		protected bool SqliteDataToHtmlModel(SqliteDataReader reader, HtmlPage page)
 		{
 			page.Id = Guid.Parse(reader.GetString(reader.GetOrdinal("id")));
-			page.Link = reader.GetString(reader.GetOrdinal("link"));
 			page.Content = reader.GetString(reader.GetOrdinal("content"));
 			page.Created = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("created")));
 			page.LastChanged = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("changed")));

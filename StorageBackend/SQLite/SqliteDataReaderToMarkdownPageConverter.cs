@@ -23,7 +23,6 @@ namespace StorageBackend.SQLite
 		protected bool SqliteDataToMarkdownModel(SqliteDataReader reader, MarkdownPage page)
 		{
 			page.Id = Guid.Parse(reader.GetString(reader.GetOrdinal("id")));
-			page.Link = reader.GetString(reader.GetOrdinal("link"));
 			page.Content = reader.GetString(reader.GetOrdinal("content"));
 			page.Created = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("created")));
 			page.LastChanged = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("changed")));
