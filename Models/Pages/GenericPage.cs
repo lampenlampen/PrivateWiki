@@ -9,6 +9,12 @@ namespace Models.Pages
 	{
 		public new string ContentType;
 
+		public new string Link
+		{
+			get => Path.FullPath;
+			set => Path = Path.ofLink(value);
+		}
+
 		public override string GetContentType() => "unknown";
 
 		[Obsolete]

@@ -82,6 +82,7 @@ namespace PrivateWiki
 
 				rootGrid.Children.Add(rootFrame);
 				rootGrid.Children.Add(Notification);
+				rootGrid.Children.Add(notificationGrid);
 				
 				Window.Current.Content = rootGrid;
 				
@@ -101,7 +102,7 @@ namespace PrivateWiki
 			// TODO Run only on first app start.
 			await DefaultPages.InsertDefaultMarkdownPagesAsync( new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), SystemClock.Instance);
 
-			rootFrame.Navigate(typeof(HtmlPageViewer), "start");
+			rootFrame.Navigate(typeof(PageViewer), "start");
 		}
 
 		/// <summary>

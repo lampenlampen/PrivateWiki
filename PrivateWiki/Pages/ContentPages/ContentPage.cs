@@ -34,7 +34,7 @@ namespace PrivateWiki.Pages.ContentPages
 		{
 			NavigationHandler.AddPage(page);
 
-				if (page.Link.Equals(link)) return;
+			if (page.Link.Equals(link)) return;
 
 			if (await _storage.ContainsMarkdownPageAsync(link))
 				Frame.Navigate(typeof(MarkdownPageViewer), link);

@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 using JetBrains.Annotations;
 using NLog;
+using PrivateWiki.Models.ViewModels;
+using ReactiveUI;
 using Page = Models.Pages.Page;
 using Path = Models.Pages.Path;
 
@@ -15,7 +20,11 @@ using Path = Models.Pages.Path;
 
 namespace PrivateWiki.Controls
 {
-	public sealed partial class PageViewerCommandBar : UserControl
+	public class PageViewerCommandBarBase : ReactiveUserControl<PageViewerCommandBarViewModel>
+	{
+	}
+
+	public sealed partial class PageViewerCommandBar : PageViewerCommandBarBase
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -25,86 +34,157 @@ namespace PrivateWiki.Controls
 			set => commandBar.Content = value;
 		}
 
+		private ISubject<Unit> _showSettings;
+		public IObservable<Unit> ShowSettings => _showSettings;
+
+		private ISubject<Unit> _scrollToTop;
+		public IObservable<Unit> ScrollToTop => _scrollToTop;
+
+		private ISubject<Unit> _printPdf;
+		public IObservable<Unit> PrintPdf => _printPdf;
+
+		private ISubject<Unit> _edit;
+		public IObservable<Unit> Edit => _edit;
+
+		private ISubject<Unit> _search;
+
+		public IObservable<Unit> Search => _search;
+
+		private ISubject<Unit> _showHistory;
+
+		public IObservable<Unit> ShowHistory => _showHistory;
+
+		private ISubject<Unit> _toggleFullscreen;
+
+		public IObservable<Unit> ToggleFullscreen => _toggleFullscreen;
+
+		private ISubject<Unit> _import;
+
+		public IObservable<Unit> Import => _import;
+
+		private ISubject<Unit> _export;
+
+		public IObservable<Unit> Export => _export;
+		
+		private ISubject<string> _navigateToPage;
+
+		public IObservable<string> NavigateToPage2 => _navigateToPage;
+
+
 		public PageViewerCommandBar()
 		{
 			this.InitializeComponent();
-			
+
 			_showSettings = new Subject<Unit>();
-			
+			_scrollToTop = new Subject<Unit>();
+			_printPdf = new Subject<Unit>();
+			_edit = new Subject<Unit>();
+			_search = new Subject<Unit>();
+			_showHistory = new Subject<Unit>();
+			_toggleFullscreen = new Subject<Unit>();
+			_import = new Subject<Unit>();
+			_export = new Subject<Unit>();
+			_navigateToPage = new Subject<string>();
+
+			this.WhenActivated(disposable =>
+			{
+				SettingsBtn.Events().Click
+					.Select(x => Unit.Default)
+					.Subscribe(x =>
+					{
+						_showSettings.OnNext(x);
+						SettingsClick?.Invoke(this, new RoutedEventArgs());
+					}).DisposeWith(disposable);
+
+				ToTopBtn.Events().Click
+					.Select(x => Unit.Default)
+					.Subscribe(x =>
+					{
+						_scrollToTop.OnNext(x);
+						TopClick?.Invoke(this, new RoutedEventArgs());
+					}).DisposeWith(disposable);
+
+				PdfBtn.Events().Click
+					.Select(x => Unit.Default)
+					.Subscribe(x =>
+					{
+						_printPdf.OnNext(x);
+						PdfClick?.Invoke(this, new RoutedEventArgs());
+					}).DisposeWith(disposable);
+
+				SearchBtn.Events().Click
+					.Select(x => Unit.Default)
+					.Subscribe(x =>
+					{
+						_search.OnNext(x);
+						SearchClick?.Invoke(this, new RoutedEventArgs());
+					}).DisposeWith(disposable);
+
+				HistoryBtn.Events().Click
+					.Select(x => Unit.Default)
+					.Subscribe(x =>
+					{
+						_showHistory.OnNext(x);
+						HistoryClick?.Invoke(this, new RoutedEventArgs());
+					}).DisposeWith(disposable);
+
+				FullscreenBtn.Events().Click
+					.Select(x => Unit.Default)
+					.Subscribe(x =>
+					{
+						_toggleFullscreen.OnNext(x);
+						FullscreenClick?.Invoke(this, new RoutedEventArgs());
+					}).DisposeWith(disposable);
+
+				ImportBtn.Events().Click
+					.Select(x => Unit.Default)
+					.Subscribe(x =>
+					{
+						_import.OnNext(x);
+						ImportClick?.Invoke(this, new RoutedEventArgs());
+					}).DisposeWith(disposable);
+
+				ExportBtn.Events().Click
+					.Select(x => Unit.Default)
+					.Subscribe(x =>
+					{
+						_export.OnNext(x);
+						ExportClick?.Invoke(this, new RoutedEventArgs());
+					}).DisposeWith(disposable);
+
+				EditBtn.Events().Click
+					.Select(_ => Unit.Default)
+					.Subscribe(x =>
+					{
+						_edit.OnNext(Unit.Default);
+						EditClick?.Invoke(this, new RoutedEventArgs());
+					}).DisposeWith(disposable);
+			});
+
 			ShowLastVisitedPages();
 		}
 
-		public event RoutedEventHandler TopClick;
+		[Obsolete] public event RoutedEventHandler TopClick;
 
-		private void Top_Click(object sender, RoutedEventArgs e)
-		{
-			TopClick?.Invoke(sender, e);
-		}
+		[Obsolete] public event RoutedEventHandler PdfClick;
 
-		public event RoutedEventHandler PdfClick;
+		[Obsolete] public event RoutedEventHandler EditClick;
 
-		private void Pdf_Click(object sender, RoutedEventArgs e)
-		{
-			PdfClick?.Invoke(sender, e);
-		}
+		[Obsolete] public event RoutedEventHandler SearchClick;
 
-		public event RoutedEventHandler EditClick;
+		[Obsolete] public event RoutedEventHandler HistoryClick;
 
-		private void Edit_Click(object sender, RoutedEventArgs e)
-		{
-			EditClick?.Invoke(sender, e);
-		}
+		[Obsolete] public event RoutedEventHandler FullscreenClick;
 
-		public event RoutedEventHandler SearchClick;
+		[Obsolete] public event RoutedEventHandler ExportClick;
 
-		private void Search_Click(object sender, RoutedEventArgs e)
-		{
-			SearchClick?.Invoke(sender, e);
-		}
+		[Obsolete] public event RoutedEventHandler ImportClick;
 
-		public event RoutedEventHandler HistoryClick;
-
-		private void History_Click(object sender, RoutedEventArgs e)
-		{
-			HistoryClick?.Invoke(sender, e);
-		}
-
-		public event RoutedEventHandler FullscreenClick;
-
-		private void Fullscreen_Click(object sender, RoutedEventArgs e)
-		{
-			FullscreenClick?.Invoke(sender, e);
-		}
-
-		public event RoutedEventHandler ExportClick;
-
-		private void Export_Click(object sender, RoutedEventArgs e)
-		{
-			ExportClick?.Invoke(sender, e);
-		}
-
-		public event RoutedEventHandler ImportClick;
-
-		private void Import_Click(object sender, RoutedEventArgs e)
-		{
-			ImportClick?.Invoke(sender, e);
-		}
-
-		public event RoutedEventHandler SettingsClick;
-
-		private void Setting_Click(object sender, RoutedEventArgs e)
-		{
-			//SettingsClick?.Invoke(sender, e);
-			_showSettings.OnNext(Unit.Default);
-		}
-
-		private ISubject<Unit> _showSettings;
-
-		public IObservable<Unit> ShowSettings => _showSettings;
+		[Obsolete] public event RoutedEventHandler SettingsClick;
 
 		private void ShowLastVisitedPages()
 		{
-			var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+			var stackPanel = new StackPanel {Orientation = Orientation.Horizontal};
 			var stack = NavigationHandler.Pages;
 
 			if (stack.Count <= 0) return;
@@ -140,7 +220,13 @@ namespace PrivateWiki.Controls
 				tooltip.Content = path.FullPath;
 				ToolTipService.SetToolTip(button, tooltip);
 
-				button.Click += Btn_Click;
+				button.Click += (sender, args) =>
+				{
+					var id = (string) ((Button) sender).Content;
+					
+					_navigateToPage.OnNext(id);
+					NavigateToPage?.Invoke(sender, id);
+				};
 
 				return button;
 			}
@@ -161,12 +247,5 @@ namespace PrivateWiki.Controls
 
 		public event NavigateToPageHandler NavigateToPage;
 
-		private void Btn_Click(object sender, RoutedEventArgs e)
-		{
-			var id = (string)((Button)sender).Content;
-			Logger.Debug($"Page Clicked: {id}");
-
-			NavigateToPage?.Invoke(sender, id);
-		}
 	}
 }

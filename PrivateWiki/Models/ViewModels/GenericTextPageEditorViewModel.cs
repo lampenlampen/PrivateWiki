@@ -11,7 +11,7 @@ using PrivateWiki.Storage;
 using ReactiveUI;
 using StorageBackend.SQLite;
 
-namespace PrivateWiki.Models
+namespace PrivateWiki.Models.ViewModels
 {
 	public class GenericTextPageEditorViewModel : ReactiveObject
 	{

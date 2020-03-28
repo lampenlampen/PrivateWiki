@@ -13,6 +13,6 @@ namespace Models.Pages
 		{
 		}
 
-		public override string GetContentType() => "Markdown";
+		public override string GetContentType() => "markdown";
 	}
 }

@@ -19,6 +19,7 @@ namespace Models.Pages
 			Created = created;
 			LastChanged = lastChanged;
 			IsLocked = isLocked;
+			Path = Path.ofLink(link);
 		}
 
 		protected Page(Path path, Guid id, string content, Instant created, Instant lastChanged, bool isLocked, List<Tag> tags = null)

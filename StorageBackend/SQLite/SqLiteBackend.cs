@@ -674,7 +674,7 @@ namespace StorageBackend.SQLite
 
 		public Task<bool> ContainsPageAsync(GenericPage page)
 		{
-			throw new NotImplementedException();
+			return ContainsPageAsync(page.Path.FullPath);
 		}
 
 		public Task<bool> ContainsPageAsync(Guid id)

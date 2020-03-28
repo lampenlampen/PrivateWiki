@@ -6,6 +6,7 @@ using Markdig;
 using Markdig.Renderers;
 using Markdig.Syntax;
 using Models.Pages;
+using YamlDotNet.Core;
 
 #nullable enable
 
@@ -49,7 +50,7 @@ namespace PrivateWiki.Markdig
 			return Parse(page.Content);
 		}
 
-		public async Task<string> ToHtmlCustom(MarkdownDocument doc)
+		public async Task<string> ToHtmlCustomAsync(MarkdownDocument doc)
 		{
 			var stringWriter = new StringWriter();
 			var renderer = new HtmlRenderer(stringWriter);
@@ -69,6 +70,13 @@ namespace PrivateWiki.Markdig
 			var html = $"<!DOCTYPE html>\n<html>\n{htmlHead}\n<body>\n{stringWriter.ToString()}\n</body></html>";
 
 			return html;
+		}
+
+		public string ToHtmlCustom(MarkdownDocument doc)
+		{
+			var task = Task.Run(async () => await ToHtmlCustomAsync(doc));
+			task.Wait();
+			return task.Result;
 		}
 
 		public async Task<string> ToHtmlString(string markdown)

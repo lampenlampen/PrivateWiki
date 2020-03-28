@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Windows.Storage;
 using Models.Pages;
+using PrivateWiki.Renderer;
 
 namespace PrivateWiki.Data
 {
@@ -20,6 +21,17 @@ namespace PrivateWiki.Data
 			await FileIO.WriteTextAsync(file, await parser.ToHtmlString(page.Content));
 
 			return file;
+		}
+
+		public async Task<StorageFile> ExportPage(GenericPage page)
+		{
+			var renderer = new ContentRenderer();
+			var data = renderer.RenderPageAsync(page);
+			var file = ApplicationData.Current.TemporaryFolder.CreateFileAsync($"{page.Path.FullPath.Replace(':', '_')}.html", CreationCollisionOption.ReplaceExisting);
+
+			await FileIO.WriteTextAsync(await file, await data);
+
+			return await file;
 		}
 	}
 }

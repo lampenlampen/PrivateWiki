@@ -1,34 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Contracts;
-using Models.Pages;
 using Models.ViewModels;
 using NLog;
-using PrivateWiki.Utilities;
-using RavinduL.LocalNotifications.Notifications;
 using ReactiveUI;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace PrivateWiki.Pages.ContentPages
+namespace PrivateWiki.Pages.ContentPages.HtmlPage
 {
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
@@ -93,10 +76,7 @@ namespace PrivateWiki.Pages.ContentPages
 
 		public override void Top_Click(object sender, RoutedEventArgs e)
 		{
-			// Testing
-			// throw new NotImplementedException();
-			
-			Frame.Navigate(typeof(GenericTextPageEditor), "start");
+			throw new NotImplementedException();
 		}
 
 		public override void Search_Click(object sender, RoutedEventArgs e)

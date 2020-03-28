@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Contracts.Storage;
 using Models.Pages;
+using StorageBackend.SQLite;
 
 namespace PrivateWiki.Data
 {
 	public static class DefaultPages
 	{
-		public static async Task InsertDefaultMarkdownPagesAsync(IMarkdownPageStorage backend, IClock clock)
+		public static async Task InsertDefaultMarkdownPagesAsync(SqLiteBackend backend, IClock clock)
 		{
 			var syntaxPage = await LoadSyntaxPage(clock);
 			if (!await backend.ContainsMarkdownPageAsync(syntaxPage.Link)) backend.InsertMarkdownPageAsync(syntaxPage);
@@ -19,6 +20,9 @@ namespace PrivateWiki.Data
 
 			var testPage = await LoadExamplePage(clock);
 			if (!await backend.ContainsMarkdownPageAsync(testPage.Link)) backend.InsertMarkdownPageAsync(testPage);
+
+			var htmlTestPage = await LoadHtmlTestPage(clock);
+			if (!await backend.ContainsPageAsync(htmlTestPage)) backend.InsertPageAsync(htmlTestPage);
 		}
 
 		private static async Task<MarkdownPage> LoadSyntaxPage(IClock clock)
@@ -52,6 +56,17 @@ namespace PrivateWiki.Data
 			var content = await FileIO.ReadTextAsync(exampleFile);
 
 			return new MarkdownPage(Guid.NewGuid(), "test", content, clock.GetCurrentInstant(), clock.GetCurrentInstant(), false);
+		}
+
+		private static async Task<GenericPage> LoadHtmlTestPage(IClock clock)
+		{
+			var defaultPagesDir = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\DefaultPages");
+
+			var startFile = await defaultPagesDir.GetFileAsync("HtmlTest.html");
+
+			var content = await FileIO.ReadTextAsync(startFile);
+
+			return new GenericPage(Path.ofLink("system:htmltest"), content, "html", clock.GetCurrentInstant(), clock.GetCurrentInstant(), true);
 		}
 	}
 }

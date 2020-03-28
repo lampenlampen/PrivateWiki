@@ -221,7 +221,7 @@ namespace PrivateWiki.Pages
 			}
 
 			// Show Page
-			var html = await parser.ToHtmlCustom(doc);
+			var html = await parser.ToHtmlCustomAsync(doc);
 			var localFolder = ApplicationData.Current.LocalFolder;
 			var mediaFolder = await localFolder.CreateFolderAsync("media", CreationCollisionOption.OpenIfExists);
 			var file = await mediaFolder.CreateFileAsync("index.html", CreationCollisionOption.ReplaceExisting);

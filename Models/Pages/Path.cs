@@ -33,13 +33,13 @@ namespace Models.Pages
 			}
 		}
 
-		public Path(string[] path, string name)
+		private Path(string[] path, string name)
 		{
 			_namespaces = path;
 			_title = name;
 		}
 
-		public Path(string name)
+		private Path(string name)
 		{
 			_title = name;
 		}
@@ -62,6 +62,26 @@ namespace Models.Pages
 		public override string ToString()
 		{
 			return FullPath;
+		}
+
+		public static Path ofLink(string link)
+		{
+			var path = link.Split(new[] {':'}, StringSplitOptions.RemoveEmptyEntries);
+
+			if (path.Length > 1)
+			{
+				var path2 = new string[path.Length-1];
+				Array.Copy(path, path2, path.Length-1);
+
+				return new Path(path2, path[path.Length - 1]);
+			}
+
+			return new Path(link);
+		}
+
+		public static Path of(string[] path, string name)
+		{
+			return new Path(path, name);
 		}
 	}
 }

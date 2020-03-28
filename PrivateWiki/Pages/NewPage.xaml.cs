@@ -9,6 +9,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Models.Pages;
 using Models.Storage;
+using PrivateWiki.Models.ViewModels;
+using ReactiveUI;
 using StorageBackend.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;
 
@@ -18,13 +20,34 @@ namespace PrivateWiki.Pages
 	/// <summary>
 	///     An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class NewPage : Page
+	public sealed partial class NewPage : Page, IViewFor<NewPageViewModel>
 	{
-		[CanBeNull] private string _pageId;
+		#region ViewModel
+		
+		public static readonly DependencyProperty ViewModelProperty = DependencyProperty
+			.Register(nameof(NewPageViewModel), typeof(NewPageViewModel), typeof(NewPage), new PropertyMetadata(null));
+
+		public NewPageViewModel ViewModel
+		{
+			get => (NewPageViewModel) GetValue(ViewModelProperty);
+			set => SetValue(ViewModelProperty, value);
+		}
+
+		object IViewFor.ViewModel
+		{
+			get => ViewModel;
+			set => ViewModel = (NewPageViewModel) value;
+		}
+		
+		#endregion
+		
+		private string _pageId;
 
 		public NewPage()
 		{
 			InitializeComponent();
+			
+			ViewModel = new NewPageViewModel();
 
 			KeyboardAccelerator GoBack = new KeyboardAccelerator();
 			GoBack.Key = VirtualKey.GoBack;

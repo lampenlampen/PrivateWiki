@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<local:PageViewerCommandBarBase
     x:Class="PrivateWiki.Controls.PageViewerCommandBar"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -12,49 +12,49 @@
     <CommandBar
         x:Name="commandBar"
         DefaultLabelPosition="Right"
-            Height="Auto"
-            Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+        Height="Auto"
+        Background="{ThemeResource SystemControlBackgroundAccentBrush}">
 
-        <AppBarButton x:Uid="/PageViewer/ToTopButton" Icon="Up" Click="Top_Click" />
-        <AppBarButton x:Uid="/PageViewer/PDFButton" Icon="Print" Click="Pdf_Click">
+        <AppBarButton x:Name="ToTopBtn" x:Uid="/PageViewer/ToTopButton" Icon="Up" />
+        <AppBarButton x:Name="PdfBtn" x:Uid="/PageViewer/PDFButton" Icon="Print">
             <AppBarButton.KeyboardAccelerators>
                 <KeyboardAccelerator
-                        Modifiers="Control"
-                        Key="P" />
+                    Modifiers="Control"
+                    Key="P" />
             </AppBarButton.KeyboardAccelerators>
         </AppBarButton>
-        <AppBarButton x:Uid="/PageViewer/EditButton" Icon="Edit" Click="Edit_Click">
+        <AppBarButton x:Name="EditBtn" x:Uid="/PageViewer/EditButton" Icon="Edit">
             <AppBarButton.KeyboardAccelerators>
                 <KeyboardAccelerator
-                        Modifiers="Control"
-                        Key="E" />
+                    Modifiers="Control"
+                    Key="E" />
             </AppBarButton.KeyboardAccelerators>
         </AppBarButton>
-        <AppBarButton x:Uid="/PageViewer/SearchButton" Icon="Find" Click="Search_Click">
+        <AppBarButton x:Name="SearchBtn" x:Uid="/PageViewer/SearchButton" Icon="Find">
             <AppBarButton.KeyboardAccelerators>
                 <KeyboardAccelerator
-                        Modifiers="Control"
-                        Key="F" />
+                    Modifiers="Control"
+                    Key="F" />
             </AppBarButton.KeyboardAccelerators>
         </AppBarButton>
-        <AppBarButton x:Uid="/PageViewer/HistoryButton" Icon="Clock" Click="History_Click" />
+        <AppBarButton x:Name="HistoryBtn" x:Uid="/PageViewer/HistoryButton" Icon="Clock" />
 
         <CommandBar.SecondaryCommands>
 
-            <AppBarButton x:Uid="/PageViewer/FullscreenButton" Icon="Fullscreen" Click="Fullscreen_Click">
+            <AppBarButton x:Name="FullscreenBtn" x:Uid="/PageViewer/FullscreenButton" Icon="Fullscreen">
                 <AppBarButton.KeyboardAccelerators>
                     <KeyboardAccelerator Key="F11" />
                 </AppBarButton.KeyboardAccelerators>
             </AppBarButton>
 
-            <AppBarButton x:Uid="/PageViewer/ExportButton" Click="Export_Click" />
+            <AppBarButton x:Name="ExportBtn" x:Uid="/PageViewer/ExportButton" />
 
-            <AppBarButton x:Uid="/PageViewer/ImportButton" Click="Import_Click" Icon="Import" />
+            <AppBarButton x:Name="ImportBtn" x:Uid="/PageViewer/ImportButton" Icon="Import" />
 
-            <AppBarButton x:Uid="/PageViewer/SettingsButton" Icon="Setting" Click="Setting_Click" />
+            <AppBarButton x:Name="SettingsBtn" x:Uid="/PageViewer/SettingsButton" Icon="Setting" />
 
         </CommandBar.SecondaryCommands>
 
     </CommandBar>
 
-</UserControl>
+</local:PageViewerCommandBarBase>

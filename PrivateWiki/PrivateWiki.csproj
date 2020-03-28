@@ -98,6 +98,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ContentPages\HtmlPageViewer.xaml.cs">
+      <DependentUpon>HtmlPageViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DiffControl.xaml.cs">
       <DependentUpon>DiffControl.xaml</DependentUpon>
     </Compile>
@@ -165,8 +168,12 @@
     <Compile Include="Markdig\Extensions\TagExtension\TagParser.cs" />
     <Compile Include="Markdig\Extensions\TagExtension\MarkdigTagExtension.cs" />
     <Compile Include="Markdig\MarkdigPipelineBuilder.cs" />
-    <Compile Include="Models\GenericTextPageEditorViewModel.cs" />
     <Compile Include="Models\LFSModel.cs" />
+    <Compile Include="Models\ViewModels\GenericTextPageEditorViewModel.cs" />
+    <Compile Include="Models\ViewModels\HtmlPageViewerViewModel.cs" />
+    <Compile Include="Models\ViewModels\NewPageViewModel.cs" />
+    <Compile Include="Models\ViewModels\PageViewerCommandBarViewModel.cs" />
+    <Compile Include="Models\ViewModels\PageViewerViewModel.cs" />
     <Compile Include="Pages\ContentPages\ContentPage.cs" />
     <Compile Include="Pages\ContentPages\GenericTextPageEditor.xaml.cs">
       <DependentUpon>GenericTextPageEditor.xaml</DependentUpon>
@@ -180,6 +187,9 @@
     <Compile Include="Pages\HistoryPage.xaml.cs">
       <DependentUpon>HistoryPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PageViewer.xaml.cs">
+      <DependentUpon>PageViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SettingsPages\AssetsSettingsPage.xaml.cs">
       <DependentUpon>AssetsSettingsPage.xaml</DependentUpon>
     </Compile>
@@ -192,6 +202,7 @@
     <Compile Include="Pages\SettingsPages\SyncSettingsPage.xaml.cs">
       <DependentUpon>SyncSettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Renderer\ContentRenderer.cs" />
     <Compile Include="SettingStorageTemplateSelector.cs" />
     <Compile Include="Settings\LFSSyncActions.cs" />
     <Compile Include="Settings\SyncModelHandler.cs" />
@@ -272,6 +283,9 @@
     <Content Include="Assets\DefaultPages\Example.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\DefaultPages\HtmlTest.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\DefaultPages\Start.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -319,6 +333,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\ContentPages\HtmlPageViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\DiffControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -438,6 +456,10 @@
     <Page Include="Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
@@ -566,7 +588,6 @@
       <Name>Windows Desktop Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -41,11 +41,11 @@ namespace StorageBackend.SQLite
 				string[] path2 = new string[path.Length - 1];
 				Array.Copy(path, path2, path.Length - 1);
 
-				page.Path = new Path(path2, path[path.Length - 1]);
+				page.Path = Path.of(path2, path[path.Length - 1]);
 			}
 			else
 			{
-				page.Path = new Path(link);
+				page.Path = Path.ofLink(link);
 			}
 
 			return true;
