@@ -52,7 +52,11 @@
                 </AppBarButton.KeyboardAccelerators>
             </AppBarButton>
 
-            <AppBarButton x:Name="ExportBtn" x:Uid="/PageViewer/ExportButton"/>
+            <AppBarButton x:Name="ExportBtn" x:Uid="/PageViewer/ExportButton">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1AD;" FontSize="32"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
 
             <AppBarButton x:Name="ImportBtn" x:Uid="/PageViewer/ImportButton" Icon="Import" />
 
