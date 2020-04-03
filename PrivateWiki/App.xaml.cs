@@ -33,6 +33,8 @@ namespace PrivateWiki
 
 		public InAppNotification Notification;
 
+		
+
 		/// <summary>
 		///     Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code
 		///     und daher das logische Äquivalent von main() bzw. WinMain().

@@ -2,15 +2,20 @@
 using NodaTime;
 using PrivateWiki.Data;
 using System;
+using System.Reactive;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Models.Pages;
 using Models.Storage;
 using PrivateWiki.Models.ViewModels;
 using ReactiveUI;
+using ReactiveUI.Validation.Extensions;
 using StorageBackend.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;
 
@@ -23,7 +28,7 @@ namespace PrivateWiki.Pages
 	public sealed partial class NewPage : Page, IViewFor<NewPageViewModel>
 	{
 		#region ViewModel
-		
+
 		public static readonly DependencyProperty ViewModelProperty = DependencyProperty
 			.Register(nameof(NewPageViewModel), typeof(NewPageViewModel), typeof(NewPage), new PropertyMetadata(null));
 
@@ -38,15 +43,15 @@ namespace PrivateWiki.Pages
 			get => ViewModel;
 			set => ViewModel = (NewPageViewModel) value;
 		}
-		
+
 		#endregion
-		
-		private string _pageId;
+
+		[Obsolete] private string _pageId;
 
 		public NewPage()
 		{
 			InitializeComponent();
-			
+
 			ViewModel = new NewPageViewModel();
 
 			KeyboardAccelerator GoBack = new KeyboardAccelerator();
@@ -59,6 +64,57 @@ namespace PrivateWiki.Pages
 			this.KeyboardAccelerators.Add(AltLeft);
 			// ALT routes here
 			AltLeft.Modifiers = VirtualKeyModifiers.Menu;
+
+			this.WhenActivated(disposable =>
+			{
+				this.Bind(ViewModel,
+						vm => vm.ContentType,
+						view => view.ContentTypeBox.SelectedValue)
+					.DisposeWith(disposable);
+
+				this.Bind(ViewModel,
+						vm => vm.LinkString,
+						view => view.PathBox.Text)
+					.DisposeWith(disposable);
+
+				CloseBtn.Events().Click
+					.Select(_ => Unit.Default)
+					.InvokeCommand(ViewModel.GoBack)
+					.DisposeWith(disposable);
+
+				CreatePageBtn.Events().Click
+					.Select(_ => Unit.Default)
+					.InvokeCommand(ViewModel.CreateNewPage)
+					.DisposeWith(disposable);
+
+				ImportPageBtn.Events().Click
+					.Select(_ => Unit.Default)
+					.InvokeCommand(ViewModel.ImportPage)
+					.DisposeWith(disposable);
+
+				ViewModel.CreateNewPage.CanExecute
+					.Subscribe(x => { CreatePageBtn.IsEnabled = x; })
+					.DisposeWith(disposable);
+
+				ViewModel.ImportPage.CanExecute
+					.Subscribe(x => { ImportPageBtn.IsEnabled = x; })
+					.DisposeWith(disposable);
+
+				ViewModel.OnGoBack.Subscribe(_ => GoBackRequested()).DisposeWith(disposable);
+
+				header1.Text = string.IsNullOrEmpty(ViewModel.LinkString) ? "Create a new page." : "This Page doesn't exist. Create it.";
+				ContentTypeBox.ItemsSource = ViewModel.ContentTypes;
+				
+				this.BindValidation(ViewModel,
+						vm => vm.LinkValidationRule,
+						v => v.ErrorLinkTextBlock.Text)
+					.DisposeWith(disposable);
+
+				this.BindValidation(ViewModel,
+						vm => vm.ContentTypeValidationRule,
+						v => v.ErrorContentTypeTextBlock.Text)
+					.DisposeWith(disposable);
+			});
 		}
 
 		private void BackInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
@@ -69,7 +125,10 @@ namespace PrivateWiki.Pages
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-			_pageId = (string) e.Parameter;
+			var link = (string) e.Parameter;
+			_pageId = link;
+
+			if (link != null) ViewModel.LinkString = link;
 		}
 
 		private void CreatePage_Click([NotNull] object sender, [NotNull] RoutedEventArgs e)
@@ -96,11 +155,6 @@ namespace PrivateWiki.Pages
 		private void NavigateToPage()
 		{
 			Frame.Navigate(typeof(PageEditor), _pageId.ToString());
-		}
-
-		private void CloseBtn_Click(object sender, RoutedEventArgs e)
-		{
-			GoBackRequested();
 		}
 
 		private bool GoBackRequested()

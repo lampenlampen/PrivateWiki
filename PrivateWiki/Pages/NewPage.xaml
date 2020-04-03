@@ -5,6 +5,7 @@
     xmlns:local="using:PrivateWiki"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -19,10 +20,10 @@
             Grid.Row="0">
 
             <Button
+                x:Name="CloseBtn"
                 RelativePanel.AlignRightWithPanel="True"
                 Margin="16, 16, 16, 16"
-                Background="Transparent"
-                Click="CloseBtn_Click">
+                Background="Transparent">
 
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
 
@@ -38,6 +39,7 @@
             VerticalAlignment="Center">
 
             <TextBlock
+                x:Name="header1"
                 Text="This Page doesn't exist."
                 FontSize="40"
                 Margin="0, 0, 0, 30" />
@@ -46,6 +48,42 @@
                 FontSize="25"
                 Margin="0, 0, 0, 30" />
 
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <ComboBox
+                    x:Name="ContentTypeBox"
+                    Header="Content Type"
+                    PlaceholderText="Select a type">
+                    
+                    
+                    <x:String>Markdown</x:String>
+                    <x:String>Html</x:String>
+                </ComboBox>
+
+            </Grid>
+
+            <TextBox
+                x:Name="PathBox"
+                Header="Path + Name"
+                PlaceholderText="Specify a path and a name">
+                <ToolTipService.ToolTip>
+                    <ToolTip
+                        Content="Specify Namespace + Page name (e.g. &quot;private:test&quot;)"/>
+                </ToolTipService.ToolTip>
+            </TextBox>
+            
+            <TextBlock
+                x:Name="ErrorLinkTextBlock"
+                Foreground="Red"/>
+                
+            <TextBlock
+                x:Name="ErrorContentTypeTextBlock"
+                Foreground="Red"/>
+
             <Grid
                 VerticalAlignment="Center"
                 Width="Auto">
@@ -53,19 +91,20 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
+                    
                 </Grid.ColumnDefinitions>
 
                 <Button
+                    x:Name="CreatePageBtn"
                     Grid.Column="0"
                     Content="Create new Page"
-                    Click="CreatePage_Click"
                     HorizontalAlignment="Right"
                     Margin="0, 0, 30, 0" />
 
                 <Button
+                    x:Name="ImportPageBtn"
                     Grid.Column="1"
                     Content="Import existing Page"
-                    Click="ImportPage_Click"
                     Width="Auto"
                     Margin="30, 0, 0, 0" />
 
