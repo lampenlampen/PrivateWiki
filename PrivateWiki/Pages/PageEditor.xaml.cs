@@ -76,7 +76,7 @@ namespace PrivateWiki.Pages
 			}
 
 			ShowPageInEditor();
-			if (NewPage) RemoveNewPageFromBackStack();
+			RemoveNewPageFromBackStack();
 		}
 
 		private void ShowPageInEditor()

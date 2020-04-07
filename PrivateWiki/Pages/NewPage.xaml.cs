@@ -68,8 +68,13 @@ namespace PrivateWiki.Pages
 			this.WhenActivated(disposable =>
 			{
 				this.Bind(ViewModel,
-						vm => vm.ContentType,
+						vm => vm.ContentType22,
 						view => view.ContentTypeBox.SelectedValue)
+					.DisposeWith(disposable);
+
+				this.Bind(ViewModel,
+						vm => vm.ContentType22,
+						view => view.ContentTypeBox.SelectedItem)
 					.DisposeWith(disposable);
 
 				this.Bind(ViewModel,
@@ -101,10 +106,12 @@ namespace PrivateWiki.Pages
 					.DisposeWith(disposable);
 
 				ViewModel.OnGoBack.Subscribe(_ => GoBackRequested()).DisposeWith(disposable);
+				ViewModel.OnCreateNewPage.ObserveOnDispatcher().Subscribe(_ => NavigateToPage()).DisposeWith(disposable);
+				ViewModel.OnImportNewPage.ObserveOnDispatcher().Subscribe(_ => GoBackRequested()).DisposeWith(disposable);
 
 				header1.Text = string.IsNullOrEmpty(ViewModel.LinkString) ? "Create a new page." : "This Page doesn't exist. Create it.";
-				ContentTypeBox.ItemsSource = ViewModel.ContentTypes;
-				
+				ContentTypeBox.ItemsSource = ViewModel.ContentTypes2;
+
 				this.BindValidation(ViewModel,
 						vm => vm.LinkValidationRule,
 						v => v.ErrorLinkTextBlock.Text)

@@ -1,16 +1,23 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reactive;
 using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Windows.Storage;
+using ColorCode.Compilation.Languages;
 using Models.Pages;
+using NodaTime;
 using PrivateWiki.Data;
+using PrivateWiki.Storage;
 using ReactiveUI;
 using ReactiveUI.Validation.Abstractions;
 using ReactiveUI.Validation.Contexts;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
+using StorageBackend.SQLite;
 
 namespace PrivateWiki.Models.ViewModels
 {
@@ -18,6 +25,7 @@ namespace PrivateWiki.Models.ViewModels
 	{
 		public ValidationContext ValidationContext { get; } = new ValidationContext();
 
+		private readonly IClock _clock;
 
 		public Path Link => Path.ofLink(LinkString);
 
@@ -41,7 +49,10 @@ namespace PrivateWiki.Models.ViewModels
 
 		private ContentType? ContentType2 = null;
 
-		public string[] ContentTypes { get; } = AppConfig.SupportedContentTypes;
+		public ContentType2? ContentType22 = null;
+
+		public IReadOnlyCollection<string> ContentTypes { get; } = new ReadOnlyCollection<string>(AppConfig.SupportedContentTypes);
+		public IReadOnlyCollection<ContentType2> ContentTypes2 { get; } = new ReadOnlyCollection<ContentType2>(AppConfig.SupportedContentTypes2);
 
 		public ValidationHelper ContentTypeValidationRule { get; }
 
@@ -62,6 +73,8 @@ namespace PrivateWiki.Models.ViewModels
 
 		public NewPageViewModel()
 		{
+			_clock = SystemClock.Instance;
+			
 			LinkValidationRule = this.ValidationRule(
 				vm => vm.LinkString,
 				link => !string.IsNullOrEmpty(link),
@@ -83,16 +96,47 @@ namespace PrivateWiki.Models.ViewModels
 			_onGoBack = new Subject<Unit>();
 		}
 
-		private Task ImportPageAsync()
+		private async Task<Unit> ImportPageAsync()
 		{
+			async Task<Unit> Action()
+			{
+				var backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), _clock);
+
+				var file = await FileSystemAccess.PickFileAsync();
+
+				if (file == null) return Unit.Default;
+
+				var content = FileIO.ReadTextAsync(file);
+
+				var now = _clock.GetCurrentInstant();
+
+				var page = new GenericPage(Link, await content, ContentType, now, now, false);
+
+				await backend.InsertPageAsync(page);
+				
+				_onImportNewPage.OnNext(Unit.Default);
+
+				return Unit.Default;
+			}
+			
 			// TODO Import Page
-			return Task.CompletedTask;
+
+			return await Action();
 		}
 
 		private Task CreateNewPageAsync()
 		{
-			// TODO Create new Page
-			return Task.CompletedTask;
+			return Task.Run(async () =>
+			{
+				var now = _clock.GetCurrentInstant();
+			
+				var page = new GenericPage(Link, "", ContentType, now, now, false);
+			
+				var backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), _clock);
+				await backend.InsertPageAsync(page);
+			
+				_onCreateNewPage.OnNext(Unit.Default);
+			});
 		}
 
 		private Task GoBackAsync()

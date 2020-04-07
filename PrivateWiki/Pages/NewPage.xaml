@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:data="using:PrivateWiki.Data"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -58,10 +59,13 @@
                     x:Name="ContentTypeBox"
                     Header="Content Type"
                     PlaceholderText="Select a type">
-                    
-                    
-                    <x:String>Markdown</x:String>
-                    <x:String>Html</x:String>
+
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="data:ContentType2">
+                            <TextBlock
+                                Text="{x:Bind Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
 
             </Grid>
