@@ -208,6 +208,12 @@
     <Compile Include="SettingStorageTemplateSelector.cs" />
     <Compile Include="Settings\LFSSyncActions.cs" />
     <Compile Include="Settings\SyncModelHandler.cs" />
+    <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs" />
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs" />
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs" />
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHtmlPageConverter.cs" />
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs" />
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs" />
     <Compile Include="Storage\DefaultStorageBackends.cs" />
     <Compile Include="Utilities\DebuggingService.cs" />
     <Compile Include="Utilities\DiffMatchPatchAlg.cs" />
@@ -595,7 +601,6 @@
       <Name>Windows Desktop Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

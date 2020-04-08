@@ -13,8 +13,8 @@ using Models.Storage;
 using NLog;
 using PrivateWiki.Pages.ContentPages;
 using PrivateWiki.Storage;
+using PrivateWiki.StorageBackend.SQLite;
 using RavinduL.LocalNotifications;
-using StorageBackend.SQLite;
 
 namespace PrivateWiki
 {

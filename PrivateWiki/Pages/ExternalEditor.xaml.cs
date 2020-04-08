@@ -15,7 +15,7 @@ using Models.Pages;
 using Models.Storage;
 using NLog;
 using NodaTime;
-using StorageBackend.SQLite;
+using PrivateWiki.StorageBackend.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238

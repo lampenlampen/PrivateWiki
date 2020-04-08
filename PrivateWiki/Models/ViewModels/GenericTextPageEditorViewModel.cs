@@ -8,8 +8,8 @@ using Models.Pages;
 using NLog;
 using NodaTime;
 using PrivateWiki.Storage;
+using PrivateWiki.StorageBackend.SQLite;
 using ReactiveUI;
-using StorageBackend.SQLite;
 
 namespace PrivateWiki.Models.ViewModels
 {

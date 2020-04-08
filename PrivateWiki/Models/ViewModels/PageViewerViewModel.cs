@@ -13,12 +13,12 @@ using NLog;
 using NodaTime;
 using PrivateWiki.Data;
 using PrivateWiki.Storage;
+using PrivateWiki.StorageBackend.SQLite;
 using PrivateWiki.Utilities;
 using PrivateWiki.Utilities.ExtensionFunctions;
 using RavinduL.LocalNotifications.Notifications;
 using ReactiveUI;
 using SQLite;
-using StorageBackend.SQLite;
 using Color = System.Drawing.Color;
 
 namespace PrivateWiki.Models.ViewModels

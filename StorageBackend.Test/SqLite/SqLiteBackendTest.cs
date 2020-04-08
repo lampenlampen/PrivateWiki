@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models.Pages;
 using Models.Storage;
 using NodaTime;
-using StorageBackend.SQLite;
+using PrivateWiki.StorageBackend.SQLite;
 
 namespace StorageBackend.Test.SqLite
 {

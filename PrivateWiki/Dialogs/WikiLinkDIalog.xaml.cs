@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Models.Storage;
-using StorageBackend.SQLite;
+using PrivateWiki.StorageBackend.SQLite;
 
 #nullable enable
 

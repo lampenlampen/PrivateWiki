@@ -1,37 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using Models.Pages;
 using NodaTime;
 
-namespace StorageBackend.SQLite
+namespace PrivateWiki.StorageBackend.SQLite
 {
-	class SqliteDataReaderToPageConverter
+	class SqliteDataReaderToHtmlPageConverter
 	{
-		public static SqliteDataReaderToPageConverter Instance = new SqliteDataReaderToPageConverter();
+		public static SqliteDataReaderToHtmlPageConverter Instance => new SqliteDataReaderToHtmlPageConverter();
 
-		public bool ConvertToPageModel(SqliteDataReader reader, GenericPage page)
+		public bool ConvertToHtmlPageModel(SqliteDataReader reader, HtmlPage page)
 		{
 			while (reader.Read())
 			{
-				return SqliteDataToPageModel(reader, page);
+				return SqliteDataToHtmlModel(reader, page);
 			}
 
 			return false;
 		}
 
-		protected bool SqliteDataToPageModel(SqliteDataReader reader, GenericPage page)
+		protected bool SqliteDataToHtmlModel(SqliteDataReader reader, HtmlPage page)
 		{
 			page.Id = Guid.Parse(reader.GetString(reader.GetOrdinal("id")));
-			page.Link = reader.GetString(reader.GetOrdinal("link"));
 			page.Content = reader.GetString(reader.GetOrdinal("content"));
 			page.Created = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("created")));
 			page.LastChanged = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("changed")));
 			page.IsLocked = reader.GetBoolean(reader.GetOrdinal("locked"));
-			page.ContentType = reader.GetString(reader.GetOrdinal("contentType"));
 
 			var link = reader.GetString(reader.GetOrdinal("link"));
 			var path = link.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
@@ -51,19 +46,17 @@ namespace StorageBackend.SQLite
 			return true;
 		}
 
-
-		public IList<GenericPage> ConvertToPageModels(SqliteDataReader reader)
+		public IList<HtmlPage> ConvertToPageModels(SqliteDataReader reader)
 		{
-			var pages = new List<GenericPage>();
+			var pages = new List<HtmlPage>();
 
 			while (reader.Read())
 			{
-				var page = new GenericPage();
-				if (SqliteDataToPageModel(reader, page)) pages.Add(page);
+				var page = new HtmlPage();
+				if (SqliteDataToHtmlModel(reader, page)) pages.Add(page);
 			}
 
 			return pages;
 		}
-
 	}
 }

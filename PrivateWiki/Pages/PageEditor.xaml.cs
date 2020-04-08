@@ -14,7 +14,7 @@ using Contracts.Storage;
 using Models.Pages;
 using Models.Storage;
 using NLog;
-using StorageBackend.SQLite;
+using PrivateWiki.StorageBackend.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;
 
 #nullable enable

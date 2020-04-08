@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.Data.Sqlite;
 using Models.Pages;
 using NodaTime;
 
-namespace StorageBackend.SQLite
+namespace PrivateWiki.StorageBackend.SQLite
 {
 	class SqliteDataReaderToHistoryPageConverter : SqliteDataReaderToPageConverter
 	{

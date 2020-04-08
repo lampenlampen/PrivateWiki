@@ -14,9 +14,9 @@ using Windows.UI.Xaml.Navigation;
 using Models.Pages;
 using Models.Storage;
 using PrivateWiki.Models.ViewModels;
+using PrivateWiki.StorageBackend.SQLite;
 using ReactiveUI;
 using ReactiveUI.Validation.Extensions;
-using StorageBackend.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -68,13 +68,10 @@ namespace PrivateWiki.Pages
 			this.WhenActivated(disposable =>
 			{
 				this.Bind(ViewModel,
-						vm => vm.ContentType22,
-						view => view.ContentTypeBox.SelectedValue)
-					.DisposeWith(disposable);
-
-				this.Bind(ViewModel,
-						vm => vm.ContentType22,
-						view => view.ContentTypeBox.SelectedItem)
+						vm => vm.ContentType,
+						view => view.ContentTypeBox.SelectedItem,
+						x => x,
+						x => (ContentType) x)
 					.DisposeWith(disposable);
 
 				this.Bind(ViewModel,
@@ -110,7 +107,7 @@ namespace PrivateWiki.Pages
 				ViewModel.OnImportNewPage.ObserveOnDispatcher().Subscribe(_ => GoBackRequested()).DisposeWith(disposable);
 
 				header1.Text = string.IsNullOrEmpty(ViewModel.LinkString) ? "Create a new page." : "This Page doesn't exist. Create it.";
-				ContentTypeBox.ItemsSource = ViewModel.ContentTypes2;
+				ContentTypeBox.ItemsSource = ViewModel.ContentTypes;
 
 				this.BindValidation(ViewModel,
 						vm => vm.LinkValidationRule,

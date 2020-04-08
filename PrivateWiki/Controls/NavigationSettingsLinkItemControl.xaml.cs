@@ -8,7 +8,7 @@ using Contracts.Storage;
 using Models.Pages;
 using Models.Storage;
 using NodaTime;
-using StorageBackend.SQLite;
+using PrivateWiki.StorageBackend.SQLite;
 using Page = Models.Pages.Page;
 
 #nullable enable

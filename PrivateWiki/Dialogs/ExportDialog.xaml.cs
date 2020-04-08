@@ -8,7 +8,7 @@ using Models.Pages;
 using Models.Storage;
 using NodaTime;
 using PrivateWiki.Data;
-using StorageBackend.SQLite;
+using PrivateWiki.StorageBackend.SQLite;
 
 // Die Elementvorlage "Inhaltsdialogfeld" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 

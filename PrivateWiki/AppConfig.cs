@@ -8,8 +8,6 @@ namespace PrivateWiki
 {
 	public static class AppConfig
 	{
-		public static readonly IList<string> SupportedContentTypes = Enum.GetNames(typeof(ContentType));
-
-		public static readonly IList<ContentType2> SupportedContentTypes2 = new List<ContentType2> {ContentType2.Html, ContentType2.Markdown, ContentType2.Text};
+		public static readonly IList<ContentType> SupportedContentTypes2 = new List<ContentType> {ContentType.Html, ContentType.Markdown, ContentType.Text};
 	}
 }

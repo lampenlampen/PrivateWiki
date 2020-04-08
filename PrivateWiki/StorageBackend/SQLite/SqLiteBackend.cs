@@ -7,7 +7,7 @@ using Models.Pages;
 using Models.Storage;
 using NodaTime;
 
-namespace StorageBackend.SQLite
+namespace PrivateWiki.StorageBackend.SQLite
 {
 	public class SqLiteBackend : ISqLiteBackend, IMarkdownPageStorage, IGenericPageStorage
 	{
@@ -655,7 +655,7 @@ namespace StorageBackend.SQLite
 					command.Parameters.AddWithValue("@Locked", page.IsLocked);
 					command.Parameters.AddWithValue("@ContentType", page.ContentType);
 					command.Parameters.AddWithValue("@Now", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
-					command.Parameters.AddWithValue("@Action", Models.Pages.PageAction.Created);
+					command.Parameters.AddWithValue("@Action", global::Models.Pages.PageAction.Created);
 
 					conn.Open();
 					var result = command.ExecuteNonQuery();

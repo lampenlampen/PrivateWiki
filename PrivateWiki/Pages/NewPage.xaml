@@ -61,7 +61,7 @@
                     PlaceholderText="Select a type">
 
                     <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="data:ContentType2">
+                        <DataTemplate x:DataType="data:ContentType">
                             <TextBlock
                                 Text="{x:Bind Name}"/>
                         </DataTemplate>

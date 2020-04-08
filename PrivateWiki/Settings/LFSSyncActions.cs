@@ -9,7 +9,7 @@ using Models.Storage;
 using NodaTime;
 using PrivateWiki.Models;
 using PrivateWiki.Storage;
-using StorageBackend.SQLite;
+using PrivateWiki.StorageBackend.SQLite;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using YamlDotNet.RepresentationModel;

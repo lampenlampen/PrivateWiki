@@ -4,7 +4,7 @@ using Microsoft.Data.Sqlite;
 using Models.Pages;
 using NodaTime;
 
-namespace StorageBackend.SQLite
+namespace PrivateWiki.StorageBackend.SQLite
 {
 	public class SqliteDataReaderToMarkdownPageConverter
 	{

@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using NodaTime;
 using PrivateWiki.Storage;
-using StorageBackend.SQLite;
+using PrivateWiki.StorageBackend.SQLite;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 

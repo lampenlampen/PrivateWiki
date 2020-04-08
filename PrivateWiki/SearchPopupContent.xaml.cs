@@ -12,7 +12,7 @@ using Models.Storage;
 using NLog;
 using NodaTime;
 using PrivateWiki.Storage;
-using StorageBackend.SQLite;
+using PrivateWiki.StorageBackend.SQLite;
 using Page = Models.Pages.Page;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236

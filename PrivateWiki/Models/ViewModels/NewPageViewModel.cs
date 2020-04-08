@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
@@ -12,12 +13,14 @@ using Models.Pages;
 using NodaTime;
 using PrivateWiki.Data;
 using PrivateWiki.Storage;
+using PrivateWiki.StorageBackend.SQLite;
 using ReactiveUI;
 using ReactiveUI.Validation.Abstractions;
 using ReactiveUI.Validation.Contexts;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
-using StorageBackend.SQLite;
+
+#nullable enable
 
 namespace PrivateWiki.Models.ViewModels
 {
@@ -39,20 +42,15 @@ namespace PrivateWiki.Models.ViewModels
 
 		public ValidationHelper LinkValidationRule { get; }
 
-		public string ContentType
+
+		public ContentType? ContentType
 		{
 			get => _contentType;
 			set => this.RaiseAndSetIfChanged(ref _contentType, value);
 		}
+		private ContentType? _contentType = null;
 
-		private string _contentType = string.Empty;
-
-		private ContentType? ContentType2 = null;
-
-		public ContentType2? ContentType22 = null;
-
-		public IReadOnlyCollection<string> ContentTypes { get; } = new ReadOnlyCollection<string>(AppConfig.SupportedContentTypes);
-		public IReadOnlyCollection<ContentType2> ContentTypes2 { get; } = new ReadOnlyCollection<ContentType2>(AppConfig.SupportedContentTypes2);
+		public IReadOnlyCollection<ContentType> ContentTypes { get; } = new ReadOnlyCollection<ContentType>(AppConfig.SupportedContentTypes2);
 
 		public ValidationHelper ContentTypeValidationRule { get; }
 
@@ -82,7 +80,7 @@ namespace PrivateWiki.Models.ViewModels
 
 			ContentTypeValidationRule = this.ValidationRule(
 				vm => vm.ContentType,
-				contentType => Enum.TryParse<ContentType>(contentType, true, out _),
+				contentType => ContentTypes.Contains(contentType),
 				contentType => "ContentType must be \"markdown\" or \"Html\"");
 
 			var isCreateAndImportEnabled = this.IsValid();
@@ -110,7 +108,7 @@ namespace PrivateWiki.Models.ViewModels
 
 				var now = _clock.GetCurrentInstant();
 
-				var page = new GenericPage(Link, await content, ContentType, now, now, false);
+				var page = new GenericPage(Link, await content, ContentType!.Name, now, now, false);
 
 				await backend.InsertPageAsync(page);
 				
@@ -130,7 +128,7 @@ namespace PrivateWiki.Models.ViewModels
 			{
 				var now = _clock.GetCurrentInstant();
 			
-				var page = new GenericPage(Link, "", ContentType, now, now, false);
+				var page = new GenericPage(Link, "", ContentType!.Name, now, now, false);
 			
 				var backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), _clock);
 				await backend.InsertPageAsync(page);

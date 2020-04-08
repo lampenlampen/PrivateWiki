@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Contracts.Storage;
 using Models.Pages;
-using StorageBackend.SQLite;
+using PrivateWiki.StorageBackend.SQLite;
 
 namespace PrivateWiki.Data
 {

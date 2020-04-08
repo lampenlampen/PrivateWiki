@@ -184,6 +184,10 @@
       <Project>{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}</Project>
       <Name>Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj">
+      <Project>{e1b1092a-eee8-4c60-bd47-86bbde74b775}</Project>
+      <Name>PrivateWiki</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StorageBackend\StorageBackend.csproj">
       <Project>{3ADA0CDB-FFEF-489C-9C72-8F99325D927E}</Project>
       <Name>StorageBackend</Name>
