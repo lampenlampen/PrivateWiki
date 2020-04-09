@@ -1,7 +1,5 @@
 using System;
-using System.IO;
-using System.Reactive.Subjects;
-using Path = Models.Pages.Path;
+using Models.Pages;
 
 namespace Contracts
 {

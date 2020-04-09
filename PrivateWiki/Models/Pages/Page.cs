@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Mime;
 using NodaTime;
 
 namespace Models.Pages
@@ -33,7 +32,7 @@ namespace Models.Pages
 			IsLocked = isLocked;
 			Tags = tags ?? new List<Tag>();
 		}
-		
+
 		protected Page(Path path, string content, Instant created, Instant lastChanged, bool isLocked, List<Tag> tags = null)
 		{
 			Path = path;
@@ -46,8 +45,7 @@ namespace Models.Pages
 			Tags = tags ?? new List<Tag>();
 		}
 
-		[Obsolete]
-		public string Link => Path.FullPath;
+		[Obsolete] public string Link => Path.FullPath;
 
 		public Guid Id { get; set; }
 
@@ -60,7 +58,7 @@ namespace Models.Pages
 		public bool IsLocked { get; set; }
 
 		public Path Path { get; set; }
-		
+
 		public List<Tag> Tags { get; }
 
 		public string ContentType => GetContentType();

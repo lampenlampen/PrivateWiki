@@ -1,27 +1,26 @@
 ﻿using System;
-using System.IO;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Windows.UI.Xaml.Controls;
+using Models.Pages;
 using NLog;
 using PrivateWiki.Models.ViewModels;
 using ReactiveUI;
-using Path = Models.Pages.Path;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace PrivateWiki.Controls.ContentPages
 {
-	public class HtmlPageViewerBase : ReactiveUserControl<HtmlPageViewerViewModel>
+	public class HtmlPageViewerBase : ReactiveUserControl<HtmlPageViewerControlViewModel>
 	{
 	}
 
 	public sealed partial class HtmlPageViewer : HtmlPageViewerBase
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-		
+
 		private ISubject<string> _navigateToPage;
 
 		public IObservable<string> NavigateToPage => _navigateToPage;
@@ -63,7 +62,7 @@ namespace PrivateWiki.Controls.ContentPages
 			{
 				// Wikilink
 				var link = uri.ToString().Substring(7);
-				
+
 				Logger.Info("Wikilink clicked.");
 				Logger.ConditionalDebug($"Wikilink clicked: {link}");
 
@@ -80,13 +79,13 @@ namespace PrivateWiki.Controls.ContentPages
 
 				return;
 			}
-			
+
 			// Normal Link
 			Logger.Info("Normal link clicked.");
 			Logger.ConditionalDebug($"Normal link clicked: {uri}");
 			args.Cancel = true;
 			ViewModel.LinkClicked.Execute(uri);
-			
+
 			return;
 		}
 	}

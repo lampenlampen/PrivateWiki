@@ -8,6 +8,5 @@ namespace Models.Storage
 		}
 
 		public string Filename { get; }
-		
 	}
 }

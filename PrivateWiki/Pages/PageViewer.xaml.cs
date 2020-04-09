@@ -1,29 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.IO;
-using System.Linq;
-using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Models.Pages;
 using NLog;
 using PrivateWiki.Controls.ContentPages;
-using PrivateWiki.Models;
 using PrivateWiki.Models.ViewModels;
 using PrivateWiki.Utilities.ExtensionFunctions;
 using ReactiveUI;
-using Path = Models.Pages.Path;
+using Page = Windows.UI.Xaml.Controls.Page;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -67,8 +55,8 @@ namespace PrivateWiki.Pages
 					.Where(x => x != null)
 					.Subscribe(x => commandBar.ViewModel = x)
 					.DisposeWith(disposable);
-				
-				
+
+
 				commandBar.ShowSettings.Subscribe(_ => Frame.Navigate(typeof(SettingsPage))).DisposeWith(disposable);
 
 				commandBar.ShowHistory.Subscribe(_ =>
@@ -117,15 +105,15 @@ namespace PrivateWiki.Pages
 				ViewModel.OnNavigateToNewPage.Subscribe(NavigateToNewPage).DisposeWith(disposable);
 				ViewModel.OnEditPage.Subscribe(EditPage).DisposeWith(disposable);
 				ViewModel.OnNewPage.Subscribe(_ => NavigateToNewPage()).DisposeWith(disposable);
-				
+
 				ViewModel.ShowPageLockedNotification.RegisterHandler(interaction => App.Current.manager.ShowPageLockedNotification()).DisposeWith(disposable);
 				ViewModel.ShowPrintBrowserDialog.RegisterHandler(ShowPrintPdfBrowserDialog).DisposeWith(disposable);
-				
+
 				this.WhenAnyValue(x => x.ViewModel.PageContentViewer)
 					.Where(x => x != null)
 					.Subscribe(x =>
 					{
-						var contentPresenter = new HtmlPageViewer {ViewModel = (HtmlPageViewerViewModel) x};
+						var contentPresenter = new HtmlPageViewer {ViewModel = (HtmlPageViewerControlViewModel) x};
 						ContentGrid.Children.Add(contentPresenter);
 					}).DisposeWith(disposable);
 			});
@@ -163,7 +151,7 @@ namespace PrivateWiki.Pages
 		private async Task ShowPrintPdfBrowserDialog(InteractionContext<Path, bool> context)
 		{
 			var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-			
+
 			var dialog = new ContentDialog
 			{
 				Title = resourceLoader.GetString("PrintPDF/Dialog/Title"),
@@ -173,8 +161,8 @@ namespace PrivateWiki.Pages
 				DefaultButton = ContentDialogButton.Primary
 			};
 
-			var result =  (await dialog.ShowAsync()) == ContentDialogResult.Primary;
-			
+			var result = (await dialog.ShowAsync()) == ContentDialogResult.Primary;
+
 			context.SetOutput(result);
 		}
 	}

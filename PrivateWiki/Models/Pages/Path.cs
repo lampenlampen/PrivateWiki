@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Models.Pages
 {
@@ -29,7 +27,6 @@ namespace Models.Pages
 				{
 					return _title;
 				}
-				
 			}
 		}
 
@@ -46,7 +43,6 @@ namespace Models.Pages
 
 		public Path()
 		{
-
 		}
 
 		public override bool Equals(object obj)
@@ -70,8 +66,8 @@ namespace Models.Pages
 
 			if (path.Length > 1)
 			{
-				var path2 = new string[path.Length-1];
-				Array.Copy(path, path2, path.Length-1);
+				var path2 = new string[path.Length - 1];
+				Array.Copy(path, path2, path.Length - 1);
 
 				return new Path(path2, path[path.Length - 1]);
 			}

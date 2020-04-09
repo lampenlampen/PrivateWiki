@@ -3,11 +3,10 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Windows.UI.Xaml;
-using Models.ViewModels;
+using Microsoft.UI.Xaml.Controls;
 using NLog;
+using PrivateWiki.Models.ViewModels;
 using ReactiveUI;
-using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
-using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -19,22 +18,22 @@ namespace PrivateWiki.Pages.ContentPages.HtmlPage
 	public sealed partial class HtmlPageViewer : IViewFor<HtmlPageViewerViewModel>
 	{
 		#region ViewModel
-		
+
 		public static readonly DependencyProperty ViewModelProperty = DependencyProperty
 			.Register(nameof(ViewModel), typeof(HtmlPageViewerViewModel), typeof(HtmlPageViewer), new PropertyMetadata(null));
 
 		public HtmlPageViewerViewModel ViewModel
 		{
-			get => (HtmlPageViewerViewModel)GetValue(ViewModelProperty);
+			get => (HtmlPageViewerViewModel) GetValue(ViewModelProperty);
 			set => SetValue(ViewModelProperty, value);
 		}
 
 		object IViewFor.ViewModel
 		{
 			get => ViewModel;
-			set => ViewModel = (HtmlPageViewerViewModel)value;
+			set => ViewModel = (HtmlPageViewerViewModel) value;
 		}
-		
+
 		#endregion
 
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -49,7 +48,7 @@ namespace PrivateWiki.Pages.ContentPages.HtmlPage
 			{
 				Content = "<h1>Heading 1</h1>"
 			};
-			
+
 			ViewModel = new HtmlPageViewerViewModel(page);
 
 			ShowPageInWebView();
@@ -57,10 +56,10 @@ namespace PrivateWiki.Pages.ContentPages.HtmlPage
 			this.WhenActivated(disposable =>
 			{
 				Observable.FromEventPattern<RoutedEventHandler, RoutedEventArgs>(
-					handler => commandBar.SearchClick += handler,
-					handler => commandBar.SearchClick -= handler)
+						handler => commandBar.SearchClick += handler,
+						handler => commandBar.SearchClick -= handler)
 					.Select(x => Unit.Default)
-					.Subscribe((_) => {  })
+					.Subscribe((_) => { })
 					.DisposeWith(disposable);
 
 				commandBar.ShowSettings

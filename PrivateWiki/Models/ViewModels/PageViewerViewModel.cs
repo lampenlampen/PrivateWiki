@@ -4,9 +4,6 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using Windows.System;
-using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
 using Contracts;
 using Models.Pages;
 using NLog;
@@ -14,22 +11,18 @@ using NodaTime;
 using PrivateWiki.Data;
 using PrivateWiki.Storage;
 using PrivateWiki.StorageBackend.SQLite;
-using PrivateWiki.Utilities;
-using PrivateWiki.Utilities.ExtensionFunctions;
-using RavinduL.LocalNotifications.Notifications;
 using ReactiveUI;
-using SQLite;
-using Color = System.Drawing.Color;
 
 namespace PrivateWiki.Models.ViewModels
 {
 	public class PageViewerViewModel : ReactiveObject
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-		
+
 		private SqLiteBackend _backend;
-		
+
 		private IContentPageViewerViewModel _pageContentViewer;
+
 		public IContentPageViewerViewModel PageContentViewer
 		{
 			get => _pageContentViewer;
@@ -37,6 +30,7 @@ namespace PrivateWiki.Models.ViewModels
 		}
 
 		private PageViewerCommandBarViewModel _commandBarViewModel;
+
 		public PageViewerCommandBarViewModel CommandBarViewModel
 		{
 			get => _commandBarViewModel;
@@ -46,23 +40,23 @@ namespace PrivateWiki.Models.ViewModels
 		private GenericPage _page;
 
 		public ReactiveCommand<string, Unit> LoadPage { get; }
-		
+
 		public ReactiveCommand<Path, Unit> ShowHistory { get; }
-		
+
 		public ReactiveCommand<Path, Unit> Edit { get; }
-		
+
 		public ReactiveCommand<Unit, Unit> Search { get; }
 
 		public ReactiveCommand<Path, Unit> Export { get; }
-		
+
 		public ReactiveCommand<Unit, Unit> Import { get; }
-		
+
 		public ReactiveCommand<Path, Unit> PrintPage { get; }
-		
+
 		public ReactiveCommand<Unit, Unit> ToggleFullscreen { get; }
-		
-		public ReactiveCommand<Unit,Unit> ScrollToTop { get; }
-		
+
+		public ReactiveCommand<Unit, Unit> ScrollToTop { get; }
+
 		public ReactiveCommand<Path, Unit> NavigateToPage { get; }
 
 		private readonly ISubject<Path> _onNavigateToExistingPage;
@@ -75,7 +69,7 @@ namespace PrivateWiki.Models.ViewModels
 		public IObservable<Path> OnEditPage => _onEditPage;
 
 		private readonly Interaction<Path, Unit> _showPageLockedNotification;
-		public Interaction<Path, Unit> ShowPageLockedNotification =>  _showPageLockedNotification;
+		public Interaction<Path, Unit> ShowPageLockedNotification => _showPageLockedNotification;
 
 		private readonly ISubject<Path> _onShowHistoryPage;
 		public IObservable<Path> OnShowHistoryPage => _onShowHistoryPage;
@@ -107,7 +101,7 @@ namespace PrivateWiki.Models.ViewModels
 			ToggleFullscreen = ReactiveCommand.CreateFromTask(ToggleFullscreenAsync);
 			ScrollToTop = ReactiveCommand.CreateFromTask(ScrollToTopAsync);
 			NavigateToPage = ReactiveCommand.CreateFromTask<Path>(NavigateToPageAsync);
-			
+
 			// Events
 			_onNavigateToExistingPage = new Subject<Path>();
 			_onNavigateToNewPage = new Subject<Path>();
@@ -123,14 +117,14 @@ namespace PrivateWiki.Models.ViewModels
 		{
 			_page = await _backend.GetPageAsync(id);
 
-			PageContentViewer = new HtmlPageViewerViewModel {Page = _page};
+			PageContentViewer = new HtmlPageViewerControlViewModel {Page = _page};
 			PageContentViewer.OnWikiLinkClicked.Subscribe(x => NavigateToPageAsync(x));
 		}
 
 		private async Task NavigateToPageAsync(Path link)
 		{
 			NavigationHandler.AddPage(Page);
-			
+
 			if (await _backend.ContainsPageAsync(link.FullPath))
 			{
 				_onNavigateToExistingPage.OnNext(link);
@@ -145,7 +139,7 @@ namespace PrivateWiki.Models.ViewModels
 		{
 			Logger.Info("Show History");
 			Logger.ConditionalDebug($"Show History of {link.FullPath}");
-			
+
 			_onShowHistoryPage.OnNext(link);
 
 			return Task.CompletedTask;
@@ -156,7 +150,7 @@ namespace PrivateWiki.Models.ViewModels
 			if (Page.IsLocked)
 			{
 				_showPageLockedNotification.Handle(link);
-				
+
 				Logger.Info("Page is locked and cannot be edited!");
 				Logger.ConditionalDebug($"Page ({link.FullPath}) is locked!");
 			}

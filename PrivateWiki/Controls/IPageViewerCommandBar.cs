@@ -7,7 +7,7 @@ namespace Contracts
 		void Edit_Click(object sender, RoutedEventArgs e);
 
 		void Revision_Click(object sender, RoutedEventArgs e);
-		
+
 		void Top_Click(object sender, RoutedEventArgs e);
 
 		/// <summary>

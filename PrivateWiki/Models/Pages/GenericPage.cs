@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using NodaTime;
 
 namespace Models.Pages
@@ -27,16 +25,17 @@ namespace Models.Pages
 		[Obsolete]
 		public GenericPage()
 		{
-			
 		}
 
-		public GenericPage(Guid id, Path path, string content, string contentType, Instant created, Instant lastChanged, bool isLocked, List<Tag> tags = null) : base(path, id, content, created, lastChanged, isLocked,
+		public GenericPage(Guid id, Path path, string content, string contentType, Instant created, Instant lastChanged, bool isLocked, List<Tag> tags = null) : base(path, id, content, created,
+			lastChanged, isLocked,
 			tags)
 		{
 			ContentType = contentType;
 		}
-		
-		public GenericPage(Path path, string content, string contentType, Instant created, Instant lastChanged, bool isLocked, List<Tag> tags = null) : base(path, content, created, lastChanged, isLocked,
+
+		public GenericPage(Path path, string content, string contentType, Instant created, Instant lastChanged, bool isLocked, List<Tag> tags = null) : base(path, content, created, lastChanged,
+			isLocked,
 			tags)
 		{
 			ContentType = contentType;

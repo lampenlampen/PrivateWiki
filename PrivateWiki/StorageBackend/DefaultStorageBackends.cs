@@ -5,7 +5,7 @@ namespace PrivateWiki.Storage
 	public static class DefaultStorageBackends
 	{
 		private static SqLiteStorage sqLiteStorage = new SqLiteStorage("main");
-		
+
 		private static SqLiteStorage testSqliteStorage = new SqLiteStorage("test");
 
 		public static SqLiteStorage GetSqliteStorage()

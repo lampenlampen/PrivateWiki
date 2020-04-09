@@ -1,28 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Models.Pages;
-using Models.ViewModels;
 using NLog;
-using NodaTime;
-using PrivateWiki.Models;
 using PrivateWiki.Models.ViewModels;
 using ReactiveUI;
-using Page = Windows.UI.Xaml.Controls.Page;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -57,7 +43,7 @@ namespace PrivateWiki.Pages.ContentPages
 		public GenericTextPageEditor()
 		{
 			this.InitializeComponent();
-			
+
 			ViewModel = new GenericTextPageEditorViewModel();
 
 			this.WhenActivated(disposables =>
@@ -112,7 +98,7 @@ namespace PrivateWiki.Pages.ContentPages
 
 				this.Bind(ViewModel, x => x.Page.Content, v => v.PageEditorTextBox.Text).DisposeWith(disposables);
 
-				ViewModel.GoBack.Subscribe( _ => GoBack()).DisposeWith(disposables);
+				ViewModel.GoBack.Subscribe(_ => GoBack()).DisposeWith(disposables);
 			});
 		}
 
