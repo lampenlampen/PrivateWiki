@@ -1,7 +1,4 @@
-﻿using JetBrains.Annotations;
-using NodaTime;
-using PrivateWiki.Data;
-using System;
+﻿using System;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -11,8 +8,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using JetBrains.Annotations;
 using Models.Pages;
 using Models.Storage;
+using NodaTime;
+using PrivateWiki.Data;
 using PrivateWiki.Models.ViewModels;
 using PrivateWiki.StorageBackend.SQLite;
 using ReactiveUI;
@@ -107,7 +107,7 @@ namespace PrivateWiki.Pages
 				ViewModel.OnImportNewPage.ObserveOnDispatcher().Subscribe(_ => GoBackRequested()).DisposeWith(disposable);
 
 				header1.Text = string.IsNullOrEmpty(ViewModel.LinkString) ? "Create a new page." : "This Page doesn't exist. Create it.";
-				ContentTypeBox.ItemsSource = ViewModel.ContentTypes;
+				ContentTypeBox.ItemsSource = ViewModel.SupportedContentTypes;
 
 				this.BindValidation(ViewModel,
 						vm => vm.LinkValidationRule,
@@ -158,7 +158,7 @@ namespace PrivateWiki.Pages
 
 		private void NavigateToPage()
 		{
-			Frame.Navigate(typeof(PageEditor), _pageId.ToString());
+			Frame.Navigate(typeof(PageEditor), ViewModel.LinkString);
 		}
 
 		private bool GoBackRequested()

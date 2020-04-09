@@ -1,7 +1,4 @@
-﻿using NodaTime;
-using PrivateWiki.Data;
-using PrivateWiki.Pages;
-using System;
+﻿using System;
 using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -9,12 +6,14 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Toolkit.Uwp.UI.Controls;
-using Models.Storage;
 using NLog;
-using PrivateWiki.Pages.ContentPages;
+using NodaTime;
+using PrivateWiki.Data;
+using PrivateWiki.Pages;
 using PrivateWiki.Storage;
 using PrivateWiki.StorageBackend.SQLite;
 using RavinduL.LocalNotifications;
+using ReactiveUI;
 
 namespace PrivateWiki
 {
@@ -23,17 +22,15 @@ namespace PrivateWiki
 	/// </summary>
 	sealed partial class App : Application
 	{
-		 private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
 		// By default, current is an instance of the Application class, which needs to be changed to be an instance of the App class.
 		public new static App Current;
 
-		[Obsolete]
-		public LocalNotificationManager manager;
+		[Obsolete] public LocalNotificationManager manager;
 
 		public InAppNotification Notification;
 
-		
 
 		/// <summary>
 		///     Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code
@@ -50,7 +47,7 @@ namespace PrivateWiki
 
 			RegisterUncaughtExceptionLogger();
 		}
-		
+
 		private void RegisterUncaughtExceptionLogger()
 		{
 			UnhandledException += (sender, args) =>
@@ -58,6 +55,8 @@ namespace PrivateWiki
 				Logger.Error(args.Exception);
 				Logger.Error(args.Message);
 			};
+
+			RxApp.DefaultExceptionHandler = new RxExceptionHandler();
 		}
 
 		/// <summary>
@@ -68,7 +67,7 @@ namespace PrivateWiki
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
 			Logger.Info("App Launched");
-			
+
 			Grid rootGrid = Window.Current.Content as Grid;
 			Frame rootFrame = rootGrid?.Children.Where((c) => c is Frame).Cast<Frame>().FirstOrDefault();
 
@@ -83,11 +82,10 @@ namespace PrivateWiki
 				Notification = new InAppNotification();
 
 				rootGrid.Children.Add(rootFrame);
-				rootGrid.Children.Add(Notification);
+				//rootGrid.Children.Add(Notification);
 				rootGrid.Children.Add(notificationGrid);
-				
+
 				Window.Current.Content = rootGrid;
-				
 			}
 
 			if (e.PrelaunchActivated == false)
@@ -102,9 +100,9 @@ namespace PrivateWiki
 		private async void ShowPage(Frame rootFrame)
 		{
 			// TODO Run only on first app start.
-			await DefaultPages.InsertDefaultMarkdownPagesAsync( new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), SystemClock.Instance);
+			await DefaultPages.InsertDefaultMarkdownPagesAsync(new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), SystemClock.Instance);
 
-			rootFrame.Navigate(typeof(PageViewer), "start");
+			rootFrame.Navigate(typeof(MainPage), "start");
 		}
 
 		/// <summary>

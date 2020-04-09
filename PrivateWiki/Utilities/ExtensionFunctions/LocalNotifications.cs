@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+using NLog;
 using RavinduL.LocalNotifications;
 using RavinduL.LocalNotifications.Notifications;
 
@@ -13,6 +11,8 @@ namespace PrivateWiki.Utilities.ExtensionFunctions
 {
 	static class LocalNotifications
 	{
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
 		public static void ShowNotImplementedNotification(this LocalNotificationManager manager)
 		{
 			manager.Show(new SimpleNotification
@@ -24,7 +24,7 @@ namespace PrivateWiki.Utilities.ExtensionFunctions
 				Background = Color.Red.ToBrush()
 			});
 		}
-		
+
 		public static void ShowOperationFinishedNotification(this LocalNotificationManager manager)
 		{
 			manager.Show(new SimpleNotification
@@ -38,6 +38,8 @@ namespace PrivateWiki.Utilities.ExtensionFunctions
 
 		public static void ShowPageLockedNotification(this LocalNotificationManager manager)
 		{
+			Logger.Debug("Show Page locked notification");
+
 			manager.Show(new SimpleNotification
 			{
 				TimeSpan = TimeSpan.FromSeconds(3),
@@ -46,6 +48,28 @@ namespace PrivateWiki.Utilities.ExtensionFunctions
 				VerticalAlignment = VerticalAlignment.Bottom,
 				Background = new SolidColorBrush(Color.Red.ToWindowsUiColor())
 			});
+		}
+
+		public static void ShowPageExistsNotificationOnUIThread(this LocalNotificationManager manager)
+		{
+			Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+				() =>
+				{
+					manager.Show(new SimpleNotification
+					{
+						Text = "Page exists already",
+						VerticalAlignment = VerticalAlignment.Bottom,
+						Background = Color.Red.ToBrush()
+					});
+				});
+		}
+
+		public delegate SimpleNotification NotificationDelegate();
+
+		public static void ShowOnUIThread(this LocalNotificationManager manager, NotificationDelegate d)
+		{
+			Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+				() => { manager.Show(d.Invoke()); });
 		}
 	}
 }

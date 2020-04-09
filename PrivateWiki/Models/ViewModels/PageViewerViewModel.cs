@@ -145,11 +145,11 @@ namespace PrivateWiki.Models.ViewModels
 			return Task.CompletedTask;
 		}
 
-		private Task EditAsync(Path link)
+		private async Task EditAsync(Path link)
 		{
 			if (Page.IsLocked)
 			{
-				_showPageLockedNotification.Handle(link);
+				await _showPageLockedNotification.Handle(link);
 
 				Logger.Info("Page is locked and cannot be edited!");
 				Logger.ConditionalDebug($"Page ({link.FullPath}) is locked!");
@@ -160,8 +160,6 @@ namespace PrivateWiki.Models.ViewModels
 				Logger.ConditionalDebug($"Page ({link.FullPath}) edit.");
 				_onEditPage.OnNext(link);
 			}
-
-			return Task.CompletedTask;
 		}
 
 		private Task SearchAsync()

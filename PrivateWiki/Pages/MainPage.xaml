@@ -9,7 +9,6 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-
     <Grid
         Height="Auto"
         Width="Auto">
@@ -34,6 +33,6 @@
             Grid.Column="1"
             d:DataContext="{d:DesignInstance Type=pages:PageEditor, IsDesignTimeCreatable=True}" />
 
-    </Grid>
+        </Grid>
 
 </Page>

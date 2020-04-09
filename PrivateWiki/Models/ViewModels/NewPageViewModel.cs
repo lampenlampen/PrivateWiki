@@ -1,19 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Subjects;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Storage;
-using ColorCode.Compilation.Languages;
 using Models.Pages;
 using NodaTime;
 using PrivateWiki.Data;
 using PrivateWiki.Storage;
 using PrivateWiki.StorageBackend.SQLite;
+using PrivateWiki.Utilities.ExtensionFunctions;
 using ReactiveUI;
 using ReactiveUI.Validation.Abstractions;
 using ReactiveUI.Validation.Contexts;
@@ -48,9 +46,10 @@ namespace PrivateWiki.Models.ViewModels
 			get => _contentType;
 			set => this.RaiseAndSetIfChanged(ref _contentType, value);
 		}
-		private ContentType? _contentType = null;
 
-		public IReadOnlyCollection<ContentType> ContentTypes { get; } = new ReadOnlyCollection<ContentType>(AppConfig.SupportedContentTypes2);
+		private ContentType? _contentType;
+
+		public IReadOnlyCollection<ContentType> SupportedContentTypes { get; } = new ReadOnlyCollection<ContentType>(AppConfig.SupportedContentTypes2);
 
 		public ValidationHelper ContentTypeValidationRule { get; }
 
@@ -72,7 +71,7 @@ namespace PrivateWiki.Models.ViewModels
 		public NewPageViewModel()
 		{
 			_clock = SystemClock.Instance;
-			
+
 			LinkValidationRule = this.ValidationRule(
 				vm => vm.LinkString,
 				link => !string.IsNullOrEmpty(link),
@@ -80,7 +79,7 @@ namespace PrivateWiki.Models.ViewModels
 
 			ContentTypeValidationRule = this.ValidationRule(
 				vm => vm.ContentType,
-				contentType => ContentTypes.Contains(contentType),
+				contentType => SupportedContentTypes.Contains(contentType),
 				contentType => "ContentType must be \"markdown\" or \"Html\"");
 
 			var isCreateAndImportEnabled = this.IsValid();
@@ -111,12 +110,12 @@ namespace PrivateWiki.Models.ViewModels
 				var page = new GenericPage(Link, await content, ContentType!.Name, now, now, false);
 
 				await backend.InsertPageAsync(page);
-				
+
 				_onImportNewPage.OnNext(Unit.Default);
 
 				return Unit.Default;
 			}
-			
+
 			// TODO Import Page
 
 			return await Action();
@@ -126,14 +125,23 @@ namespace PrivateWiki.Models.ViewModels
 		{
 			return Task.Run(async () =>
 			{
-				var now = _clock.GetCurrentInstant();
-			
-				var page = new GenericPage(Link, "", ContentType!.Name, now, now, false);
-			
 				var backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), _clock);
-				await backend.InsertPageAsync(page);
-			
-				_onCreateNewPage.OnNext(Unit.Default);
+				var a = await backend.ContainsPageAsync(LinkString);
+
+				if (a)
+				{
+					App.Current.manager.ShowPageExistsNotificationOnUIThread();
+				}
+				else
+				{
+					var now = _clock.GetCurrentInstant();
+
+					var page = new GenericPage(Link, "", ContentType!.Name, now, now, false);
+
+					await backend.InsertPageAsync(page);
+
+					_onCreateNewPage.OnNext(Unit.Default);
+				}
 			});
 		}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -106,7 +107,7 @@ namespace PrivateWiki.Pages
 				ViewModel.OnEditPage.Subscribe(EditPage).DisposeWith(disposable);
 				ViewModel.OnNewPage.Subscribe(_ => NavigateToNewPage()).DisposeWith(disposable);
 
-				ViewModel.ShowPageLockedNotification.RegisterHandler(interaction => App.Current.manager.ShowPageLockedNotification()).DisposeWith(disposable);
+				ViewModel.ShowPageLockedNotification.RegisterHandler(ShowPageLockedNotification).DisposeWith(disposable);
 				ViewModel.ShowPrintBrowserDialog.RegisterHandler(ShowPrintPdfBrowserDialog).DisposeWith(disposable);
 
 				this.WhenAnyValue(x => x.ViewModel.PageContentViewer)
@@ -164,6 +165,13 @@ namespace PrivateWiki.Pages
 			var result = (await dialog.ShowAsync()) == ContentDialogResult.Primary;
 
 			context.SetOutput(result);
+		}
+
+		private async Task ShowPageLockedNotification(InteractionContext<Path, Unit> context)
+		{
+			App.Current.manager.ShowPageLockedNotification();
+
+			context.SetOutput(Unit.Default);
 		}
 	}
 }

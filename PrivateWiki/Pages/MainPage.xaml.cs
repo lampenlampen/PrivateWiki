@@ -25,8 +25,7 @@ namespace PrivateWiki.Pages
 			ApplicationView.GetForCurrentView().TitleBar.ButtonBackgroundColor =
 				new UISettings().GetColorValue(UIColorType.Accent);
 
-
-			EditorFrame.Navigate(typeof(MarkdownPageViewer), "start");
+			EditorFrame.Navigate(typeof(PageViewer), "start");
 		}
 
 		/// Extend acrylic into the title bar.
