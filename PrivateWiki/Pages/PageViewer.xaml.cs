@@ -60,11 +60,7 @@ namespace PrivateWiki.Pages
 
 				commandBar.ShowSettings.Subscribe(_ => Frame.Navigate(typeof(SettingsPage))).DisposeWith(disposable);
 
-				commandBar.ShowHistory.Subscribe(_ =>
-				{
-					Frame.Navigate(typeof(HistoryPage), ViewModel.Page.Path.FullPath);
-					Logger.Debug("Show History");
-				}).DisposeWith(disposable);
+				commandBar.ShowHistory.Select(_ => ViewModel.Page.Path).InvokeCommand(this, x => x.ViewModel.ShowHistory).DisposeWith(disposable);
 
 				commandBar.Edit
 					.Select(_ => ViewModel.Page.Path)

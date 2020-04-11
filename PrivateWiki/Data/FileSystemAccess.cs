@@ -2,8 +2,7 @@
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
+using DynamicData;
 
 #nullable enable
 
@@ -75,7 +74,7 @@ namespace PrivateWiki.Data
 				SuggestedFileName = "PrivateWiki",
 				SuggestedStartLocation = PickerLocationId.DocumentsLibrary
 			};
-			picker.FileTypeChoices.Add("MarkdownWiki", new[] { ".mdwiki" });
+			picker.FileTypeChoices.Add("MarkdownWiki", new[] {".mdwiki"});
 
 			return await picker.PickSaveFileAsync();
 		}
@@ -87,8 +86,22 @@ namespace PrivateWiki.Data
 				SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
 				ViewMode = PickerViewMode.List
 			};
-			
+
 			picker.FileTypeFilter.Add("*");
+
+			return picker.PickSingleFileAsync().AsTask();
+		}
+
+		public static Task<StorageFile> PickFileAsync(params string[] fileTypes)
+		{
+			var picker = new FileOpenPicker
+			{
+				SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
+				ViewMode = PickerViewMode.List
+			};
+
+			picker.FileTypeFilter.Add(fileTypes);
+
 
 			return picker.PickSingleFileAsync().AsTask();
 		}

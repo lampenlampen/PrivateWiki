@@ -99,7 +99,7 @@ namespace PrivateWiki.Models.ViewModels
 			{
 				var backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), _clock);
 
-				var file = await FileSystemAccess.PickFileAsync();
+				var file = await FileSystemAccess.PickFileAsync(ContentType.FileExtension);
 
 				if (file == null) return Unit.Default;
 
@@ -115,8 +115,6 @@ namespace PrivateWiki.Models.ViewModels
 
 				return Unit.Default;
 			}
-
-			// TODO Import Page
 
 			return await Action();
 		}

@@ -103,8 +103,8 @@ namespace PrivateWiki.Pages
 					.DisposeWith(disposable);
 
 				ViewModel.OnGoBack.Subscribe(_ => GoBackRequested()).DisposeWith(disposable);
-				ViewModel.OnCreateNewPage.ObserveOnDispatcher().Subscribe(_ => NavigateToPage()).DisposeWith(disposable);
-				ViewModel.OnImportNewPage.ObserveOnDispatcher().Subscribe(_ => GoBackRequested()).DisposeWith(disposable);
+				ViewModel.OnCreateNewPage.ObserveOnDispatcher().Subscribe(_ => NavigateToPageEditor()).DisposeWith(disposable);
+				ViewModel.OnImportNewPage.ObserveOnDispatcher().Subscribe(_ => NavigateToPageViewer()).DisposeWith(disposable);
 
 				header1.Text = string.IsNullOrEmpty(ViewModel.LinkString) ? "Create a new page." : "This Page doesn't exist. Create it.";
 				ContentTypeBox.ItemsSource = ViewModel.SupportedContentTypes;
@@ -137,7 +137,7 @@ namespace PrivateWiki.Pages
 
 		private void CreatePage_Click([NotNull] object sender, [NotNull] RoutedEventArgs e)
 		{
-			NavigateToPage();
+			NavigateToPageEditor();
 		}
 
 		private async void ImportPage_Click(object sender, RoutedEventArgs e)
@@ -153,12 +153,17 @@ namespace PrivateWiki.Pages
 
 			await backend.InsertPageAsync(page);
 
-			NavigateToPage();
+			NavigateToPageEditor();
 		}
 
-		private void NavigateToPage()
+		private void NavigateToPageEditor()
 		{
 			Frame.Navigate(typeof(PageEditor), ViewModel.LinkString);
+		}
+
+		private void NavigateToPageViewer()
+		{
+			Frame.Navigate(typeof(PageViewer), ViewModel.LinkString);
 		}
 
 		private bool GoBackRequested()

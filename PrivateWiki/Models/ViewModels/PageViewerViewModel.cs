@@ -11,6 +11,7 @@ using NodaTime;
 using PrivateWiki.Data;
 using PrivateWiki.Storage;
 using PrivateWiki.StorageBackend.SQLite;
+using PrivateWiki.Utilities.ExtensionFunctions;
 using ReactiveUI;
 
 namespace PrivateWiki.Models.ViewModels
@@ -140,7 +141,8 @@ namespace PrivateWiki.Models.ViewModels
 			Logger.Info("Show History");
 			Logger.ConditionalDebug($"Show History of {link.FullPath}");
 
-			_onShowHistoryPage.OnNext(link);
+			App.Current.manager.ShowNotImplementedNotification();
+			//_onShowHistoryPage.OnNext(link);
 
 			return Task.CompletedTask;
 		}
@@ -165,18 +167,24 @@ namespace PrivateWiki.Models.ViewModels
 		private Task SearchAsync()
 		{
 			// TODO Search
+			App.Current.manager.ShowNotImplementedNotification();
+
 			return Task.CompletedTask;
 		}
 
 		private Task ExportAsync(Path link)
 		{
 			// TODO Export
+			App.Current.manager.ShowNotImplementedNotification();
+
 			return Task.CompletedTask;
 		}
 
 		private Task ImportAsync()
 		{
 			//TODO Import
+			App.Current.manager.ShowNotImplementedNotification();
+
 			return Task.CompletedTask;
 		}
 
@@ -195,16 +203,18 @@ namespace PrivateWiki.Models.ViewModels
 			}
 		}
 
-		private Task<Unit> ToggleFullscreenAsync()
+		private Task ToggleFullscreenAsync()
 		{
 			// TODO Toggle Fullscreen
-			return Task.FromResult(Unit.Default);
+			App.Current.manager.ShowNotImplementedNotification();
+			return Task.CompletedTask;
 		}
 
-		private Task<Unit> ScrollToTopAsync()
+		private Task ScrollToTopAsync()
 		{
 			// TODO Scroll to top
-			return Task.FromResult(Unit.Default);
+			App.Current.manager.ShowNotImplementedNotification();
+			return Task.CompletedTask;
 		}
 	}
 }
