@@ -12,6 +12,7 @@ using PrivateWiki.Data;
 using PrivateWiki.Pages;
 using PrivateWiki.Storage;
 using PrivateWiki.StorageBackend.SQLite;
+using PrivateWiki.UI;
 using RavinduL.LocalNotifications;
 using ReactiveUI;
 
@@ -27,7 +28,7 @@ namespace PrivateWiki
 		// By default, current is an instance of the Application class, which needs to be changed to be an instance of the App class.
 		public new static App Current;
 
-		[Obsolete] public LocalNotificationManager manager;
+		public GlobalNotificationManager Manager { get; private set; }
 
 		public InAppNotification Notification;
 
@@ -78,7 +79,7 @@ namespace PrivateWiki
 
 				var notificationGrid = new Grid();
 
-				manager = new LocalNotificationManager(notificationGrid);
+				Manager = new GlobalNotificationManager(new LocalNotificationManager(notificationGrid));
 				Notification = new InAppNotification();
 
 				rootGrid.Children.Add(rootFrame);

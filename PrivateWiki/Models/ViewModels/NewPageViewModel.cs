@@ -11,7 +11,6 @@ using NodaTime;
 using PrivateWiki.Data;
 using PrivateWiki.Storage;
 using PrivateWiki.StorageBackend.SQLite;
-using PrivateWiki.Utilities.ExtensionFunctions;
 using ReactiveUI;
 using ReactiveUI.Validation.Abstractions;
 using ReactiveUI.Validation.Contexts;
@@ -128,7 +127,7 @@ namespace PrivateWiki.Models.ViewModels
 
 				if (a)
 				{
-					App.Current.manager.ShowPageExistsNotificationOnUIThread();
+					App.Current.Manager.ShowPageExistsNotificationOnUIThread();
 				}
 				else
 				{

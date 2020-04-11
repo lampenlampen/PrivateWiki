@@ -11,7 +11,6 @@ using Markdig.Extensions.Yaml;
 using Markdig.Syntax;
 using PrivateWiki.Models;
 using PrivateWiki.Settings;
-using PrivateWiki.Utilities.ExtensionFunctions;
 
 #nullable enable
 
@@ -71,7 +70,7 @@ namespace PrivateWiki.Controls.Settings.Sync
 			// TODO Light Sync
 			await new LFSSyncActions().ExportTask2(Model);
 
-			App.Current.manager.ShowOperationFinishedNotification();
+			App.Current.Manager.ShowOperationFinishedNotification();
 		}
 
 		private async void ImportData(object sender, RoutedEventArgs e)
@@ -95,12 +94,7 @@ namespace PrivateWiki.Controls.Settings.Sync
 					var yaml = content.Substring(yamlBlock.Span.Start, yamlBlock.Span.Length);
 					var a = deserializer.Deserialize(new StringReader(yaml));
 				}
-				
-				
 			}
-
-
-			
 		}
 	}
 }

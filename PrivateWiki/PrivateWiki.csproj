@@ -155,49 +155,49 @@
     <Compile Include="Dialogs\ExportDialog.xaml.cs">
       <DependentUpon>ExportDialog.xaml</DependentUpon>
     </Compile>
-      <Compile Include="Dialogs\GridViewDialog.xaml.cs">
-          <DependentUpon>GridViewDialog.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Dialogs\PageEditorImagePickerDialog.xaml.cs">
-          <DependentUpon>PageEditorImagePickerDialog.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Dialogs\WikiLinkDialog.xaml.cs">
-          <DependentUpon>WikiLinkDialog.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Dialogs\DissmissableDialog.cs"/>
-      <Compile Include="Markdig\Extensions\TagExtension\TagExtension.cs"/>
-      <Compile Include="Markdig\Extensions\TagExtension\TagGroup.cs"/>
-      <Compile Include="Markdig\Extensions\TagExtension\TagInline.cs"/>
-      <Compile Include="Markdig\Extensions\TagExtension\TagParser.cs"/>
-      <Compile Include="Markdig\Extensions\TagExtension\MarkdigTagExtension.cs"/>
-      <Compile Include="Markdig\MarkdigPipelineBuilder.cs"/>
-      <Compile Include="Models\LFSModel.cs"/>
-      <Compile Include="Models\Pages\GenericPage.cs"/>
-      <Compile Include="Models\Pages\HtmlPage.cs"/>
-      <Compile Include="Models\Pages\MarkdownPage.cs"/>
-      <Compile Include="Models\Pages\Page.cs"/>
-      <Compile Include="Models\Pages\PageAction.cs"/>
-      <Compile Include="Models\Pages\PageHistory.cs"/>
-      <Compile Include="Models\Pages\Path.cs"/>
-      <Compile Include="Models\Pages\Tag.cs"/>
-      <Compile Include="Models\ViewModels\GenericTextPageEditorViewModel.cs"/>
-      <Compile Include="Models\ViewModels\HtmlPageViewerControlViewModel.cs"/>
-      <Compile Include="Models\ViewModels\HtmlPageViewerViewModel.cs"/>
-      <Compile Include="Models\ViewModels\IContentPageViewerViewModel.cs"/>
-      <Compile Include="Models\ViewModels\NewPageViewModel.cs"/>
-      <Compile Include="Models\ViewModels\PageViewerCommandBarViewModel.cs"/>
-      <Compile Include="Models\ViewModels\PageViewerViewModel.cs"/>
-      <Compile Include="Pages\ContentPages\ContentPage.cs"/>
-      <Compile Include="Pages\ContentPages\GenericTextPageEditor.xaml.cs">
-          <DependentUpon>GenericTextPageEditor.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Pages\ContentPages\HtmlPage\HtmlPageEditor.xaml.cs">
-          <DependentUpon>HtmlPageEditor.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Pages\ContentPages\HtmlPage\HtmlPageViewer.xaml.cs">
-          <DependentUpon>HtmlPageViewer.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Pages\HistoryPage.xaml.cs">
+    <Compile Include="Dialogs\GridViewDialog.xaml.cs">
+      <DependentUpon>GridViewDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\PageEditorImagePickerDialog.xaml.cs">
+      <DependentUpon>PageEditorImagePickerDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\WikiLinkDialog.xaml.cs">
+      <DependentUpon>WikiLinkDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DissmissableDialog.cs"/>
+    <Compile Include="Markdig\Extensions\TagExtension\TagExtension.cs"/>
+    <Compile Include="Markdig\Extensions\TagExtension\TagGroup.cs"/>
+    <Compile Include="Markdig\Extensions\TagExtension\TagInline.cs"/>
+    <Compile Include="Markdig\Extensions\TagExtension\TagParser.cs"/>
+    <Compile Include="Markdig\Extensions\TagExtension\MarkdigTagExtension.cs"/>
+    <Compile Include="Markdig\MarkdigPipelineBuilder.cs"/>
+    <Compile Include="Models\LFSModel.cs"/>
+    <Compile Include="Models\Pages\GenericPage.cs"/>
+    <Compile Include="Models\Pages\HtmlPage.cs"/>
+    <Compile Include="Models\Pages\MarkdownPage.cs"/>
+    <Compile Include="Models\Pages\Page.cs"/>
+    <Compile Include="Models\Pages\PageAction.cs"/>
+    <Compile Include="Models\Pages\PageHistory.cs"/>
+    <Compile Include="Models\Pages\Path.cs"/>
+    <Compile Include="Models\Pages\Tag.cs"/>
+    <Compile Include="Models\ViewModels\GenericTextPageEditorViewModel.cs"/>
+    <Compile Include="Models\ViewModels\HtmlPageViewerControlViewModel.cs"/>
+    <Compile Include="Models\ViewModels\HtmlPageViewerViewModel.cs"/>
+    <Compile Include="Models\ViewModels\IContentPageViewerViewModel.cs"/>
+    <Compile Include="Models\ViewModels\NewPageViewModel.cs"/>
+    <Compile Include="Models\ViewModels\PageViewerCommandBarViewModel.cs"/>
+    <Compile Include="Models\ViewModels\PageViewerViewModel.cs"/>
+    <Compile Include="Pages\ContentPages\ContentPage.cs"/>
+    <Compile Include="Pages\ContentPages\GenericTextPageEditor.xaml.cs">
+      <DependentUpon>GenericTextPageEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ContentPages\HtmlPage\HtmlPageEditor.xaml.cs">
+      <DependentUpon>HtmlPageEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ContentPages\HtmlPage\HtmlPageViewer.xaml.cs">
+      <DependentUpon>HtmlPageViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\HistoryPage.xaml.cs">
           <DependentUpon>HistoryPage.xaml</DependentUpon>
       </Compile>
       <Compile Include="Pages\PageViewer.xaml.cs">
@@ -206,50 +206,51 @@
       <Compile Include="Pages\SettingsPages\AssetsSettingsPage.xaml.cs">
           <DependentUpon>AssetsSettingsPage.xaml</DependentUpon>
       </Compile>
-      <Compile Include="Pages\SettingsPages\PagesSettingsPage.xaml.cs">
-          <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Pages\SettingsPages\StorageSettingsPage.xaml.cs">
-          <DependentUpon>StorageSettingsPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Pages\SettingsPages\SyncSettingsPage.xaml.cs">
-          <DependentUpon>SyncSettingsPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Renderer\ContentRenderer.cs"/>
-      <Compile Include="RxExceptionHandler.cs"/>
-      <Compile Include="SettingStorageTemplateSelector.cs"/>
-      <Compile Include="Settings\LFSSyncActions.cs"/>
-      <Compile Include="Settings\SyncModelHandler.cs"/>
-      <Compile Include="StorageBackend\DefaultStorageBackends.cs"/>
-      <Compile Include="StorageBackend\IGenericPageStorage.cs"/>
-      <Compile Include="StorageBackend\IMarkdownPageStorage.cs"/>
-      <Compile Include="StorageBackend\IPageStorage.cs"/>
-      <Compile Include="StorageBackend\ISqLiteBackend.cs"/>
-      <Compile Include="StorageBackend\IStorageBackend.cs"/>
-      <Compile Include="StorageBackend\SqLiteStorage.cs"/>
-      <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs"/>
-      <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs"/>
-      <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs"/>
-      <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHtmlPageConverter.cs"/>
-      <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs"/>
-      <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs"/>
-      <Compile Include="StorageBackend\Storage.cs"/>
-      <Compile Include="Utilities\DebuggingService.cs"/>
-      <Compile Include="Utilities\DiffMatchPatchAlg.cs"/>
-      <Compile Include="ImagePickerDialogModel.cs"/>
-      <Compile Include="Models\DeveloperSettingsModel.cs"/>
-      <Compile Include="Models\NavigationItem.cs"/>
-      <Compile Include="Models\RenderingViewModels.cs"/>
-      <Compile Include="MyTreeViewNode.cs"/>
-      <Compile Include="MyUriToStreamResolver.cs"/>
-      <Compile Include="Pages\ExternalEditor.xaml.cs">
-          <DependentUpon>ExternalEditor.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="Dialogs\HyperlinkDialog.xaml.cs">
-          <DependentUpon>HyperlinkDialog.xaml</DependentUpon>
+    <Compile Include="Pages\SettingsPages\PagesSettingsPage.xaml.cs">
+      <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Markdig\IPageParser.cs" />
-    <Compile Include="Markdig\IPageRenderer.cs" />
+    <Compile Include="Pages\SettingsPages\StorageSettingsPage.xaml.cs">
+      <DependentUpon>StorageSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsPages\SyncSettingsPage.xaml.cs">
+      <DependentUpon>SyncSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Renderer\ContentRenderer.cs"/>
+    <Compile Include="RxExceptionHandler.cs"/>
+    <Compile Include="SettingStorageTemplateSelector.cs"/>
+    <Compile Include="Settings\LFSSyncActions.cs"/>
+    <Compile Include="Settings\SyncModelHandler.cs"/>
+    <Compile Include="StorageBackend\DefaultStorageBackends.cs"/>
+    <Compile Include="StorageBackend\IGenericPageStorage.cs"/>
+    <Compile Include="StorageBackend\IMarkdownPageStorage.cs"/>
+    <Compile Include="StorageBackend\IPageStorage.cs"/>
+    <Compile Include="StorageBackend\ISqLiteBackend.cs"/>
+    <Compile Include="StorageBackend\IStorageBackend.cs"/>
+    <Compile Include="StorageBackend\SqLiteStorage.cs"/>
+    <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs"/>
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs"/>
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs"/>
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHtmlPageConverter.cs"/>
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs"/>
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs"/>
+    <Compile Include="StorageBackend\Storage.cs"/>
+    <Compile Include="UI\GlobalNotificationManager.cs"/>
+    <Compile Include="Utilities\DebuggingService.cs"/>
+    <Compile Include="Utilities\DiffMatchPatchAlg.cs"/>
+    <Compile Include="ImagePickerDialogModel.cs"/>
+    <Compile Include="Models\DeveloperSettingsModel.cs"/>
+    <Compile Include="Models\NavigationItem.cs"/>
+    <Compile Include="Models\RenderingViewModels.cs"/>
+    <Compile Include="MyTreeViewNode.cs"/>
+    <Compile Include="MyUriToStreamResolver.cs"/>
+    <Compile Include="Pages\ExternalEditor.xaml.cs">
+      <DependentUpon>ExternalEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\HyperlinkDialog.xaml.cs">
+      <DependentUpon>HyperlinkDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Markdig\IPageParser.cs"/>
+    <Compile Include="Markdig\IPageRenderer.cs"/>
     <Compile Include="Pages\ImportDiffPage.xaml.cs">
       <DependentUpon>ImportDiffPage.xaml</DependentUpon>
     </Compile>

@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using Windows.System;
-using Windows.UI.Text;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Contracts;
 using Contracts.Storage;
-using JetBrains.Annotations;
 using Models.Pages;
 using NLog;
 using PrivateWiki.Data;
 using PrivateWiki.Dialogs;
 using PrivateWiki.Utilities;
-using PrivateWiki.Utilities.ExtensionFunctions;
 using RavinduL.LocalNotifications.Notifications;
 using Page = Models.Pages.Page;
 
@@ -48,7 +44,7 @@ namespace PrivateWiki.Pages.ContentPages
 
 			if (Page.IsLocked)
 			{
-				App.Current.manager.Show(new SimpleNotification
+				App.Current.Manager.Show(new SimpleNotification
 				{
 					TimeSpan = TimeSpan.FromSeconds(3),
 					Text = "Page cannot be edited.",
@@ -126,7 +122,7 @@ namespace PrivateWiki.Pages.ContentPages
 		{
 			// TODO Import Dialog
 
-			App.Current.manager.ShowNotImplementedNotification();
+			App.Current.Manager.ShowNotImplementedNotification();
 		}
 
 		public void CommandBar_OnNavigateToPage(object sender, string id)
