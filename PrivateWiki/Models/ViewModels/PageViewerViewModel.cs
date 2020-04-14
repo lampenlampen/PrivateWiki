@@ -79,6 +79,9 @@ namespace PrivateWiki.Models.ViewModels
 
 		public IObservable<Unit> OnNewPage => CommandBarViewModel.OnNewPage;
 
+		public IObservable<Unit> OnSearch => _onSearch;
+		private readonly ISubject<Unit> _onSearch;
+
 		public GenericPage Page
 		{
 			get => _page;
@@ -107,6 +110,7 @@ namespace PrivateWiki.Models.ViewModels
 			_onNavigateToNewPage = new Subject<Path>();
 			_onEditPage = new Subject<Path>();
 			_onShowHistoryPage = new Subject<Path>();
+			_onSearch = new Subject<Unit>();
 
 			// Interactions
 			_showPageLockedNotification = new Interaction<Path, Unit>();
@@ -140,8 +144,8 @@ namespace PrivateWiki.Models.ViewModels
 			Logger.Info("Show History");
 			Logger.ConditionalDebug($"Show History of {link.FullPath}");
 
-			App.Current.Manager.ShowNotImplementedNotification();
-			//_onShowHistoryPage.OnNext(link);
+			//App.Current.Manager.ShowNotImplementedNotification();
+			_onShowHistoryPage.OnNext(link);
 
 			return Task.CompletedTask;
 		}
@@ -165,8 +169,7 @@ namespace PrivateWiki.Models.ViewModels
 
 		private Task SearchAsync()
 		{
-			// TODO Search
-			App.Current.Manager.ShowNotImplementedNotification();
+			_onSearch.OnNext(Unit.Default);
 
 			return Task.CompletedTask;
 		}
@@ -211,8 +214,8 @@ namespace PrivateWiki.Models.ViewModels
 
 		private Task ScrollToTopAsync()
 		{
-			// TODO Scroll to top
-			App.Current.Manager.ShowNotImplementedNotification();
+			PageContentViewer.ScrollToTop.OnNext(Unit.Default);
+
 			return Task.CompletedTask;
 		}
 	}

@@ -17,7 +17,7 @@ namespace PrivateWiki.Pages
 	/// </summary>
 	public sealed partial class HistoryPage : Page
 	{
-		private ObservableCollection<PageHistory<GenericPage>> Pages { get; set; }
+		private ObservableCollection<GenericPageHistory> Pages { get; set; }
 
 		private string _link;
 
@@ -34,14 +34,14 @@ namespace PrivateWiki.Pages
 			_link = pageLink;
 
 			// For developing purposes
-			 Init(pageLink);
+			Init(pageLink);
 			//InitTest();
 		}
 
 		private async void Init(string pageLink)
 		{
 			var storage = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
-			var pages = new ObservableCollection<PageHistory<GenericPage>>(await storage.GetPageHistoryAsync(pageLink));
+			var pages = new ObservableCollection<GenericPageHistory>(await storage.GetPageHistoryAsync(pageLink));
 
 			Pages = pages;
 			Bindings.Update();
@@ -51,7 +51,7 @@ namespace PrivateWiki.Pages
 		{
 			// Create dummy data.
 
-			var pages = new ObservableCollection<PageHistory<GenericPage>>();
+			var pages = new ObservableCollection<GenericPageHistory>();
 
 			var id = Guid.NewGuid();
 			var id2 = Guid.NewGuid();
@@ -74,18 +74,17 @@ namespace PrivateWiki.Pages
 			};
 
 			var editedPage = new GenericPage()
-				{
-					Created = Instant.FromUnixTimeMilliseconds(1567296000),
-					Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
-					Id = id,
-					Link = "test1",
-					IsLocked = false,
-					LastChanged = Instant.FromUnixTimeMilliseconds(1567468840)
+			{
+				Created = Instant.FromUnixTimeMilliseconds(1567296000),
+				Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
+				Id = id,
+				Link = "test1",
+				IsLocked = false,
+				LastChanged = Instant.FromUnixTimeMilliseconds(1567468840)
 			};
 
 			var edited = new GenericPageHistory(editedPage)
 			{
-				
 				ValidFrom = Instant.FromUnixTimeMilliseconds(1567468840),
 				ValidTo = Instant.FromUnixTimeMilliseconds(1567555220),
 				Action = PageAction.Edited
@@ -109,13 +108,13 @@ namespace PrivateWiki.Pages
 			};
 
 			var unlockedPage = new GenericPage()
-				{
-					Created = Instant.FromUnixTimeMilliseconds(1567296000),
-					Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
-					Id = id,
-					Link = "test1",
-					IsLocked = false,
-					LastChanged = Instant.FromUnixTimeMilliseconds(1567641650)
+			{
+				Created = Instant.FromUnixTimeMilliseconds(1567296000),
+				Content = "# Test Heading 1\ntesfsdgkjasbfadfsg",
+				Id = id,
+				Link = "test1",
+				IsLocked = false,
+				LastChanged = Instant.FromUnixTimeMilliseconds(1567641650)
 			};
 
 			var unlocked = new GenericPageHistory(unlockedPage)

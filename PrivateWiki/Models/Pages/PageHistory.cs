@@ -1,8 +1,9 @@
-﻿using NodaTime;
+﻿using System;
+using NodaTime;
 
 namespace Models.Pages
 {
-	public class PageHistory<T> where T : Page
+	public abstract class PageHistory<T> where T : Page
 	{
 		public T Page { get; private set; }
 
@@ -25,6 +26,7 @@ namespace Models.Pages
 		}
 	}
 
+	[Obsolete]
 	public class MarkdownPageHistory : PageHistory<MarkdownPage>
 	{
 		public MarkdownPageHistory(MarkdownPage page) : base(page)

@@ -14,7 +14,7 @@
     <Page.Resources>
         <utilities:InstantToReadableDateTimeConverter x:Key="InstantToReadableDateTimeConverter" />
 
-        <DataTemplate x:Key="CreatedTemplate" x:DataType="pages:MarkdownPageHistory">
+        <DataTemplate x:Key="CreatedTemplate" x:DataType="pages:GenericPageHistory">
             <Grid Height="Auto">
                 <controls:DropShadowPanel
                     Color="Black"
@@ -47,7 +47,7 @@
                 </controls:DropShadowPanel>
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="EditedTemplate" x:DataType="pages:MarkdownPageHistory">
+        <DataTemplate x:Key="EditedTemplate" x:DataType="pages:GenericPageHistory">
             <Grid Height="Auto">
                 <controls:DropShadowPanel
                     Grid.Row="0"
@@ -96,7 +96,7 @@
             </Grid>
         </DataTemplate>
 
-        <DataTemplate x:Key="LockedTemplate" x:DataType="pages:MarkdownPageHistory">
+        <DataTemplate x:Key="LockedTemplate" x:DataType="pages:GenericPageHistory">
             <Grid Height="Auto">
                 <controls:DropShadowPanel
                     Color="Black"
@@ -130,7 +130,7 @@
             </Grid>
         </DataTemplate>
 
-        <DataTemplate x:Key="UnlockedTemplate" x:DataType="pages:MarkdownPageHistory">
+        <DataTemplate x:Key="UnlockedTemplate" x:DataType="pages:GenericPageHistory">
             <Grid Height="Auto">
                 <controls:DropShadowPanel
                     Color="Black"
@@ -164,7 +164,7 @@
             </Grid>
         </DataTemplate>
 
-        <DataTemplate x:Key="DeletedTemplate" x:DataType="pages:MarkdownPageHistory">
+        <DataTemplate x:Key="DeletedTemplate" x:DataType="pages:GenericPageHistory">
             <Grid Height="Auto">
                 <controls:DropShadowPanel
                     Color="Black"

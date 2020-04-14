@@ -18,7 +18,7 @@ namespace PrivateWiki.Utilities
 
 		protected override DataTemplate SelectTemplateCore(object item)
 		{
-			var page = (MarkdownPageHistory) item;
+			var page = (PageHistory<GenericPage>) item;
 
 			return page.Action switch
 			{

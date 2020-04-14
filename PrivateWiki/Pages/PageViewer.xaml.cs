@@ -10,6 +10,7 @@ using Models.Pages;
 using NLog;
 using PrivateWiki.Controls.ContentPages;
 using PrivateWiki.Models.ViewModels;
+using PrivateWiki.Pages.ContentPages;
 using ReactiveUI;
 using Page = Windows.UI.Xaml.Controls.Page;
 
@@ -101,6 +102,8 @@ namespace PrivateWiki.Pages
 				ViewModel.OnNavigateToNewPage.Subscribe(NavigateToNewPage).DisposeWith(disposable);
 				ViewModel.OnEditPage.Subscribe(EditPage).DisposeWith(disposable);
 				ViewModel.OnNewPage.Subscribe(_ => NavigateToNewPage()).DisposeWith(disposable);
+				ViewModel.OnShowHistoryPage.Subscribe(a => ShowHistory(a)).DisposeWith(disposable);
+				ViewModel.OnSearch.Subscribe(_ => Search()).DisposeWith(disposable);
 
 				ViewModel.ShowPageLockedNotification.RegisterHandler(ShowPageLockedNotification).DisposeWith(disposable);
 				ViewModel.ShowPrintBrowserDialog.RegisterHandler(ShowPrintPdfBrowserDialog).DisposeWith(disposable);
@@ -136,12 +139,26 @@ namespace PrivateWiki.Pages
 
 		private void EditPage(Path link)
 		{
-			Frame.Navigate(typeof(PageEditor), link.FullPath);
+			Frame.Navigate(typeof(GenericTextPageEditor), link.FullPath);
 		}
 
 		private void ShowHistory(Path link)
 		{
 			Frame.Navigate(typeof(HistoryPage), link.FullPath);
+		}
+
+		private void Search()
+		{
+			SearchPopup.IsOpen = true;
+			SearchPopup.Closed += (sender, e) =>
+			{
+				var link = SearchPopupContentName.SelectedPageLink;
+
+				if (link != null)
+				{
+					NavigateToPage(Path.ofLink(link));
+				}
+			};
 		}
 
 		private async Task ShowPrintPdfBrowserDialog(InteractionContext<Path, bool> context)

@@ -36,6 +36,10 @@ namespace PrivateWiki.Controls.ContentPages
 				ViewModel.Content.Subscribe(x => { Webview.NavigateToString(x); })
 					.DisposeWith(disposable);
 
+				ViewModel.OnScrollToTop
+					.Subscribe(_ => Webview.InvokeScriptAsync("eval", new[] {"window.scrollTo(0,0);"}))
+					.DisposeWith(disposable);
+
 				ViewModel.RenderContent.Execute(Unit.Default)
 					.Subscribe(x => Webview.NavigateToString(x))
 					.DisposeWith(disposable);

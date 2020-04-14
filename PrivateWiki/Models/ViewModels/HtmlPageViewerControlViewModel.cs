@@ -35,6 +35,11 @@ namespace PrivateWiki.Models.ViewModels
 
 		public ReactiveCommand<Uri, Unit> LinkClicked { get; }
 
+		private readonly ISubject<Unit> _onScrollToTop;
+		public IObservable<Unit> OnScrollToTop => _onScrollToTop;
+
+		public IObserver<Unit> ScrollToTop => _onScrollToTop;
+
 		private ISubject<string> _content { get; }
 
 		public IObservable<string> Content => _content;
@@ -43,6 +48,8 @@ namespace PrivateWiki.Models.ViewModels
 		public HtmlPageViewerControlViewModel()
 		{
 			_content = new Subject<string>();
+			_onScrollToTop = new Subject<Unit>();
+
 			_onWikiLinkClicked = new Subject<Path>();
 
 			RenderContent = ReactiveCommand.CreateFromTask(Render);

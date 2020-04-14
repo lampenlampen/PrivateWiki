@@ -147,7 +147,6 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
@@ -180,17 +179,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Models\Models.csproj">
-      <Project>{112EFB3B-66AE-47EB-889D-1D6C876C9ECD}</Project>
-      <Name>Models</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj">
       <Project>{e1b1092a-eee8-4c60-bd47-86bbde74b775}</Project>
       <Name>PrivateWiki</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StorageBackend\StorageBackend.csproj">
-      <Project>{3ADA0CDB-FFEF-489C-9C72-8F99325D927E}</Project>
-      <Name>StorageBackend</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

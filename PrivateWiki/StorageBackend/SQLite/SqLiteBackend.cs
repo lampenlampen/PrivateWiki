@@ -37,7 +37,7 @@ namespace PrivateWiki.StorageBackend.SQLite
 		}
 
 		#region ISqLiteBackend Members
-		
+
 		public Task<bool> ExistsAsync()
 		{
 			bool Action()
@@ -76,7 +76,7 @@ namespace PrivateWiki.StorageBackend.SQLite
 			var command = new SqliteCommand
 			{
 				Connection = conn,
-				CommandText = 
+				CommandText =
 					@"CREATE TABLE IF NOT EXISTS pages (
 				    id TEXT PRIMARY KEY, 
 				    link Text UNIQUE,
@@ -374,7 +374,7 @@ namespace PrivateWiki.StorageBackend.SQLite
 			bool MarkdownPageAction(MarkdownPage page)
 			{
 				using var conn = _conn;
-				
+
 				var command = new SqliteCommand
 				{
 					Connection = conn,
@@ -397,7 +397,7 @@ namespace PrivateWiki.StorageBackend.SQLite
 			bool MarkdownPageAction(Guid id)
 			{
 				using var conn = _conn;
-				
+
 				var command = new SqliteCommand
 				{
 					Connection = conn,
@@ -420,7 +420,7 @@ namespace PrivateWiki.StorageBackend.SQLite
 			bool MarkdownPageAction(string link)
 			{
 				using var conn = _conn;
-				
+
 				var command = new SqliteCommand
 				{
 					Connection = conn,
@@ -590,7 +590,7 @@ namespace PrivateWiki.StorageBackend.SQLite
 				return true;
 			}
 
-			return new TaskFactory<bool>().StartNew((page) => PageAction((GenericPage)page), page);
+			return new TaskFactory<bool>().StartNew((page) => PageAction((GenericPage) page), page);
 		}
 
 		public Task<bool> DeletePageAsync(GenericPage page)
@@ -669,7 +669,7 @@ namespace PrivateWiki.StorageBackend.SQLite
 				}
 			}
 
-			return new TaskFactory<bool>().StartNew((page) => PageAction((GenericPage)page), page);
+			return new TaskFactory<bool>().StartNew((page) => PageAction((GenericPage) page), page);
 		}
 
 		public Task<bool> ContainsPageAsync(GenericPage page)
@@ -696,7 +696,7 @@ namespace PrivateWiki.StorageBackend.SQLite
 				return result == 1;
 			}
 
-			return new TaskFactory<bool>().StartNew(id => PageAction((Guid)id), id);
+			return new TaskFactory<bool>().StartNew(id => PageAction((Guid) id), id);
 		}
 
 		public Task<bool> ContainsPageAsync(string link)
@@ -718,12 +718,12 @@ namespace PrivateWiki.StorageBackend.SQLite
 				return result != null;
 			}
 
-			return new TaskFactory<bool>().StartNew(link => PageAction((string)link), link);
+			return new TaskFactory<bool>().StartNew(link => PageAction((string) link), link);
 		}
 
-		public Task<IEnumerable<PageHistory<GenericPage>>> GetPageHistoryAsync(string pageLink)
+		public Task<IEnumerable<GenericPageHistory>> GetPageHistoryAsync(string pageLink)
 		{
-			IEnumerable<PageHistory<GenericPage>> Action(string pageLink)
+			IEnumerable<GenericPageHistory> Action(string pageLink)
 			{
 				using var conn = _conn;
 
@@ -741,7 +741,7 @@ namespace PrivateWiki.StorageBackend.SQLite
 				return pages;
 			}
 
-			return new TaskFactory<IEnumerable<PageHistory<GenericPage>>>().StartNew(page => Action((string)page), pageLink);
+			return new TaskFactory<IEnumerable<GenericPageHistory>>().StartNew(page => Action((string) page), pageLink);
 		}
 
 		#endregion
