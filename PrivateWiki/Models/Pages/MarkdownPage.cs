@@ -1,7 +1,7 @@
 ﻿using System;
 using NodaTime;
 
-namespace Models.Pages
+namespace PrivateWiki.Models.Pages
 {
 	public class MarkdownPage : Page
 	{

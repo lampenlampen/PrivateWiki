@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Data.Sqlite;
-using Models.Pages;
 using NodaTime;
+using PrivateWiki.Models.Pages;
 
 namespace PrivateWiki.StorageBackend.SQLite
 {
@@ -29,7 +29,7 @@ namespace PrivateWiki.StorageBackend.SQLite
 			page.IsLocked = reader.GetBoolean(reader.GetOrdinal("locked"));
 
 			var link = reader.GetString(reader.GetOrdinal("link"));
-			var path = link.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+			var path = link.Split(new[] {':'}, StringSplitOptions.RemoveEmptyEntries);
 
 			if (path.Length > 1)
 			{

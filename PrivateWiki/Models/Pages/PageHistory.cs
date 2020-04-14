@@ -1,7 +1,7 @@
 ﻿using System;
 using NodaTime;
 
-namespace Models.Pages
+namespace PrivateWiki.Models.Pages
 {
 	public abstract class PageHistory<T> where T : Page
 	{

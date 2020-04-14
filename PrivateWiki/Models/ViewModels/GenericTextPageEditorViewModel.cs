@@ -3,11 +3,10 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using Contracts.Storage;
-using Models.Pages;
 using NLog;
 using NodaTime;
-using PrivateWiki.Storage;
+using PrivateWiki.Models.Pages;
+using PrivateWiki.StorageBackend;
 using PrivateWiki.StorageBackend.SQLite;
 using ReactiveUI;
 

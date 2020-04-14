@@ -1,4 +1,4 @@
-namespace Models.Storage
+namespace PrivateWiki.StorageBackend
 {
 	public class SqLiteStorage : IStorage
 	{

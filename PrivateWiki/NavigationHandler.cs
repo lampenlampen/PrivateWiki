@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using Models.Pages;
 using NLog;
+using PrivateWiki.Models.Pages;
 
 #nullable enable
 
@@ -16,7 +15,7 @@ namespace PrivateWiki
 
 		internal static List<Path> Pages { get; set; } = new List<Path>();
 
-		public static bool AddPage( Page page)
+		public static bool AddPage(Page page)
 		{
 			Pages.Remove(page.Path);
 			Pages.Add(page.Path);

@@ -4,9 +4,8 @@ using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using Windows.System;
 using Windows.UI.Xaml.Controls;
-using Contracts;
-using Models.Pages;
 using NLog;
+using PrivateWiki.Models.Pages;
 using PrivateWiki.Renderer;
 using ReactiveUI;
 

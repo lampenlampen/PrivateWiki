@@ -1,0 +1,124 @@
+﻿<Page
+    x:Class="PrivateWiki.UI.Pages.SettingsPages.PagesSettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:utilities="using:PrivateWiki.Utilities"
+    xmlns:controls="using:PrivateWiki.UI.Controls"
+    xmlns:xamlConverter="using:PrivateWiki.UI.XamlConverter"
+    mc:Ignorable="d"
+    Background="#EEEEEE">
+    
+    <Page.Resources>
+        <xamlConverter:InstantToReadableDateTimeConverter x:Key="InstantToReadableDateTimeConverter" />
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <controls:SettingsHeader
+            Grid.Row="0"
+            Title="Pages"
+            Subtitle="Manage your pages"
+            ApplyClick="SettingsHeader_OnApplyClick"
+            ResetClick="SettingsHeader_OnResetClick">
+            <controls:SettingsHeader.Icon>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8C8;" FontSize="32"/>
+            </controls:SettingsHeader.Icon>
+        </controls:SettingsHeader>
+
+        <ScrollViewer
+            Grid.Row="1">
+
+            <Grid
+                Padding="32, 16, 32, 32"
+                Height="Auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="256" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Grid x:Name="grid" Grid.Column="0" Margin="0, 0, 32, 0" Height="Auto">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <controls1:DropShadowPanel
+                        Grid.Row="0"
+                        Color="Black"
+                        OffsetX="3"
+                        OffsetY="3"
+                        BlurRadius="5"
+                        ShadowOpacity=".3"
+                        Height="Auto"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch">
+
+                        <StackPanel x:Name="stackpanel" Background="White" Padding="8">
+
+                            <controls1:DataGrid
+                                x:Name="PagesTable"
+                                ItemsSource="{x:Bind Pages}"
+                                AutoGenerateColumns="False"
+                                IsReadOnly="True"
+                                GridLinesVisibility="Horizontal">
+                                
+                                <controls1:DataGrid.Columns>
+                                    <controls1:DataGridTextColumn
+                                        Header="Title"
+                                        Width="SizeToHeader"
+                                        Binding="{Binding Path.Title}"
+                                        FontSize="16"/>
+                                    
+                                    <controls1:DataGridTextColumn
+                                        Header="Namespace"
+                                        Width="SizeToHeader"
+                                        Binding="{Binding Path.NamespaceString}"
+                                        FontSize="16"/>
+                                    
+                                    <controls1:DataGridTextColumn
+                                        Header="Created"
+                                        Width="SizeToHeader"
+                                        Binding="{Binding Created, Converter={StaticResource InstantToReadableDateTimeConverter}}"
+                                        FontSize="16"/>
+                                    
+                                    <controls1:DataGridTextColumn
+                                        Header="Last Changed"
+                                        Width="SizeToHeader"
+                                        Binding="{Binding LastChanged, Converter={StaticResource InstantToReadableDateTimeConverter}}"
+                                        FontSize="16"/>
+                                    
+                                    <controls1:DataGridCheckBoxColumn
+                                        Header="Locked"
+                                        Width="SizeToHeader"
+                                        Binding="{Binding IsLocked}"/>
+                                    
+                                    <controls1:DataGridTextColumn
+                                        Header="Content Type"
+                                        Width="SizeToHeader"
+                                        Binding="{Binding ContentType}"
+                                        FontSize="16"/>
+                                    
+                                </controls1:DataGrid.Columns>
+                            </controls1:DataGrid>
+
+                        </StackPanel>
+
+                    </controls1:DropShadowPanel>
+
+                </Grid>
+
+                <Grid
+                    Grid.Column="1"
+                    x:Name="NavigationSettingsItemContent" />
+            </Grid>
+
+        </ScrollViewer>
+
+    </Grid>
+</Page>

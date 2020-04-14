@@ -1,4 +1,4 @@
-﻿namespace Models.Pages
+﻿namespace PrivateWiki.Models.Pages
 {
 	public class HtmlPage : Page
 	{

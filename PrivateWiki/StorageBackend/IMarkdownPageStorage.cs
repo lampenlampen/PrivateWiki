@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Models.Pages;
+using PrivateWiki.Models.Pages;
 
-namespace Contracts.Storage
+namespace PrivateWiki.StorageBackend
 {
 	public interface IMarkdownPageStorage : IPageStorage
 	{

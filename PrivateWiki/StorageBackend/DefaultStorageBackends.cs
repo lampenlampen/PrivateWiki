@@ -1,6 +1,4 @@
-using Models.Storage;
-
-namespace PrivateWiki.Storage
+namespace PrivateWiki.StorageBackend
 {
 	public static class DefaultStorageBackends
 	{

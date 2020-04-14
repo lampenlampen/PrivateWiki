@@ -1,9 +1,8 @@
-using NodaTime;
 using System;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Contracts.Storage;
-using Models.Pages;
+using NodaTime;
+using PrivateWiki.Models.Pages;
 using PrivateWiki.StorageBackend.SQLite;
 
 namespace PrivateWiki.Data

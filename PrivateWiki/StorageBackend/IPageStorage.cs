@@ -1,4 +1,4 @@
-namespace Contracts.Storage
+namespace PrivateWiki.StorageBackend
 {
 	public interface IPageStorage
 	{

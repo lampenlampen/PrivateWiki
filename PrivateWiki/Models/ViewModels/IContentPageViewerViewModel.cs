@@ -1,8 +1,8 @@
 using System;
 using System.Reactive;
-using Models.Pages;
+using PrivateWiki.Models.Pages;
 
-namespace Contracts
+namespace PrivateWiki.Models.ViewModels
 {
 	public interface IContentPageViewerViewModel
 	{

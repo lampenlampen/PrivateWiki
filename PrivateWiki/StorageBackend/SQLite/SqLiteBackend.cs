@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Contracts.Storage;
 using Microsoft.Data.Sqlite;
-using Models.Pages;
-using Models.Storage;
 using NodaTime;
+using PrivateWiki.Models.Pages;
 
 namespace PrivateWiki.StorageBackend.SQLite
 {
@@ -655,7 +653,7 @@ namespace PrivateWiki.StorageBackend.SQLite
 					command.Parameters.AddWithValue("@Locked", page.IsLocked);
 					command.Parameters.AddWithValue("@ContentType", page.ContentType);
 					command.Parameters.AddWithValue("@Now", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
-					command.Parameters.AddWithValue("@Action", global::Models.Pages.PageAction.Created);
+					command.Parameters.AddWithValue("@Action", global::PrivateWiki.Models.Pages.PageAction.Created);
 
 					conn.Open();
 					var result = command.ExecuteNonQuery();

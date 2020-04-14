@@ -4,12 +4,11 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using Windows.System;
-using Contracts;
-using Models.Pages;
 using NLog;
 using NodaTime;
 using PrivateWiki.Data;
-using PrivateWiki.Storage;
+using PrivateWiki.Models.Pages;
+using PrivateWiki.StorageBackend;
 using PrivateWiki.StorageBackend.SQLite;
 using ReactiveUI;
 

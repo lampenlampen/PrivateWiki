@@ -1,4 +1,4 @@
-﻿using Models.Pages;
+﻿using PrivateWiki.Models.Pages;
 using ReactiveUI;
 
 namespace PrivateWiki.Models.ViewModels

@@ -5,6 +5,7 @@ using Markdig.Renderers;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Microsoft.UI.Xaml.Controls;
+using PrivateWiki.UI.Controls;
 
 namespace PrivateWiki.Markdig
 {
@@ -22,7 +23,7 @@ namespace PrivateWiki.Markdig
 
 		public TreeViewNode ParseHeaders(MarkdownDocument doc)
 		{
-			rootHeader = new TreeViewNode { Content = "test", IsExpanded = true };
+			rootHeader = new TreeViewNode {Content = "test", IsExpanded = true};
 
 			var headerBlocks = doc.Where(b => b is HeadingBlock);
 

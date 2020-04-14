@@ -9,10 +9,10 @@ using Microsoft.Toolkit.Uwp.UI.Controls;
 using NLog;
 using NodaTime;
 using PrivateWiki.Data;
-using PrivateWiki.Pages;
-using PrivateWiki.Storage;
+using PrivateWiki.StorageBackend;
 using PrivateWiki.StorageBackend.SQLite;
 using PrivateWiki.UI;
+using PrivateWiki.UI.Pages;
 using RavinduL.LocalNotifications;
 using ReactiveUI;
 

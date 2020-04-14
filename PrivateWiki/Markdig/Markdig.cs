@@ -5,8 +5,7 @@ using Windows.Storage;
 using Markdig;
 using Markdig.Renderers;
 using Markdig.Syntax;
-using Models.Pages;
-using YamlDotNet.Core;
+using PrivateWiki.Models.Pages;
 
 #nullable enable
 
@@ -54,7 +53,7 @@ namespace PrivateWiki.Markdig
 		{
 			var stringWriter = new StringWriter();
 			var renderer = new HtmlRenderer(stringWriter);
-			
+
 			_pipeline.Setup(renderer);
 
 			renderer.Render(doc);

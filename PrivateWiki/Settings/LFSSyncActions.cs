@@ -4,14 +4,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
-using Models.Pages;
-using Models.Storage;
 using NodaTime;
 using PrivateWiki.Models;
-using PrivateWiki.Storage;
+using PrivateWiki.Models.Pages;
+using PrivateWiki.StorageBackend;
 using PrivateWiki.StorageBackend.SQLite;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
 using YamlDotNet.RepresentationModel;
 using YamlDotNet.Serialization;
 using UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding;
@@ -71,10 +68,10 @@ namespace PrivateWiki.Settings
 			foreach (var page in await pages)
 			{
 				var file = (await folder).CreateFileAsync($"{page.Link.Replace(':', '_')}.md", CreationCollisionOption.ReplaceExisting);
-				
+
 				var writer = new StringWriter();
 				writer.WriteLine("---");
-				
+
 				new MarkdownPageToMarkdownDocSerializer().Serialize(writer, page);
 
 				// TODO Refactor see https://github.com/aaubry/YamlDotNet/issues/436#issuecomment-544276681
@@ -101,7 +98,7 @@ namespace PrivateWiki.Settings
 				new YamlScalarNode("locked"), new YamlScalarNode(page.IsLocked.ToString()),
 				new YamlScalarNode("path"), new YamlScalarNode(page.Path.FullPath))));
 
-				yamlStream.Save(writer, assignAnchors:true);
+			yamlStream.Save(writer, assignAnchors: true);
 		}
 	}
 
@@ -115,12 +112,12 @@ namespace PrivateWiki.Settings
 			var mapping = (YamlMappingNode) yamlStream.Documents[0].RootNode;
 
 			var stringBuilder = new StringBuilder();
-			
+
 			foreach (var entry in mapping.Children)
 			{
 				stringBuilder.AppendLine(entry.ToString());
 			}
-			
+
 			return new MarkdownPage();
 		}
 	}

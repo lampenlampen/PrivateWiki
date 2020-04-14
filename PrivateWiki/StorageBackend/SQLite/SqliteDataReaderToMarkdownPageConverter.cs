@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Data.Sqlite;
-using Models.Pages;
 using NodaTime;
+using PrivateWiki.Models.Pages;
 
 namespace PrivateWiki.StorageBackend.SQLite
 {
@@ -33,8 +33,8 @@ namespace PrivateWiki.StorageBackend.SQLite
 
 			if (path.Length > 1)
 			{
-				string[] path2 = new string[path.Length-1];
-				Array.Copy(path, path2, path.Length-1);
+				string[] path2 = new string[path.Length - 1];
+				Array.Copy(path, path2, path.Length - 1);
 
 				page.Path = Path.of(path2, path[path.Length - 1]);
 			}
@@ -49,7 +49,7 @@ namespace PrivateWiki.StorageBackend.SQLite
 		public IList<MarkdownPage> ConvertToPageModels(SqliteDataReader reader)
 		{
 			var pages = new List<MarkdownPage>();
-			
+
 			while (reader.Read())
 			{
 				var page = new MarkdownPage();

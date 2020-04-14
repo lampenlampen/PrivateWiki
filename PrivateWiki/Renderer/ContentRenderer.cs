@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Models.Pages;
+using PrivateWiki.Models.Pages;
 
 namespace PrivateWiki.Renderer
 {
@@ -11,7 +11,7 @@ namespace PrivateWiki.Renderer
 			return Task.Run(() =>
 			{
 				Debug.Assert(page != null, nameof(page) + " != null");
-			
+
 				switch (page.ContentType.ToLower())
 				{
 					case "markdown":

@@ -1,6 +1,6 @@
 using System;
 
-namespace Models.Pages
+namespace PrivateWiki.Models.Pages
 {
 	public class Tag
 	{

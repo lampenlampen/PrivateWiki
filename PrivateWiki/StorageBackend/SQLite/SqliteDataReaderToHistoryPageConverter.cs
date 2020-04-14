@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Data.Sqlite;
-using Models.Pages;
 using NodaTime;
+using PrivateWiki.Models.Pages;
 
 namespace PrivateWiki.StorageBackend.SQLite
 {
@@ -19,14 +19,14 @@ namespace PrivateWiki.StorageBackend.SQLite
 				var page = new GenericPage();
 				if (SqliteDataToPageModel(reader, page))
 				{
-					var action = (PageAction)reader.GetInt32(reader.GetOrdinal("action"));
+					var action = (PageAction) reader.GetInt32(reader.GetOrdinal("action"));
 
 					var pageHistory = new GenericPageHistory(page)
 					{
 						ValidFrom =
 							Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("valid_from"))),
 						ValidTo = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("valid_to"))),
-						Action = (PageAction)reader.GetInt16(reader.GetOrdinal("action"))
+						Action = (PageAction) reader.GetInt16(reader.GetOrdinal("action"))
 					};
 
 					pages.Add(pageHistory);
@@ -35,6 +35,5 @@ namespace PrivateWiki.StorageBackend.SQLite
 
 			return pages;
 		}
-
 	}
 }

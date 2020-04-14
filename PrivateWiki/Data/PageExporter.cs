@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Models.Pages;
+using PrivateWiki.Models.Pages;
 using PrivateWiki.Renderer;
 
 namespace PrivateWiki.Data
@@ -10,7 +10,6 @@ namespace PrivateWiki.Data
 	{
 		public PageExporter()
 		{
-
 		}
 
 		public async Task<StorageFile> ExportPage(MarkdownPage page)

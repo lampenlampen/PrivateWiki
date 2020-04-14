@@ -4,7 +4,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using NLog;
-using PrivateWiki.Utilities;
+using PrivateWiki.Utilities.ExtensionFunctions;
 using RavinduL.LocalNotifications;
 using RavinduL.LocalNotifications.Notifications;
 

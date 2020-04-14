@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Models.Pages
+namespace PrivateWiki.Models.Pages
 {
 	public class Path
 	{

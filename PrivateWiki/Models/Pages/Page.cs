@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NodaTime;
 
-namespace Models.Pages
+namespace PrivateWiki.Models.Pages
 {
 	public abstract class Page
 	{
