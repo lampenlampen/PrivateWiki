@@ -19,6 +19,8 @@ namespace PrivateWiki.Renderer
 						return renderer.ToHtmlCustom(renderer.Parse(page.Content));
 					case "html":
 						return page.Content;
+					case "text":
+						return $"<pre>{page.Content}</pre>";
 					default:
 						return page.Content;
 				}
