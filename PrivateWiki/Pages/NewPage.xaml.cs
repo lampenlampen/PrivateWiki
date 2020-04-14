@@ -158,7 +158,7 @@ namespace PrivateWiki.Pages
 
 		private void NavigateToPageEditor()
 		{
-			Frame.Navigate(typeof(PageEditor), ViewModel.LinkString);
+			Frame.Navigate(typeof(MarkdownPageEditor), ViewModel.LinkString);
 		}
 
 		private void NavigateToPageViewer()

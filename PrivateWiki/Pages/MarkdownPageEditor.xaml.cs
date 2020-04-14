@@ -1,9 +1,4 @@
-﻿using JetBrains.Annotations;
-using NodaTime;
-using PrivateWiki.Data;
-using PrivateWiki.Dialogs;
-using System;
-using System.Diagnostics;
+﻿using System;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -11,9 +6,13 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Contracts.Storage;
+using JetBrains.Annotations;
 using Models.Pages;
 using Models.Storage;
 using NLog;
+using NodaTime;
+using PrivateWiki.Data;
+using PrivateWiki.Dialogs;
 using PrivateWiki.StorageBackend.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;
 
@@ -26,17 +25,17 @@ namespace PrivateWiki.Pages
 	/// <summary>
 	///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
 	/// </summary>
-	public sealed partial class PageEditor : Page
+	public sealed partial class MarkdownPageEditor : Page
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
 		private IMarkdownPageStorage _storage;
-		
+
 		private MarkdownPage Page { get; set; }
-		
+
 		private bool NewPage { get; set; }
 
-		public PageEditor()
+		public MarkdownPageEditor()
 		{
 			InitializeComponent();
 			_storage = new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance);
@@ -61,7 +60,7 @@ namespace PrivateWiki.Pages
 
 		protected override async void OnNavigatedTo([NotNull] NavigationEventArgs e)
 		{
-			var pageLink = (string)e.Parameter;
+			var pageLink = (string) e.Parameter;
 			Logger.Debug($"Id: {pageLink}");
 			if (pageLink == null) throw new ArgumentNullException(nameof(pageLink));
 
@@ -104,7 +103,7 @@ namespace PrivateWiki.Pages
 			{
 				var backstack = Frame.BackStack;
 				var lastEntry = backstack[Frame.BackStackDepth - 1];
-				if (lastEntry.SourcePageType == typeof(PageEditor))
+				if (lastEntry.SourcePageType == typeof(MarkdownPageEditor))
 				{
 					Logger.Debug("Remove EditorPage from BackStack");
 					backstack.Remove(lastEntry);
@@ -184,7 +183,7 @@ namespace PrivateWiki.Pages
 			{
 				var parser = new Markdig.Markdig();
 				var html = await parser.ToHtmlString(PageEditorTextBox.Text);
-				
+
 				try
 				{
 					html = System.Xml.Linq.XElement.Parse(html).ToString();
@@ -193,7 +192,7 @@ namespace PrivateWiki.Pages
 				{
 					// isn't well-formed xml
 				}
-				
+
 				Preview_Html.Text = html;
 			}
 
@@ -209,7 +208,7 @@ namespace PrivateWiki.Pages
 		private void AddTag_Click(object sender, RoutedEventArgs e)
 		{
 			var tagName = AddTagBox.Text;
-			
+
 			// TODO Save Tags to DB
 			//Page.Tags.Add(tag);
 			ListView.Items.Add(tagName);
@@ -433,7 +432,7 @@ namespace PrivateWiki.Pages
 			var dialog = new GridViewDialog();
 			await dialog.ShowAsync();
 		}
-		
+
 		#endregion
 	}
 }

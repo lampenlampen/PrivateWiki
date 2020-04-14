@@ -55,7 +55,7 @@ namespace PrivateWiki.Pages.ContentPages
 			}
 			else
 			{
-				Frame.Navigate(typeof(PageEditor), Page.Link);
+				Frame.Navigate(typeof(MarkdownPageEditor), Page.Link);
 			}
 		}
 

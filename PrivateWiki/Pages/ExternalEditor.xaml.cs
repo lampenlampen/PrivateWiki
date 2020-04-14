@@ -1,7 +1,5 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
@@ -11,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Contracts.Storage;
+using JetBrains.Annotations;
 using Models.Pages;
 using Models.Storage;
 using NLog;
@@ -46,7 +45,7 @@ namespace PrivateWiki.Pages
 		{
 			base.OnNavigatedTo(e);
 
-			var pageId = (Guid)e.Parameter;
+			var pageId = (Guid) e.Parameter;
 
 			Page = await _storage.GetMarkdownPageAsync(pageId);
 
@@ -70,7 +69,7 @@ namespace PrivateWiki.Pages
 				SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
 				SuggestedFileName = Page.Link.Replace(":", "_")
 			};
-			picker.FileTypeChoices.Add("Markdown", new[] { ".md" });
+			picker.FileTypeChoices.Add("Markdown", new[] {".md"});
 
 			var file = await picker.PickSaveFileAsync();
 
@@ -122,7 +121,7 @@ namespace PrivateWiki.Pages
 			{
 				var backstack = Frame.BackStack;
 				var lastEntry = backstack[Frame.BackStackDepth - 1];
-				if (lastEntry.SourcePageType == typeof(PageEditor))
+				if (lastEntry.SourcePageType == typeof(MarkdownPageEditor))
 				{
 					Logger.Debug("Remove PageEditor from BackStack");
 					backstack.Remove(lastEntry);

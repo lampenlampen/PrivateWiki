@@ -31,7 +31,7 @@
             Height="Auto"
             MinHeight="800"
             Grid.Column="1"
-            d:DataContext="{d:DesignInstance Type=pages:PageEditor, IsDesignTimeCreatable=True}" />
+            d:DataContext="{d:DesignInstance Type=pages:MarkdownPageEditor, IsDesignTimeCreatable=True}" />
 
         </Grid>
 
