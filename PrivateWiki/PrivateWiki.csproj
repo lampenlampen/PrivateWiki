@@ -17,7 +17,6 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>PrivateWiki_TemporaryKey.pfx</PackageCertificateKeyFile>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -98,62 +97,62 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppConfig.cs"/>
-    <Compile Include="Data\ContentType.cs"/>
-    <Compile Include="Data\DefaultPages.cs"/>
-    <Compile Include="Data\FileSystemAccess.cs"/>
-    <Compile Include="Data\PageExporter.cs"/>
-    <Compile Include="Markdig\Extensions\TagExtension\TagExtension.cs"/>
-    <Compile Include="Markdig\Extensions\TagExtension\TagGroup.cs"/>
-    <Compile Include="Markdig\Extensions\TagExtension\TagInline.cs"/>
-    <Compile Include="Markdig\Extensions\TagExtension\TagParser.cs"/>
-    <Compile Include="Markdig\Extensions\TagExtension\MarkdigTagExtension.cs"/>
-    <Compile Include="Markdig\MarkdigPipelineBuilder.cs"/>
-    <Compile Include="Models\LFSModel.cs"/>
-    <Compile Include="Models\Pages\GenericPage.cs"/>
-    <Compile Include="Models\Pages\HtmlPage.cs"/>
-    <Compile Include="Models\Pages\MarkdownPage.cs"/>
-    <Compile Include="Models\Pages\Page.cs"/>
-    <Compile Include="Models\Pages\PageAction.cs"/>
-    <Compile Include="Models\Pages\PageHistory.cs"/>
-    <Compile Include="Models\Pages\Path.cs"/>
-    <Compile Include="Models\Pages\Tag.cs"/>
-    <Compile Include="Models\ViewModels\GenericTextPageEditorViewModel.cs"/>
-    <Compile Include="Models\ViewModels\HtmlPageViewerControlViewModel.cs"/>
-    <Compile Include="Models\ViewModels\HtmlPageViewerViewModel.cs"/>
-    <Compile Include="Models\ViewModels\IContentPageViewerViewModel.cs"/>
-    <Compile Include="Models\ViewModels\ImagePickerDialogModel.cs"/>
-    <Compile Include="Models\ViewModels\NewPageViewModel.cs"/>
-    <Compile Include="Models\ViewModels\PageEditors\HtmlPageEditorControlViewModel.cs"/>
-    <Compile Include="Models\ViewModels\PageEditors\IPageEditorControlViewModel.cs"/>
-    <Compile Include="Models\ViewModels\PageEditors\MarkdownPageEditorControlViewModel.cs"/>
-    <Compile Include="Models\ViewModels\PageEditors\TextPageEditorControlViewModel.cs"/>
-    <Compile Include="Models\ViewModels\PageEditorViewModel.cs"/>
-    <Compile Include="Models\ViewModels\PageViewerCommandBarViewModel.cs"/>
-    <Compile Include="Models\ViewModels\PageViewerViewModel.cs"/>
-    <Compile Include="Renderer\ContentRenderer.cs"/>
-    <Compile Include="RxExceptionHandler.cs"/>
-    <Compile Include="Settings\LFSSyncActions.cs"/>
-    <Compile Include="Settings\SyncModelHandler.cs"/>
-    <Compile Include="StorageBackend\DefaultStorageBackends.cs"/>
-    <Compile Include="StorageBackend\IGenericPageStorage.cs"/>
-    <Compile Include="StorageBackend\IMarkdownPageStorage.cs"/>
-    <Compile Include="StorageBackend\IPageStorage.cs"/>
-    <Compile Include="StorageBackend\ISqLiteBackend.cs"/>
-    <Compile Include="StorageBackend\IStorageBackend.cs"/>
-    <Compile Include="StorageBackend\SqLiteStorage.cs"/>
-    <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs"/>
-    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs"/>
-    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs"/>
-    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHtmlPageConverter.cs"/>
-    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs"/>
-    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs"/>
-    <Compile Include="StorageBackend\Storage.cs"/>
+    <Compile Include="AppConfig.cs" />
+    <Compile Include="Data\ContentType.cs" />
+    <Compile Include="Data\DefaultPages.cs" />
+    <Compile Include="Data\FileSystemAccess.cs" />
+    <Compile Include="Data\PageExporter.cs" />
+    <Compile Include="Markdig\Extensions\TagExtension\TagExtension.cs" />
+    <Compile Include="Markdig\Extensions\TagExtension\TagGroup.cs" />
+    <Compile Include="Markdig\Extensions\TagExtension\TagInline.cs" />
+    <Compile Include="Markdig\Extensions\TagExtension\TagParser.cs" />
+    <Compile Include="Markdig\Extensions\TagExtension\MarkdigTagExtension.cs" />
+    <Compile Include="Markdig\MarkdigPipelineBuilder.cs" />
+    <Compile Include="Models\LFSModel.cs" />
+    <Compile Include="Models\Pages\GenericPage.cs" />
+    <Compile Include="Models\Pages\HtmlPage.cs" />
+    <Compile Include="Models\Pages\MarkdownPage.cs" />
+    <Compile Include="Models\Pages\Page.cs" />
+    <Compile Include="Models\Pages\PageAction.cs" />
+    <Compile Include="Models\Pages\PageHistory.cs" />
+    <Compile Include="Models\Pages\Path.cs" />
+    <Compile Include="Models\Pages\Tag.cs" />
+    <Compile Include="Models\ViewModels\GenericTextPageEditorViewModel.cs" />
+    <Compile Include="Models\ViewModels\HtmlPageViewerControlViewModel.cs" />
+    <Compile Include="Models\ViewModels\HtmlPageViewerViewModel.cs" />
+    <Compile Include="Models\ViewModels\IContentPageViewerViewModel.cs" />
+    <Compile Include="Models\ViewModels\ImagePickerDialogModel.cs" />
+    <Compile Include="Models\ViewModels\NewPageViewModel.cs" />
+    <Compile Include="Models\ViewModels\PageEditors\HtmlPageEditorControlViewModel.cs" />
+    <Compile Include="Models\ViewModels\PageEditors\IPageEditorControlViewModel.cs" />
+    <Compile Include="Models\ViewModels\PageEditors\MarkdownPageEditorControlViewModel.cs" />
+    <Compile Include="Models\ViewModels\PageEditors\TextPageEditorControlViewModel.cs" />
+    <Compile Include="Models\ViewModels\PageEditorViewModel.cs" />
+    <Compile Include="Models\ViewModels\PageViewerCommandBarViewModel.cs" />
+    <Compile Include="Models\ViewModels\PageViewerViewModel.cs" />
+    <Compile Include="Renderer\ContentRenderer.cs" />
+    <Compile Include="RxExceptionHandler.cs" />
+    <Compile Include="Settings\LFSSyncActions.cs" />
+    <Compile Include="Settings\SyncModelHandler.cs" />
+    <Compile Include="StorageBackend\DefaultStorageBackends.cs" />
+    <Compile Include="StorageBackend\IGenericPageStorage.cs" />
+    <Compile Include="StorageBackend\IMarkdownPageStorage.cs" />
+    <Compile Include="StorageBackend\IPageStorage.cs" />
+    <Compile Include="StorageBackend\ISqLiteBackend.cs" />
+    <Compile Include="StorageBackend\IStorageBackend.cs" />
+    <Compile Include="StorageBackend\SqLiteStorage.cs" />
+    <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs" />
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs" />
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs" />
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHtmlPageConverter.cs" />
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs" />
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs" />
+    <Compile Include="StorageBackend\Storage.cs" />
     <Compile Include="UI\Controls\DiffControl.xaml.cs">
       <DependentUpon>DiffControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controls\IPageViewerCommandBar.cs"/>
-    <Compile Include="UI\Controls\MyTreeViewNode.cs"/>
+    <Compile Include="UI\Controls\IPageViewerCommandBar.cs" />
+    <Compile Include="UI\Controls\MyTreeViewNode.cs" />
     <Compile Include="UI\Controls\NavigationSettingsDividerItemControl.xaml.cs">
       <DependentUpon>NavigationSettingsDividerItemControl.xaml</DependentUpon>
     </Compile>
@@ -205,7 +204,7 @@
     <Compile Include="UI\Controls\Settings\Sync\LFSControl.xaml.cs">
       <DependentUpon>LFSControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Dialogs\DissmissableDialog.cs"/>
+    <Compile Include="UI\Dialogs\DissmissableDialog.cs" />
     <Compile Include="UI\Dialogs\EditorImagePickerDialog.xaml.cs">
       <DependentUpon>EditorImagePickerDialog.xaml</DependentUpon>
     </Compile>
@@ -224,8 +223,8 @@
     <Compile Include="UI\Dialogs\WikiLinkDialog.xaml.cs">
       <DependentUpon>WikiLinkDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\GlobalNotificationManager.cs"/>
-    <Compile Include="UI\Pages\ContentPages\ContentPage.cs"/>
+    <Compile Include="UI\GlobalNotificationManager.cs" />
+    <Compile Include="UI\Pages\ContentPages\ContentPage.cs" />
     <Compile Include="UI\Pages\ContentPages\GenericTextPageEditor.xaml.cs">
       <DependentUpon>GenericTextPageEditor.xaml</DependentUpon>
     </Compile>
@@ -289,39 +288,39 @@
     <Compile Include="UI\SearchPopupContent.xaml.cs">
       <DependentUpon>SearchPopupContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\TemplateSelector\MediaManagerTreeViewItemTemplateSelector.cs"/>
-    <Compile Include="UI\TemplateSelector\PageHistoryTemplateSelector.cs"/>
-    <Compile Include="UI\TemplateSelector\SettingNavigationTemplateSelector.cs"/>
-    <Compile Include="UI\TemplateSelector\SettingStorageTemplateSelector.cs"/>
-    <Compile Include="UI\XamlConverter\BoolToColorConverter.cs"/>
-    <Compile Include="UI\XamlConverter\BoolVisibilityConverter.cs"/>
-    <Compile Include="UI\XamlConverter\InstantToReadableDateTimeConverter.cs"/>
-    <Compile Include="UI\XamlConverter\SyncFrequencyToRadioButtonConverter.cs"/>
-    <Compile Include="Utilities\DebuggingService.cs"/>
-    <Compile Include="Utilities\DiffMatchPatchAlg.cs"/>
-    <Compile Include="Models\DeveloperSettingsModel.cs"/>
-    <Compile Include="Models\NavigationItem.cs"/>
-    <Compile Include="Models\RenderingViewModels.cs"/>
-    <Compile Include="MyUriToStreamResolver.cs"/>
-    <Compile Include="Markdig\IPageParser.cs"/>
-    <Compile Include="Markdig\IPageRenderer.cs"/>
-    <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockExtension.cs"/>
-    <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockPipelineExtension.cs"/>
-    <Compile Include="Markdig\Extensions\MathExtension\MathePipelineExtension.cs"/>
-    <Compile Include="Markdig\HeadersParser.cs"/>
-    <Compile Include="Markdig\Extensions\CodeBlockExtension\MyHtmlCodeBlockRenderer.cs"/>
-    <Compile Include="Markdig\Extensions\MathExtension\MyHtmlMathInlineRenderer.cs"/>
-    <Compile Include="Markdig\Extensions\MathExtension\MyMathematicsExtension.cs"/>
-    <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkParser.cs"/>
-    <Compile Include="NavigationHandler.cs"/>
-    <Compile Include="Markdig\Markdig.cs"/>
-    <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkExtension.cs"/>
-    <Compile Include="Properties\AssemblyInfo.cs"/>
-    <Compile Include="Settings\DeveloperSettingsModelHandler.cs"/>
-    <Compile Include="Settings\RenderingModelHandler.cs"/>
-    <Compile Include="Utilities\ExtensionFunctions\ColorExtension.cs"/>
-    <Compile Include="Utilities\ExtensionFunctions\LocalNotifications.cs"/>
-    <Compile Include="Utilities\FullyObservableCollection.cs"/>
+    <Compile Include="UI\TemplateSelector\MediaManagerTreeViewItemTemplateSelector.cs" />
+    <Compile Include="UI\TemplateSelector\PageHistoryTemplateSelector.cs" />
+    <Compile Include="UI\TemplateSelector\SettingNavigationTemplateSelector.cs" />
+    <Compile Include="UI\TemplateSelector\SettingStorageTemplateSelector.cs" />
+    <Compile Include="UI\XamlConverter\BoolToColorConverter.cs" />
+    <Compile Include="UI\XamlConverter\BoolVisibilityConverter.cs" />
+    <Compile Include="UI\XamlConverter\InstantToReadableDateTimeConverter.cs" />
+    <Compile Include="UI\XamlConverter\SyncFrequencyToRadioButtonConverter.cs" />
+    <Compile Include="Utilities\DebuggingService.cs" />
+    <Compile Include="Utilities\DiffMatchPatchAlg.cs" />
+    <Compile Include="Models\DeveloperSettingsModel.cs" />
+    <Compile Include="Models\NavigationItem.cs" />
+    <Compile Include="Models\RenderingViewModels.cs" />
+    <Compile Include="MyUriToStreamResolver.cs" />
+    <Compile Include="Markdig\IPageParser.cs" />
+    <Compile Include="Markdig\IPageRenderer.cs" />
+    <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockExtension.cs" />
+    <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockPipelineExtension.cs" />
+    <Compile Include="Markdig\Extensions\MathExtension\MathePipelineExtension.cs" />
+    <Compile Include="Markdig\HeadersParser.cs" />
+    <Compile Include="Markdig\Extensions\CodeBlockExtension\MyHtmlCodeBlockRenderer.cs" />
+    <Compile Include="Markdig\Extensions\MathExtension\MyHtmlMathInlineRenderer.cs" />
+    <Compile Include="Markdig\Extensions\MathExtension\MyMathematicsExtension.cs" />
+    <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkParser.cs" />
+    <Compile Include="NavigationHandler.cs" />
+    <Compile Include="Markdig\Markdig.cs" />
+    <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkExtension.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\DeveloperSettingsModelHandler.cs" />
+    <Compile Include="Settings\RenderingModelHandler.cs" />
+    <Compile Include="Utilities\ExtensionFunctions\ColorExtension.cs" />
+    <Compile Include="Utilities\ExtensionFunctions\LocalNotifications.cs" />
+    <Compile Include="Utilities\FullyObservableCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -339,7 +338,6 @@
     <None Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="PrivateWiki_TemporaryKey.pfx" />
     <PRIResource Include="Strings\en-US\Settings.resw" />
     <PRIResource Include="Strings\fr-FR\PageViewer.resw" />
     <PRIResource Include="Strings\de-DE\PageViewer.resw" />
@@ -620,7 +618,7 @@
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets"/>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">
