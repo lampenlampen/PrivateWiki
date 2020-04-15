@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Navigation;
 using NLog;
 using PrivateWiki.Models.Pages;
 using PrivateWiki.Models.ViewModels;
-using PrivateWiki.UI.Controls.ContentPages;
+using PrivateWiki.UI.Controls.PageViewers;
 using PrivateWiki.UI.Pages.ContentPages;
 using ReactiveUI;
 using Page = Windows.UI.Xaml.Controls.Page;
@@ -112,7 +112,7 @@ namespace PrivateWiki.UI.Pages
 					.Where(x => x != null)
 					.Subscribe(x =>
 					{
-						var contentPresenter = new HtmlPageViewer {ViewModel = (HtmlPageViewerControlViewModel) x};
+						var contentPresenter = new HtmlPageViewerControl {ViewModel = (HtmlPageViewerControlViewModel) x};
 						ContentGrid.Children.Add(contentPresenter);
 					}).DisposeWith(disposable);
 			});

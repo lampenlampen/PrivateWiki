@@ -11,13 +11,13 @@ using ReactiveUI;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace PrivateWiki.UI.Controls.ContentPages
+namespace PrivateWiki.UI.Controls.PageViewers
 {
-	public class HtmlPageViewerBase : ReactiveUserControl<HtmlPageViewerControlViewModel>
+	public class HtmlPageViewerControlBase : ReactiveUserControl<HtmlPageViewerControlViewModel>
 	{
 	}
 
-	public sealed partial class HtmlPageViewer : HtmlPageViewerBase
+	public sealed partial class HtmlPageViewerControl : HtmlPageViewerControlBase
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -25,7 +25,7 @@ namespace PrivateWiki.UI.Controls.ContentPages
 
 		public IObservable<string> NavigateToPage => _navigateToPage;
 
-		public HtmlPageViewer()
+		public HtmlPageViewerControl()
 		{
 			this.InitializeComponent();
 

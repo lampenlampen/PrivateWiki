@@ -95,216 +95,233 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-      <Compile Include="App.xaml.cs">
-          <DependentUpon>App.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="AppConfig.cs"/>
-      <Compile Include="Data\ContentType.cs"/>
-      <Compile Include="Data\DefaultPages.cs"/>
-      <Compile Include="Data\FileSystemAccess.cs"/>
-      <Compile Include="Data\PageExporter.cs"/>
-      <Compile Include="Markdig\Extensions\TagExtension\TagExtension.cs"/>
-      <Compile Include="Markdig\Extensions\TagExtension\TagGroup.cs"/>
-      <Compile Include="Markdig\Extensions\TagExtension\TagInline.cs"/>
-      <Compile Include="Markdig\Extensions\TagExtension\TagParser.cs"/>
-      <Compile Include="Markdig\Extensions\TagExtension\MarkdigTagExtension.cs"/>
-      <Compile Include="Markdig\MarkdigPipelineBuilder.cs"/>
-      <Compile Include="Models\LFSModel.cs"/>
-      <Compile Include="Models\Pages\GenericPage.cs"/>
-      <Compile Include="Models\Pages\HtmlPage.cs"/>
-      <Compile Include="Models\Pages\MarkdownPage.cs"/>
-      <Compile Include="Models\Pages\Page.cs"/>
-      <Compile Include="Models\Pages\PageAction.cs"/>
-      <Compile Include="Models\Pages\PageHistory.cs"/>
-      <Compile Include="Models\Pages\Path.cs"/>
-      <Compile Include="Models\Pages\Tag.cs"/>
-      <Compile Include="Models\ViewModels\GenericTextPageEditorViewModel.cs"/>
-      <Compile Include="Models\ViewModels\HtmlPageViewerControlViewModel.cs"/>
-      <Compile Include="Models\ViewModels\HtmlPageViewerViewModel.cs"/>
-      <Compile Include="Models\ViewModels\IContentPageViewerViewModel.cs"/>
-      <Compile Include="Models\ViewModels\ImagePickerDialogModel.cs"/>
-      <Compile Include="Models\ViewModels\NewPageViewModel.cs"/>
-      <Compile Include="Models\ViewModels\PageViewerCommandBarViewModel.cs"/>
-      <Compile Include="Models\ViewModels\PageViewerViewModel.cs"/>
-      <Compile Include="Renderer\ContentRenderer.cs"/>
-      <Compile Include="RxExceptionHandler.cs"/>
-      <Compile Include="Settings\LFSSyncActions.cs"/>
-      <Compile Include="Settings\SyncModelHandler.cs"/>
-      <Compile Include="StorageBackend\DefaultStorageBackends.cs"/>
-      <Compile Include="StorageBackend\IGenericPageStorage.cs"/>
-      <Compile Include="StorageBackend\IMarkdownPageStorage.cs"/>
-      <Compile Include="StorageBackend\IPageStorage.cs"/>
-      <Compile Include="StorageBackend\ISqLiteBackend.cs"/>
-      <Compile Include="StorageBackend\IStorageBackend.cs"/>
-      <Compile Include="StorageBackend\SqLiteStorage.cs"/>
-      <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs"/>
-      <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs"/>
-      <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs"/>
-      <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHtmlPageConverter.cs"/>
-      <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs"/>
-      <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs"/>
-      <Compile Include="StorageBackend\Storage.cs"/>
-      <Compile Include="UI\Controls\ContentPages\HtmlPageViewer.xaml.cs">
-          <DependentUpon>HtmlPageViewer.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\DiffControl.xaml.cs">
-          <DependentUpon>DiffControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\IPageViewerCommandBar.cs"/>
-      <Compile Include="UI\Controls\MyTreeViewNode.cs"/>
-      <Compile Include="UI\Controls\NavigationSettingsDividerItemControl.xaml.cs">
-          <DependentUpon>NavigationSettingsDividerItemControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\NavigationSettingsHeaderItemControl.xaml.cs">
-          <DependentUpon>NavigationSettingsHeaderItemControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\NavigationSettingsLinkItemControl.xaml.cs">
-          <DependentUpon>NavigationSettingsLinkItemControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\PageViewerCommandBar.xaml.cs">
-          <DependentUpon>PageViewerCommandBar.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\SettingsHeader.xaml.cs">
-          <DependentUpon>SettingsHeader.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\Settings\Rendering\CoreControl.xaml.cs">
-          <DependentUpon>CoreControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\Settings\Rendering\DiagramControl.xaml.cs">
-          <DependentUpon>DiagramControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\Settings\Rendering\EmphasisExtraControl.xaml.cs">
-          <DependentUpon>EmphasisExtraControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\Settings\Rendering\ListControl.xaml.cs">
-          <DependentUpon>ListControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\Settings\Rendering\MathControl.xaml.cs">
-          <DependentUpon>MathControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\Settings\Rendering\SyntaxHighlightingControl.xaml.cs">
-          <DependentUpon>SyntaxHighlightingControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\Settings\Rendering\TableControl.xaml.cs">
-          <DependentUpon>TableControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\Settings\Sync\LFSControl.xaml.cs">
-          <DependentUpon>LFSControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Dialogs\DissmissableDialog.cs"/>
-      <Compile Include="UI\Dialogs\EditorImagePickerDialog.xaml.cs">
-          <DependentUpon>EditorImagePickerDialog.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Dialogs\ExportDialog.xaml.cs">
-          <DependentUpon>ExportDialog.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Dialogs\GridViewDialog.xaml.cs">
-          <DependentUpon>GridViewDialog.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Dialogs\HyperlinkDialog.xaml.cs">
-          <DependentUpon>HyperlinkDialog.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Dialogs\PageEditorImagePickerDialog.xaml.cs">
-          <DependentUpon>PageEditorImagePickerDialog.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Dialogs\WikiLinkDialog.xaml.cs">
-          <DependentUpon>WikiLinkDialog.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\GlobalNotificationManager.cs"/>
-      <Compile Include="UI\Pages\ContentPages\ContentPage.cs"/>
-      <Compile Include="UI\Pages\ContentPages\GenericTextPageEditor.xaml.cs">
-          <DependentUpon>GenericTextPageEditor.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\ContentPages\HtmlPage\HtmlPageEditor.xaml.cs">
-          <DependentUpon>HtmlPageEditor.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\ContentPages\HtmlPage\HtmlPageViewer.xaml.cs">
-          <DependentUpon>HtmlPageViewer.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\ExternalEditor.xaml.cs">
-          <DependentUpon>ExternalEditor.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\HistoryPage.xaml.cs">
-          <DependentUpon>HistoryPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\ImportDiffPage.xaml.cs">
-          <DependentUpon>ImportDiffPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\MainPage.xaml.cs">
-          <DependentUpon>MainPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\MarkdownPageEditor.xaml.cs">
-          <DependentUpon>MarkdownPageEditor.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\MarkdownPageViewer.xaml.cs">
-          <DependentUpon>MarkdownPageViewer.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\NewPage.xaml.cs">
-          <DependentUpon>NewPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\PageViewer.xaml.cs">
-          <DependentUpon>PageViewer.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\SettingsPage.xaml.cs">
-          <DependentUpon>SettingsPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\SettingsPages\AssetsSettingsPage.xaml.cs">
-          <DependentUpon>AssetsSettingsPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\SettingsPages\DeveloperSettingsPage.xaml.cs">
-          <DependentUpon>DeveloperSettingsPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\SettingsPages\NavigationSettingsPage.xaml.cs">
-          <DependentUpon>NavigationSettingsPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\SettingsPages\PagesSettingsPage.xaml.cs">
-          <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\SettingsPages\RenderingSettingsPage.xaml.cs">
-          <DependentUpon>RenderingSettingsPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\SettingsPages\StorageSettingsPage.xaml.cs">
-          <DependentUpon>StorageSettingsPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Pages\SettingsPages\SyncSettingsPage.xaml.cs">
-          <DependentUpon>SyncSettingsPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\SearchPopupContent.xaml.cs">
-          <DependentUpon>SearchPopupContent.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\TemplateSelector\MediaManagerTreeViewItemTemplateSelector.cs"/>
-      <Compile Include="UI\TemplateSelector\PageHistoryTemplateSelector.cs"/>
-      <Compile Include="UI\TemplateSelector\SettingNavigationTemplateSelector.cs"/>
-      <Compile Include="UI\TemplateSelector\SettingStorageTemplateSelector.cs"/>
-      <Compile Include="UI\XamlConverter\BoolToColorConverter.cs"/>
-      <Compile Include="UI\XamlConverter\BoolVisibilityConverter.cs"/>
-      <Compile Include="UI\XamlConverter\InstantToReadableDateTimeConverter.cs"/>
-      <Compile Include="UI\XamlConverter\SyncFrequencyToRadioButtonConverter.cs"/>
-      <Compile Include="Utilities\DebuggingService.cs"/>
-      <Compile Include="Utilities\DiffMatchPatchAlg.cs"/>
-      <Compile Include="Models\DeveloperSettingsModel.cs"/>
-      <Compile Include="Models\NavigationItem.cs"/>
-      <Compile Include="Models\RenderingViewModels.cs"/>
-      <Compile Include="MyUriToStreamResolver.cs"/>
-      <Compile Include="Markdig\IPageParser.cs"/>
-      <Compile Include="Markdig\IPageRenderer.cs"/>
-      <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockExtension.cs"/>
-      <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockPipelineExtension.cs"/>
-      <Compile Include="Markdig\Extensions\MathExtension\MathePipelineExtension.cs"/>
-      <Compile Include="Markdig\HeadersParser.cs"/>
-      <Compile Include="Markdig\Extensions\CodeBlockExtension\MyHtmlCodeBlockRenderer.cs"/>
-      <Compile Include="Markdig\Extensions\MathExtension\MyHtmlMathInlineRenderer.cs"/>
-      <Compile Include="Markdig\Extensions\MathExtension\MyMathematicsExtension.cs"/>
-      <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkParser.cs"/>
-      <Compile Include="NavigationHandler.cs"/>
-      <Compile Include="Markdig\Markdig.cs"/>
-      <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkExtension.cs"/>
-      <Compile Include="Properties\AssemblyInfo.cs"/>
-      <Compile Include="Settings\DeveloperSettingsModelHandler.cs"/>
-      <Compile Include="Settings\RenderingModelHandler.cs"/>
-      <Compile Include="Utilities\ExtensionFunctions\ColorExtension.cs"/>
-      <Compile Include="Utilities\ExtensionFunctions\LocalNotifications.cs"/>
-      <Compile Include="Utilities\FullyObservableCollection.cs"/>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppConfig.cs"/>
+    <Compile Include="Data\ContentType.cs"/>
+    <Compile Include="Data\DefaultPages.cs"/>
+    <Compile Include="Data\FileSystemAccess.cs"/>
+    <Compile Include="Data\PageExporter.cs"/>
+    <Compile Include="Markdig\Extensions\TagExtension\TagExtension.cs"/>
+    <Compile Include="Markdig\Extensions\TagExtension\TagGroup.cs"/>
+    <Compile Include="Markdig\Extensions\TagExtension\TagInline.cs"/>
+    <Compile Include="Markdig\Extensions\TagExtension\TagParser.cs"/>
+    <Compile Include="Markdig\Extensions\TagExtension\MarkdigTagExtension.cs"/>
+    <Compile Include="Markdig\MarkdigPipelineBuilder.cs"/>
+    <Compile Include="Models\LFSModel.cs"/>
+    <Compile Include="Models\Pages\GenericPage.cs"/>
+    <Compile Include="Models\Pages\HtmlPage.cs"/>
+    <Compile Include="Models\Pages\MarkdownPage.cs"/>
+    <Compile Include="Models\Pages\Page.cs"/>
+    <Compile Include="Models\Pages\PageAction.cs"/>
+    <Compile Include="Models\Pages\PageHistory.cs"/>
+    <Compile Include="Models\Pages\Path.cs"/>
+    <Compile Include="Models\Pages\Tag.cs"/>
+    <Compile Include="Models\ViewModels\GenericTextPageEditorViewModel.cs"/>
+    <Compile Include="Models\ViewModels\HtmlPageViewerControlViewModel.cs"/>
+    <Compile Include="Models\ViewModels\HtmlPageViewerViewModel.cs"/>
+    <Compile Include="Models\ViewModels\IContentPageViewerViewModel.cs"/>
+    <Compile Include="Models\ViewModels\ImagePickerDialogModel.cs"/>
+    <Compile Include="Models\ViewModels\NewPageViewModel.cs"/>
+    <Compile Include="Models\ViewModels\PageEditors\HtmlPageEditorControlViewModel.cs"/>
+    <Compile Include="Models\ViewModels\PageEditors\IPageEditorControlViewModel.cs"/>
+    <Compile Include="Models\ViewModels\PageEditors\MarkdownPageEditorControlViewModel.cs"/>
+    <Compile Include="Models\ViewModels\PageEditors\TextPageEditorControlViewModel.cs"/>
+    <Compile Include="Models\ViewModels\PageEditorViewModel.cs"/>
+    <Compile Include="Models\ViewModels\PageViewerCommandBarViewModel.cs"/>
+    <Compile Include="Models\ViewModels\PageViewerViewModel.cs"/>
+    <Compile Include="Renderer\ContentRenderer.cs"/>
+    <Compile Include="RxExceptionHandler.cs"/>
+    <Compile Include="Settings\LFSSyncActions.cs"/>
+    <Compile Include="Settings\SyncModelHandler.cs"/>
+    <Compile Include="StorageBackend\DefaultStorageBackends.cs"/>
+    <Compile Include="StorageBackend\IGenericPageStorage.cs"/>
+    <Compile Include="StorageBackend\IMarkdownPageStorage.cs"/>
+    <Compile Include="StorageBackend\IPageStorage.cs"/>
+    <Compile Include="StorageBackend\ISqLiteBackend.cs"/>
+    <Compile Include="StorageBackend\IStorageBackend.cs"/>
+    <Compile Include="StorageBackend\SqLiteStorage.cs"/>
+    <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs"/>
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs"/>
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs"/>
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHtmlPageConverter.cs"/>
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs"/>
+    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs"/>
+    <Compile Include="StorageBackend\Storage.cs"/>
+    <Compile Include="UI\Controls\DiffControl.xaml.cs">
+      <DependentUpon>DiffControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\IPageViewerCommandBar.cs"/>
+    <Compile Include="UI\Controls\MyTreeViewNode.cs"/>
+    <Compile Include="UI\Controls\NavigationSettingsDividerItemControl.xaml.cs">
+      <DependentUpon>NavigationSettingsDividerItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\NavigationSettingsHeaderItemControl.xaml.cs">
+      <DependentUpon>NavigationSettingsHeaderItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\NavigationSettingsLinkItemControl.xaml.cs">
+      <DependentUpon>NavigationSettingsLinkItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\PageEditors\HtmlPageEditorControl.xaml.cs">
+      <DependentUpon>HtmlPageEditorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\PageEditors\MarkdownPageEditorControl.xaml.cs">
+      <DependentUpon>MarkdownPageEditorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\PageEditors\TextPageEditorControl.xaml.cs">
+      <DependentUpon>TextPageEditorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\PageViewerCommandBar.xaml.cs">
+      <DependentUpon>PageViewerCommandBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\PageViewers\HtmlPageViewerControl.xaml.cs">
+      <DependentUpon>HtmlPageViewerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\SettingsHeader.xaml.cs">
+      <DependentUpon>SettingsHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Settings\Rendering\CoreControl.xaml.cs">
+      <DependentUpon>CoreControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Settings\Rendering\DiagramControl.xaml.cs">
+      <DependentUpon>DiagramControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Settings\Rendering\EmphasisExtraControl.xaml.cs">
+      <DependentUpon>EmphasisExtraControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Settings\Rendering\ListControl.xaml.cs">
+      <DependentUpon>ListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Settings\Rendering\MathControl.xaml.cs">
+      <DependentUpon>MathControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Settings\Rendering\SyntaxHighlightingControl.xaml.cs">
+      <DependentUpon>SyntaxHighlightingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Settings\Rendering\TableControl.xaml.cs">
+      <DependentUpon>TableControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Settings\Sync\LFSControl.xaml.cs">
+      <DependentUpon>LFSControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\DissmissableDialog.cs"/>
+    <Compile Include="UI\Dialogs\EditorImagePickerDialog.xaml.cs">
+      <DependentUpon>EditorImagePickerDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\ExportDialog.xaml.cs">
+      <DependentUpon>ExportDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\GridViewDialog.xaml.cs">
+      <DependentUpon>GridViewDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\HyperlinkDialog.xaml.cs">
+      <DependentUpon>HyperlinkDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\PageEditorImagePickerDialog.xaml.cs">
+      <DependentUpon>PageEditorImagePickerDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\WikiLinkDialog.xaml.cs">
+      <DependentUpon>WikiLinkDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\GlobalNotificationManager.cs"/>
+    <Compile Include="UI\Pages\ContentPages\ContentPage.cs"/>
+    <Compile Include="UI\Pages\ContentPages\GenericTextPageEditor.xaml.cs">
+      <DependentUpon>GenericTextPageEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\ContentPages\HtmlPage\HtmlPageEditor.xaml.cs">
+      <DependentUpon>HtmlPageEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\ContentPages\HtmlPage\HtmlPageViewer.xaml.cs">
+      <DependentUpon>HtmlPageViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\ExternalEditor.xaml.cs">
+      <DependentUpon>ExternalEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\HistoryPage.xaml.cs">
+      <DependentUpon>HistoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\ImportDiffPage.xaml.cs">
+      <DependentUpon>ImportDiffPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\MarkdownPageEditor.xaml.cs">
+      <DependentUpon>MarkdownPageEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\MarkdownPageViewer.xaml.cs">
+      <DependentUpon>MarkdownPageViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\NewPage.xaml.cs">
+      <DependentUpon>NewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\PageEditor.xaml.cs">
+      <DependentUpon>PageEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\PageViewer.xaml.cs">
+      <DependentUpon>PageViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\SettingsPages\AssetsSettingsPage.xaml.cs">
+      <DependentUpon>AssetsSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\SettingsPages\DeveloperSettingsPage.xaml.cs">
+      <DependentUpon>DeveloperSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\SettingsPages\NavigationSettingsPage.xaml.cs">
+      <DependentUpon>NavigationSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\SettingsPages\PagesSettingsPage.xaml.cs">
+      <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\SettingsPages\RenderingSettingsPage.xaml.cs">
+      <DependentUpon>RenderingSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\SettingsPages\StorageSettingsPage.xaml.cs">
+      <DependentUpon>StorageSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\SettingsPages\SyncSettingsPage.xaml.cs">
+      <DependentUpon>SyncSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SearchPopupContent.xaml.cs">
+      <DependentUpon>SearchPopupContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\TemplateSelector\MediaManagerTreeViewItemTemplateSelector.cs"/>
+    <Compile Include="UI\TemplateSelector\PageHistoryTemplateSelector.cs"/>
+    <Compile Include="UI\TemplateSelector\SettingNavigationTemplateSelector.cs"/>
+    <Compile Include="UI\TemplateSelector\SettingStorageTemplateSelector.cs"/>
+    <Compile Include="UI\XamlConverter\BoolToColorConverter.cs"/>
+    <Compile Include="UI\XamlConverter\BoolVisibilityConverter.cs"/>
+    <Compile Include="UI\XamlConverter\InstantToReadableDateTimeConverter.cs"/>
+    <Compile Include="UI\XamlConverter\SyncFrequencyToRadioButtonConverter.cs"/>
+    <Compile Include="Utilities\DebuggingService.cs"/>
+    <Compile Include="Utilities\DiffMatchPatchAlg.cs"/>
+    <Compile Include="Models\DeveloperSettingsModel.cs"/>
+    <Compile Include="Models\NavigationItem.cs"/>
+    <Compile Include="Models\RenderingViewModels.cs"/>
+    <Compile Include="MyUriToStreamResolver.cs"/>
+    <Compile Include="Markdig\IPageParser.cs"/>
+    <Compile Include="Markdig\IPageRenderer.cs"/>
+    <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockExtension.cs"/>
+    <Compile Include="Markdig\Extensions\CodeBlockExtension\CodeBlockPipelineExtension.cs"/>
+    <Compile Include="Markdig\Extensions\MathExtension\MathePipelineExtension.cs"/>
+    <Compile Include="Markdig\HeadersParser.cs"/>
+    <Compile Include="Markdig\Extensions\CodeBlockExtension\MyHtmlCodeBlockRenderer.cs"/>
+    <Compile Include="Markdig\Extensions\MathExtension\MyHtmlMathInlineRenderer.cs"/>
+    <Compile Include="Markdig\Extensions\MathExtension\MyMathematicsExtension.cs"/>
+    <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkParser.cs"/>
+    <Compile Include="NavigationHandler.cs"/>
+    <Compile Include="Markdig\Markdig.cs"/>
+    <Compile Include="Markdig\Extensions\WikiLinkExtension\WikiLinkExtension.cs"/>
+    <Compile Include="Properties\AssemblyInfo.cs"/>
+    <Compile Include="Settings\DeveloperSettingsModelHandler.cs"/>
+    <Compile Include="Settings\RenderingModelHandler.cs"/>
+    <Compile Include="Utilities\ExtensionFunctions\ColorExtension.cs"/>
+    <Compile Include="Utilities\ExtensionFunctions\LocalNotifications.cs"/>
+    <Compile Include="Utilities\FullyObservableCollection.cs"/>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -363,145 +380,161 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-      <Page Include="UI\Controls\ContentPages\HtmlPageViewer.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Controls\DiffControl.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Controls\NavigationSettingsDividerItemControl.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Controls\NavigationSettingsHeaderItemControl.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Controls\NavigationSettingsLinkItemControl.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Controls\PageViewerCommandBar.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Controls\SettingsHeader.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Controls\Settings\Rendering\CoreControl.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Controls\Settings\Rendering\DiagramControl.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Controls\Settings\Rendering\EmphasisExtraControl.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Controls\Settings\Rendering\ListControl.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Controls\Settings\Rendering\MathControl.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Controls\Settings\Rendering\SyntaxHighlightingControl.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Controls\Settings\Rendering\TableControl.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Controls\Settings\Sync\LFSControl.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Dialogs\EditorImagePickerDialog.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Dialogs\ExportDialog.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Dialogs\GridViewDialog.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Dialogs\HyperlinkDialog.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Dialogs\PageEditorImagePickerDialog.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Dialogs\WikiLinkDialog.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\ContentPages\GenericTextPageEditor.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\ContentPages\HtmlPage\HtmlPageEditor.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\ContentPages\HtmlPage\HtmlPageViewer.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\ExternalEditor.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\HistoryPage.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\ImportDiffPage.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\MainPage.xaml">
-          <Generator>MSBuild:Compile</Generator>
-          <SubType>Designer</SubType>
-      </Page>
-      <Page Include="UI\Pages\MarkdownPageEditor.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\MarkdownPageViewer.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\NewPage.xaml">
-          <Generator>MSBuild:Compile</Generator>
-          <SubType>Designer</SubType>
-      </Page>
-      <Page Include="UI\Pages\PageViewer.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\SettingsPage.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\SettingsPages\AssetsSettingsPage.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\SettingsPages\DeveloperSettingsPage.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\SettingsPages\NavigationSettingsPage.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\SettingsPages\PagesSettingsPage.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\SettingsPages\RenderingSettingsPage.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\SettingsPages\StorageSettingsPage.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\Pages\SettingsPages\SyncSettingsPage.xaml">
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Include="UI\SearchPopupContent.xaml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:Compile</Generator>
-      </Page>
+    <Page Include="UI\Controls\DiffControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\NavigationSettingsDividerItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\NavigationSettingsHeaderItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\NavigationSettingsLinkItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\PageEditors\HtmlPageEditorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\PageEditors\MarkdownPageEditorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\PageEditors\TextPageEditorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\PageViewerCommandBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\PageViewers\HtmlPageViewerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\SettingsHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\Settings\Rendering\CoreControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\Settings\Rendering\DiagramControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\Settings\Rendering\EmphasisExtraControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\Settings\Rendering\ListControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\Settings\Rendering\MathControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\Settings\Rendering\SyntaxHighlightingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\Settings\Rendering\TableControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\Settings\Sync\LFSControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\EditorImagePickerDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\ExportDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\GridViewDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\HyperlinkDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\PageEditorImagePickerDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\WikiLinkDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\ContentPages\GenericTextPageEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\ContentPages\HtmlPage\HtmlPageEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\ContentPages\HtmlPage\HtmlPageViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\ExternalEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\HistoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\ImportDiffPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Pages\MarkdownPageEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\MarkdownPageViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\NewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Pages\PageEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\PageViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\SettingsPages\AssetsSettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\SettingsPages\DeveloperSettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\SettingsPages\NavigationSettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\SettingsPages\PagesSettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\SettingsPages\RenderingSettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\SettingsPages\StorageSettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\SettingsPages\SyncSettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\SearchPopupContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FontAwesome.UWP">
@@ -573,22 +606,22 @@
       <Version>8.1.0</Version>
     </PackageReference>
   </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\RuntimeComponent\RuntimeComponent.csproj">
-            <Project>{a58a6b6d-679f-42e3-b415-eb310c14907a}</Project>
-            <Name>RuntimeComponent</Name>
-        </ProjectReference>
-    </ItemGroup>
-    <ItemGroup>
-        <SDKReference Include="WindowsDesktop, Version=10.0.18362.0">
-            <Name>Windows Desktop Extensions for the UWP</Name>
-        </SDKReference>
-    </ItemGroup>
-    <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
-        <VisualStudioVersion>14.0</VisualStudioVersion>
-    </PropertyGroup>
-    <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets"/>
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <ItemGroup>
+    <ProjectReference Include="..\RuntimeComponent\RuntimeComponent.csproj">
+      <Project>{a58a6b6d-679f-42e3-b415-eb310c14907a}</Project>
+      <Name>RuntimeComponent</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsDesktop, Version=10.0.18362.0">
+      <Name>Windows Desktop Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets"/>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">
     </Target>
