@@ -2,9 +2,9 @@ using System;
 using System.IO;
 using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Models.Pages;
-using Models.Storage;
 using NodaTime;
+using PrivateWiki.Models.Pages;
+using PrivateWiki.StorageBackend;
 using PrivateWiki.StorageBackend.SQLite;
 
 namespace StorageBackend.Test.SqLite
