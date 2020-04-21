@@ -122,10 +122,13 @@
     <Compile Include="Models\ViewModels\HtmlPageViewerViewModel.cs" />
     <Compile Include="Models\ViewModels\IContentPageViewerViewModel.cs" />
     <Compile Include="Models\ViewModels\ImagePickerDialogModel.cs" />
+    <Compile Include="Models\ViewModels\IPageEditorCommandBarViewModel.cs" />
     <Compile Include="Models\ViewModels\NewPageViewModel.cs" />
+    <Compile Include="Models\ViewModels\PageEditorCommandBarViewModel.cs" />
     <Compile Include="Models\ViewModels\PageEditors\HtmlPageEditorControlViewModel.cs" />
     <Compile Include="Models\ViewModels\PageEditors\IPageEditorControlViewModel.cs" />
     <Compile Include="Models\ViewModels\PageEditors\MarkdownPageEditorControlViewModel.cs" />
+    <Compile Include="Models\ViewModels\PageEditors\PageEditorControlViewModelBase.cs" />
     <Compile Include="Models\ViewModels\PageEditors\TextPageEditorControlViewModel.cs" />
     <Compile Include="Models\ViewModels\PageEditorViewModel.cs" />
     <Compile Include="Models\ViewModels\PageViewerCommandBarViewModel.cs" />
@@ -161,6 +164,9 @@
     </Compile>
     <Compile Include="UI\Controls\NavigationSettingsLinkItemControl.xaml.cs">
       <DependentUpon>NavigationSettingsLinkItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\PageEditorCommandBar.xaml.cs">
+      <DependentUpon>PageEditorCommandBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Controls\PageEditors\HtmlPageEditorControl.xaml.cs">
       <DependentUpon>HtmlPageEditorControl.xaml</DependentUpon>
@@ -391,6 +397,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Controls\NavigationSettingsLinkItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\PageEditorCommandBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

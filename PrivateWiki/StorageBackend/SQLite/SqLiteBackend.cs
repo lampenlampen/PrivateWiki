@@ -7,6 +7,8 @@ using PrivateWiki.Models.Pages;
 
 namespace PrivateWiki.StorageBackend.SQLite
 {
+	#nullable enable
+	
 	public class SqLiteBackend : ISqLiteBackend, IMarkdownPageStorage, IGenericPageStorage
 	{
 		private const bool IsObsoleteError = false;
@@ -593,7 +595,7 @@ namespace PrivateWiki.StorageBackend.SQLite
 
 		public Task<bool> DeletePageAsync(GenericPage page)
 		{
-			throw new NotImplementedException();
+			return DeletePageAsync(page.Id);
 		}
 
 		public Task<bool> DeletePageAsync(Guid id)

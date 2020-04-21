@@ -1,7 +1,14 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using PrivateWiki.Models.Pages;
 using PrivateWiki.Models.ViewModels;
+using PrivateWiki.Models.ViewModels.PageEditors;
+using PrivateWiki.UI.Controls.PageEditors;
 using ReactiveUI;
 using Page = Windows.UI.Xaml.Controls.Page;
 
@@ -36,6 +43,36 @@ namespace PrivateWiki.UI.Pages
 		{
 			InitializeComponent();
 			ViewModel = new PageEditorViewModel();
+
+			this.WhenActivated(disposable =>
+			{
+				this.WhenAnyValue(x => x.ViewModel.PageContentViewModel)
+					.Where(x => x != null)
+					.Subscribe(ShowPage)
+					.DisposeWith(disposable);
+
+				ViewModel.ConfirmDelete.RegisterHandler(ConfirmDeleteAsync);
+
+				ViewModel.OnAbort.Subscribe(_ => Abort()).DisposeWith(disposable);
+				ViewModel.OnSave.Subscribe(x => NavigateToCurrentPage(x));
+				ViewModel.OnDelete.Subscribe(_ => NavigateToPreviousOrDefaultPage());
+
+			});
+		}
+
+		private async Task ConfirmDeleteAsync(InteractionContext<Path, bool> context)
+		{
+			var dialog = new ContentDialog
+			{
+				Title = $"Delete Page {context.Input.FullPath}",
+				Content =
+					"Delete this page permanently. After this action there is no way of restoring the current state.",
+				CloseButtonText = "Cancel",
+				PrimaryButtonText = "Delete Page",
+				DefaultButton = ContentDialogButton.Close
+			};
+			
+			context.SetOutput(await dialog.ShowAsync() == ContentDialogResult.Primary);
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -43,6 +80,31 @@ namespace PrivateWiki.UI.Pages
 			base.OnNavigatedTo(e);
 			var path = Path.ofLink((string) e.Parameter);
 			ViewModel.ShowPage.Execute(path);
+		}
+
+		private void ShowPage(IPageEditorControlViewModel vm)
+		{
+			var control = new MarkdownPageEditorControl
+			{
+				ViewModel = (MarkdownPageEditorControlViewModel) vm
+			};
+
+			PageContentControlHost.Children.Add(control);
+		}
+
+		private void Abort()
+		{
+			if (Frame.CanGoBack) Frame.GoBack();
+		}
+
+		private void NavigateToCurrentPage(Path path)
+		{
+			Frame.Navigate(typeof(PageViewer), path.FullPath);
+		}
+
+		private void NavigateToPreviousOrDefaultPage()
+		{
+			Frame.Navigate(typeof(PageViewer));
 		}
 	}
 }

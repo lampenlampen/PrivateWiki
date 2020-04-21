@@ -60,7 +60,8 @@ namespace PrivateWiki.UI.Pages
 
 				commandBar.ShowSettings.Subscribe(_ => Frame.Navigate(typeof(SettingsPage))).DisposeWith(disposable);
 
-				commandBar.ShowHistory.Select(_ => ViewModel.Page.Path).InvokeCommand(this, x => x.ViewModel.ShowHistory).DisposeWith(disposable);
+				commandBar.ShowHistory.Select(_ => ViewModel.Page.Path)
+					.InvokeCommand(this, x => x.ViewModel.ShowHistory).DisposeWith(disposable);
 
 				commandBar.Edit
 					.Select(_ => ViewModel.Page.Path)
@@ -105,14 +106,16 @@ namespace PrivateWiki.UI.Pages
 				ViewModel.OnShowHistoryPage.Subscribe(a => ShowHistory(a)).DisposeWith(disposable);
 				ViewModel.OnSearch.Subscribe(_ => Search()).DisposeWith(disposable);
 
-				ViewModel.ShowPageLockedNotification.RegisterHandler(ShowPageLockedNotification).DisposeWith(disposable);
+				ViewModel.ShowPageLockedNotification.RegisterHandler(ShowPageLockedNotification)
+					.DisposeWith(disposable);
 				ViewModel.ShowPrintBrowserDialog.RegisterHandler(ShowPrintPdfBrowserDialog).DisposeWith(disposable);
 
 				this.WhenAnyValue(x => x.ViewModel.PageContentViewer)
 					.Where(x => x != null)
 					.Subscribe(x =>
 					{
-						var contentPresenter = new HtmlPageViewerControl {ViewModel = (HtmlPageViewerControlViewModel) x};
+						var contentPresenter = new HtmlPageViewerControl
+							{ViewModel = (HtmlPageViewerControlViewModel) x};
 						ContentGrid.Children.Add(contentPresenter);
 					}).DisposeWith(disposable);
 			});
@@ -120,8 +123,20 @@ namespace PrivateWiki.UI.Pages
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-			if (e.Parameter == null) throw new ArgumentNullException(nameof(e), "No page id");
-			var id = (string) e.Parameter;
+			string id;
+
+			if (e.Parameter == null)
+			{
+				Logger.Info("Show default page.");
+
+				// TODO make default page configurable
+				id = "start";
+			}
+			else
+			{
+				id = (string) e.Parameter;
+			}
+
 			Logger.Info($"Show Page: {id}");
 			ViewModel.LoadPage.Execute(id);
 		}
@@ -139,7 +154,7 @@ namespace PrivateWiki.UI.Pages
 
 		private void EditPage(Path link)
 		{
-			Frame.Navigate(typeof(GenericTextPageEditor), link.FullPath);
+			Frame.Navigate(typeof(PageEditor), link.FullPath);
 		}
 
 		private void ShowHistory(Path link)

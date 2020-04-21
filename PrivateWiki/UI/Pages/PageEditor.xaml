@@ -9,6 +9,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid
-        x:Name="PageContentControlDisplayer"/>
+        x:Name="PageContentControlHost"/>
     
 </Page>

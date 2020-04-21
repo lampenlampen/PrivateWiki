@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace PrivateWiki.Models.Pages
 {
-	public class Path
+	public class Path : IEquatable<Path>
 	{
 		private string[]? _namespaces;
 
@@ -54,7 +54,7 @@ namespace PrivateWiki.Models.Pages
 		{
 			return FullPath.GetHashCode();
 		}
-
+		
 		public override string ToString()
 		{
 			return FullPath;
@@ -78,6 +78,11 @@ namespace PrivateWiki.Models.Pages
 		public static Path of(string[] path, string name)
 		{
 			return new Path(path, name);
+		}
+
+		public bool Equals(Path other)
+		{
+			return FullPath == other.FullPath;
 		}
 	}
 }

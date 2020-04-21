@@ -1,19 +1,33 @@
 using System;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Threading.Tasks;
+using PrivateWiki.Models.Pages;
 using ReactiveUI;
 
 namespace PrivateWiki.Models.ViewModels.PageEditors
 {
-	public class MarkdownPageEditorControlViewModel : ReactiveObject, IPageEditorControlViewModel
+	public class MarkdownPageEditorControlViewModel : PageEditorControlViewModelBase
 	{
-		private readonly ISubject<Unit> _savePage;
-		public IObservable<Unit> OnSavePage => _savePage;
+		public MarkdownPageEditorControlViewModel()
+		{
+			this.WhenAnyValue(x => x.Page)
+				.Where(x => x != null)
+				.Subscribe(x => Content = x.Content);
+		}
 
-		private readonly ISubject<Unit> _abort;
-		public IObservable<Unit> OnAbort => _abort;
-
-		private readonly ISubject<Unit> _openInExternalEditor;
-		public IObservable<Unit> OnOpenInExternalEditor => _openInExternalEditor;
+		private protected override async Task SavePageAsync()
+		{
+			if (Content != Page.Content)
+			{
+				var newPage = Page.Clone(content: Content);
+				_onSavePage.OnNext(newPage);
+			}
+			else
+			{
+				// TODO Save, although nothing changed
+			}
+		}
 	}
 }

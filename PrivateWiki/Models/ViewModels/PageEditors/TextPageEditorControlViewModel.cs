@@ -1,19 +1,39 @@
 using System;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using PrivateWiki.Models.Pages;
 using ReactiveUI;
 
 namespace PrivateWiki.Models.ViewModels.PageEditors
 {
 	public class TextPageEditorControlViewModel : ReactiveObject, IPageEditorControlViewModel
 	{
-		private readonly ISubject<Unit> _savePage;
-		public IObservable<Unit> OnSavePage => _savePage;
+		private IPageEditorCommandBarViewModel _commandBarViewModel = null!;
 
-		private readonly ISubject<Unit> _abort;
-		public IObservable<Unit> OnAbort => _abort;
+		public IPageEditorCommandBarViewModel CommandBarViewModel
+		{
+			get => _commandBarViewModel;
+			private set => this.RaiseAndSetIfChanged(ref _commandBarViewModel, value);
+		}
 
-		private readonly ISubject<Unit> _openInExternalEditor;
-		public IObservable<Unit> OnOpenInExternalEditor => _openInExternalEditor;
+		public GenericPage Page { get; set; }
+		public IObservable<GenericPage> OnSavePage { get; }
+
+		public IObservable<Unit> OnAbort { get; }
+
+		public IObservable<Unit> OnOpenInExternalEditor { get; }
+		
+		public IObservable<Unit> OnDelete { get; }
+
+		public TextPageEditorControlViewModel()
+		{
+			CommandBarViewModel = new PageEditorCommandBarViewModel();
+
+			OnAbort = CommandBarViewModel.OnAbort.AsObservable();
+			// OnSavePage = CommandBarViewModel.OnSave.AsObservable();
+			OnOpenInExternalEditor = CommandBarViewModel.OnOpenInExternalEditor.AsObservable();
+			OnDelete = CommandBarViewModel.OnDelete.AsObservable();
+		}
 	}
 }
