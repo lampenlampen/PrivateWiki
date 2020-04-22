@@ -1,11 +1,9 @@
 using System;
 using System.Reactive;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using NLog;
-using NLog.Fluent;
 using NodaTime;
 using PrivateWiki.Models.Pages;
 using PrivateWiki.Models.ViewModels.PageEditors;
@@ -18,17 +16,16 @@ namespace PrivateWiki.Models.ViewModels
 	public class PageEditorViewModel : ReactiveObject
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-		
-		private GenericPage Page;
 
-		private IPageEditorControlViewModel _pageContentViewModel;
+		private GenericPage Page = null!;
+
+		private IPageEditorControlViewModel _pageContentViewModel = null!;
 
 		public IPageEditorControlViewModel PageContentViewModel
 		{
 			get => _pageContentViewModel;
 			set => this.RaiseAndSetIfChanged(ref _pageContentViewModel, value);
 		}
-
 
 		public readonly ReactiveCommand<Path, Unit> ShowPage;
 
@@ -43,34 +40,33 @@ namespace PrivateWiki.Models.ViewModels
 		private readonly Interaction<Path, bool> _confirmDelete;
 		public Interaction<Path, bool> ConfirmDelete => _confirmDelete;
 
-		private ISubject<Unit> _onAbort;
+		private readonly ISubject<Unit> _onAbort;
 		public IObservable<Unit> OnAbort => _onAbort;
 
-		private ISubject<Path> _onSave;
+		private readonly ISubject<Path> _onSave;
 		public IObservable<Path> OnSave => _onSave;
 
-		private ISubject<Unit> _onDelete;
+		private readonly ISubject<Unit> _onDelete;
 		public IObservable<Unit> OnDelete => _onDelete;
 
-		private ISubject<Unit> _onOpenInExternalEditor;
-		public IObservable<Unit> OnOpenInExternalEditor => _onOpenInExternalEditor;
+		private readonly ISubject<Path> _onOpenInExternalEditor;
+		public IObservable<Path> OnOpenInExternalEditor => _onOpenInExternalEditor;
 
 		public PageEditorViewModel()
 		{
-			
 			ShowPage = ReactiveCommand.CreateFromTask<Path>(ShowPageAsync);
 			SavePage = ReactiveCommand.CreateFromTask<GenericPage>(SavePageAsync);
 			Abort = ReactiveCommand.CreateFromTask(AbortAsync);
 			OpenInExternalEditor = ReactiveCommand.CreateFromTask(OpenInExternalEditorAsync);
 			DeletePage = ReactiveCommand.CreateFromTask(DeletePageAsync);
-			
+
 			_onAbort = new Subject<Unit>();
 			_onSave = new Subject<Path>();
-			_onOpenInExternalEditor = new Subject<Unit>();
+			_onOpenInExternalEditor = new Subject<Path>();
 			_onDelete = new Subject<Unit>();
 
 			_confirmDelete = new Interaction<Path, bool>();
-			
+
 			this.WhenAnyValue(x => x.PageContentViewModel)
 				.Where(x => x != null)
 				.Subscribe(x =>
@@ -78,6 +74,7 @@ namespace PrivateWiki.Models.ViewModels
 					x.OnAbort.InvokeCommand(this, b => b.Abort);
 					x.OnSavePage.InvokeCommand(this, b => b.SavePage);
 					x.OnDelete.InvokeCommand(this, b => b.DeletePage);
+					x.OnOpenInExternalEditor.InvokeCommand(this, b => b.OpenInExternalEditor);
 				});
 		}
 
@@ -91,8 +88,6 @@ namespace PrivateWiki.Models.ViewModels
 			{
 				Page = Page
 			};
-			
-			
 		}
 
 		private async Task DeletePageAsync()
@@ -103,10 +98,10 @@ namespace PrivateWiki.Models.ViewModels
 			{
 				Logger.Info("Delete page");
 				Logger.ConditionalDebug($"Delete Page ({Page.Path.FullPath})");
-				
+
 				var backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
 				backend.DeletePageAsync(Page);
-				
+
 				_onDelete.OnNext(Unit.Default);
 			}
 		}
@@ -129,7 +124,8 @@ namespace PrivateWiki.Models.ViewModels
 
 		private Task OpenInExternalEditorAsync()
 		{
-			_onOpenInExternalEditor.OnNext(Unit.Default);
+			_onOpenInExternalEditor.OnNext(Page.Path);
+
 			return Task.CompletedTask;
 		}
 	}

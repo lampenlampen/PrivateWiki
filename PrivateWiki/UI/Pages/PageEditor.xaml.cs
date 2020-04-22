@@ -51,12 +51,12 @@ namespace PrivateWiki.UI.Pages
 					.Subscribe(ShowPage)
 					.DisposeWith(disposable);
 
-				ViewModel.ConfirmDelete.RegisterHandler(ConfirmDeleteAsync);
+				ViewModel.ConfirmDelete.RegisterHandler(ConfirmDeleteAsync).DisposeWith(disposable);
 
 				ViewModel.OnAbort.Subscribe(_ => Abort()).DisposeWith(disposable);
-				ViewModel.OnSave.Subscribe(x => NavigateToCurrentPage(x));
-				ViewModel.OnDelete.Subscribe(_ => NavigateToPreviousOrDefaultPage());
-
+				ViewModel.OnSave.Subscribe(x => NavigateToCurrentPage(x)).DisposeWith(disposable);
+				ViewModel.OnDelete.Subscribe(_ => NavigateToPreviousOrDefaultPage()).DisposeWith(disposable);
+				ViewModel.OnOpenInExternalEditor.Subscribe(x => Frame.Navigate(typeof(ExternalEditor), x.FullPath)).DisposeWith(disposable);
 			});
 		}
 
@@ -71,7 +71,7 @@ namespace PrivateWiki.UI.Pages
 				PrimaryButtonText = "Delete Page",
 				DefaultButton = ContentDialogButton.Close
 			};
-			
+
 			context.SetOutput(await dialog.ShowAsync() == ContentDialogResult.Primary);
 		}
 
