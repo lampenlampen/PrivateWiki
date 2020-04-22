@@ -28,7 +28,7 @@ namespace PrivateWiki
 		// By default, current is an instance of the Application class, which needs to be changed to be an instance of the App class.
 		public new static App Current;
 
-		public GlobalNotificationManager Manager { get; private set; }
+		public GlobalNotificationManager GlobalNotificationManager { get; private set; }
 
 		public InAppNotification Notification;
 
@@ -79,7 +79,7 @@ namespace PrivateWiki
 
 				var notificationGrid = new Grid();
 
-				Manager = new GlobalNotificationManager(new LocalNotificationManager(notificationGrid));
+				GlobalNotificationManager = new GlobalNotificationManager(new LocalNotificationManager(notificationGrid));
 				Notification = new InAppNotification();
 
 				rootGrid.Children.Add(rootFrame);

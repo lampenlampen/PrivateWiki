@@ -84,7 +84,7 @@ namespace PrivateWiki.Models.ViewModels
 			Page = await backend.GetPageAsync(path.FullPath);
 
 			// Testing
-			PageContentViewModel = new MarkdownPageEditorControlViewModel
+			PageContentViewModel = new TextPageEditorControlViewModel()
 			{
 				Page = Page
 			};
@@ -106,14 +106,13 @@ namespace PrivateWiki.Models.ViewModels
 			}
 		}
 
-		private Task SavePageAsync(GenericPage page)
+		private async Task SavePageAsync(GenericPage page)
 		{
 			// Save page
 			var backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
-			backend.UpdatePage(page, PageAction.Edited);
+			await backend.UpdatePage(page, PageAction.Edited);
 
 			_onSave.OnNext(Page.Path);
-			return Task.CompletedTask;
 		}
 
 		private Task AbortAsync()

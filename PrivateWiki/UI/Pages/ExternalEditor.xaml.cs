@@ -45,9 +45,9 @@ namespace PrivateWiki.UI.Pages
 		{
 			base.OnNavigatedTo(e);
 
-			var pageId = (Guid) e.Parameter;
+			var path = (string) e.Parameter;
 
-			Page = await _storage.GetMarkdownPageAsync(pageId);
+			Page = await _storage.GetMarkdownPageAsync(path);
 
 			LaunchExternalEditor();
 		}

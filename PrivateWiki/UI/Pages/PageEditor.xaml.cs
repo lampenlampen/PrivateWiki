@@ -84,9 +84,9 @@ namespace PrivateWiki.UI.Pages
 
 		private void ShowPage(IPageEditorControlViewModel vm)
 		{
-			var control = new MarkdownPageEditorControl
+			var control = new TextPageEditorControl()
 			{
-				ViewModel = (MarkdownPageEditorControlViewModel) vm
+				ViewModel = (TextPageEditorControlViewModel) vm
 			};
 
 			PageContentControlHost.Children.Add(control);

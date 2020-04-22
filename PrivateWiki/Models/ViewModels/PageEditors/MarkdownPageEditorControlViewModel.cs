@@ -1,15 +1,20 @@
 using System;
-using System.Reactive;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using PrivateWiki.Models.Pages;
 using ReactiveUI;
 
 namespace PrivateWiki.Models.ViewModels.PageEditors
 {
 	public class MarkdownPageEditorControlViewModel : PageEditorControlViewModelBase
 	{
+		private MarkdownPageEditorControlPivotItem _currentPivotItem = MarkdownPageEditorControlPivotItem.Editor;
+
+		public MarkdownPageEditorControlPivotItem CurrentPivotItem
+		{
+			get => _currentPivotItem;
+			set => this.RaiseAndSetIfChanged(ref _currentPivotItem, value);
+		}
+
 		public MarkdownPageEditorControlViewModel()
 		{
 			this.WhenAnyValue(x => x.Page)
@@ -29,5 +34,13 @@ namespace PrivateWiki.Models.ViewModels.PageEditors
 				// TODO Save, although nothing changed
 			}
 		}
+	}
+
+	public enum MarkdownPageEditorControlPivotItem
+	{
+		Editor,
+		Preview,
+		HtmlPreview,
+		Metadata
 	}
 }

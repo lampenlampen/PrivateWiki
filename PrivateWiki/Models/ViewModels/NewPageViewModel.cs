@@ -127,7 +127,7 @@ namespace PrivateWiki.Models.ViewModels
 
 				if (a)
 				{
-					App.Current.Manager.ShowPageExistsNotificationOnUIThread();
+					App.Current.GlobalNotificationManager.ShowPageExistsNotificationOnUIThread();
 				}
 				else
 				{

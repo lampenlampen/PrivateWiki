@@ -26,5 +26,24 @@ namespace PrivateWiki.Renderer
 				}
 			});
 		}
+
+		public Task<string> RenderContentAsync(string content, string contentType)
+		{
+			return Task.Run(() =>
+			{
+				switch (contentType.ToLower())
+				{
+					case "markdown":
+						var renderer = new Markdig.Markdig();
+						return renderer.ToHtmlCustom(renderer.Parse(content));
+					case "html":
+						return content;
+					case "text":
+						return $"<pre>{content}</pre>";
+					default:
+						return content;
+				}
+			});
+		}
 	}
 }

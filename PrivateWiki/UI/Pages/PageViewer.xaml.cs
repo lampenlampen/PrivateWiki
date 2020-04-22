@@ -10,7 +10,6 @@ using NLog;
 using PrivateWiki.Models.Pages;
 using PrivateWiki.Models.ViewModels;
 using PrivateWiki.UI.Controls.PageViewers;
-using PrivateWiki.UI.Pages.ContentPages;
 using ReactiveUI;
 using Page = Windows.UI.Xaml.Controls.Page;
 
@@ -196,7 +195,7 @@ namespace PrivateWiki.UI.Pages
 
 		private async Task ShowPageLockedNotification(InteractionContext<Path, Unit> context)
 		{
-			App.Current.Manager.ShowPageLockedNotification();
+			App.Current.GlobalNotificationManager.ShowPageLockedNotification();
 
 			context.SetOutput(Unit.Default);
 		}

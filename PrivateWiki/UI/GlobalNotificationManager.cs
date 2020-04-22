@@ -141,6 +141,18 @@ namespace PrivateWiki.UI
 				});
 		}
 
+		public static void ShowLinkClickedNotification(this GlobalNotificationManager manager, string link)
+		{
+			Logger.Debug("Show link clicked notification");
+
+			manager.Show(new SimpleNotification
+			{
+				Text = $"Link \"{link}\" clicked.",
+				VerticalAlignment = VerticalAlignment.Bottom,
+				TimeSpan = TimeSpan.FromSeconds(3)
+			});
+		}
+
 		public delegate SimpleNotification NotificationDelegate();
 
 		public static void ShowOnUIThread(this GlobalNotificationManager manager, NotificationDelegate d)

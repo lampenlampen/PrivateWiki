@@ -70,7 +70,7 @@ namespace PrivateWiki.UI.Controls.Settings.Sync
 			// TODO Light Sync
 			await new LFSSyncActions().ExportTask2(Model);
 
-			App.Current.Manager.ShowOperationFinishedNotification();
+			App.Current.GlobalNotificationManager.ShowOperationFinishedNotification();
 		}
 
 		private async void ImportData(object sender, RoutedEventArgs e)

@@ -5,9 +5,85 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pageEditors="using:PrivateWiki.UI.Controls.PageEditors"
+    xmlns:controls1="using:PrivateWiki.UI.Controls"
     mc:Ignorable="d">
 
     <Grid>
-        <TextBlock Text="HtmlPageEditorControl"/>
+        <Pivot
+            Name="Pivot">
+
+            <PivotItem
+                x:Name="EditorPivotItem"
+                Header="Editor">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0">
+                        <Grid
+                            x:Name="PageEditorTextBoxGrid">
+                            <TextBox
+                                Name="PageEditorTextBox"
+                                Text="Lorem Ipsum"
+                                AcceptsReturn="True"
+                                TextWrapping="Wrap"
+                                MinHeight="400" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </PivotItem>
+
+            <PivotItem
+                x:Name="PreviewPivotItem"
+                Header="Preview">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <WebView
+                        Grid.Row="0"
+                        Name="Preview_WebView"
+                        Height="Auto"
+                        Width="Auto"
+                        MaxHeight="500" />
+
+                </Grid>
+            </PivotItem>
+
+            <PivotItem
+                x:Name="MetadataPivotItem"
+                Header="Metadaten">
+
+                <StackPanel>
+
+                    <TextBlock Text="Tags"
+                               HorizontalAlignment="Left"
+                               FontSize="30"
+                               TextDecorations="Underline"
+                               Padding="20, 0, 0, 20" />
+
+                    <TextBox
+                        Name="AddTagBox" />
+
+                    <Button
+                        Name="AddTagButton"
+                        Content="Add Tag" />
+
+                    <ListView
+                        Name="ListView"
+                        SelectionMode="None" />
+                    
+                </StackPanel>
+            </PivotItem>
+
+            <Pivot.RightHeader>
+                <controls1:PageEditorCommandBar x:Name="commandBar" />
+            </Pivot.RightHeader>
+        </Pivot>
     </Grid>
 </pageEditors:HtmlPageEditorControlBase>

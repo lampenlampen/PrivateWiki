@@ -44,7 +44,7 @@ namespace PrivateWiki.UI.Pages.ContentPages
 
 			if (Page.IsLocked)
 			{
-				App.Current.Manager.Show(new SimpleNotification
+				App.Current.GlobalNotificationManager.Show(new SimpleNotification
 				{
 					TimeSpan = TimeSpan.FromSeconds(3),
 					Text = "Page cannot be edited.",
@@ -122,7 +122,7 @@ namespace PrivateWiki.UI.Pages.ContentPages
 		{
 			// TODO Import Dialog
 
-			App.Current.Manager.ShowNotImplementedNotification();
+			App.Current.GlobalNotificationManager.ShowNotImplementedNotification();
 		}
 
 		public void CommandBar_OnNavigateToPage(object sender, string id)

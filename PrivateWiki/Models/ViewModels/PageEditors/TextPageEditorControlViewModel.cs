@@ -1,39 +1,44 @@
 using System;
-using System.Reactive;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using PrivateWiki.Models.Pages;
+using System.Threading.Tasks;
 using ReactiveUI;
 
 namespace PrivateWiki.Models.ViewModels.PageEditors
 {
-	public class TextPageEditorControlViewModel : ReactiveObject, IPageEditorControlViewModel
+	public class TextPageEditorControlViewModel : PageEditorControlViewModelBase
 	{
-		private IPageEditorCommandBarViewModel _commandBarViewModel = null!;
+		private TextPageEditorControlPivotItem _currentPivotItem = TextPageEditorControlPivotItem.Editor;
 
-		public IPageEditorCommandBarViewModel CommandBarViewModel
+		public TextPageEditorControlPivotItem CurrentPivotItem
 		{
-			get => _commandBarViewModel;
-			private set => this.RaiseAndSetIfChanged(ref _commandBarViewModel, value);
+			get => _currentPivotItem;
+			set => this.RaiseAndSetIfChanged(ref _currentPivotItem, value);
 		}
-
-		public GenericPage Page { get; set; }
-		public IObservable<GenericPage> OnSavePage { get; }
-
-		public IObservable<Unit> OnAbort { get; }
-
-		public IObservable<Unit> OnOpenInExternalEditor { get; }
-		
-		public IObservable<Unit> OnDelete { get; }
 
 		public TextPageEditorControlViewModel()
 		{
-			CommandBarViewModel = new PageEditorCommandBarViewModel();
-
-			OnAbort = CommandBarViewModel.OnAbort.AsObservable();
-			// OnSavePage = CommandBarViewModel.OnSave.AsObservable();
-			OnOpenInExternalEditor = CommandBarViewModel.OnOpenInExternalEditor.AsObservable();
-			OnDelete = CommandBarViewModel.OnDelete.AsObservable();
+			this.WhenAnyValue(x => x.Page)
+				.Where(x => x != null)
+				.Subscribe(x => Content = x.Content);
 		}
+
+		private protected override async Task SavePageAsync()
+		{
+			if (Content != Page.Content)
+			{
+				var newPage = Page.Clone(content: Content);
+				_onSavePage.OnNext(newPage);
+			}
+			else
+			{
+				// TODO Save, although nothing changed
+			}
+		}
+	}
+
+	public enum TextPageEditorControlPivotItem
+	{
+		Editor,
+		Metadata
 	}
 }

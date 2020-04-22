@@ -9,9 +9,61 @@
     mc:Ignorable="d">
 
     <Grid>
-        <StackPanel>
-            <controls:PageEditorCommandBar x:Name="commandBar"/>
-            <TextBlock Text="TextPageEditorControl"/>
-        </StackPanel>
+        <Pivot
+            Name="Pivot">
+
+            <PivotItem
+                x:Name="EditorPivotItem"
+                Header="Editor">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0">
+                        <Grid
+                            x:Name="PageEditorTextBoxGrid">
+                            <TextBox
+                                Name="PageEditorTextBox"
+                                Text="Lorem Ipsum"
+                                AcceptsReturn="True"
+                                TextWrapping="Wrap"
+                                MinHeight="400" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </PivotItem>
+            
+            <PivotItem
+                x:Name="MetadataPivotItem"
+                Header="Metadaten">
+
+                <StackPanel>
+
+                    <TextBlock Text="Tags"
+                               HorizontalAlignment="Left"
+                               FontSize="30"
+                               TextDecorations="Underline"
+                               Padding="20, 0, 0, 20" />
+
+                    <TextBox
+                        Name="AddTagBox" />
+
+                    <Button
+                        Name="AddTagButton"
+                        Content="Add Tag" />
+
+                    <ListView
+                        Name="ListView"
+                        SelectionMode="None" />
+
+                </StackPanel>
+            </PivotItem>
+
+            <Pivot.RightHeader>
+                <controls:PageEditorCommandBar x:Name="commandBar" />
+            </Pivot.RightHeader>
+        </Pivot>
     </Grid>
 </pageEditors:TextPageEditorControlBase>

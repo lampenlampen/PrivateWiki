@@ -176,7 +176,7 @@ namespace PrivateWiki.Models.ViewModels
 		private Task ExportAsync(Path link)
 		{
 			// TODO Export
-			App.Current.Manager.ShowNotImplementedNotification();
+			App.Current.GlobalNotificationManager.ShowNotImplementedNotification();
 
 			return Task.CompletedTask;
 		}
@@ -184,7 +184,7 @@ namespace PrivateWiki.Models.ViewModels
 		private Task ImportAsync()
 		{
 			//TODO Import
-			App.Current.Manager.ShowNotImplementedNotification();
+			App.Current.GlobalNotificationManager.ShowNotImplementedNotification();
 
 			return Task.CompletedTask;
 		}
@@ -207,7 +207,7 @@ namespace PrivateWiki.Models.ViewModels
 		private Task ToggleFullscreenAsync()
 		{
 			// TODO Toggle Fullscreen
-			App.Current.Manager.ShowNotImplementedNotification();
+			App.Current.GlobalNotificationManager.ShowNotImplementedNotification();
 			return Task.CompletedTask;
 		}
 

@@ -7,213 +7,189 @@
     xmlns:pageEditors="using:PrivateWiki.UI.Controls.PageEditors"
     xmlns:controls="using:PrivateWiki.UI.Controls"
     xmlns:uwp="using:FontAwesome.UWP"
-    xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
     <Grid>
         <Pivot
-        Name="Pivot">
+            Name="Pivot">
 
-        <PivotItem
-            Header="Editor">
+            <PivotItem
+                x:Name="EditorPivotItem"
+                Header="Editor">
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0">
+                    <StackPanel Grid.Row="0">
+                        <CommandBar
+                            Name="Toolbar">
 
-                    <CommandBar
-                        Name="Toolbar">
+                            <CommandBar.Content>
+                                <StackPanel
+                                    Orientation="Horizontal">
 
-                        <CommandBar.Content>
+                                    <AppBarButton
+                                        Icon="Pictures"
+                                        IsCompact="True"
+                                        ToolTipService.ToolTip="Images"
+                                        AutomationProperties.Name="Images">
+                                        <FlyoutBase.AttachedFlyout>
+                                            <MenuFlyout Placement="Bottom">
+                                                <MenuFlyoutItem Text="Add Existing Image" Icon="Pictures" />
+                                                <MenuFlyoutItem Text="Add New Image" Icon="Pictures" />
+                                            </MenuFlyout>
+                                        </FlyoutBase.AttachedFlyout>
+                                    </AppBarButton>
 
-                            <StackPanel
-                                Orientation="Horizontal">
+                                    <AppBarButton
+                                        Name="Bold"
+                                        Content="Bold"
+                                        ToolTipService.ToolTip="Bold"
+                                        Icon="Bold" />
 
-                                <AppBarButton
-                                    Icon="Pictures"
-                                    IsCompact="True"
-                                    ToolTipService.ToolTip="Images"
-                                    AutomationProperties.Name="Images">
-                                    <FlyoutBase.AttachedFlyout>
-                                        <MenuFlyout Placement="Bottom">
-                                            <MenuFlyoutItem Text="Add Existing Image" Icon="Pictures"/>
-                                            <MenuFlyoutItem Text="Add New Image" Icon="Pictures"/>
-                                        </MenuFlyout>
-                                    </FlyoutBase.AttachedFlyout>
-                                </AppBarButton>
+                                    <AppBarButton
+                                        Name="Underline"
+                                        IsEnabled="False"
+                                        ToolTipService.ToolTip="Underline"
+                                        Icon="Underline" />
 
-                                <AppBarButton
-                                    Name="Bold"
-                                    Content="Bold"
-                                    ToolTipService.ToolTip="Bold"
-                                    Icon="Bold"/>
+                                    <AppBarButton
+                                        Name="Italic"
+                                        ToolTipService.ToolTip="Italic"
+                                        Icon="Italic" />
 
-                                <AppBarButton
-                                    Name="Underline"
-                                    IsEnabled="False"
-                                    ToolTipService.ToolTip="Underline"
-                                    Icon="Underline"
-                                     />
+                                    <AppBarButton
+                                        Name="HyperLink"
+                                        ToolTipService.ToolTip="HyperLink"
+                                        Icon="Link" />
 
-                                <AppBarButton
-                                    Name="Italic"
-                                    ToolTipService.ToolTip="Italic"
-                                    Icon="Italic"/>
+                                    <AppBarButton
+                                        Name="WikiLink"
+                                        ToolTipService.ToolTip="WikiLink"
+                                        Icon="Link" />
 
-                                <AppBarButton
-                                    Name="HyperLink"
-                                    ToolTipService.ToolTip="HyperLink"
-                                    Icon="Link"/>
+                                    <AppBarButton
+                                        Name="NumberedList"
+                                        IsEnabled="False"
+                                        ToolTipService.ToolTip="Numbered List"
+                                        Icon="List" />
 
-                                <AppBarButton
-                                    Name="WikiLink"
-                                    ToolTipService.ToolTip="WikiLink"
-                                    Icon="Link"/>
+                                    <AppBarButton
+                                        Name="List"
+                                        IsEnabled="False"
+                                        ToolTipService.ToolTip="List"
+                                        Icon="List" />
 
-                                <AppBarButton
-                                    Name="NumberedList"
-                                    IsEnabled="False"
-                                    ToolTipService.ToolTip="Numbered List"
-                                    Icon="List"/>
+                                    <AppBarButton
+                                        Name="Quote"
+                                        IsEnabled="False"
+                                        Content="Quote"
+                                        ToolTipService.ToolTip="Quote" />
 
-                                <AppBarButton
-                                    Name="List"
-                                    IsEnabled="False"
-                                    ToolTipService.ToolTip="List"
-                                    Icon="List"/>
+                                    <AppBarButton
+                                        Name="HorizontalRule"
+                                        Content="Horizontal Rule"
+                                        ToolTipService.ToolTip="Horizontal Rule" />
 
-                                <AppBarButton
-                                    Name="Quote"
-                                    IsEnabled="False"
-                                    Content="Quote"
-                                    ToolTipService.ToolTip="Quote"/>
+                                    <AppBarButton
+                                        Name="Code"
+                                        IsEnabled="False"
+                                        Content="Code"
+                                        ToolTipService.ToolTip="Code" />
 
-                                <AppBarButton
-                                    Name="HorizontalRule"
-                                    Content="Horizontal Rule"
-                                    ToolTipService.ToolTip="Horizontal Rule"/>
+                                    <AppBarButton
+                                        Name="Strikethrough"
+                                        Content="Strikethrough"
+                                        ToolTipService.ToolTip="Strikethrough" />
 
-                                <AppBarButton
-                                    Name="Code"
-                                    IsEnabled="False"
-                                    Content="Code"
-                                    ToolTipService.ToolTip="Code"/>
+                                    <AppBarButton
+                                        Name="Table"
+                                        ToolTipService.ToolTip="Table"
+                                        IsEnabled="False">
+                                        <AppBarButton.Icon>
+                                            <uwp:FontAwesome Icon="Table" />
+                                        </AppBarButton.Icon>
+                                    </AppBarButton>
+                                </StackPanel>
+                            </CommandBar.Content>
+                        </CommandBar>
 
-                                <AppBarButton
-                                    Name="Strikethrough"
-                                    Content="Strikethrough"
-                                    ToolTipService.ToolTip="Strikethrough"/>
+                        <Grid
+                            x:Name="PageEditorTextBoxGrid">
+                            <TextBox
+                                Name="PageEditorTextBox"
+                                Text="Lorem Ipsum"
+                                AcceptsReturn="True"
+                                TextWrapping="Wrap"
+                                MinHeight="400" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </PivotItem>
 
-                                <AppBarButton
-                                    Name="Table"
-                                    ToolTipService.ToolTip="Table"
-                                    IsEnabled="False">
-                                    <AppBarButton.Icon>
-                                        <uwp:FontAwesome Icon="Table"/>
-                                    </AppBarButton.Icon>
-                                </AppBarButton>
+            <PivotItem
+                x:Name="PreviewPivotItem"
+                Header="Preview">
 
-                            </StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <WebView
+                        Grid.Row="0"
+                        Name="Preview_WebView"
+                        Height="Auto"
+                        Width="Auto"
+                        MaxHeight="500" />
 
-                        </CommandBar.Content>
-                    </CommandBar>
+                </Grid>
+            </PivotItem>
 
-                    <Grid
-                        x:Name="PageEditorTextBoxGrid">
-                        <TextBox
-                            Name="PageEditorTextBox"
-                            Text="Lorem Ipsum"
-                            AcceptsReturn="True"
-                            TextWrapping="Wrap"
-                            MinHeight="400"
-                            Background="White" />
-                    </Grid>
+            <PivotItem
+                x:Name="HtmlPreviewPivotItem"
+                Header="Html">
+                <ScrollViewer
+                    VerticalScrollMode="Auto">
+                    <GridView>
+                        <TextBlock
+                            x:Name="Preview_Html"
+                            IsTextSelectionEnabled="True"
+                            VerticalAlignment="Stretch" />
+                    </GridView>
+                </ScrollViewer>
+            </PivotItem>
 
+            <PivotItem
+                x:Name="MetadataPivotItem"
+                Header="Metadaten">
+                <StackPanel>
+
+                    <TextBlock Text="Tags"
+                               HorizontalAlignment="Left"
+                               FontSize="30"
+                               TextDecorations="Underline"
+                               Padding="20, 0, 0, 20" />
+
+                    <TextBox
+                        Name="AddTagBox" />
+
+                    <Button
+                        Name="AddTagButton"
+                        Content="Add Tag" />
+
+                    <ListView
+                        Name="ListView"
+                        SelectionMode="None" />
 
                 </StackPanel>
-
-            </Grid>
-
-        </PivotItem>
-
-        <PivotItem
-            Header="Preview">
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-
-                <WebView
-                    Grid.Row="0"
-                    Name="Preview_WebView"
-                    Height="Auto"
-                    Width="Auto"
-                    MaxHeight="500"/>
-
-                <controls1:InAppNotification
-                    Grid.Row="1"
-                    x:Name="InAppNotification"
-                    ShowDismissButton="True" />
-
-
-            </Grid>
-
-        </PivotItem>
-
-        <PivotItem
-            Header="Html">
-            <ScrollViewer
-                VerticalScrollMode="Auto">
-                <GridView>
-
-                    <TextBlock
-                        x:Name="Preview_Html"
-                        IsTextSelectionEnabled="True" 
-                        VerticalAlignment="Stretch"/>
-
-
-                </GridView>
-            </ScrollViewer>
-        </PivotItem>
-
-        <PivotItem
-            Header="Metadaten">
-
-            <StackPanel>
-
-                <TextBlock Text="Tags"
-                           HorizontalAlignment="Left"
-                           FontSize="30"
-                           TextDecorations="Underline"
-                           Padding="20, 0, 0, 20" />
-
-                <TextBox
-                    Name="AddTagBox" />
-
-                <Button
-                    Name="AddTagButton"
-                    Content="Add Tag"/>
-
-                <ListView
-                    Name="ListView"
-                    SelectionMode="None" />
-
-
-            </StackPanel>
-
-
-        </PivotItem>
-
-        <Pivot.RightHeader>
-            <controls:PageEditorCommandBar x:Name="commandBar"/>
-        </Pivot.RightHeader>
-
-    </Pivot>
+            </PivotItem>
+            <Pivot.RightHeader>
+                <controls:PageEditorCommandBar x:Name="commandBar" />
+            </Pivot.RightHeader>
+        </Pivot>
     </Grid>
 </pageEditors:MarkdownPageEditorControlBase>
