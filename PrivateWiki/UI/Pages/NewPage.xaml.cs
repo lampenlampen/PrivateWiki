@@ -2,22 +2,16 @@
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using JetBrains.Annotations;
-using NodaTime;
 using PrivateWiki.Data;
-using PrivateWiki.Models.Pages;
 using PrivateWiki.Models.ViewModels;
-using PrivateWiki.StorageBackend;
-using PrivateWiki.StorageBackend.SQLite;
 using ReactiveUI;
 using ReactiveUI.Validation.Extensions;
-using Page = Windows.UI.Xaml.Controls.Page;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 namespace PrivateWiki.UI.Pages
@@ -133,27 +127,6 @@ namespace PrivateWiki.UI.Pages
 			_pageId = link;
 
 			if (link != null) ViewModel.LinkString = link;
-		}
-
-		private void CreatePage_Click([NotNull] object sender, [NotNull] RoutedEventArgs e)
-		{
-			NavigateToPageEditor();
-		}
-
-		private async void ImportPage_Click(object sender, RoutedEventArgs e)
-		{
-			var backend = new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance);
-			var file = await FileSystemAccess.PickMarkdownFileAsync();
-
-			if (file == null) return;
-
-			var content = await FileIO.ReadTextAsync(file);
-
-			var page = new GenericPage(_pageId, Guid.NewGuid(), content, "markdown", SystemClock.Instance.GetCurrentInstant(), SystemClock.Instance.GetCurrentInstant(), false);
-
-			await backend.InsertPageAsync(page);
-
-			NavigateToPageEditor();
 		}
 
 		private void NavigateToPageEditor()
