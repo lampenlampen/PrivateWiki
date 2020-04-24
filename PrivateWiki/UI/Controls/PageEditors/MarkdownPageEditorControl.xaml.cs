@@ -5,7 +5,6 @@ using Windows.UI.Xaml.Controls;
 using NLog;
 using PrivateWiki.Models.ViewModels;
 using PrivateWiki.Models.ViewModels.PageEditors;
-using PrivateWiki.Renderer;
 using ReactiveUI;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -44,8 +43,13 @@ namespace PrivateWiki.UI.Controls.PageEditors
 					.Subscribe(_ => ViewModel.CurrentPivotItem = SelectedItemToPivotItemConverter(Pivot.SelectedItem))
 					.DisposeWith(disposable);
 
-				this.WhenAnyValue(x => x.ViewModel.CurrentPivotItem)
-					.Subscribe(OnPivotSelectionChanged)
+				this.WhenAnyValue(x => x.ViewModel.PreviewContent)
+					.Subscribe(x => Preview_WebView.NavigateToString(x))
+					.DisposeWith(disposable);
+
+				this.OneWayBind(ViewModel,
+						vm => vm.HtmlPreviewContent,
+						view => view.Preview_Html.Text)
 					.DisposeWith(disposable);
 
 				Preview_WebView.Events().NavigationStarting
@@ -71,29 +75,6 @@ namespace PrivateWiki.UI.Controls.PageEditors
 					return MarkdownPageEditorControlPivotItem.Metadata;
 				default:
 					throw new ArgumentOutOfRangeException(nameof(selectedItem), selectedItem, $"PivotItem {selectedPivotItem.Name} not handled!");
-			}
-		}
-
-		private async void OnPivotSelectionChanged(MarkdownPageEditorControlPivotItem item)
-		{
-			ContentRenderer renderer = new ContentRenderer();
-			string content;
-			switch (item)
-			{
-				case MarkdownPageEditorControlPivotItem.Editor:
-					break;
-				case MarkdownPageEditorControlPivotItem.Preview:
-					content = await renderer.RenderContentAsync(ViewModel.Content, "markdown");
-					Preview_WebView.NavigateToString(content);
-					break;
-				case MarkdownPageEditorControlPivotItem.HtmlPreview:
-					content = await renderer.RenderContentAsync(ViewModel.Content, "markdown");
-					Preview_Html.Text = content;
-					break;
-				case MarkdownPageEditorControlPivotItem.Metadata:
-					break;
-				default:
-					throw new ArgumentOutOfRangeException(nameof(item), item, null);
 			}
 		}
 

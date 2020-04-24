@@ -11,7 +11,7 @@ namespace PrivateWiki.StorageBackend.SQLite
 
 	public class SqLiteBackend : ISqLiteBackend, IMarkdownPageStorage, IGenericPageStorage
 	{
-		private const bool IsObsoleteError = true;
+		private const bool IsObsoleteError = false;
 
 		private readonly SqLiteStorage _sqLite;
 
