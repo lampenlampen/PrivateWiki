@@ -1,5 +1,3 @@
-using System;
-using System.Globalization;
 using System.Linq;
 
 namespace PrivateWiki.Data
@@ -18,9 +16,9 @@ namespace PrivateWiki.Data
 		}
 
 		public string Name { get; }
-		
+
 		public string FileExtension { get; }
-		
+
 		public string MimeType { get; }
 
 		public static ContentType Parse(string contentTypeString)
@@ -30,6 +28,4 @@ namespace PrivateWiki.Data
 			return contentTypes.First(x => x.Name.ToLower().Equals(contentTypeString.ToLower()));
 		}
 	}
-	
-	
 }

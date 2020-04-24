@@ -11,7 +11,7 @@ using ReactiveUI;
 
 namespace PrivateWiki.UI.Controls.PageEditors
 {
-	public class HtmlPageEditorControlBase : ReactiveUserControl<HtmlPageEditorControlViewModel>
+	public class HtmlPageEditorControlBase : PageEditorControlBase<HtmlPageEditorControlViewModel>
 	{
 	}
 

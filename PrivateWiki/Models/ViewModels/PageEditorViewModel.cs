@@ -17,6 +17,8 @@ namespace PrivateWiki.Models.ViewModels
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
+		private readonly IGenericPageStorage _backend;
+
 		private GenericPage Page = null!;
 
 		private IPageEditorControlViewModel _pageContentViewModel = null!;
@@ -54,6 +56,8 @@ namespace PrivateWiki.Models.ViewModels
 
 		public PageEditorViewModel()
 		{
+			_backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
+
 			ShowPage = ReactiveCommand.CreateFromTask<Path>(ShowPageAsync);
 			SavePage = ReactiveCommand.CreateFromTask<GenericPage>(SavePageAsync);
 			Abort = ReactiveCommand.CreateFromTask(AbortAsync);
@@ -80,13 +84,14 @@ namespace PrivateWiki.Models.ViewModels
 
 		private async Task ShowPageAsync(Path path)
 		{
-			var backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
-			Page = await backend.GetPageAsync(path.FullPath);
+			Page = await _backend.GetPageAsync(path.FullPath);
 
-			// Testing
-			PageContentViewModel = new TextPageEditorControlViewModel()
+			PageContentViewModel = Page.ContentType.MimeType switch
 			{
-				Page = Page
+				"text/markdown" => new MarkdownPageEditorControlViewModel {Page = Page},
+				"text/html" => new HtmlPageEditorControlViewModel {Page = Page},
+				"text/plain" => new TextPageEditorControlViewModel {Page = Page},
+				_ => new TextPageEditorControlViewModel {Page = Page}
 			};
 		}
 
@@ -99,8 +104,7 @@ namespace PrivateWiki.Models.ViewModels
 				Logger.Info("Delete page");
 				Logger.ConditionalDebug($"Delete Page ({Page.Path.FullPath})");
 
-				var backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
-				backend.DeletePageAsync(Page);
+				_backend.DeletePageAsync(Page);
 
 				_onDelete.OnNext(Unit.Default);
 			}
@@ -109,8 +113,7 @@ namespace PrivateWiki.Models.ViewModels
 		private async Task SavePageAsync(GenericPage page)
 		{
 			// Save page
-			var backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
-			await backend.UpdatePage(page, PageAction.Edited);
+			await _backend.UpdatePage(page, PageAction.Edited);
 
 			_onSave.OnNext(Page.Path);
 		}

@@ -13,6 +13,8 @@ namespace PrivateWiki.Models.Pages
 		{
 		}
 
-		public override string GetContentType() => "markdown";
+		public string GetContentType() => "markdown";
+
+		public string ContentType => GetContentType();
 	}
 }

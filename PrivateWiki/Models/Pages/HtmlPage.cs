@@ -2,6 +2,6 @@
 {
 	public class HtmlPage : Page
 	{
-		public override string GetContentType() => "Html";
+		//public string GetContentType() => "Html";
 	}
 }

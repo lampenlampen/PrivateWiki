@@ -10,7 +10,8 @@
 
     <Grid>
         <Pivot
-            Name="Pivot">
+            x:Name="Pivot"
+            Title="Html Page Editor">
 
             <PivotItem
                 x:Name="EditorPivotItem"

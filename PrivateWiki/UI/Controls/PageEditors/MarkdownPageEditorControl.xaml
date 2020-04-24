@@ -11,7 +11,8 @@
 
     <Grid>
         <Pivot
-            Name="Pivot">
+            x:Name="Pivot"
+            Title="Markdown Page Editor">
 
             <PivotItem
                 x:Name="EditorPivotItem"

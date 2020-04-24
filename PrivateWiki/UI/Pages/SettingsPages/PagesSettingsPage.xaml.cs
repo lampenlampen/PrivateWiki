@@ -15,7 +15,7 @@ namespace PrivateWiki.UI.Pages.SettingsPages
 	/// </summary>
 	public sealed partial class PagesSettingsPage : Page
 	{
-		public ObservableCollection<global::PrivateWiki.Models.Pages.Page> Pages { get; set; } = new ObservableCollection<global::PrivateWiki.Models.Pages.Page>();
+		public ObservableCollection<Models.Pages.Page> Pages { get; set; } = new ObservableCollection<Models.Pages.Page>();
 
 		public PagesSettingsPage()
 		{
@@ -26,7 +26,7 @@ namespace PrivateWiki.UI.Pages.SettingsPages
 		private async void Init()
 		{
 			var backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
-			var pages = await backend.GetAllMarkdownPagesAsync();
+			var pages = await backend.GetAllPagesAsync();
 
 			foreach (var page in pages)
 			{

@@ -101,7 +101,7 @@
                                     <controls1:DataGridTextColumn
                                         Header="Content Type"
                                         Width="SizeToHeader"
-                                        Binding="{Binding ContentType}"
+                                        Binding="{Binding Path=ContentType.Name}"
                                         FontSize="16"/>
                                     
                                 </controls1:DataGrid.Columns>

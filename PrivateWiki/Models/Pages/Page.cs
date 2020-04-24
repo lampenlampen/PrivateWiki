@@ -61,8 +61,8 @@ namespace PrivateWiki.Models.Pages
 
 		public List<Tag> Tags { get; }
 
-		public string ContentType => GetContentType();
+		//public string ContentType => GetContentType();
 
-		public abstract string GetContentType();
+		//public abstract string GetContentType();
 	}
 }

@@ -54,7 +54,7 @@ namespace PrivateWiki.UI.Pages
 				ViewModel.ConfirmDelete.RegisterHandler(ConfirmDeleteAsync).DisposeWith(disposable);
 
 				ViewModel.OnAbort.Subscribe(_ => Abort()).DisposeWith(disposable);
-				ViewModel.OnSave.Subscribe(x => NavigateToCurrentPage(x)).DisposeWith(disposable);
+				ViewModel.OnSave.Subscribe(NavigateToCurrentPage).DisposeWith(disposable);
 				ViewModel.OnDelete.Subscribe(_ => NavigateToPreviousOrDefaultPage()).DisposeWith(disposable);
 				ViewModel.OnOpenInExternalEditor.Subscribe(x => Frame.Navigate(typeof(ExternalEditor), x.FullPath)).DisposeWith(disposable);
 			});
@@ -84,9 +84,12 @@ namespace PrivateWiki.UI.Pages
 
 		private void ShowPage(IPageEditorControlViewModel vm)
 		{
-			var control = new TextPageEditorControl()
+			UserControl control = vm.Page.ContentType.MimeType switch
 			{
-				ViewModel = (TextPageEditorControlViewModel) vm
+				"text/markdown" => new MarkdownPageEditorControl {ViewModel = (MarkdownPageEditorControlViewModel) vm},
+				"text/html" => new HtmlPageEditorControl {ViewModel = (HtmlPageEditorControlViewModel) vm},
+				"text/plain" => new TextPageEditorControl {ViewModel = (TextPageEditorControlViewModel) vm},
+				_ => new TextPageEditorControl {ViewModel = (TextPageEditorControlViewModel) vm}
 			};
 
 			PageContentControlHost.Children.Add(control);

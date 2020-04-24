@@ -12,7 +12,11 @@ using ReactiveUI;
 
 namespace PrivateWiki.UI.Controls.PageEditors
 {
-	public class MarkdownPageEditorControlBase : ReactiveUserControl<MarkdownPageEditorControlViewModel>
+	public abstract class PageEditorControlBase<T> : ReactiveUserControl<T> where T : PageEditorControlViewModelBase
+	{
+	}
+
+	public class MarkdownPageEditorControlBase : PageEditorControlBase<MarkdownPageEditorControlViewModel>
 	{
 	}
 

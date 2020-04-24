@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Data.Sqlite;
 using NodaTime;
+using PrivateWiki.Data;
 using PrivateWiki.Models.Pages;
 
 namespace PrivateWiki.StorageBackend.SQLite
@@ -28,7 +29,8 @@ namespace PrivateWiki.StorageBackend.SQLite
 			page.Created = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("created")));
 			page.LastChanged = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("changed")));
 			page.IsLocked = reader.GetBoolean(reader.GetOrdinal("locked"));
-			page.ContentType = reader.GetString(reader.GetOrdinal("contentType"));
+			//page.ContentType = reader.GetString(reader.GetOrdinal("contentType"));
+			page.ContentType = ContentType.Parse(reader.GetString(reader.GetOrdinal("contentType")));
 
 			var link = reader.GetString(reader.GetOrdinal("link"));
 			var path = link.Split(new[] {':'}, StringSplitOptions.RemoveEmptyEntries);

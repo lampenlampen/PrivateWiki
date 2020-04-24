@@ -1,5 +1,7 @@
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using PrivateWiki.Data;
 using PrivateWiki.Models.Pages;
 
 namespace PrivateWiki.Renderer
@@ -12,14 +14,14 @@ namespace PrivateWiki.Renderer
 			{
 				Debug.Assert(page != null, nameof(page) + " != null");
 
-				switch (page.ContentType.ToLower())
+				switch (page.ContentType.MimeType)
 				{
-					case "markdown":
+					case "text/markdown":
 						var renderer = new Markdig.Markdig();
 						return renderer.ToHtmlCustom(renderer.Parse(page.Content));
-					case "html":
+					case "text/html":
 						return page.Content;
-					case "text":
+					case "text/plain":
 						return $"<pre>{page.Content}</pre>";
 					default:
 						return page.Content;
@@ -27,6 +29,7 @@ namespace PrivateWiki.Renderer
 			});
 		}
 
+		[Obsolete]
 		public Task<string> RenderContentAsync(string content, string contentType)
 		{
 			return Task.Run(() =>
@@ -39,6 +42,25 @@ namespace PrivateWiki.Renderer
 					case "html":
 						return content;
 					case "text":
+						return $"<pre>{content}</pre>";
+					default:
+						return content;
+				}
+			});
+		}
+
+		public Task<string> RenderContentAsync(string content, ContentType contentType)
+		{
+			return Task.Run(() =>
+			{
+				switch (contentType.MimeType)
+				{
+					case "text/markdown":
+						var renderer = new Markdig.Markdig();
+						return renderer.ToHtmlCustom(renderer.Parse(content));
+					case "text/html":
+						return content;
+					case "text/plain":
 						return $"<pre>{content}</pre>";
 					default:
 						return content;
