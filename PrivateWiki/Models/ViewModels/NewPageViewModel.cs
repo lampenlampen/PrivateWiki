@@ -40,13 +40,13 @@ namespace PrivateWiki.Models.ViewModels
 		public ValidationHelper LinkValidationRule { get; }
 
 
-		public ContentType? ContentType
+		public ContentType ContentType
 		{
 			get => _contentType;
 			set => this.RaiseAndSetIfChanged(ref _contentType, value);
 		}
 
-		private ContentType? _contentType;
+		private ContentType _contentType = ContentType.Text;
 
 		public IReadOnlyCollection<ContentType> SupportedContentTypes { get; } = new ReadOnlyCollection<ContentType>(AppConfig.SupportedContentTypes2);
 
@@ -133,7 +133,7 @@ namespace PrivateWiki.Models.ViewModels
 				{
 					var now = _clock.GetCurrentInstant();
 
-					var page = new GenericPage(Link, "", ContentType!.Name, now, now, false);
+					var page = new GenericPage(Link, "", ContentType.Name, now, now, false);
 
 					await backend.InsertPageAsync(page);
 
