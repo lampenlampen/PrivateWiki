@@ -15,10 +15,10 @@
         Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
@@ -27,11 +27,21 @@
             x:Name="SearchPopup"
             HorizontalAlignment="Stretch"
             IsLightDismissEnabled="True"
-            LightDismissOverlayMode="On">
+            LightDismissOverlayMode="On"
+            Width="{Binding ElementName=PageViewerGrid, Path=Width}">
+            
+            <Border
+                Name="popupTestBorder"
+                Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
+                BorderBrush="{StaticResource ApplicationForegroundThemeBrush}"
+                BorderThickness="2">
+                
+                <ui:SearchPopupContent
+                    x:Name="SearchPopupContentName" />
+                
+            </Border>
 
-            <ui:SearchPopupContent x:Name="SearchPopupContentName"
-                                   HorizontalAlignment="Center"/>
-
+            
         </Popup>
 
         <controls:PageViewerCommandBar
@@ -40,12 +50,12 @@
             Grid.Column="0"
             Grid.ColumnSpan="3"
             Height="Auto"
-            Background="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+            Background="{ThemeResource SystemControlBackgroundAccentBrush}" />
 
         <Grid
             Grid.Row="1"
             Grid.Column="0"
-            x:Name="ContentGrid"/>
+            x:Name="ContentGrid" />
 
         <!--
         <Border

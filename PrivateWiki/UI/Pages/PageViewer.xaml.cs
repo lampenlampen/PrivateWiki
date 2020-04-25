@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Navigation;
 using NLog;
 using PrivateWiki.Models.Pages;
@@ -163,6 +164,7 @@ namespace PrivateWiki.UI.Pages
 
 		private void Search()
 		{
+			_centerPopup(SearchPopup);
 			SearchPopup.IsOpen = true;
 			SearchPopup.Closed += (sender, e) =>
 			{
@@ -198,6 +200,36 @@ namespace PrivateWiki.UI.Pages
 			App.Current.GlobalNotificationManager.ShowPageLockedNotification();
 
 			context.SetOutput(Unit.Default);
+		}
+
+		private void _centerPopup(Popup popup, FrameworkElement extraElement = null)
+		{
+			double ratio = .6; // How much of the window the popup fills, give or take. (90%)
+
+			Panel pnl = (Panel) popup.Parent;
+			double parentHeight = pnl.ActualHeight;
+			double parentWidth = pnl.ActualWidth;
+
+			// Min 200 for each dimension.
+			double width = parentWidth * ratio > 200 ? parentWidth * ratio : 200;
+			double height = parentHeight * ratio > 200 ? parentHeight * ratio : 200;
+
+			popup.Width = width;
+			//popup.Height = height;
+
+			//popup.HorizontalAlignment = HorizontalAlignment.Center;
+			popup.VerticalAlignment = VerticalAlignment.Top; // <<< This is ignored?!
+
+			// Resize the border too. Not sure how to get this "for free".
+			popupTestBorder.Width = width;
+			popupTestBorder.Height = height;
+
+			// Not using this here, but if there's anything else that needs resizing, do it.
+			if (null != extraElement)
+			{
+				extraElement.Width = width;
+				extraElement.Height = height;
+			}
 		}
 	}
 }
