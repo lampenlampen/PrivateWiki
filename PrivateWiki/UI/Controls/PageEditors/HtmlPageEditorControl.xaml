@@ -19,20 +19,17 @@
 
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0">
-                        <Grid
-                            x:Name="PageEditorTextBoxGrid">
-                            <TextBox
-                                Name="PageEditorTextBox"
-                                Text="Lorem Ipsum"
-                                AcceptsReturn="True"
-                                TextWrapping="Wrap"
-                                MinHeight="400" />
-                        </Grid>
-                    </StackPanel>
+                    <TextBox
+                        Grid.Row="1"
+                        Name="PageEditorTextBox"
+                        Text="Lorem Ipsum"
+                        AcceptsReturn="True"
+                        TextWrapping="Wrap"/>
+
                 </Grid>
             </PivotItem>
 
@@ -45,13 +42,10 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    
+
                     <WebView
                         Grid.Row="0"
-                        Name="Preview_WebView"
-                        Height="Auto"
-                        Width="Auto"
-                        MaxHeight="500" />
+                        Name="Preview_WebView"/>
 
                 </Grid>
             </PivotItem>
@@ -61,7 +55,6 @@
                 Header="Metadaten">
 
                 <StackPanel>
-
                     <TextBlock Text="Tags"
                                HorizontalAlignment="Left"
                                FontSize="30"
@@ -78,7 +71,7 @@
                     <ListView
                         Name="ListView"
                         SelectionMode="None" />
-                    
+
                 </StackPanel>
             </PivotItem>
 

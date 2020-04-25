@@ -15,21 +15,22 @@
         Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <Popup
             x:Name="SearchPopup"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Stretch"
             IsLightDismissEnabled="True"
             LightDismissOverlayMode="On">
 
-            <ui:SearchPopupContent x:Name="SearchPopupContentName" />
+            <ui:SearchPopupContent x:Name="SearchPopupContentName"
+                                   HorizontalAlignment="Center"/>
 
         </Popup>
 
@@ -41,16 +42,23 @@
             Height="Auto"
             Background="{ThemeResource SystemControlBackgroundAccentBrush}"/>
 
+        <Grid
+            Grid.Row="1"
+            Grid.Column="0"
+            x:Name="ContentGrid"/>
+
+        <!--
         <Border
             Grid.Row="1"
             Grid.Column="0"
             BorderBrush="Gray"
-            BorderThickness="0"
+            BorderThickness="2"
             CornerRadius="4"
             Padding="5, 0, 5, 5">
             <Grid
-                x:Name="ContentGrid"/>
+            x:Name="ContentGrid"/>
         </Border>
+-->
 
         <!--
 

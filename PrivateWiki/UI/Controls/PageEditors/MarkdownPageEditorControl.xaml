@@ -20,113 +20,110 @@
 
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
+                    <CommandBar
+                        Grid.Row="0"
+                        Name="Toolbar">
 
-                    <StackPanel Grid.Row="0">
-                        <CommandBar
-                            Name="Toolbar">
+                        <CommandBar.Content>
+                            <StackPanel
+                                Orientation="Horizontal">
 
-                            <CommandBar.Content>
-                                <StackPanel
-                                    Orientation="Horizontal">
+                                <AppBarButton
+                                    Icon="Pictures"
+                                    IsCompact="True"
+                                    ToolTipService.ToolTip="Images"
+                                    AutomationProperties.Name="Images">
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem Text="Add Existing Image" Icon="Pictures" />
+                                            <MenuFlyoutItem Text="Add New Image" Icon="Pictures" />
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                </AppBarButton>
 
-                                    <AppBarButton
-                                        Icon="Pictures"
-                                        IsCompact="True"
-                                        ToolTipService.ToolTip="Images"
-                                        AutomationProperties.Name="Images">
-                                        <FlyoutBase.AttachedFlyout>
-                                            <MenuFlyout Placement="Bottom">
-                                                <MenuFlyoutItem Text="Add Existing Image" Icon="Pictures" />
-                                                <MenuFlyoutItem Text="Add New Image" Icon="Pictures" />
-                                            </MenuFlyout>
-                                        </FlyoutBase.AttachedFlyout>
-                                    </AppBarButton>
+                                <AppBarButton
+                                    Name="Bold"
+                                    Content="Bold"
+                                    ToolTipService.ToolTip="Bold"
+                                    Icon="Bold" />
 
-                                    <AppBarButton
-                                        Name="Bold"
-                                        Content="Bold"
-                                        ToolTipService.ToolTip="Bold"
-                                        Icon="Bold" />
+                                <AppBarButton
+                                    Name="Underline"
+                                    IsEnabled="False"
+                                    ToolTipService.ToolTip="Underline"
+                                    Icon="Underline" />
 
-                                    <AppBarButton
-                                        Name="Underline"
-                                        IsEnabled="False"
-                                        ToolTipService.ToolTip="Underline"
-                                        Icon="Underline" />
+                                <AppBarButton
+                                    Name="Italic"
+                                    ToolTipService.ToolTip="Italic"
+                                    Icon="Italic" />
 
-                                    <AppBarButton
-                                        Name="Italic"
-                                        ToolTipService.ToolTip="Italic"
-                                        Icon="Italic" />
+                                <AppBarButton
+                                    Name="HyperLink"
+                                    ToolTipService.ToolTip="HyperLink"
+                                    Icon="Link" />
 
-                                    <AppBarButton
-                                        Name="HyperLink"
-                                        ToolTipService.ToolTip="HyperLink"
-                                        Icon="Link" />
+                                <AppBarButton
+                                    Name="WikiLink"
+                                    ToolTipService.ToolTip="WikiLink"
+                                    Icon="Link" />
 
-                                    <AppBarButton
-                                        Name="WikiLink"
-                                        ToolTipService.ToolTip="WikiLink"
-                                        Icon="Link" />
+                                <AppBarButton
+                                    Name="NumberedList"
+                                    IsEnabled="False"
+                                    ToolTipService.ToolTip="Numbered List"
+                                    Icon="List" />
 
-                                    <AppBarButton
-                                        Name="NumberedList"
-                                        IsEnabled="False"
-                                        ToolTipService.ToolTip="Numbered List"
-                                        Icon="List" />
+                                <AppBarButton
+                                    Name="List"
+                                    IsEnabled="False"
+                                    ToolTipService.ToolTip="List"
+                                    Icon="List" />
 
-                                    <AppBarButton
-                                        Name="List"
-                                        IsEnabled="False"
-                                        ToolTipService.ToolTip="List"
-                                        Icon="List" />
+                                <AppBarButton
+                                    Name="Quote"
+                                    IsEnabled="False"
+                                    Content="Quote"
+                                    ToolTipService.ToolTip="Quote" />
 
-                                    <AppBarButton
-                                        Name="Quote"
-                                        IsEnabled="False"
-                                        Content="Quote"
-                                        ToolTipService.ToolTip="Quote" />
+                                <AppBarButton
+                                    Name="HorizontalRule"
+                                    Content="Horizontal Rule"
+                                    ToolTipService.ToolTip="Horizontal Rule" />
 
-                                    <AppBarButton
-                                        Name="HorizontalRule"
-                                        Content="Horizontal Rule"
-                                        ToolTipService.ToolTip="Horizontal Rule" />
+                                <AppBarButton
+                                    Name="Code"
+                                    IsEnabled="False"
+                                    Content="Code"
+                                    ToolTipService.ToolTip="Code" />
 
-                                    <AppBarButton
-                                        Name="Code"
-                                        IsEnabled="False"
-                                        Content="Code"
-                                        ToolTipService.ToolTip="Code" />
+                                <AppBarButton
+                                    Name="Strikethrough"
+                                    Content="Strikethrough"
+                                    ToolTipService.ToolTip="Strikethrough" />
 
-                                    <AppBarButton
-                                        Name="Strikethrough"
-                                        Content="Strikethrough"
-                                        ToolTipService.ToolTip="Strikethrough" />
+                                <AppBarButton
+                                    Name="Table"
+                                    ToolTipService.ToolTip="Table"
+                                    IsEnabled="False">
+                                    <AppBarButton.Icon>
+                                        <uwp:FontAwesome Icon="Table" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
+                            </StackPanel>
+                        </CommandBar.Content>
+                    </CommandBar>
 
-                                    <AppBarButton
-                                        Name="Table"
-                                        ToolTipService.ToolTip="Table"
-                                        IsEnabled="False">
-                                        <AppBarButton.Icon>
-                                            <uwp:FontAwesome Icon="Table" />
-                                        </AppBarButton.Icon>
-                                    </AppBarButton>
-                                </StackPanel>
-                            </CommandBar.Content>
-                        </CommandBar>
+                    <TextBox
+                        Grid.Row="1"
+                        Name="PageEditorTextBox"
+                        Text="Lorem Ipsum"
+                        AcceptsReturn="True"
+                        TextWrapping="Wrap" />
 
-                        <Grid
-                            x:Name="PageEditorTextBoxGrid">
-                            <TextBox
-                                Name="PageEditorTextBox"
-                                Text="Lorem Ipsum"
-                                AcceptsReturn="True"
-                                TextWrapping="Wrap"
-                                MinHeight="400" />
-                        </Grid>
-                    </StackPanel>
                 </Grid>
             </PivotItem>
 
@@ -139,13 +136,10 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    
+
                     <WebView
                         Grid.Row="0"
-                        Name="Preview_WebView"
-                        Height="Auto"
-                        Width="Auto"
-                        MaxHeight="500" />
+                        Name="Preview_WebView"/>
 
                 </Grid>
             </PivotItem>
@@ -153,15 +147,12 @@
             <PivotItem
                 x:Name="HtmlPreviewPivotItem"
                 Header="Html">
-                <ScrollViewer
-                    VerticalScrollMode="Auto">
-                    <GridView>
-                        <TextBlock
-                            x:Name="Preview_Html"
-                            IsTextSelectionEnabled="True"
-                            VerticalAlignment="Stretch" />
-                    </GridView>
-                </ScrollViewer>
+                <Grid>
+                    <TextBox
+                        x:Name="Preview_Html"
+                        IsReadOnly="True"
+                        TextWrapping="Wrap"/>
+                </Grid>
             </PivotItem>
 
             <PivotItem

@@ -58,6 +58,20 @@ namespace PrivateWiki.UI
 			});
 		}
 
+		public void ShowCreatePageInSystemNamespaceNotAllowedNotification()
+		{
+			Logger.Debug("Notification: Page cannot be created in the system namespace");
+
+			_manager.Show(new SimpleNotification
+			{
+				TimeSpan = TimeSpan.FromSeconds(3),
+				Text = "Your are not allowed to create pages in the \"system\" namespace",
+				Glyph = "\uE1F6",
+				VerticalAlignment = VerticalAlignment.Bottom,
+				Background = new SolidColorBrush(Color.Red.ToWindowsUiColor())
+			});
+		}
+
 		public void ShowPageExistsNotificationOnUIThread()
 		{
 			Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,

@@ -120,6 +120,13 @@ namespace PrivateWiki.Models.ViewModels
 
 		private Task CreateNewPageAsync()
 		{
+			// Pages cannot be created in the system namespace
+			if (Link.IsSystemNamespace())
+			{
+				App.Current.GlobalNotificationManager.ShowCreatePageInSystemNamespaceNotAllowedNotification();
+				return Task.CompletedTask;
+			}
+
 			return Task.Run(async () =>
 			{
 				var backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), _clock);

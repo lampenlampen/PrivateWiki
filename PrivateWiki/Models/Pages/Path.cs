@@ -41,8 +41,17 @@ namespace PrivateWiki.Models.Pages
 			_title = name;
 		}
 
-		public Path()
+		/// <summary>
+		/// Returns true, if the path belongs to the system namespace.
+		/// </summary>
+		/// <returns></returns>
+		public bool IsSystemNamespace()
 		{
+			if (_namespaces == null) return false;
+
+			var a = _namespaces[0];
+
+			return a != null && a.ToUpperInvariant() == "SYSTEM";
 		}
 
 		public override bool Equals(object obj)
@@ -54,7 +63,7 @@ namespace PrivateWiki.Models.Pages
 		{
 			return FullPath.GetHashCode();
 		}
-		
+
 		public override string ToString()
 		{
 			return FullPath;

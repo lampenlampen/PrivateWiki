@@ -6,16 +6,20 @@
 Internal links to other wikipages are created like normal links but prefixed with a colon.
 
 ``` md
-This is an internal link [Link Text](:pagelink).
+This is an internal link [Syntax](:system:syntax).
 ```
+
+This is an internal link [Syntax](:system:syntax).
 
 #### Wikilinks 
 
 Wikilinks are also supported:
 
 ``` md
-This is also an internal link [[pagelink]].
+This is also an internal link [[system:syntax]].
 ```
+
+This is also an internal link [[system:syntax]].
 
 ## Headings
 ## Codeblock
@@ -28,4 +32,4 @@ This is also an internal link [[pagelink]].
 
 ### Tags
 
-If enabled hashtags `#this_is_a_tag` are recognized as tags. Tags can be written everywhere in the document.
+If enabled, hashtags `#this_is_a_tag` are recognized as tags. Tags can be written everywhere in the document.

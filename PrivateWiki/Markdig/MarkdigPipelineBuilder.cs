@@ -1,6 +1,6 @@
 using Markdig;
 using Markdig.Extensions.EmphasisExtras;
-using PrivateWiki.Markdig.Extensions.CodeBlockExtension;
+using Markdig.SyntaxHighlighting;
 using PrivateWiki.Markdig.Extensions.MathExtension;
 using PrivateWiki.Markdig.Extensions.TagExtension;
 using PrivateWiki.Markdig.Extensions.WikiLinkExtension;
@@ -83,7 +83,7 @@ namespace PrivateWiki.Markdig
 
 						break;
 					case SyntaxHighlightingRenderModel syntaxHighlightingRenderModel:
-						if (syntaxHighlightingRenderModel.IsEnabled) pipelineBuilder.UseMyHtmlCodeBlockRenderer();
+						if (syntaxHighlightingRenderModel.IsEnabled) pipelineBuilder.UseSyntaxHighlighting();
 						break;
 					case TableRenderModel tableRenderModel:
 						if (tableRenderModel.IsEnabled)
@@ -100,7 +100,7 @@ namespace PrivateWiki.Markdig
 			pipelineBuilder.UseMyWikiLinkExtension();
 			pipelineBuilder.UseTagExtension();
 			pipelineBuilder.UseYamlFrontMatter();
-			
+
 			return pipelineBuilder.Build();
 		}
 	}

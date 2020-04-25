@@ -12,10 +12,8 @@
     <Grid>
         <WebView
             Name="Webview"
-            MinHeight="100"
-            MinWidth="100"
-            Width="Auto"
-            Height="Auto"
-            DefaultBackgroundColor="White"/>
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            DefaultBackgroundColor="White" />
     </Grid>
 </pageViewers:HtmlPageViewerControlBase>

@@ -20,28 +20,23 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0">
-                        <Grid
-                            x:Name="PageEditorTextBoxGrid">
-                            <TextBox
-                                Name="PageEditorTextBox"
-                                Text="Lorem Ipsum"
-                                AcceptsReturn="True"
-                                TextWrapping="Wrap"
-                                MinHeight="400" />
-                        </Grid>
-                    </StackPanel>
+                    <TextBox
+                        Name="PageEditorTextBox"
+                        Text="Lorem Ipsum"
+                        AcceptsReturn="True"
+                        TextWrapping="Wrap" />
+
                 </Grid>
             </PivotItem>
-            
+
             <PivotItem
                 x:Name="MetadataPivotItem"
                 Header="Metadaten">
 
                 <StackPanel>
-
                     <TextBlock Text="Tags"
                                HorizontalAlignment="Left"
                                FontSize="30"
