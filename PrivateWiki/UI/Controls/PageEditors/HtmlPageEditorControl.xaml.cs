@@ -4,7 +4,7 @@ using System.Reactive.Linq;
 using Windows.UI.Xaml.Controls;
 using PrivateWiki.Models.ViewModels;
 using PrivateWiki.Models.ViewModels.PageEditors;
-using PrivateWiki.Renderer;
+using PrivateWiki.Rendering;
 using ReactiveUI;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238

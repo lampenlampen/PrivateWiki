@@ -168,7 +168,7 @@ namespace PrivateWiki.UI.Pages
 			if (Pivot.SelectedIndex == 1)
 			{
 				var htmlFileName = "index_preview.html";
-				var parser = new Markdig.Markdig();
+				var parser = new Rendering.Markdown.Markdig.Markdig();
 				var html = parser.ToHtmlString(PageEditorTextBox.Text);
 				var localFolder = ApplicationData.Current.LocalFolder;
 				var mediaFolder = await localFolder.GetFolderAsync("media");
@@ -180,7 +180,7 @@ namespace PrivateWiki.UI.Pages
 
 			if (Pivot.SelectedIndex == 2)
 			{
-				var parser = new Markdig.Markdig();
+				var parser = new Rendering.Markdown.Markdig.Markdig();
 				var html = await parser.ToHtmlString(PageEditorTextBox.Text);
 
 				try

@@ -22,7 +22,7 @@ namespace PrivateWiki.Models.Pages
 			Path = Path.ofLink(link);
 		}
 
-		protected Page(Path path, Guid id, string content, Instant created, Instant lastChanged, bool isLocked, List<Tag> tags = null)
+		protected Page(Path path, Guid id, string content, Instant created, Instant lastChanged, bool isLocked, List<Tag>? tags = null)
 		{
 			Path = path;
 			Id = id;
@@ -33,7 +33,7 @@ namespace PrivateWiki.Models.Pages
 			Tags = tags ?? new List<Tag>();
 		}
 
-		protected Page(Path path, string content, Instant created, Instant lastChanged, bool isLocked, List<Tag> tags = null)
+		protected Page(Path path, string content, Instant created, Instant lastChanged, bool isLocked, List<Tag>? tags = null)
 		{
 			Path = path;
 			Id = Guid.NewGuid();

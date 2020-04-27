@@ -85,7 +85,7 @@ namespace PrivateWiki.UI.Controls.Settings.Sync
 			{
 				var content = await FileIO.ReadTextAsync(file);
 
-				var markdig = new Markdig.Markdig();
+				var markdig = new PrivateWiki.Rendering.Markdown.Markdig.Markdig();
 				var doc = markdig.Parse(content);
 				var yamlBlock = doc.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
 

@@ -7,14 +7,14 @@ using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Markdig.SyntaxHighlighting;
 
-namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
+namespace PrivateWiki.Rendering.Markdown.Markdig.Extensions.CodeBlockExtension
 {
 	internal class MyHtmlCodeBlockRenderer : SyntaxHighlightingCodeBlockRenderer
 	{
-		private readonly IStyleSheet _customCss;
-		private readonly CodeBlockRenderer _underlyingRenderer;
+		private readonly IStyleSheet? _customCss;
+		private readonly CodeBlockRenderer? _underlyingRenderer;
 
-		public MyHtmlCodeBlockRenderer(CodeBlockRenderer underlyingRenderer = null, IStyleSheet customCss = null)
+		public MyHtmlCodeBlockRenderer(CodeBlockRenderer? underlyingRenderer = null, IStyleSheet? customCss = null)
 		{
 			_underlyingRenderer = underlyingRenderer ?? new CodeBlockRenderer();
 			_customCss = customCss;
@@ -31,7 +31,7 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 					.WriteAttributes(obj.TryGetAttributes() ?? new HtmlAttributes())
 					.Write(">");
 
-				string firstLine2;
+				string? firstLine2;
 				var code2 = GetCode(obj, out firstLine2);
 
 				RenderCode(renderer, null, firstLine2, code2);
@@ -83,13 +83,13 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 		private void RenderMermaidDiagram(HtmlRenderer renderer, string code)
 		{
 			var html = "<div class=\"mermaid\">" +
-					   $"{code}" +
-					   "</div>";
+			           $"{code}" +
+			           "</div>";
 
 			renderer.Write(html);
 		}
 
-		private void RenderCode(HtmlRenderer renderer, string languageMoniker, string firstLine, string code)
+		private void RenderCode(HtmlRenderer renderer, string? languageMoniker, string? firstLine, string code)
 		{
 			RenderCodeHeader(renderer, languageMoniker);
 
@@ -101,16 +101,16 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 			if (language != null) markup = markup.Substring(56, markup.Length - 56 - 12);
 
 			var html = "<pre class=\"codeBlockBox\">\r\n" +
-					   "<code class=\"codeBlockCode\">" +
-					   $"{markup}" +
-					   "</code>" +
-					   "</pre>";
+			           "<code class=\"codeBlockCode\">" +
+			           $"{markup}" +
+			           "</code>" +
+			           "</pre>";
 
 
 			renderer.Write(html);
 		}
 
-		private void RenderCodeHeader(HtmlRenderer renderer, string languageMoniker)
+		private void RenderCodeHeader(HtmlRenderer renderer, string? languageMoniker)
 		{
 			var codeHeader =
 				$"<div class=\"codeBlockHeader\">\r\n" +
@@ -123,7 +123,7 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 			renderer.Write(codeHeader);
 		}
 
-		private string ApplySyntaxHighlighting(string languageMoniker, string firstLine, string code)
+		private string ApplySyntaxHighlighting(string? languageMoniker, string? firstLine, string code)
 		{
 			var languageTypeAdapter = new LanguageTypeAdapter();
 			var language = languageTypeAdapter.Parse(languageMoniker, firstLine);
@@ -138,7 +138,7 @@ namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
 			return codeBuilder.ToString();
 		}
 
-		private static string GetCode(LeafBlock obj, out string firstLine)
+		private static string GetCode(LeafBlock obj, out string? firstLine)
 		{
 			var code = new StringBuilder();
 			firstLine = null;

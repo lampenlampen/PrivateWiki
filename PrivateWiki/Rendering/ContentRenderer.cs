@@ -3,8 +3,9 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using PrivateWiki.Data;
 using PrivateWiki.Models.Pages;
+using PrivateWiki.Rendering.Markdown;
 
-namespace PrivateWiki.Renderer
+namespace PrivateWiki.Rendering
 {
 	public class ContentRenderer
 	{
@@ -17,8 +18,8 @@ namespace PrivateWiki.Renderer
 				switch (page.ContentType.MimeType)
 				{
 					case "text/markdown":
-						var renderer = new Markdig.Markdig();
-						return renderer.ToHtmlCustom(renderer.Parse(page.Content));
+						var renderer = new MarkdownRenderer();
+						return renderer.RenderToHtml(page.Content);
 					case "text/html":
 						return page.Content;
 					case "text/plain":
@@ -37,8 +38,8 @@ namespace PrivateWiki.Renderer
 				switch (contentType.ToLower())
 				{
 					case "markdown":
-						var renderer = new Markdig.Markdig();
-						return renderer.ToHtmlCustom(renderer.Parse(content));
+						var renderer = new MarkdownRenderer();
+						return renderer.RenderToHtml(content);
 					case "html":
 						return content;
 					case "text":
@@ -56,8 +57,8 @@ namespace PrivateWiki.Renderer
 				switch (contentType.MimeType)
 				{
 					case "text/markdown":
-						var renderer = new Markdig.Markdig();
-						return renderer.ToHtmlCustom(renderer.Parse(content));
+						var renderer = new MarkdownRenderer();
+						return renderer.RenderToHtml(content);
 					case "text/html":
 						return content;
 					case "text/plain":

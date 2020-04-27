@@ -1,6 +1,6 @@
 ﻿using Markdig;
 
-namespace PrivateWiki.Markdig.Extensions.MathExtension
+namespace PrivateWiki.Rendering.Markdown.Markdig.Extensions.MathExtension
 {
 	internal static class MathePipelineExtension
 	{

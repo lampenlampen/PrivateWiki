@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 #nullable enable
 
-namespace PrivateWiki
+namespace PrivateWiki.Models.ViewModels
 {
 	public class ImagePickerDialogModel
 	{

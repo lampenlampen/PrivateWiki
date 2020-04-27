@@ -42,7 +42,7 @@ namespace PrivateWiki.UI.Dialogs
 			{
 				if (exportHtml)
 				{
-					var parser = new Markdig.Markdig();
+					var parser = new Rendering.Markdown.Markdig.Markdig();
 
 					var file = await folder.CreateFileAsync($"{page.Link.Replace(':', '_')}.html",
 						CreationCollisionOption.ReplaceExisting);

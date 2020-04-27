@@ -4,7 +4,7 @@ using Markdig.Renderers;
 using Markdig.Renderers.Normalize;
 using Markdig.Renderers.Normalize.Inlines;
 
-namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
+namespace PrivateWiki.Rendering.Markdown.Markdig.Extensions.WikiLinkExtension
 {
 	internal class WikiLinkExtension : IMarkdownExtension
 	{

@@ -1,7 +1,7 @@
 using Markdig;
 using Markdig.Renderers;
 
-namespace PrivateWiki.Markdig.Extensions.TagExtension
+namespace PrivateWiki.Rendering.Markdown.Markdig.Extensions.TagExtension
 {
 	public class TagExtension : IMarkdownExtension
 	{
@@ -15,7 +15,6 @@ namespace PrivateWiki.Markdig.Extensions.TagExtension
 
 		public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
 		{
-			
 		}
 	}
 }

@@ -1,13 +1,13 @@
 using Markdig;
 using Markdig.Extensions.EmphasisExtras;
 using Markdig.SyntaxHighlighting;
-using PrivateWiki.Markdig.Extensions.MathExtension;
-using PrivateWiki.Markdig.Extensions.TagExtension;
-using PrivateWiki.Markdig.Extensions.WikiLinkExtension;
 using PrivateWiki.Models;
+using PrivateWiki.Rendering.Markdown.Markdig.Extensions.MathExtension;
+using PrivateWiki.Rendering.Markdown.Markdig.Extensions.TagExtension;
+using PrivateWiki.Rendering.Markdown.Markdig.Extensions.WikiLinkExtension;
 using PrivateWiki.Settings;
 
-namespace PrivateWiki.Markdig
+namespace PrivateWiki.Rendering.Markdown.Markdig
 {
 	public static class MarkdigPipelineBuilder
 	{

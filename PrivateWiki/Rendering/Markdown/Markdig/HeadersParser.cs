@@ -7,7 +7,7 @@ using Markdig.Syntax;
 using Microsoft.UI.Xaml.Controls;
 using PrivateWiki.UI.Controls;
 
-namespace PrivateWiki.Markdig
+namespace PrivateWiki.Rendering.Markdown.Markdig
 {
 	internal class HeadersParser
 	{

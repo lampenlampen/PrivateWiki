@@ -2,7 +2,7 @@
 using Markdig.Extensions.Mathematics;
 using Markdig.Renderers;
 
-namespace PrivateWiki.Markdig.Extensions.MathExtension
+namespace PrivateWiki.Rendering.Markdown.Markdig.Extensions.MathExtension
 {
 	internal class MyMathematicsExtension : IMarkdownExtension
 	{

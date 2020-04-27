@@ -6,7 +6,7 @@ using Windows.System;
 using Windows.UI.Xaml.Controls;
 using NLog;
 using PrivateWiki.Models.Pages;
-using PrivateWiki.Renderer;
+using PrivateWiki.Rendering;
 using ReactiveUI;
 
 namespace PrivateWiki.Models.ViewModels

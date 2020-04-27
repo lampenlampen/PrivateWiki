@@ -9,8 +9,6 @@ namespace PrivateWiki.Models
 		public string Title { get; set; }
 
 		public string Subtitle { get; set; }
-
-		
 	}
 
 
@@ -23,19 +21,31 @@ namespace PrivateWiki.Models
 		public string TargetToken
 		{
 			get => _targetToken;
-			set { _targetToken = value; OnPropertyChanged(nameof(TargetToken));}
+			set
+			{
+				_targetToken = value;
+				OnPropertyChanged(nameof(TargetToken));
+			}
 		}
 
 		public string TargetPath
 		{
 			get => _targetPath;
-			set { _targetPath = value; OnPropertyChanged(nameof(TargetPath)); }
+			set
+			{
+				_targetPath = value;
+				OnPropertyChanged(nameof(TargetPath));
+			}
 		}
 
 		public SyncFrequency SyncFrequency
 		{
 			get => _syncFrequency;
-			set { _syncFrequency = value; OnPropertyChanged(nameof(SyncFrequency)); }
+			set
+			{
+				_syncFrequency = value;
+				OnPropertyChanged(nameof(SyncFrequency));
+			}
 		}
 
 		public LFSModel()
@@ -47,7 +57,7 @@ namespace PrivateWiki.Models
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

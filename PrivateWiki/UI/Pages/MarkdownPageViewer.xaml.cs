@@ -11,8 +11,8 @@ using Windows.UI.Xaml.Navigation;
 using JetBrains.Annotations;
 using NLog;
 using NodaTime;
-using PrivateWiki.Markdig;
-using PrivateWiki.Markdig.Extensions.TagExtension;
+using PrivateWiki.Rendering.Markdown.Markdig;
+using PrivateWiki.Rendering.Markdown.Markdig.Extensions.TagExtension;
 using PrivateWiki.Settings;
 using PrivateWiki.StorageBackend;
 using PrivateWiki.StorageBackend.SQLite;
@@ -162,7 +162,7 @@ namespace PrivateWiki.UI.Pages
 			Page = await new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance).GetPageAsync(pageId);
 			// Page = await _storage.GetPageAsync(pageId);
 			Logger.Debug($"Page Some: {pageId}");
-			var parser = new Markdig.Markdig();
+			var parser = new Rendering.Markdown.Markdig.Markdig();
 			var doc = parser.Parse(Page.Content);
 
 			// Show Tags

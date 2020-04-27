@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Windows.Storage;
 using PrivateWiki.Models.Pages;
-using PrivateWiki.Renderer;
+using PrivateWiki.Rendering;
 
 namespace PrivateWiki.Data
 {
@@ -14,7 +14,7 @@ namespace PrivateWiki.Data
 
 		public async Task<StorageFile> ExportPage(MarkdownPage page)
 		{
-			var parser = new Markdig.Markdig();
+			var parser = new Rendering.Markdown.Markdig.Markdig();
 			var file = await ApplicationData.Current.TemporaryFolder.CreateFileAsync($"{page.Link.Replace(':', '_')}.html", CreationCollisionOption.ReplaceExisting);
 
 			await FileIO.WriteTextAsync(file, await parser.ToHtmlString(page.Content));

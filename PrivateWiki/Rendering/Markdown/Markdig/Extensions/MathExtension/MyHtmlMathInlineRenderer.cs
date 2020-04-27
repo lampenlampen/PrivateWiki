@@ -3,7 +3,7 @@ using Markdig.Extensions.Mathematics;
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
 
-namespace PrivateWiki.Markdig.Extensions.MathExtension
+namespace PrivateWiki.Rendering.Markdown.Markdig.Extensions.MathExtension
 {
 	internal class MyHtmlMathInlineRenderer : HtmlObjectRenderer<MathInline>
 	{

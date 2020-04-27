@@ -1,7 +1,7 @@
 using System;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using PrivateWiki.Renderer;
+using PrivateWiki.Rendering;
 using ReactiveUI;
 
 namespace PrivateWiki.Models.ViewModels.PageEditors

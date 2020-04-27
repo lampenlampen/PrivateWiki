@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Markdig.Helpers;
+﻿using Markdig.Helpers;
 using Markdig.Parsers;
 using Markdig.Syntax.Inlines;
 using NLog;
 
-namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
+namespace PrivateWiki.Rendering.Markdown.Markdig.Extensions.WikiLinkExtension
 {
 	public class WikiLinkParser : InlineParser
 	{
@@ -35,7 +32,8 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 			// Parse link
 			while (true)
 			{
-				if (slice.CurrentChar == ' ' || slice.CurrentChar == '|' || slice.CurrentChar == '.' || slice.CurrentChar == ',' || slice.CurrentChar == '\r' || slice.CurrentChar == '\n' || slice.CurrentChar == '\0') break;
+				if (slice.CurrentChar == ' ' || slice.CurrentChar == '|' || slice.CurrentChar == '.' || slice.CurrentChar == ',' || slice.CurrentChar == '\r' || slice.CurrentChar == '\n' ||
+				    slice.CurrentChar == '\0') break;
 
 				buffer.Append(slice.CurrentChar);
 
@@ -44,7 +42,7 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 
 			var link = buffer.ToString();
 
-			
+
 			if (slice.CurrentChar == '|')
 			{
 				// TODO 
@@ -74,7 +72,7 @@ namespace PrivateWiki.Markdig.Extensions.WikiLinkExtension
 				Span = inline.Span,
 				Line = line,
 				Column = column,
-				Content = new StringSlice(slice.Text, startPosition + 2, startPosition +1 + link.Length),
+				Content = new StringSlice(slice.Text, startPosition + 2, startPosition + 1 + link.Length),
 				IsClosed = true
 			});
 

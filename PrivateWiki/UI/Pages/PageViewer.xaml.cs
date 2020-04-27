@@ -202,7 +202,7 @@ namespace PrivateWiki.UI.Pages
 			context.SetOutput(Unit.Default);
 		}
 
-		private void _centerPopup(Popup popup, FrameworkElement extraElement = null)
+		private void _centerPopup(Popup popup, FrameworkElement? extraElement = null)
 		{
 			double ratio = .6; // How much of the window the popup fills, give or take. (90%)
 
@@ -225,7 +225,7 @@ namespace PrivateWiki.UI.Pages
 			popupTestBorder.Height = height;
 
 			// Not using this here, but if there's anything else that needs resizing, do it.
-			if (null != extraElement)
+			if (extraElement != null)
 			{
 				extraElement.Width = width;
 				extraElement.Height = height;

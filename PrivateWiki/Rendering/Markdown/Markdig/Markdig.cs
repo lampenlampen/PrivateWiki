@@ -7,12 +7,9 @@ using Markdig.Renderers;
 using Markdig.Syntax;
 using PrivateWiki.Models.Pages;
 
-#nullable enable
-
-
-namespace PrivateWiki.Markdig
+namespace PrivateWiki.Rendering.Markdown.Markdig
 {
-	public class Markdig : IPageParser, IPageRenderer
+	public class Markdig
 	{
 		private readonly MarkdownPipeline _pipeline;
 		private readonly HtmlRenderer _renderer;
@@ -41,7 +38,7 @@ namespace PrivateWiki.Markdig
 
 		public MarkdownDocument Parse(string markdown)
 		{
-			var dom = Markdown.Parse(markdown, _pipeline);
+			var dom = global::Markdig.Markdown.Parse(markdown, _pipeline);
 			return dom;
 		}
 

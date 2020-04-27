@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:privateWiki="using:PrivateWiki"
     xmlns:dialogs="using:PrivateWiki.UI.Dialogs"
+    xmlns:viewModels="using:PrivateWiki.Models.ViewModels"
     mc:Ignorable="d"
     Title="Pick Image"
     PrimaryButtonText="Pick Image"
@@ -18,7 +19,7 @@
             ItemsSource="{x:Bind Images}"
             MinWidth="500">
             <GridView.ItemTemplate>
-                <DataTemplate x:Name="ImageGalleryDataTemplate" x:DataType="privateWiki:ImagePickerDialogModel">
+                <DataTemplate x:Name="ImageGalleryDataTemplate" x:DataType="viewModels:ImagePickerDialogModel">
                     <Grid Height="135" Width="240" AutomationProperties.Name="{x:Bind Title}">
                         <Image Source="{x:Bind Image}" Stretch="UniformToFill"/>
                         

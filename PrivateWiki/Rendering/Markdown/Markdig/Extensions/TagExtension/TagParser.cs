@@ -3,7 +3,7 @@ using Markdig.Parsers;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 
-namespace PrivateWiki.Markdig.Extensions.TagExtension
+namespace PrivateWiki.Rendering.Markdown.Markdig.Extensions.TagExtension
 {
 	public class TagParser : InlineParser
 	{
@@ -11,7 +11,7 @@ namespace PrivateWiki.Markdig.Extensions.TagExtension
 		/// The key used to store at the document level the pending <see cref="TagInline"/>
 		/// </summary>
 		public static readonly object DocumentKey = typeof(TagInline);
-		
+
 		public TagParser()
 		{
 			OpeningCharacters = new[] {'#'};
@@ -20,7 +20,7 @@ namespace PrivateWiki.Markdig.Extensions.TagExtension
 		public override bool Match(InlineProcessor processor, ref StringSlice slice)
 		{
 			// TODO 
-			
+
 			var startPosition = slice.Start;
 
 			var c = slice.CurrentChar;
@@ -47,7 +47,7 @@ namespace PrivateWiki.Markdig.Extensions.TagExtension
 			var tag = new TagInline
 			{
 				Content = tagContent,
-				Span = new SourceSpan(processor.GetSourcePosition(startPosition+1, out int line, out int column), processor.GetSourcePosition(slice.Start - 1)),
+				Span = new SourceSpan(processor.GetSourcePosition(startPosition + 1, out int line, out int column), processor.GetSourcePosition(slice.Start - 1)),
 				Line = line,
 				Column = column
 			};
@@ -59,8 +59,9 @@ namespace PrivateWiki.Markdig.Extensions.TagExtension
 				tags = new TagGroup();
 				processor.Document.SetData(DocumentKey, tags);
 			}
+
 			tags.Add(tag);
-			
+
 			// TODO add setting
 
 			var linkInline = new LinkInline
@@ -83,10 +84,10 @@ namespace PrivateWiki.Markdig.Extensions.TagExtension
 				Content = new StringSlice(slice.Text, startPosition, startPosition + tagContent.Length),
 				IsClosed = true
 			});
-			
-			
+
+
 			processor.Inline = linkInline;
-			
+
 			return true;
 		}
 	}

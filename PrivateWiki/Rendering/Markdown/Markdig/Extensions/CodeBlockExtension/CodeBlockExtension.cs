@@ -5,13 +5,13 @@ using Markdig.Renderers;
 using Markdig.Renderers.Html;
 using Markdig.SyntaxHighlighting;
 
-namespace PrivateWiki.Markdig.Extensions.CodeBlockExtension
+namespace PrivateWiki.Rendering.Markdown.Markdig.Extensions.CodeBlockExtension
 {
 	internal class CodeBlockExtension : IMarkdownExtension
 	{
-		private readonly IStyleSheet _customCss;
+		private readonly IStyleSheet? _customCss;
 
-		public CodeBlockExtension(IStyleSheet customCss = null)
+		public CodeBlockExtension(IStyleSheet? customCss = null)
 		{
 			_customCss = customCss;
 		}

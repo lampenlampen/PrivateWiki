@@ -31,7 +31,7 @@ namespace PrivateWiki.UI.Dialogs
 
 		private void InsertHyperlink_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
-			WikiLink = WikiLinkComboBox.SelectionBoxItem as string;
+			WikiLink = (string) WikiLinkComboBox.SelectionBoxItem;
 		}
 	}
 }

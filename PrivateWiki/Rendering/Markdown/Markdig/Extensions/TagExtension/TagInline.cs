@@ -1,6 +1,6 @@
 using Markdig.Syntax.Inlines;
 
-namespace PrivateWiki.Markdig.Extensions.TagExtension
+namespace PrivateWiki.Rendering.Markdown.Markdig.Extensions.TagExtension
 {
 	/// <summary>
 	/// Represents a tag.

@@ -1,7 +1,7 @@
 using Markdig;
 using Markdig.Syntax;
 
-namespace PrivateWiki.Markdig.Extensions.TagExtension
+namespace PrivateWiki.Rendering.Markdown.Markdig.Extensions.TagExtension
 {
 	public static class MarkdigTagExtension
 	{
@@ -14,6 +14,6 @@ namespace PrivateWiki.Markdig.Extensions.TagExtension
 		public static TagGroup GetTags(this MarkdownDocument doc)
 		{
 			return doc.GetData(TagParser.DocumentKey) as TagGroup;
-		} 
+		}
 	}
 }
