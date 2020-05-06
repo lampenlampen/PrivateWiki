@@ -13,10 +13,18 @@ namespace PrivateWiki.Rendering.Markdown.Markdig
 	{
 		private readonly MarkdownPipeline _pipeline;
 		private readonly HtmlRenderer _renderer;
+		private readonly HtmlBuilder _htmlBuilder;
 
 		public Markdig()
 		{
-			_pipeline = MarkdigPipelineBuilder.GetMarkdownPipeline();
+			_htmlBuilder = new HtmlBuilder(new StringWriter());
+			_htmlBuilder.WriteHtmlStartTag();
+			_htmlBuilder.WriteHeadStartTag();
+
+			_pipeline = MarkdigPipelineBuilder.GetMarkdownPipeline(_htmlBuilder);
+
+			_htmlBuilder.WriteHeadEndTag();
+
 			_renderer = new HtmlRenderer(new StringWriter());
 		}
 
@@ -93,6 +101,34 @@ namespace PrivateWiki.Rendering.Markdown.Markdig
 		public async Task<string> ToHtmlString(MarkdownPage page)
 		{
 			return await ToHtmlString(page.Content);
+		}
+
+		public string ToHtml(string content)
+		{
+			var stringWriter = new StringWriter();
+			var renderer = new HtmlRenderer(stringWriter);
+
+			_pipeline.Setup(renderer);
+
+			var dom = global::Markdig.Markdown.Parse(content, _pipeline);
+			var dom2 = global::Markdig.Markdown.ToHtml(content, stringWriter, _pipeline);
+
+			var pipeline = new MarkdownPipelineBuilder()
+				.UseDiagrams().Build();
+			var html = global::Markdig.Markdown.ToHtml(content, MarkdigPipelineBuilder.GetMarkdownPipeline());
+
+			stringWriter.Flush();
+
+			_htmlBuilder.WriteBodyStartTag();
+
+			_htmlBuilder.WriteHtmlSnippet(stringWriter.ToString());
+
+			_htmlBuilder.WriteBodyEndTag();
+			_htmlBuilder.WriteHtmlEndTag();
+
+			_htmlBuilder.Flush();
+
+			return _htmlBuilder.ToString();
 		}
 	}
 }
