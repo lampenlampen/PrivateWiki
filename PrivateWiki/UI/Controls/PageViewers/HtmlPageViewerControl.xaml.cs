@@ -3,6 +3,7 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using NLog;
 using PrivateWiki.Models.Pages;
@@ -20,6 +21,8 @@ namespace PrivateWiki.UI.Controls.PageViewers
 	public sealed partial class HtmlPageViewerControl : HtmlPageViewerControlBase
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+		private Uri _uri;
 
 		private ISubject<string> _navigateToPage;
 
@@ -41,7 +44,7 @@ namespace PrivateWiki.UI.Controls.PageViewers
 					.DisposeWith(disposable);
 
 				ViewModel.RenderContent.Execute(Unit.Default)
-					.Subscribe(x => Webview.NavigateToString(x))
+					.Subscribe(x => DisplayPage(x))
 					.DisposeWith(disposable);
 
 				Webview.Events().NavigationStarting
@@ -84,6 +87,28 @@ namespace PrivateWiki.UI.Controls.PageViewers
 				return;
 			}
 
+			if (uri.AbsoluteUri.StartsWith("ms-local-stream:"))
+			{
+				if (uri.Equals(_uri))
+				{
+					Logger.Info("Load Wiki page");
+					return;
+				}
+				else
+				{
+					// Wikilink
+					var link = uri.AbsolutePath.Substring(7);
+
+					Logger.Info("Wikilink clicked.");
+					Logger.ConditionalDebug($"Wikilink clicked: {link}");
+
+					ViewModel.WikilinkClicked.Execute(Path.ofLink(link));
+
+					args.Cancel = true;
+					return;
+				}
+			}
+
 			// Normal Link
 			Logger.Info("Normal link clicked.");
 			Logger.ConditionalDebug($"Normal link clicked: {uri}");
@@ -91,6 +116,21 @@ namespace PrivateWiki.UI.Controls.PageViewers
 			ViewModel.LinkClicked.Execute(uri);
 
 			return;
+		}
+
+		private async void DisplayPage(string htmlContent)
+		{
+			var localFolder = ApplicationData.Current.LocalFolder;
+			var dataFolder = await localFolder.CreateFolderAsync("data", CreationCollisionOption.OpenIfExists);
+			var file = dataFolder.CreateFileAsync("index.html", CreationCollisionOption.ReplaceExisting);
+
+			await FileIO.WriteTextAsync(await file, htmlContent);
+
+			var uri = Webview.BuildLocalStreamUri("wikidata", "/data/index.html");
+			_uri = uri;
+			var uriResolver = new MyUriToStreamResolver();
+
+			Webview.NavigateToLocalStreamUri(uri, uriResolver);
 		}
 	}
 }
