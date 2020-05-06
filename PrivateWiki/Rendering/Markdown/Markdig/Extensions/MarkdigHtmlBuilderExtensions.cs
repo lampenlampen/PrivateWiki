@@ -6,7 +6,7 @@ namespace PrivateWiki.Rendering.Markdown.Markdig.Extensions
 	{
 		public static void UseMathjax(this HtmlBuilder builder)
 		{
-			builder.LoadScriptAsyncFromUrl(new Uri("https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"));
+			builder.LoadScriptAsyncFromUrl(new Uri("https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"));
 		}
 
 		public static void UseMermaid(this HtmlBuilder builder)
