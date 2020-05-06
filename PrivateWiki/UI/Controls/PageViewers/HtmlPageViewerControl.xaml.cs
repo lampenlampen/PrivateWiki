@@ -26,7 +26,7 @@ namespace PrivateWiki.UI.Controls.PageViewers
 
 		private ISubject<string> _navigateToPage;
 
-		public IObservable<string> NavigateToPage => _navigateToPage;
+		// public IObservable<string> NavigateToPage => _navigateToPage;
 
 		public HtmlPageViewerControl()
 		{
@@ -120,8 +120,7 @@ namespace PrivateWiki.UI.Controls.PageViewers
 
 		private async void DisplayPage(string htmlContent)
 		{
-			var localFolder = ApplicationData.Current.LocalFolder;
-			var dataFolder = await localFolder.CreateFolderAsync("data", CreationCollisionOption.OpenIfExists);
+			var dataFolder = await App.Current.Config.GetDataFolder();
 			var file = dataFolder.CreateFileAsync("index.html", CreationCollisionOption.ReplaceExisting);
 
 			await FileIO.WriteTextAsync(await file, htmlContent);

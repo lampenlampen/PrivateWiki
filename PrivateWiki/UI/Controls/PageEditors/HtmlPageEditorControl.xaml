@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pageEditors="using:PrivateWiki.UI.Controls.PageEditors"
     xmlns:controls1="using:PrivateWiki.UI.Controls"
+    xmlns:pageViewers="using:PrivateWiki.UI.Controls.PageViewers"
     mc:Ignorable="d">
 
     <Grid>
@@ -37,16 +38,10 @@
                 x:Name="PreviewPivotItem"
                 Header="Preview">
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <WebView
-                        Grid.Row="0"
-                        Name="Preview_WebView"/>
-
-                </Grid>
+                <pageViewers:HtmlPageViewerControl
+                    x:Name="htmlPageViewerControl"
+                    />
+                
             </PivotItem>
 
             <PivotItem

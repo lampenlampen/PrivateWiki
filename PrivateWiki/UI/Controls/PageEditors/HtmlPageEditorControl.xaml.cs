@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using Windows.UI.Xaml.Controls;
 using PrivateWiki.Models.ViewModels;
 using PrivateWiki.Models.ViewModels.PageEditors;
@@ -41,10 +40,12 @@ namespace PrivateWiki.UI.Controls.PageEditors
 					.Subscribe(OnPivotSelectionChanged)
 					.DisposeWith(disposable);
 
+				/*
 				Preview_WebView.Events().NavigationStarting
 					.Select(x => x.args)
 					.Subscribe(ShowPreviewLinksAsNotifications)
 					.DisposeWith(disposable);
+					*/
 			});
 		}
 
@@ -75,7 +76,8 @@ namespace PrivateWiki.UI.Controls.PageEditors
 					break;
 				case HtmlPageEditorControlPivotItem.Preview:
 					content = await renderer.RenderContentAsync(ViewModel.Content, "markdown");
-					Preview_WebView.NavigateToString(content);
+					//Preview_WebView.NavigateToString(content);
+					htmlPageViewerControl.ViewModel = new HtmlPageViewerControlViewModel {Page = ViewModel.Page};
 					break;
 				case HtmlPageEditorControlPivotItem.Metadata:
 					break;

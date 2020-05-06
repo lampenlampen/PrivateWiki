@@ -28,6 +28,8 @@ namespace PrivateWiki
 		// By default, current is an instance of the Application class, which needs to be changed to be an instance of the App class.
 		public new static App Current;
 
+		public AppConfig Config = new AppConfig();
+
 		public GlobalNotificationManager GlobalNotificationManager { get; private set; }
 
 		public InAppNotification Notification;
