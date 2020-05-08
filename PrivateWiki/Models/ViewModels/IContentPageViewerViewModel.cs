@@ -9,5 +9,7 @@ namespace PrivateWiki.Models.ViewModels
 		IObservable<Path> OnWikiLinkClicked { get; }
 
 		IObserver<Unit> ScrollToTop { get; }
+
+		IObservable<KeyboardShortcut> OnKeyPressed { get; }
 	}
 }

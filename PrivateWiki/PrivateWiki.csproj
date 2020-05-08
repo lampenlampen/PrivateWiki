@@ -98,15 +98,16 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppConfig.cs" />
-    <Compile Include="Data\ContentType.cs" />
-    <Compile Include="Data\DefaultPages.cs" />
-    <Compile Include="Data\FileSystemAccess.cs" />
-    <Compile Include="Data\PageExporter.cs" />
-    <Compile Include="Models\LFSModel.cs" />
-    <Compile Include="Models\Pages\GenericPage.cs" />
-    <Compile Include="Models\Pages\HtmlPage.cs" />
-    <Compile Include="Models\Pages\MarkdownPage.cs" />
-    <Compile Include="Models\Pages\Page.cs" />
+      <Compile Include="Data\ContentType.cs"/>
+      <Compile Include="Data\DefaultPages.cs"/>
+      <Compile Include="Data\FileSystemAccess.cs"/>
+      <Compile Include="Data\PageExporter.cs"/>
+      <Compile Include="KeyboardShortcuts.cs"/>
+      <Compile Include="Models\LFSModel.cs"/>
+      <Compile Include="Models\Pages\GenericPage.cs"/>
+      <Compile Include="Models\Pages\HtmlPage.cs"/>
+      <Compile Include="Models\Pages\MarkdownPage.cs"/>
+      <Compile Include="Models\Pages\Page.cs"/>
       <Compile Include="Models\Pages\PageAction.cs"/>
       <Compile Include="Models\Pages\PageHistory.cs"/>
       <Compile Include="Models\Pages\Path.cs"/>
@@ -166,13 +167,13 @@
       <Compile Include="UI\Controls\DiffControl.xaml.cs">
           <DependentUpon>DiffControl.xaml</DependentUpon>
       </Compile>
-    <Compile Include="UI\Controls\IPageViewerCommandBar.cs" />
-    <Compile Include="UI\Controls\MyTreeViewNode.cs" />
-    <Compile Include="UI\Controls\NavigationSettingsDividerItemControl.xaml.cs">
-      <DependentUpon>NavigationSettingsDividerItemControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\NavigationSettingsHeaderItemControl.xaml.cs">
-      <DependentUpon>NavigationSettingsHeaderItemControl.xaml</DependentUpon>
+      <Compile Include="UI\Controls\IPageViewerCommandBar.cs"/>
+      <Compile Include="UI\Controls\MyTreeViewNode.cs"/>
+      <Compile Include="UI\Controls\NavigationSettingsDividerItemControl.xaml.cs">
+          <DependentUpon>NavigationSettingsDividerItemControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Controls\NavigationSettingsHeaderItemControl.xaml.cs">
+          <DependentUpon>NavigationSettingsHeaderItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Controls\NavigationSettingsLinkItemControl.xaml.cs">
       <DependentUpon>NavigationSettingsLinkItemControl.xaml</DependentUpon>

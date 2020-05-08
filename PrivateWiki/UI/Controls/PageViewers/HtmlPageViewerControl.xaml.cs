@@ -51,7 +51,21 @@ namespace PrivateWiki.UI.Controls.PageViewers
 					.Select(a => a.args)
 					.Subscribe(WebViewNavigationStarting)
 					.DisposeWith(disposable);
+
+				Webview.Events().ScriptNotify
+					.Select(x => KeyboardShortcutConverter.Parse(x.Value))
+					.InvokeCommand(ViewModel, x => x.KeyPressed)
+					.DisposeWith(disposable);
 			});
+		}
+
+		private void Webview_OnScriptNotify(NotifyEventArgs e)
+		{
+			Logger.Debug($"WebView Script+ {e.Value}");
+
+			var key = KeyboardShortcutConverter.Parse(e.Value);
+
+			ViewModel.KeyPressed.Execute(key);
 		}
 
 		private void WebViewNavigationStarting(WebViewNavigationStartingEventArgs args)
@@ -120,7 +134,7 @@ namespace PrivateWiki.UI.Controls.PageViewers
 
 		private async void DisplayPage(string htmlContent)
 		{
-			var dataFolder = await App.Current.Config.GetDataFolder();
+			var dataFolder = await App.Current.Config.GetDataFolderAsync();
 			var file = dataFolder.CreateFileAsync("index.html", CreationCollisionOption.ReplaceExisting);
 
 			await FileIO.WriteTextAsync(await file, htmlContent);

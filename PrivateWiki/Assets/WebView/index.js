@@ -1,4 +1,4 @@
-var strgPressed = false;
+let strgPressed = false;
 
 document.addEventListener('keydown', (e) => {
     if (e.key == "Control") {

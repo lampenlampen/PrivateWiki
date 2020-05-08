@@ -10,12 +10,17 @@ namespace PrivateWiki
 	{
 		public static readonly IList<ContentType> SupportedContentTypes2 = new List<ContentType> {ContentType.Html, ContentType.Markdown, ContentType.Text};
 
-		public async Task<StorageFolder> GetDataFolder()
+		private readonly Lazy<Task<StorageFolder>> _dataFolder = new Lazy<Task<StorageFolder>>(() =>
 		{
 			var localFolder = ApplicationData.Current.LocalFolder;
-			var dataFolder = await localFolder.CreateFolderAsync("data", CreationCollisionOption.OpenIfExists);
+			var dataFolder = localFolder.CreateFolderAsync("data", CreationCollisionOption.OpenIfExists);
 
-			return dataFolder;
+			return dataFolder.AsTask();
+		});
+
+		public async Task<StorageFolder> GetDataFolderAsync()
+		{
+			return await _dataFolder.Value;
 		}
 	}
 }

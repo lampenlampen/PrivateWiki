@@ -34,6 +34,8 @@ namespace PrivateWiki.Models.ViewModels
 
 		public ReactiveCommand<Uri, Unit> LinkClicked { get; }
 
+		public ReactiveCommand<KeyboardShortcut, Unit> KeyPressed { get; }
+
 		private readonly ISubject<Unit> _onScrollToTop;
 		public IObservable<Unit> OnScrollToTop => _onScrollToTop;
 
@@ -43,18 +45,22 @@ namespace PrivateWiki.Models.ViewModels
 
 		public IObservable<string> Content => _content;
 
+		public IObservable<KeyboardShortcut> OnKeyPressed => _onKeyPressed;
+		private readonly Subject<KeyboardShortcut> _onKeyPressed;
+
 
 		public HtmlPageViewerControlViewModel()
 		{
 			_content = new Subject<string>();
 			_onScrollToTop = new Subject<Unit>();
+			_onKeyPressed = new Subject<KeyboardShortcut>();
 
 			_onWikiLinkClicked = new Subject<Path>();
 
 			RenderContent = ReactiveCommand.CreateFromTask(Render);
-
 			WikilinkClicked = ReactiveCommand.CreateFromTask<Path>(WikiLinkClickedAsync);
 			LinkClicked = ReactiveCommand.CreateFromTask<Uri>(LinkClickedAsync);
+			KeyPressed = ReactiveCommand.Create<KeyboardShortcut>(x => _onKeyPressed.OnNext(x));
 		}
 
 		private Task<string> Render()

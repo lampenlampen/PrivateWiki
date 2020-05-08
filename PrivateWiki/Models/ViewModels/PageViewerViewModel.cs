@@ -122,6 +122,25 @@ namespace PrivateWiki.Models.ViewModels
 
 			PageContentViewer = new HtmlPageViewerControlViewModel {Page = _page};
 			PageContentViewer.OnWikiLinkClicked.Subscribe(x => NavigateToPageAsync(x));
+			PageContentViewer.OnKeyPressed.Subscribe(KeyPressed);
+		}
+
+		private async void KeyPressed(KeyboardShortcut key)
+		{
+			switch (key)
+			{
+				case KeyboardShortcut.EditPage:
+					await Edit.Execute(Page.Path);
+					break;
+				case KeyboardShortcut.SearchPage:
+					await Search.Execute();
+					break;
+				case KeyboardShortcut.PrintPdfPage:
+					await PrintPage.Execute();
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(key), key, null);
+			}
 		}
 
 		private async Task NavigateToPageAsync(Path link)
