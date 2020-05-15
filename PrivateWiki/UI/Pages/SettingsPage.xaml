@@ -78,20 +78,5 @@
                 Name="SettingsContentFrame"
                 Background="#EEEEEE" />
         </muxc:NavigationView>
-
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger
-                            MinWindowWidth="{x:Bind NavView.CompactModeThresholdWidth}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <!-- Leave the next line for left-only navigation. -->
-                        <Setter Target="SettingsContentFrame.Padding" Value="24,0,24,24" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

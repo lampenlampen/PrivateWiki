@@ -14,7 +14,7 @@ using PrivateWiki.Utilities;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
-namespace PrivateWiki.UI.Pages.SettingsPages
+namespace PrivateWiki.UI.Pages.SettingsPagesOld
 {
 	/// <summary>
 	/// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
