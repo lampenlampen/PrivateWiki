@@ -36,6 +36,12 @@ namespace PrivateWiki.Models.ViewModels
 			private set => this.RaiseAndSetIfChanged(ref _commandBarViewModel, value);
 		}
 
+		public GenericPage Page
+		{
+			get => _page;
+			private set => this.RaiseAndSetIfChanged(ref _page, value);
+		}
+
 		private GenericPage _page;
 
 		public ReactiveCommand<string, Unit> LoadPage { get; }
@@ -81,12 +87,6 @@ namespace PrivateWiki.Models.ViewModels
 		public IObservable<Unit> OnSearch => _onSearch;
 		private readonly ISubject<Unit> _onSearch;
 
-		public GenericPage Page
-		{
-			get => _page;
-			set => this.RaiseAndSetIfChanged(ref _page, value);
-		}
-
 		public PageViewerViewModel()
 		{
 			_backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
@@ -118,9 +118,9 @@ namespace PrivateWiki.Models.ViewModels
 
 		private async Task LoadPageAsync(string id)
 		{
-			_page = await _backend.GetPageAsync(id);
+			Page = await _backend.GetPageAsync(id);
 
-			PageContentViewer = new HtmlPageViewerControlViewModel {Page = _page};
+			PageContentViewer = new HtmlPageViewerControlViewModel {Page = Page};
 			PageContentViewer.OnWikiLinkClicked.Subscribe(x => NavigateToPageAsync(x));
 			PageContentViewer.OnKeyPressed.Subscribe(KeyPressed);
 		}

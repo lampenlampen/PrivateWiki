@@ -40,8 +40,6 @@ namespace PrivateWiki.UI.Pages
 
 		#endregion
 
-		[Obsolete] private string _pageId;
-
 		public NewPage()
 		{
 			InitializeComponent();
@@ -124,7 +122,6 @@ namespace PrivateWiki.UI.Pages
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			var link = (string) e.Parameter;
-			_pageId = link;
 
 			if (link != null) ViewModel.LinkString = link;
 		}

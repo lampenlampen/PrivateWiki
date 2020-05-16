@@ -31,6 +31,7 @@ namespace PrivateWiki.Rendering.Markdown.Markdig
 
 			htmlBuilder.UseVSCodeMarkdownStylesheet();
 			htmlBuilder.AddKeyboardListener();
+			htmlBuilder.AddCharset();
 
 			foreach (var model in models)
 			{

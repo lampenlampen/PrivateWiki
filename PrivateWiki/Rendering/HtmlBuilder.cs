@@ -114,5 +114,10 @@ namespace PrivateWiki.Rendering
 			builder.WriteScriptTag(
 				"let strgPressed = false;\n\ndocument.addEventListener('keydown', (e) => {\n    if (e.key == \"Control\") {\n        strgPressed = true;\n    } else if (e.key == \"e\" && strgPressed) {\n        alert(\"Strg+E pressed\");\n        window.external.notify(\"key:strg+e\");\n    } else if (e.key == \"p\" && strgPressed) {\n        alert(\"Strg+P pressed\");\n        window.external.notify(\"key:strg+p\");\n    } else if (e.key == \"s\" && strgPressed) {\n        alert(\"Strg+S pressed\");\n        window.external.notify(\"key:strg+s\");\n    }\n});\n\ndocument.addEventListener(\"keyup\", (e) => {\n    if (e.key == \"Control\") {\n        strgPressed = false;\n    }\n});");
 		}
+
+		public static void AddCharset(this HtmlBuilder builder)
+		{
+			builder.WriteHtmlSnippet("<meta charset=\"UTF-8\">");
+		}
 	}
 }
