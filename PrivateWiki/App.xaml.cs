@@ -100,6 +100,19 @@ namespace PrivateWiki
 			}
 		}
 
+		protected override void OnActivated(IActivatedEventArgs args)
+		{
+			// Window management
+			if (!(Window.Current.Content is Frame rootFrame))
+			{
+				rootFrame = new Frame();
+				Window.Current.Content = rootFrame;
+				ShowPage(rootFrame);
+			}
+
+			Window.Current.Activate();
+		}
+
 		private async void ShowPage(Frame rootFrame)
 		{
 			// TODO Run only on first app start.
