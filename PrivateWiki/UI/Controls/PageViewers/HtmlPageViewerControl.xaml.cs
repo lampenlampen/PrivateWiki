@@ -120,6 +120,8 @@ namespace PrivateWiki.UI.Controls.PageViewers
 			{
 				if (uri.Equals(_uri))
 				{
+					// Load the index.html page
+
 					Logger.Info("Load Wiki page");
 					return;
 				}
@@ -138,6 +140,8 @@ namespace PrivateWiki.UI.Controls.PageViewers
 				}
 				else
 				{
+					// Local file link
+
 					var dataFolder = await App.Current.Config.GetDataFolderAsync();
 					var dataPath = dataFolder.Path;
 					var localPath = uri.AbsolutePath.Substring(6);
