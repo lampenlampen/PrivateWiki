@@ -4,6 +4,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Xaml.Controls;
 using NLog;
 using PrivateWiki.Models.Pages;
@@ -56,7 +57,21 @@ namespace PrivateWiki.UI.Controls.PageViewers
 					.Select(x => KeyboardShortcutConverter.Parse(x.Value))
 					.InvokeCommand(ViewModel, x => x.KeyPressed)
 					.DisposeWith(disposable);
+
+				Webview.Events().UnsupportedUriSchemeIdentified
+					.Select(a => a.args)
+					.Subscribe(WebViewUnsupportedUriSchemeIdentified)
+					.DisposeWith(disposable);
 			});
+		}
+
+		private void WebViewUnsupportedUriSchemeIdentified(WebViewUnsupportedUriSchemeIdentifiedEventArgs args)
+		{
+			var uri = args.Uri;
+
+			args.Handled = true;
+
+			Logger.Debug($"UnsupportedUriScheme: {uri.AbsolutePath}");
 		}
 
 		private void Webview_OnScriptNotify(NotifyEventArgs e)
@@ -68,7 +83,7 @@ namespace PrivateWiki.UI.Controls.PageViewers
 			ViewModel.KeyPressed.Execute(key);
 		}
 
-		private void WebViewNavigationStarting(WebViewNavigationStartingEventArgs args)
+		private async void WebViewNavigationStarting(WebViewNavigationStartingEventArgs args)
 		{
 			var uri = args.Uri;
 
@@ -108,7 +123,7 @@ namespace PrivateWiki.UI.Controls.PageViewers
 					Logger.Info("Load Wiki page");
 					return;
 				}
-				else
+				else if (uri.LocalPath.StartsWith("/data/:"))
 				{
 					// Wikilink
 					var link = uri.AbsolutePath.Substring(7);
@@ -119,6 +134,20 @@ namespace PrivateWiki.UI.Controls.PageViewers
 					ViewModel.WikilinkClicked.Execute(Path.ofLink(link));
 
 					args.Cancel = true;
+					return;
+				}
+				else
+				{
+					var dataFolder = await App.Current.Config.GetDataFolderAsync();
+					var dataPath = dataFolder.Path;
+					var localPath = uri.AbsolutePath.Substring(6);
+
+					var a = System.IO.Path.Combine(dataPath, localPath);
+
+					var file = System.IO.Path.GetFullPath(a);
+
+					Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(file));
+
 					return;
 				}
 			}
