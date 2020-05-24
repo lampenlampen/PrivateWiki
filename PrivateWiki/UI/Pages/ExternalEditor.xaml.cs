@@ -134,9 +134,9 @@ namespace PrivateWiki.UI.Pages
 			var diffEngine = new diff_match_patch();
 
 			var a = diffEngine.diff_linesToChars(page.Content, newPage);
-			var text1 = a[0] as string;
-			var text2 = a[1] as string;
-			var lineArray = a[2] as List<string>;
+			var text1 = (string) a[0];
+			var text2 = (string) a[1];
+			var lineArray = (List<string>) a[2];
 
 
 			var diff = diffEngine.diff_main(text1, text2, false);

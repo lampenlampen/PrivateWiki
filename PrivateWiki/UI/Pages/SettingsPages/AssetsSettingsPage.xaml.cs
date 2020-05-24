@@ -2,9 +2,9 @@
 using System.Reactive.Disposables;
 using Windows.System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using PrivateWiki.Models.ViewModels.Settings;
+using PrivateWiki.UI.Events;
 using ReactiveUI;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -42,7 +42,9 @@ namespace PrivateWiki.UI.Pages.SettingsPages
 
 			this.WhenActivated(disposable =>
 			{
-				TreeViewMedia.Events();
+				TreeViewMedia.Events().ItemInvoked
+					.Subscribe()
+					.DisposeWith(disposable);
 
 				OpenInExplorerText.Events().Click
 					.Subscribe(async _ => { Launcher.LaunchFolderAsync(await App.Current.Config.GetDataFolderAsync()); })
