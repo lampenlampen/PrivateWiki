@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using muxc = Microsoft.UI.Xaml.Controls;
 
-namespace PrivateWiki.UI.TemplateSelector
+namespace PrivateWiki.UWP.UI.TemplateSelector
 {
 	internal class MediaManagerTreeViewItemTemplateSelector : DataTemplateSelector
 	{

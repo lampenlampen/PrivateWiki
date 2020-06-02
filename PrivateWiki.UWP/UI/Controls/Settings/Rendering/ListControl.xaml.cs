@@ -3,7 +3,7 @@ using PrivateWiki.Models;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace PrivateWiki.UI.Controls.Settings.Rendering
+namespace PrivateWiki.UWP.UI.Controls.Settings.Rendering
 {
 	public sealed partial class ListControl : UserControl
 	{

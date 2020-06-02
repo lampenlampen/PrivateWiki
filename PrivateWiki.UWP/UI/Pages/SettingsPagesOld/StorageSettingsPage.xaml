@@ -1,11 +1,11 @@
 ﻿<Page
-    x:Class="PrivateWiki.UI.Pages.SettingsPagesOld.StorageSettingsPage"
+    x:Class="PrivateWiki.UWP.UI.Pages.SettingsPagesOld.StorageSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uwp="using:FontAwesome.UWP"
-    xmlns:controls="using:PrivateWiki.UI.Controls"
+    xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
     mc:Ignorable="d"
     Background="#EEEEEE">
 

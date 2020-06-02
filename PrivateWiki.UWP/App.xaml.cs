@@ -9,19 +9,21 @@ using Microsoft.Toolkit.Uwp.UI.Controls;
 using NLog;
 using NodaTime;
 using PrivateWiki.Data;
-using PrivateWiki.StorageBackend;
-using PrivateWiki.StorageBackend.SQLite;
-using PrivateWiki.UI;
-using PrivateWiki.UI.Pages;
+using PrivateWiki.UWP.Data;
+using PrivateWiki.UWP.StorageBackend;
+using PrivateWiki.UWP.StorageBackend.SQLite;
+using PrivateWiki.UWP.UI;
+using PrivateWiki.UWP.UI.Pages;
 using RavinduL.LocalNotifications;
 using ReactiveUI;
+using SimpleInjector;
 
-namespace PrivateWiki
+namespace PrivateWiki.UWP
 {
 	/// <summary>
 	///     Stellt das anwendungsspezifische Verhalten bereit, um die Standardanwendungsklasse zu ergänzen.
 	/// </summary>
-	sealed partial class App : Application
+	sealed partial class App : Windows.UI.Xaml.Application
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -29,6 +31,8 @@ namespace PrivateWiki
 		public new static App Current;
 
 		public AppConfig Config = new AppConfig();
+
+		public Application Application = Application.Instance;
 
 		public GlobalNotificationManager GlobalNotificationManager { get; private set; }
 
@@ -44,6 +48,14 @@ namespace PrivateWiki
 			Current = this;
 			InitializeComponent();
 			Suspending += OnSuspending;
+
+			Application.StorageBackend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
+			Application.Launcher = new Launcher();
+
+			Application.Container.Register<IFilesystemProvider, UWPFilesystemProvider>(Lifestyle.Singleton);
+
+			Application.VerifyContainer();
+
 
 			Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 			NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
@@ -82,6 +94,7 @@ namespace PrivateWiki
 				var notificationGrid = new Grid();
 
 				GlobalNotificationManager = new GlobalNotificationManager(new LocalNotificationManager(notificationGrid));
+				Application.GlobalNotificationManager = GlobalNotificationManager;
 				Notification = new InAppNotification();
 
 				rootGrid.Children.Add(rootFrame);

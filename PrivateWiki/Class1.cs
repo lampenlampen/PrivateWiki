@@ -1,9 +1,6 @@
-﻿using System;
-
-namespace PrivateWiki
+﻿namespace PrivateWiki
 {
 	public class Class1
 	{
-		
 	}
 }

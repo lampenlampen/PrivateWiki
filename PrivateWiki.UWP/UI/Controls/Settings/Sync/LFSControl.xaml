@@ -1,13 +1,12 @@
 ﻿<UserControl
-    x:Class="PrivateWiki.UI.Controls.Settings.Sync.LFSControl"
+    x:Class="PrivateWiki.UWP.UI.Controls.Settings.Sync.LFSControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:utilities="using:PrivateWiki.Utilities"
     xmlns:models="using:PrivateWiki.Models"
-    xmlns:xamlConverter="using:PrivateWiki.UI.XamlConverter"
+    xmlns:xamlConverter="using:PrivateWiki.UWP.UI.XamlConverter"
     mc:Ignorable="d"
     d:DesignHeight="1000"
     d:DesignWidth="1000">

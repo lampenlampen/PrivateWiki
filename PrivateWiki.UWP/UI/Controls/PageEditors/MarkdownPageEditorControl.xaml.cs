@@ -9,7 +9,7 @@ using ReactiveUI;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace PrivateWiki.UI.Controls.PageEditors
+namespace PrivateWiki.UWP.UI.Controls.PageEditors
 {
 	public abstract class PageEditorControlBase<T> : ReactiveUserControl<T> where T : PageEditorControlViewModelBase
 	{

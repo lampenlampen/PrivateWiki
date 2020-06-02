@@ -4,7 +4,7 @@ using Microsoft.Data.Sqlite;
 using NodaTime;
 using PrivateWiki.Models.Pages;
 
-namespace PrivateWiki.StorageBackend.SQLite
+namespace PrivateWiki.UWP.StorageBackend.SQLite
 {
 	class SqliteDataReaderToHtmlPageConverter
 	{

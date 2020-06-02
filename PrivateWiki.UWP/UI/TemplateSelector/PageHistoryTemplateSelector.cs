@@ -2,7 +2,7 @@
 using Windows.UI.Xaml.Controls;
 using PrivateWiki.Models.Pages;
 
-namespace PrivateWiki.UI.TemplateSelector
+namespace PrivateWiki.UWP.UI.TemplateSelector
 {
 	class PageHistoryTemplateSelector : DataTemplateSelector
 	{

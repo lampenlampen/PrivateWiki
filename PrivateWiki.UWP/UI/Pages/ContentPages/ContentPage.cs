@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Drawing;
-using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using NLog;
-using PrivateWiki.Data;
 using PrivateWiki.Models.Pages;
-using PrivateWiki.StorageBackend;
-using PrivateWiki.UI.Controls;
-using PrivateWiki.UI.Dialogs;
-using PrivateWiki.Utilities.ExtensionFunctions;
+using PrivateWiki.UWP.Data;
+using PrivateWiki.UWP.StorageBackend;
+using PrivateWiki.UWP.UI.Controls;
+using PrivateWiki.UWP.UI.Dialogs;
+using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 using RavinduL.LocalNotifications.Notifications;
 using Page = PrivateWiki.Models.Pages.Page;
 
-namespace PrivateWiki.UI.Pages.ContentPages
+namespace PrivateWiki.UWP.UI.Pages.ContentPages
 {
 	public abstract class ContentPage : Windows.UI.Xaml.Controls.Page, IPageViewerCommandBar
 	{
@@ -94,7 +93,7 @@ namespace PrivateWiki.UI.Pages.ContentPages
 				var pageExporter = new PageExporter();
 				var file = await pageExporter.ExportPage((MarkdownPage) Page);
 
-				_ = Launcher.LaunchFileAsync(file);
+				_ = Windows.System.Launcher.LaunchFileAsync(file);
 			}
 		}
 

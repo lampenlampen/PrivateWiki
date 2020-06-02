@@ -1,8 +1,8 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
-using PrivateWiki.Models;
+using PrivateWiki.UWP.Models;
 
-namespace PrivateWiki.UI.XamlConverter
+namespace PrivateWiki.UWP.UI.XamlConverter
 {
 	class SyncFrequencyToRadioButtonConverter : IValueConverter
 	{

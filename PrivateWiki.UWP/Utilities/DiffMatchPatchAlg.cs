@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace PrivateWiki.Utilities
+namespace PrivateWiki.UWP.Utilities
 {
 	internal class DiffMatchPatchAlg
 	{

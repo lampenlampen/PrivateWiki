@@ -3,19 +3,19 @@ using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using NodaTime;
-using PrivateWiki.StorageBackend;
-using PrivateWiki.StorageBackend.SQLite;
+using PrivateWiki.UWP.StorageBackend;
+using PrivateWiki.UWP.StorageBackend.SQLite;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace PrivateWiki.UI.Pages.SettingsPagesOld
+namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 {
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
 	public sealed partial class PagesSettingsPage : Page
 	{
-		public ObservableCollection<Models.Pages.Page> Pages { get; set; } = new ObservableCollection<Models.Pages.Page>();
+		public ObservableCollection<PrivateWiki.Models.Pages.Page> Pages { get; set; } = new ObservableCollection<PrivateWiki.Models.Pages.Page>();
 
 		public PagesSettingsPage()
 		{

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage;
-using PrivateWiki.Data;
+using PrivateWiki.Models.Pages;
 
-namespace PrivateWiki
+namespace PrivateWiki.UWP
 {
 	public class AppConfig
 	{
@@ -20,9 +20,9 @@ namespace PrivateWiki
 			return dataFolder.AsTask();
 		});
 
-		public async Task<StorageFolder> GetDataFolderAsync()
+		public Task<StorageFolder> GetDataFolderAsync()
 		{
-			return await _dataFolder.Value;
+			return _dataFolder.Value;
 		}
 	}
 }

@@ -8,7 +8,7 @@ using PrivateWiki.Models.ViewModels;
 
 // Die Elementvorlage "Inhaltsdialogfeld" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
-namespace PrivateWiki.UI.Dialogs
+namespace PrivateWiki.UWP.UI.Dialogs
 {
 	public sealed partial class PageEditorImagePickerDialog : DissmissableDialog
 	{

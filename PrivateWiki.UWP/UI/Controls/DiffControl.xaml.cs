@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using PrivateWiki.Data;
+using PrivateWiki.UWP.Data;
 using RuntimeComponent;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace PrivateWiki.UI.Controls
+namespace PrivateWiki.UWP.UI.Controls
 {
 	public sealed partial class DiffControl : UserControl
 	{

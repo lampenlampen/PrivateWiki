@@ -5,7 +5,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.Web;
 
-namespace PrivateWiki
+namespace PrivateWiki.UWP
 {
 	class MyUriToStreamResolver : IUriToStreamResolver
 	{

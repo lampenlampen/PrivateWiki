@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 #nullable enable
 
-namespace PrivateWiki.Models
+namespace PrivateWiki.UWP.Models
 {
 	public class NavigationItem : INotifyPropertyChanged
 	{
@@ -23,7 +23,6 @@ namespace PrivateWiki.Models
 
 	public class DividerItem : NavigationItem
 	{
-
 	}
 
 	public class HeaderItem : NavigationItem
@@ -69,8 +68,6 @@ namespace PrivateWiki.Models
 
 		public JsonWriter WriteJson(NavigationItem item)
 		{
-
-
 			switch (item)
 			{
 				case DividerItem dividerItem:

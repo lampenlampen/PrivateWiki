@@ -4,13 +4,13 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using NodaTime;
 using PrivateWiki.Models.Pages;
-using PrivateWiki.StorageBackend;
-using PrivateWiki.StorageBackend.SQLite;
+using PrivateWiki.UWP.StorageBackend;
+using PrivateWiki.UWP.StorageBackend.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace PrivateWiki.UI.Pages
+namespace PrivateWiki.UWP.UI.Pages
 {
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.

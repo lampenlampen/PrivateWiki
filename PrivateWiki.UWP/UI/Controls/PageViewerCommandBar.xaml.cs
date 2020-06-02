@@ -16,7 +16,7 @@ using ReactiveUI;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace PrivateWiki.UI.Controls
+namespace PrivateWiki.UWP.UI.Controls
 {
 	public class PageViewerCommandBarBase : ReactiveUserControl<PageViewerCommandBarViewModel>
 	{

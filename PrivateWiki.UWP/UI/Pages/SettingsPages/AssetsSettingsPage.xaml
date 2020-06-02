@@ -1,15 +1,14 @@
 ﻿<Page
-    x:Class="PrivateWiki.UI.Pages.SettingsPages.AssetsSettingsPage"
+    x:Class="PrivateWiki.UWP.UI.Pages.SettingsPages.AssetsSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:PrivateWiki.UI.Pages.SettingsPages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uwp="using:FontAwesome.UWP"
-    xmlns:templateSelector="using:PrivateWiki.UI.TemplateSelector"
-    xmlns:controls="using:PrivateWiki.UI.Controls"
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:controls2="using:Microsoft.UI.Xaml.Controls"
+    xmlns:templateSelector="using:PrivateWiki.UWP.UI.TemplateSelector"
+    xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 

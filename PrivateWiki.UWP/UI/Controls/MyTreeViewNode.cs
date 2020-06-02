@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace PrivateWiki.UI.Controls
+namespace PrivateWiki.UWP.UI.Controls
 {
 	class MyTreeViewNode : TreeViewNode
 	{

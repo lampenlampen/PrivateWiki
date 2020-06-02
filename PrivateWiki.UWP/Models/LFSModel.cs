@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
-namespace PrivateWiki.Models
+namespace PrivateWiki.UWP.Models
 {
 	public class SyncModel
 	{

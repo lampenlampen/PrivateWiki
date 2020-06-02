@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using NodaTime;
 using PrivateWiki.Models.Pages;
-using PrivateWiki.StorageBackend.SQLite;
+using PrivateWiki.UWP.StorageBackend.SQLite;
 
-namespace PrivateWiki.Data
+namespace PrivateWiki.UWP.Data
 {
 	public static class DefaultPages
 	{

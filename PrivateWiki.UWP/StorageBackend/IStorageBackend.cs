@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace PrivateWiki.StorageBackend
+namespace PrivateWiki.UWP.StorageBackend
 {
 	/// <summary>
 	/// Provides access to a storage backend.

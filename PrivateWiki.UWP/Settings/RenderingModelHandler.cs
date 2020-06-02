@@ -5,7 +5,7 @@ using PrivateWiki.Models;
 
 #nullable enable
 
-namespace PrivateWiki.Settings
+namespace PrivateWiki.UWP.Settings
 {
 	class RenderingModelHandler
 	{

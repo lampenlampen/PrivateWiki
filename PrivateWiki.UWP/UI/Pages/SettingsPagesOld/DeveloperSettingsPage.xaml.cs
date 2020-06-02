@@ -1,12 +1,12 @@
 ﻿using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using PrivateWiki.Models;
-using PrivateWiki.Settings;
+using PrivateWiki.UWP.Models;
+using PrivateWiki.UWP.Settings;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace PrivateWiki.UI.Pages.SettingsPagesOld
+namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 {
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.

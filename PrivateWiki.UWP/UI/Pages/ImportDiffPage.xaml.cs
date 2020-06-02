@@ -8,11 +8,11 @@ using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using NLog;
-using PrivateWiki.Utilities;
+using PrivateWiki.UWP.Utilities;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
-namespace PrivateWiki.UI.Pages
+namespace PrivateWiki.UWP.UI.Pages
 {
 	/// <summary>
 	///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.

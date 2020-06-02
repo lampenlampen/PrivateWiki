@@ -10,13 +10,13 @@ using Windows.UI.Xaml.Navigation;
 using NLog;
 using PrivateWiki.Models.Pages;
 using PrivateWiki.Models.ViewModels;
-using PrivateWiki.UI.Controls.PageViewers;
+using PrivateWiki.UWP.UI.Controls.PageViewers;
 using ReactiveUI;
 using Page = Windows.UI.Xaml.Controls.Page;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace PrivateWiki.UI.Pages
+namespace PrivateWiki.UWP.UI.Pages
 {
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.

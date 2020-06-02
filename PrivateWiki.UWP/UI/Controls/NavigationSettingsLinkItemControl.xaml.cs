@@ -6,15 +6,15 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using NodaTime;
 using PrivateWiki.Models.Pages;
-using PrivateWiki.StorageBackend;
-using PrivateWiki.StorageBackend.SQLite;
+using PrivateWiki.UWP.StorageBackend;
+using PrivateWiki.UWP.StorageBackend.SQLite;
 using Page = PrivateWiki.Models.Pages.Page;
 
 #nullable enable
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace PrivateWiki.UI.Controls
+namespace PrivateWiki.UWP.UI.Controls
 {
 	public sealed partial class NavigationSettingsLinkItemControl : UserControl
 	{

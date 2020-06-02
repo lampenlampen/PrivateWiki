@@ -5,7 +5,7 @@ using PrivateWiki.Models.Pages;
 
 #nullable enable
 
-namespace PrivateWiki
+namespace PrivateWiki.UWP
 {
 	internal static class NavigationHandler
 	{

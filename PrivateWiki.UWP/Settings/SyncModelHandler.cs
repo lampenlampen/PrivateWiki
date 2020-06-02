@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using PrivateWiki.Models;
+using PrivateWiki.UWP.Models;
 
-namespace PrivateWiki.Settings
+namespace PrivateWiki.UWP.Settings
 {
 	class SyncModelHandler
 	{
@@ -82,7 +82,6 @@ namespace PrivateWiki.Settings
 			var localFolder = ApplicationData.Current.LocalFolder;
 			var settingsFolder = await localFolder.CreateFolderAsync("settings", CreationCollisionOption.OpenIfExists);
 			return await settingsFolder.CreateFileAsync("storage.json", CreationCollisionOption.ReplaceExisting);
-
 		}
 	}
 
@@ -101,7 +100,7 @@ namespace PrivateWiki.Settings
 			{
 				case LFSModel lfsModel:
 					LFSModelWriteJson(Writer, lfsModel);
-				break;
+					break;
 			}
 
 			return Writer;

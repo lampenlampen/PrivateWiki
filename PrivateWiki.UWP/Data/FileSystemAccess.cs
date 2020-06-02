@@ -6,7 +6,7 @@ using DynamicData;
 
 #nullable enable
 
-namespace PrivateWiki.Data
+namespace PrivateWiki.UWP.Data
 {
 	internal class FileSystemAccess
 	{

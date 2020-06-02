@@ -1,5 +1,5 @@
-﻿<contentPages1:ContentPage
-    x:Class="PrivateWiki.UI.Pages.MarkdownPageViewer"
+﻿<contentPages:ContentPage
+    x:Class="PrivateWiki.UWP.UI.Pages.MarkdownPageViewer"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,9 +7,9 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:privateWiki="using:PrivateWiki"
-    xmlns:controls1="using:PrivateWiki.UI.Controls"
-    xmlns:contentPages1="using:PrivateWiki.UI.Pages.ContentPages"
-    xmlns:ui="using:PrivateWiki.UI"
+    xmlns:contentPages="using:PrivateWiki.UWP.UI.Pages.ContentPages"
+    xmlns:ui="using:PrivateWiki.UWP.UI"
+    xmlns:controls1="using:PrivateWiki.UWP.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -122,4 +122,4 @@
 
         </StackPanel>
     </Grid>
-</contentPages1:ContentPage>
+</contentPages:ContentPage>

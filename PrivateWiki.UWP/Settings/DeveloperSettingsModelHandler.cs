@@ -1,10 +1,10 @@
 ﻿using System;
 using Windows.Storage;
-using PrivateWiki.Models;
+using PrivateWiki.UWP.Models;
 
 #nullable enable
 
-namespace PrivateWiki.Settings
+namespace PrivateWiki.UWP.Settings
 {
 	class DeveloperSettingsModelHandler
 	{
@@ -26,7 +26,7 @@ namespace PrivateWiki.Settings
 			{
 				model = new DeveloperSettingsModel
 				{
-					IsAcrylicBackgroundEnabled = (bool)container.Values["experimental_is_acrylicbackground_enabled"]
+					IsAcrylicBackgroundEnabled = (bool) container.Values["experimental_is_acrylicbackground_enabled"]
 				};
 			}
 			catch (NullReferenceException e)

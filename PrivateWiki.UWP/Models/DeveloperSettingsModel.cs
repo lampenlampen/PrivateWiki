@@ -1,4 +1,4 @@
-﻿namespace PrivateWiki.Models
+﻿namespace PrivateWiki.UWP.Models
 {
 	class DeveloperSettingsModel
 	{

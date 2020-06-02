@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PrivateWiki.Models.Pages;
+using PrivateWiki.StorageBackend;
 
-namespace PrivateWiki.StorageBackend
+namespace PrivateWiki.UWP.StorageBackend
 {
 	public interface IMarkdownPageStorage : IPageStorage
 	{

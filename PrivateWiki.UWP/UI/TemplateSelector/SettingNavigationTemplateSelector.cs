@@ -1,9 +1,9 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using PrivateWiki.Models;
+using PrivateWiki.UWP.Models;
 
-namespace PrivateWiki.UI.TemplateSelector
+namespace PrivateWiki.UWP.UI.TemplateSelector
 {
 	public class SettingNavigationTemplateSelector : DataTemplateSelector
 	{

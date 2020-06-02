@@ -1,4 +1,4 @@
-namespace PrivateWiki.StorageBackend
+namespace PrivateWiki.UWP.StorageBackend
 {
 	public static class DefaultStorageBackends
 	{

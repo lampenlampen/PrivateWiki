@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 using NLog;
 using muxc = Microsoft.UI.Xaml.Controls;
 
-namespace PrivateWiki.UI.Pages.SettingsPagesOld
+namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 {
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.

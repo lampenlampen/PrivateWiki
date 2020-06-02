@@ -2,7 +2,7 @@
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace PrivateWiki.UI.Pages.ContentPages.HtmlPage
+namespace PrivateWiki.UWP.UI.Pages.ContentPages.HtmlPage
 {
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.

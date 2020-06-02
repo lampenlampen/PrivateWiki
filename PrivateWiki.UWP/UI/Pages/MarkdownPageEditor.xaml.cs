@@ -8,18 +8,19 @@ using Windows.UI.Xaml.Navigation;
 using JetBrains.Annotations;
 using NLog;
 using NodaTime;
-using PrivateWiki.Data;
 using PrivateWiki.Models.Pages;
-using PrivateWiki.StorageBackend;
-using PrivateWiki.StorageBackend.SQLite;
-using PrivateWiki.UI.Dialogs;
+using PrivateWiki.Rendering;
+using PrivateWiki.UWP.Data;
+using PrivateWiki.UWP.StorageBackend;
+using PrivateWiki.UWP.StorageBackend.SQLite;
+using PrivateWiki.UWP.UI.Dialogs;
 using Page = Windows.UI.Xaml.Controls.Page;
 
 #nullable enable
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
-namespace PrivateWiki.UI.Pages
+namespace PrivateWiki.UWP.UI.Pages
 {
 	/// <summary>
 	///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
@@ -168,8 +169,8 @@ namespace PrivateWiki.UI.Pages
 			if (Pivot.SelectedIndex == 1)
 			{
 				var htmlFileName = "index_preview.html";
-				var parser = new Rendering.Markdown.Markdig.Markdig();
-				var html = parser.ToHtmlString(PageEditorTextBox.Text);
+				var contentRenderer = new ContentRenderer();
+				var html = contentRenderer.RenderContentAsync(PageEditorTextBox.Text, ContentType.Markdown);
 				var localFolder = ApplicationData.Current.LocalFolder;
 				var mediaFolder = await localFolder.GetFolderAsync("media");
 				var file = await mediaFolder.CreateFileAsync(htmlFileName, CreationCollisionOption.ReplaceExisting);
@@ -180,8 +181,8 @@ namespace PrivateWiki.UI.Pages
 
 			if (Pivot.SelectedIndex == 2)
 			{
-				var parser = new Rendering.Markdown.Markdig.Markdig();
-				var html = await parser.ToHtmlString(PageEditorTextBox.Text);
+				var contentRenderer = new ContentRenderer();
+				var html = await contentRenderer.RenderContentAsync(PageEditorTextBox.Text, ContentType.Markdown);
 
 				try
 				{

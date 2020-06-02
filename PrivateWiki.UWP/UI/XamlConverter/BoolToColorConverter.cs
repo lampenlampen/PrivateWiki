@@ -2,11 +2,11 @@
 using System.Drawing;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
-using PrivateWiki.Utilities.ExtensionFunctions;
+using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 
 #nullable enable
 
-namespace PrivateWiki.UI.XamlConverter
+namespace PrivateWiki.UWP.UI.XamlConverter
 {
 	class EnableStateToColorConverter : IValueConverter
 	{

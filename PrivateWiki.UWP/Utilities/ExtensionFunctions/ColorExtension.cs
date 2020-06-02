@@ -1,7 +1,7 @@
 ﻿using Windows.UI;
 using Windows.UI.Xaml.Media;
 
-namespace PrivateWiki.Utilities.ExtensionFunctions
+namespace PrivateWiki.UWP.Utilities.ExtensionFunctions
 {
 	static class ColorExtension
 	{

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Text;
-using Windows.Storage;
-using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -11,14 +9,12 @@ using Windows.UI.Xaml.Navigation;
 using JetBrains.Annotations;
 using NLog;
 using NodaTime;
-using PrivateWiki.Rendering.Markdown.Markdig;
-using PrivateWiki.Rendering.Markdown.Markdig.Extensions.TagExtension;
-using PrivateWiki.Settings;
-using PrivateWiki.StorageBackend;
-using PrivateWiki.StorageBackend.SQLite;
-using PrivateWiki.UI.Controls;
-using PrivateWiki.UI.Pages.ContentPages;
-using PrivateWiki.Utilities.ExtensionFunctions;
+using PrivateWiki.UWP.Settings;
+using PrivateWiki.UWP.StorageBackend;
+using PrivateWiki.UWP.StorageBackend.SQLite;
+using PrivateWiki.UWP.UI.Controls;
+using PrivateWiki.UWP.UI.Pages.ContentPages;
+using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
 
@@ -26,7 +22,7 @@ using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvo
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
-namespace PrivateWiki.UI.Pages
+namespace PrivateWiki.UWP.UI.Pages
 {
 	/// <summary>
 	///     Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
@@ -57,7 +53,7 @@ namespace PrivateWiki.UI.Pages
 
 			if (acrylicBackground)
 			{
-				PageViewerGrid.Background = (Brush) Application.Current.Resources["SystemControlAcrylicWindowBrush"];
+				PageViewerGrid.Background = (Brush) App.Current.Resources["SystemControlAcrylicWindowBrush"];
 				Webview.DefaultBackgroundColor = Color.Transparent.ToWindowsUiColor();
 			}
 			else
@@ -112,7 +108,7 @@ namespace PrivateWiki.UI.Pages
 
 			// Normal Link
 			Logger.Debug($"Link: {uri.AbsoluteUri}");
-			Launcher.LaunchUriAsync(uri);
+			Windows.System.Launcher.LaunchUriAsync(uri);
 			args.Cancel = true;
 		}
 
@@ -152,6 +148,7 @@ namespace PrivateWiki.UI.Pages
 
 		private async void DisplayPage(string pageId)
 		{
+			/*
 			if (!await _storage.ContainsMarkdownPageAsync(pageId))
 				if (Frame.CanGoBack)
 				{
@@ -225,6 +222,7 @@ namespace PrivateWiki.UI.Pages
 			_uri = uri.AbsoluteUri;
 			var uriResolver = new MyUriToStreamResolver();
 			Webview.NavigateToLocalStreamUri(uri, uriResolver);
+			*/
 		}
 
 		/// <summary>

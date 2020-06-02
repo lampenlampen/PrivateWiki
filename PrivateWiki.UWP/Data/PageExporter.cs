@@ -4,7 +4,7 @@ using Windows.Storage;
 using PrivateWiki.Models.Pages;
 using PrivateWiki.Rendering;
 
-namespace PrivateWiki.Data
+namespace PrivateWiki.UWP.Data
 {
 	public class PageExporter
 	{
@@ -14,10 +14,12 @@ namespace PrivateWiki.Data
 
 		public async Task<StorageFile> ExportPage(MarkdownPage page)
 		{
-			var parser = new Rendering.Markdown.Markdig.Markdig();
+			var contentRenderer = new ContentRenderer();
+			var content = contentRenderer.RenderContentAsync(page.Content, ContentType.Markdown);
+
 			var file = await ApplicationData.Current.TemporaryFolder.CreateFileAsync($"{page.Link.Replace(':', '_')}.html", CreationCollisionOption.ReplaceExisting);
 
-			await FileIO.WriteTextAsync(file, await parser.ToHtmlString(page.Content));
+			await FileIO.WriteTextAsync(file, await content);
 
 			return file;
 		}

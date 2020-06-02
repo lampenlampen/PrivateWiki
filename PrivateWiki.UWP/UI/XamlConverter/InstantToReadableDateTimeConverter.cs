@@ -2,7 +2,7 @@
 using Windows.UI.Xaml.Data;
 using NodaTime;
 
-namespace PrivateWiki.UI.XamlConverter
+namespace PrivateWiki.UWP.UI.XamlConverter
 {
 	class InstantToReadableDateTimeConverter : IValueConverter
 	{

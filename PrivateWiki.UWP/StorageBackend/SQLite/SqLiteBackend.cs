@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using NodaTime;
 using PrivateWiki.Models.Pages;
+using PrivateWiki.StorageBackend;
 
-namespace PrivateWiki.StorageBackend.SQLite
+namespace PrivateWiki.UWP.StorageBackend.SQLite
 {
 #nullable enable
 

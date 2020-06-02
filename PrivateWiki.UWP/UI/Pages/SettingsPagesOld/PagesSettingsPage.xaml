@@ -1,13 +1,12 @@
 ﻿<Page
-    x:Class="PrivateWiki.UI.Pages.SettingsPagesOld.PagesSettingsPage"
+    x:Class="PrivateWiki.UWP.UI.Pages.SettingsPagesOld.PagesSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:utilities="using:PrivateWiki.Utilities"
-    xmlns:controls="using:PrivateWiki.UI.Controls"
-    xmlns:xamlConverter="using:PrivateWiki.UI.XamlConverter"
+    xmlns:xamlConverter="using:PrivateWiki.UWP.UI.XamlConverter"
+    xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
     mc:Ignorable="d"
     Background="#EEEEEE">
     

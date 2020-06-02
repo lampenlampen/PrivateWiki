@@ -4,7 +4,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Windows.Storage;
-using Windows.System;
 using Windows.UI.Xaml.Controls;
 using NLog;
 using PrivateWiki.Models.Pages;
@@ -13,7 +12,7 @@ using ReactiveUI;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace PrivateWiki.UI.Controls.PageViewers
+namespace PrivateWiki.UWP.UI.Controls.PageViewers
 {
 	public class HtmlPageViewerControlBase : ReactiveUserControl<HtmlPageViewerControlViewModel>
 	{
@@ -150,7 +149,7 @@ namespace PrivateWiki.UI.Controls.PageViewers
 
 					var file = System.IO.Path.GetFullPath(a);
 
-					Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(file));
+					Windows.System.Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(file));
 
 					return;
 				}

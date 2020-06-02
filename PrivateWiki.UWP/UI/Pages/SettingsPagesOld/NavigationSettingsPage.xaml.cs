@@ -6,15 +6,15 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using PrivateWiki.Models;
-using PrivateWiki.UI.Controls;
-using PrivateWiki.Utilities;
+using PrivateWiki.UWP.Models;
+using PrivateWiki.UWP.UI.Controls;
+using PrivateWiki.UWP.Utilities;
 
 #nullable enable
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
-namespace PrivateWiki.UI.Pages.SettingsPagesOld
+namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 {
 	/// <summary>
 	/// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.

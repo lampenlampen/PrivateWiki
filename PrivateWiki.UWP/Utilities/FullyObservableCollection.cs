@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace PrivateWiki.Utilities
+namespace PrivateWiki.UWP.Utilities
 {
 	public class FullyObservableCollection<T> : ObservableCollection<T>
 		where T : INotifyPropertyChanged
@@ -15,7 +15,8 @@ namespace PrivateWiki.Utilities
 		public event EventHandler<ItemPropertyChangedEventArgs> ItemPropertyChanged;
 
 		public FullyObservableCollection() : base()
-		{ }
+		{
+		}
 
 		public FullyObservableCollection(List<T> list) : base(list)
 		{
@@ -30,14 +31,14 @@ namespace PrivateWiki.Utilities
 		protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
 		{
 			if (e.Action == NotifyCollectionChangedAction.Remove ||
-				e.Action == NotifyCollectionChangedAction.Replace)
+			    e.Action == NotifyCollectionChangedAction.Replace)
 			{
 				foreach (T item in e.OldItems)
 					item.PropertyChanged -= ChildPropertyChanged;
 			}
 
 			if (e.Action == NotifyCollectionChangedAction.Add ||
-				e.Action == NotifyCollectionChangedAction.Replace)
+			    e.Action == NotifyCollectionChangedAction.Replace)
 			{
 				foreach (T item in e.NewItems)
 					item.PropertyChanged += ChildPropertyChanged;
@@ -73,7 +74,7 @@ namespace PrivateWiki.Utilities
 
 		private void ChildPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			T typedSender = (T)sender;
+			T typedSender = (T) sender;
 			int i = Items.IndexOf(typedSender);
 
 			if (i < 0)
@@ -112,6 +113,7 @@ namespace PrivateWiki.Utilities
 		/// <param name="index">The index.</param>
 		/// <param name="args">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
 		public ItemPropertyChangedEventArgs(int index, PropertyChangedEventArgs args) : this(index, args.PropertyName)
-		{ }
+		{
+		}
 	}
 }

@@ -7,7 +7,7 @@ using NLog;
 using RavinduL.LocalNotifications;
 using RavinduL.LocalNotifications.Notifications;
 
-namespace PrivateWiki.Utilities.ExtensionFunctions
+namespace PrivateWiki.UWP.Utilities.ExtensionFunctions
 {
 	static class LocalNotifications
 	{

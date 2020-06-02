@@ -3,7 +3,7 @@ using System.Reactive.Linq;
 using Windows.Foundation;
 using Microsoft.UI.Xaml.Controls;
 
-namespace PrivateWiki.UI.Events
+namespace PrivateWiki.UWP.UI.Events
 {
 	public class RxTreeViewEvents
 	{

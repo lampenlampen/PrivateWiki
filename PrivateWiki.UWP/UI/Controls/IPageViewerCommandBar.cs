@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml;
 
-namespace PrivateWiki.UI.Controls
+namespace PrivateWiki.UWP.UI.Controls
 {
 	public interface IPageViewerCommandBar
 	{

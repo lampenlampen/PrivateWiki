@@ -2,14 +2,14 @@
 using System.Linq;
 using Windows.UI.Xaml.Controls;
 using NodaTime;
-using PrivateWiki.StorageBackend;
-using PrivateWiki.StorageBackend.SQLite;
+using PrivateWiki.UWP.StorageBackend;
+using PrivateWiki.UWP.StorageBackend.SQLite;
 
 #nullable enable
 
 // Die Elementvorlage "Inhaltsdialogfeld" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
-namespace PrivateWiki.UI.Dialogs
+namespace PrivateWiki.UWP.UI.Dialogs
 {
 	public sealed partial class WikiLinkDialog : DissmissableDialog
 	{

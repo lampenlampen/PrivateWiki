@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using NodaTime;
-using PrivateWiki.Models;
 using PrivateWiki.Models.Pages;
-using PrivateWiki.StorageBackend;
-using PrivateWiki.StorageBackend.SQLite;
+using PrivateWiki.UWP.Models;
+using PrivateWiki.UWP.StorageBackend;
+using PrivateWiki.UWP.StorageBackend.SQLite;
 using YamlDotNet.RepresentationModel;
 using YamlDotNet.Serialization;
 using UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding;
 
-namespace PrivateWiki.Settings
+namespace PrivateWiki.UWP.Settings
 {
 	class LFSSyncActions
 	{

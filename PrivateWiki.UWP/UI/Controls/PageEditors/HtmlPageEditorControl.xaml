@@ -1,12 +1,12 @@
 ﻿<pageEditors:HtmlPageEditorControlBase
-    x:Class="PrivateWiki.UI.Controls.PageEditors.HtmlPageEditorControl"
+    x:Class="PrivateWiki.UWP.UI.Controls.PageEditors.HtmlPageEditorControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pageEditors="using:PrivateWiki.UI.Controls.PageEditors"
-    xmlns:controls1="using:PrivateWiki.UI.Controls"
-    xmlns:pageViewers="using:PrivateWiki.UI.Controls.PageViewers"
+    xmlns:pageEditors="using:PrivateWiki.UWP.UI.Controls.PageEditors"
+    xmlns:pageViewers="using:PrivateWiki.UWP.UI.Controls.PageViewers"
+    xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
     mc:Ignorable="d">
 
     <Grid>
@@ -70,7 +70,7 @@
             </PivotItem>
 
             <Pivot.RightHeader>
-                <controls1:PageEditorCommandBar x:Name="commandBar" />
+                <controls:PageEditorCommandBar x:Name="commandBar" />
             </Pivot.RightHeader>
         </Pivot>
     </Grid>

@@ -1,12 +1,12 @@
 ﻿<Page
-    x:Class="PrivateWiki.UI.Pages.PageViewer"
+    x:Class="PrivateWiki.UWP.UI.Pages.PageViewer"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:privateWiki="using:PrivateWiki"
-    xmlns:controls="using:PrivateWiki.UI.Controls"
-    xmlns:ui="using:PrivateWiki.UI"
+    xmlns:ui="using:PrivateWiki.UWP.UI"
+    xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 

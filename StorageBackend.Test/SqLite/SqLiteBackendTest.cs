@@ -4,8 +4,8 @@ using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NodaTime;
 using PrivateWiki.Models.Pages;
-using PrivateWiki.StorageBackend;
-using PrivateWiki.StorageBackend.SQLite;
+using PrivateWiki.UWP.StorageBackend;
+using PrivateWiki.UWP.StorageBackend.SQLite;
 
 namespace StorageBackend.Test.SqLite
 {
@@ -23,15 +23,14 @@ namespace StorageBackend.Test.SqLite
 			var storage = new SqLiteStorage("test");
 			sqliteBackend = new SqLiteBackend(storage, clock);
 			sqliteBackend.CreateTablesAsync().Wait();
-
 		}
-		
+
 		/*[TestCleanup]
 		public void DeleteTestDatabase()
 		{
 			File.Delete(sqliteBackend.Connection.DataSource);
 		}*/
-		
+
 		[TestMethod]
 		public void CreateTablesAsync()
 		{
@@ -63,9 +62,9 @@ namespace StorageBackend.Test.SqLite
 		[TestMethod]
 		public void ExistsTest()
 		{
-			var task =  sqliteBackend.ExistsAsync();
+			var task = sqliteBackend.ExistsAsync();
 			task.Wait();
-			
+
 			Assert.IsTrue(task.Result);
 		}
 
@@ -74,7 +73,7 @@ namespace StorageBackend.Test.SqLite
 		{
 			var task = sqliteBackend.ExistsAsync();
 			task.Wait();
-			
+
 			Assert.IsFalse(task.Result);
 		}
 
@@ -104,9 +103,9 @@ namespace StorageBackend.Test.SqLite
 
 			var task3 = sqliteBackend.UpdateMarkdownPage(page, PageAction.Edited);
 			task3.Wait();
-			
+
 			Assert.IsTrue(task2.Result);
-			
+
 			var task4 = sqliteBackend.DeleteMarkdownPageAsync(page);
 			task4.Wait();
 		}

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.Data.Sqlite;
 using NodaTime;
-using PrivateWiki.Data;
 using PrivateWiki.Models.Pages;
 
-namespace PrivateWiki.StorageBackend.SQLite
+namespace PrivateWiki.UWP.StorageBackend.SQLite
 {
 	class SqliteDataReaderToPageConverter
 	{

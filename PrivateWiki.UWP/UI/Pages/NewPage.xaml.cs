@@ -4,17 +4,17 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Windows.System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using PrivateWiki.Data;
+using PrivateWiki.Models.Pages;
 using PrivateWiki.Models.ViewModels;
 using ReactiveUI;
 using ReactiveUI.Validation.Extensions;
+using Page = Windows.UI.Xaml.Controls.Page;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-namespace PrivateWiki.UI.Pages
+namespace PrivateWiki.UWP.UI.Pages
 {
 	/// <summary>
 	///     An empty page that can be used on its own or navigated to within a Frame.

@@ -5,14 +5,15 @@ using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
 using JetBrains.Annotations;
 using NodaTime;
-using PrivateWiki.Data;
 using PrivateWiki.Models.Pages;
-using PrivateWiki.StorageBackend;
-using PrivateWiki.StorageBackend.SQLite;
+using PrivateWiki.Rendering;
+using PrivateWiki.UWP.Data;
+using PrivateWiki.UWP.StorageBackend;
+using PrivateWiki.UWP.StorageBackend.SQLite;
 
 // Die Elementvorlage "Inhaltsdialogfeld" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
-namespace PrivateWiki.UI.Dialogs
+namespace PrivateWiki.UWP.UI.Dialogs
 {
 	public sealed partial class ExportDialog : DissmissableDialog
 	{
@@ -42,11 +43,11 @@ namespace PrivateWiki.UI.Dialogs
 			{
 				if (exportHtml)
 				{
-					var parser = new Rendering.Markdown.Markdig.Markdig();
+					var contentRenderer = new ContentRenderer();
 
 					var file = await folder.CreateFileAsync($"{page.Link.Replace(':', '_')}.html",
 						CreationCollisionOption.ReplaceExisting);
-					await FileIO.WriteTextAsync(file, await parser.ToHtmlString(page.Content), UnicodeEncoding.Utf8);
+					await FileIO.WriteTextAsync(file, await contentRenderer.RenderContentAsync(page.Content, ContentType.Markdown), UnicodeEncoding.Utf8);
 				}
 
 				if (exportMarkdown)

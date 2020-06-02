@@ -1,22 +1,16 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using Windows.Storage;
-using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
-using Windows.Storage.Search;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Markdig.Extensions.Yaml;
-using Markdig.Syntax;
-using PrivateWiki.Models;
-using PrivateWiki.Settings;
+using PrivateWiki.UWP.Models;
+using PrivateWiki.UWP.Settings;
 
 #nullable enable
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace PrivateWiki.UI.Controls.Settings.Sync
+namespace PrivateWiki.UWP.UI.Controls.Settings.Sync
 {
 	public sealed partial class LFSControl : UserControl
 	{
@@ -75,18 +69,21 @@ namespace PrivateWiki.UI.Controls.Settings.Sync
 
 		private async void ImportData(object sender, RoutedEventArgs e)
 		{
+			throw new NotImplementedException("ImportData");
+
+			/*
 			var deserializer = new MarkdownDocToMarkdownPageDeserializer();
 
 			var folder = StorageApplicationPermissions.FutureAccessList.GetFolderAsync(Model.TargetToken);
 
 			var files = (await folder).GetFilesAsync(CommonFileQuery.DefaultQuery);
-
+			
 			foreach (var file in await files)
 			{
 				var content = await FileIO.ReadTextAsync(file);
 
-				var markdig = new PrivateWiki.Rendering.Markdown.Markdig.Markdig();
-				var doc = markdig.Parse(content);
+				var contentRenderer = new ContentRenderer();
+				var doc = contentRenderer.RenderContentAsync(content, ContentType.Markdown);
 				var yamlBlock = doc.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
 
 				if (yamlBlock != null)
@@ -95,6 +92,7 @@ namespace PrivateWiki.UI.Controls.Settings.Sync
 					var a = deserializer.Deserialize(new StringReader(yaml));
 				}
 			}
+			*/
 		}
 	}
 }

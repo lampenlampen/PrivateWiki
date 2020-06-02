@@ -1,29 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reactive;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+﻿using System.Reactive.Disposables;
 using PrivateWiki.Models.ViewModels;
 using ReactiveUI;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace PrivateWiki.UI.Controls
+namespace PrivateWiki.UWP.UI.Controls
 {
-	public class PageEditorCommandBarBase : ReactiveUserControl<PageEditorCommandBarViewModel> {}
-	
+	public class PageEditorCommandBarBase : ReactiveUserControl<PageEditorCommandBarViewModel>
+	{
+	}
+
 	public sealed partial class PageEditorCommandBar : PageEditorCommandBarBase
 	{
 		public PageEditorCommandBar()
@@ -33,8 +19,8 @@ namespace PrivateWiki.UI.Controls
 			this.WhenActivated(disposable =>
 			{
 				this.BindCommand(ViewModel,
-					vm => vm.Save,
-					view => view.SaveBtn)
+						vm => vm.Save,
+						view => view.SaveBtn)
 					.DisposeWith(disposable);
 
 				this.BindCommand(ViewModel,

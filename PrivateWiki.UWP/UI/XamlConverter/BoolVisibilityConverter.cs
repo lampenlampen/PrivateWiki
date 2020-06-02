@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace PrivateWiki.UI.XamlConverter
+namespace PrivateWiki.UWP.UI.XamlConverter
 {
 	class BoolVisibilityConverter : IValueConverter
 	{

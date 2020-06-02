@@ -1,10 +1,10 @@
 ﻿<Page
-    x:Class="PrivateWiki.UI.Pages.MainPage"
+    x:Class="PrivateWiki.UWP.UI.Pages.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pages1="using:PrivateWiki.UI.Pages"
+    xmlns:pages="using:PrivateWiki.UWP.UI.Pages"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -29,7 +29,7 @@
             Width="Auto"
             Height="Auto"
             Grid.Column="1"
-            d:DataContext="{d:DesignInstance Type=pages1:MarkdownPageEditor, IsDesignTimeCreatable=True}" />
+            d:DataContext="{d:DesignInstance Type=pages:MarkdownPageEditor, IsDesignTimeCreatable=True}" />
 
         </Grid>
 

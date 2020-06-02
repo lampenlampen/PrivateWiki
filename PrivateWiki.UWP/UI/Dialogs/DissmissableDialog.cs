@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
-namespace PrivateWiki.UI.Dialogs
+namespace PrivateWiki.UWP.UI.Dialogs
 {
 	public class DissmissableDialog : ContentDialog
 	{

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
-using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -12,14 +11,14 @@ using JetBrains.Annotations;
 using NLog;
 using NodaTime;
 using PrivateWiki.Models.Pages;
-using PrivateWiki.StorageBackend;
-using PrivateWiki.StorageBackend.SQLite;
-using PrivateWiki.Utilities;
+using PrivateWiki.UWP.StorageBackend;
+using PrivateWiki.UWP.StorageBackend.SQLite;
+using PrivateWiki.UWP.Utilities;
 using Page = Windows.UI.Xaml.Controls.Page;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace PrivateWiki.UI.Pages
+namespace PrivateWiki.UWP.UI.Pages
 {
 	/// <summary>
 	///     An empty page that can be used on its own or navigated to within a Frame.
@@ -58,7 +57,7 @@ namespace PrivateWiki.UI.Pages
 
 			await FileIO.WriteTextAsync(file, Page.Content);
 
-			var success = await Launcher.LaunchFileAsync(file);
+			var success = await Windows.System.Launcher.LaunchFileAsync(file);
 		}
 
 		private async Task<StorageFile> PickFile()
