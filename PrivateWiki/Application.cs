@@ -1,7 +1,7 @@
-using PrivateWiki.Data;
+using System;
+using NodaTime;
 using PrivateWiki.StorageBackend;
 using SimpleInjector;
-using Splat;
 
 namespace PrivateWiki
 {
@@ -13,19 +13,19 @@ namespace PrivateWiki
 
 		public IGlobalNotificationManager GlobalNotificationManager { get; set; }
 
+		[Obsolete]
 		public IGenericPageStorage StorageBackend { get; set; }
 
+		[Obsolete]
 		public ILauncherImpl Launcher { get; set; }
-
-		public IMutableDependencyResolver MDR { get; set; }
 
 		public Container Container { get; }
 
 		public Application()
 		{
-			MDR = Locator.CurrentMutable;
-
 			Container = new Container();
+			
+			Container.Register<IClock>(() => SystemClock.Instance, Lifestyle.Singleton);
 
 			AppSettings = new AppSettings();
 		}
@@ -33,15 +33,6 @@ namespace PrivateWiki
 		public void VerifyContainer()
 		{
 			Container.Verify();
-		}
-
-		public void Test()
-		{
-			var filesystemProvider = Container.GetInstance<IFilesystemProvider>();
-
-			var file = new File("C:\\Users\\test.md");
-
-			filesystemProvider.WriteTextAsync(file, "Test");
 		}
 	}
 }

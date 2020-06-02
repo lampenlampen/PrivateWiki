@@ -61,6 +61,11 @@ namespace PrivateWiki.UWP.UI.Controls.PageViewers
 					.Select(a => a.args)
 					.Subscribe(WebViewUnsupportedUriSchemeIdentified)
 					.DisposeWith(disposable);
+
+				Webview.Events().ContainsFullScreenElementChanged
+					.Select(_ => Unit.Default)
+					.Subscribe(x => WebView_OnContainsFullscreenElementChanged())
+					.DisposeWith(disposable);
 			});
 		}
 
@@ -176,6 +181,20 @@ namespace PrivateWiki.UWP.UI.Controls.PageViewers
 			var uriResolver = new MyUriToStreamResolver();
 
 			Webview.NavigateToLocalStreamUri(uri, uriResolver);
+		}
+
+		private void WebView_OnContainsFullscreenElementChanged()
+		{
+			var applicationView = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView();
+
+			if (Webview.ContainsFullScreenElement)
+			{
+				applicationView.TryEnterFullScreenMode();
+			}
+			else if (applicationView.IsFullScreenMode)
+			{
+				applicationView.ExitFullScreenMode();
+			}
 		}
 	}
 }

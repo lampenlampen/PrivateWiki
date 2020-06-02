@@ -2,6 +2,7 @@
 using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -9,6 +10,7 @@ using Microsoft.Toolkit.Uwp.UI.Controls;
 using NLog;
 using NodaTime;
 using PrivateWiki.Data;
+using PrivateWiki.StorageBackend;
 using PrivateWiki.UWP.Data;
 using PrivateWiki.UWP.StorageBackend;
 using PrivateWiki.UWP.StorageBackend.SQLite;
@@ -53,6 +55,8 @@ namespace PrivateWiki.UWP
 			Application.Launcher = new Launcher();
 
 			Application.Container.Register<IFilesystemProvider, UWPFilesystemProvider>(Lifestyle.Singleton);
+			Application.Container.Register<IGenericPageStorage>(() => new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), Lifestyle.Singleton);
+			Application.Container.Register<ILauncherImpl, Launcher>(Lifestyle.Singleton);
 
 			Application.VerifyContainer();
 

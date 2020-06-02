@@ -97,33 +97,33 @@
         <Compile Include="App.xaml.cs">
             <DependentUpon>App.xaml</DependentUpon>
         </Compile>
-        <Compile Include="AppConfig.cs"/>
-        <Compile Include="Data\DefaultPages.cs"/>
-        <Compile Include="Data\FileSystemAccess.cs"/>
-        <Compile Include="Data\PageExporter.cs"/>
-        <Compile Include="Data\UWPFilesystemProvider.cs"/>
-        <Compile Include="Launcher.cs"/>
-        <Compile Include="Models\LFSModel.cs"/>
-        <Compile Include="RxExceptionHandler.cs"/>
-        <Compile Include="Settings\LFSSyncActions.cs"/>
-        <Compile Include="Settings\SyncModelHandler.cs"/>
-        <Compile Include="StorageBackend\DefaultStorageBackends.cs"/>
-        <Compile Include="StorageBackend\IMarkdownPageStorage.cs"/>
-        <Compile Include="StorageBackend\ISqLiteBackend.cs"/>
-        <Compile Include="StorageBackend\IStorageBackend.cs"/>
-        <Compile Include="StorageBackend\SqLiteStorage.cs"/>
-        <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs"/>
-        <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs"/>
-        <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs"/>
-        <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHtmlPageConverter.cs"/>
-        <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs"/>
-        <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs"/>
-        <Compile Include="StorageBackend\IStorage.cs"/>
+        <Compile Include="AppConfig.cs" />
+        <Compile Include="Data\DefaultPages.cs" />
+        <Compile Include="Data\FileSystemAccess.cs" />
+        <Compile Include="Data\PageExporter.cs" />
+        <Compile Include="Data\UWPFilesystemProvider.cs" />
+        <Compile Include="Launcher.cs" />
+        <Compile Include="Models\LFSModel.cs" />
+        <Compile Include="RxExceptionHandler.cs" />
+        <Compile Include="Settings\LFSSyncActions.cs" />
+        <Compile Include="Settings\SyncModelHandler.cs" />
+        <Compile Include="StorageBackend\DefaultStorageBackends.cs" />
+        <Compile Include="StorageBackend\IMarkdownPageStorage.cs" />
+        <Compile Include="StorageBackend\ISqLiteBackend.cs" />
+        <Compile Include="StorageBackend\IStorageBackend.cs" />
+        <Compile Include="StorageBackend\SqLiteStorage.cs" />
+        <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs" />
+        <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs" />
+        <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs" />
+        <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHtmlPageConverter.cs" />
+        <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs" />
+        <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs" />
+        <Compile Include="StorageBackend\IStorage.cs" />
         <Compile Include="UI\Controls\DiffControl.xaml.cs">
             <DependentUpon>DiffControl.xaml</DependentUpon>
         </Compile>
-        <Compile Include="UI\Controls\IPageViewerCommandBar.cs"/>
-        <Compile Include="UI\Controls\MyTreeViewNode.cs"/>
+        <Compile Include="UI\Controls\IPageViewerCommandBar.cs" />
+        <Compile Include="UI\Controls\MyTreeViewNode.cs" />
         <Compile Include="UI\Controls\NavigationSettingsDividerItemControl.xaml.cs">
             <DependentUpon>NavigationSettingsDividerItemControl.xaml</DependentUpon>
         </Compile>
@@ -197,18 +197,9 @@
     <Compile Include="UI\Dialogs\WikiLinkDialog.xaml.cs">
       <DependentUpon>WikiLinkDialog.xaml</DependentUpon>
     </Compile>
-        <Compile Include="UI\Events\RxTreeViewEvents.cs"/>
+        <Compile Include="UI\Events\RxTreeViewEvents.cs" />
     <Compile Include="UI\GlobalNotificationManager.cs" />
     <Compile Include="UI\Pages\ContentPages\ContentPage.cs" />
-    <Compile Include="UI\Pages\ContentPages\GenericTextPageEditor.xaml.cs">
-      <DependentUpon>GenericTextPageEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Pages\ContentPages\HtmlPage\HtmlPageEditor.xaml.cs">
-      <DependentUpon>HtmlPageEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Pages\ContentPages\HtmlPage\HtmlPageViewer.xaml.cs">
-      <DependentUpon>HtmlPageViewer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\Pages\ExternalEditor.xaml.cs">
       <DependentUpon>ExternalEditor.xaml</DependentUpon>
     </Compile>
@@ -266,25 +257,25 @@
         <Compile Include="UI\SearchPopupContent.xaml.cs">
             <DependentUpon>SearchPopupContent.xaml</DependentUpon>
         </Compile>
-        <Compile Include="UI\TemplateSelector\MediaManagerTreeViewItemTemplateSelector.cs"/>
-        <Compile Include="UI\TemplateSelector\PageHistoryTemplateSelector.cs"/>
-        <Compile Include="UI\TemplateSelector\SettingNavigationTemplateSelector.cs"/>
-        <Compile Include="UI\TemplateSelector\SettingStorageTemplateSelector.cs"/>
-        <Compile Include="UI\XamlConverter\BoolToColorConverter.cs"/>
-        <Compile Include="UI\XamlConverter\BoolVisibilityConverter.cs"/>
-        <Compile Include="UI\XamlConverter\InstantToReadableDateTimeConverter.cs"/>
-        <Compile Include="UI\XamlConverter\SyncFrequencyToRadioButtonConverter.cs"/>
-        <Compile Include="Utilities\DiffMatchPatchAlg.cs"/>
-        <Compile Include="Models\DeveloperSettingsModel.cs"/>
-        <Compile Include="Models\NavigationItem.cs"/>
-        <Compile Include="MyUriToStreamResolver.cs"/>
-        <Compile Include="NavigationHandler.cs"/>
-        <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="Settings\DeveloperSettingsModelHandler.cs"/>
-        <Compile Include="Settings\RenderingModelHandler.cs"/>
-        <Compile Include="Utilities\ExtensionFunctions\ColorExtension.cs"/>
-        <Compile Include="Utilities\ExtensionFunctions\LocalNotifications.cs"/>
-        <Compile Include="Utilities\FullyObservableCollection.cs"/>
+        <Compile Include="UI\TemplateSelector\MediaManagerTreeViewItemTemplateSelector.cs" />
+        <Compile Include="UI\TemplateSelector\PageHistoryTemplateSelector.cs" />
+        <Compile Include="UI\TemplateSelector\SettingNavigationTemplateSelector.cs" />
+        <Compile Include="UI\TemplateSelector\SettingStorageTemplateSelector.cs" />
+        <Compile Include="UI\XamlConverter\BoolToColorConverter.cs" />
+        <Compile Include="UI\XamlConverter\BoolVisibilityConverter.cs" />
+        <Compile Include="UI\XamlConverter\InstantToReadableDateTimeConverter.cs" />
+        <Compile Include="UI\XamlConverter\SyncFrequencyToRadioButtonConverter.cs" />
+        <Compile Include="Utilities\DiffMatchPatchAlg.cs" />
+        <Compile Include="Models\DeveloperSettingsModel.cs" />
+        <Compile Include="Models\NavigationItem.cs" />
+        <Compile Include="MyUriToStreamResolver.cs" />
+        <Compile Include="NavigationHandler.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Settings\DeveloperSettingsModelHandler.cs" />
+        <Compile Include="Settings\RenderingModelHandler.cs" />
+        <Compile Include="Utilities\ExtensionFunctions\ColorExtension.cs" />
+        <Compile Include="Utilities\ExtensionFunctions\LocalNotifications.cs" />
+        <Compile Include="Utilities\FullyObservableCollection.cs" />
     </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -425,15 +416,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Dialogs\WikiLinkDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Pages\ContentPages\GenericTextPageEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Pages\ContentPages\HtmlPage\HtmlPageEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Pages\ContentPages\HtmlPage\HtmlPageViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Pages\ExternalEditor.xaml">

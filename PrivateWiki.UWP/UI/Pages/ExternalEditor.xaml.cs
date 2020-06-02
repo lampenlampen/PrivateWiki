@@ -29,7 +29,6 @@ namespace PrivateWiki.UWP.UI.Pages
 
 		private MarkdownPage Page;
 		private readonly string TMP_FILE_FUTURE_ACCESS_LIST = "tmp_file_future_access_list";
-		private string VSCODE_PATH = "C:\\Software\\Microsoft VS Code\\bin\\code.cmd";
 
 		private IMarkdownPageStorage _storage;
 

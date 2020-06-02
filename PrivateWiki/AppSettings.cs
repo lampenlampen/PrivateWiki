@@ -153,7 +153,7 @@ namespace PrivateWiki
 			}
 		}
 
-		private bool _isMedialinkEnabled = false;
+		private bool _isMedialinkEnabled = true;
 
 		public bool IsMedialinkEnabled
 		{

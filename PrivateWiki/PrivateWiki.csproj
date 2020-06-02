@@ -27,12 +27,6 @@
         <PackageReference Include="SimpleInjector">
             <Version>4.10.2</Version>
         </PackageReference>
-        <PackageReference Include="Splat">
-            <Version>9.4.5</Version>
-        </PackageReference>
-        <PackageReference Include="Splat.SimpleInjector">
-            <Version>9.4.5</Version>
-        </PackageReference>
     </ItemGroup>
 
 </Project>
