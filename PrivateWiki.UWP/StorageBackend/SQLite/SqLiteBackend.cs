@@ -152,42 +152,6 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 		}
 
 		[Obsolete("Use generic methods", IsObsoleteError)]
-		private Task<Page> GetPage2(string param, string value)
-		{
-			Page Action()
-			{
-				using var conn = _conn;
-
-				try
-				{
-					var command = new SqliteCommand
-					{
-						Connection = conn,
-						CommandText = "SELECT * FROM 'pages' WHERE @param = @value",
-					};
-					command.Parameters.AddWithValue("@param", param);
-					command.Parameters.AddWithValue("@value", value);
-
-					conn.Open();
-					var reader = command.ExecuteReader();
-
-					var page = new GenericPage();
-
-					SqliteDataReaderToPageConverter.Instance.ConvertToPageModel(reader, page);
-
-					return page;
-				}
-				catch (SqliteException e)
-				{
-					Console.WriteLine(e);
-					throw;
-				}
-			}
-
-			return Task.Run(Action);
-		}
-
-		[Obsolete("Use generic methods", IsObsoleteError)]
 		public Task<MarkdownPage> GetMarkdownPageAsync(string link)
 		{
 			MarkdownPage Action()
@@ -334,7 +298,7 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 			{
 				var mPage = (MarkdownPage) page;
 
-				using var conn = _conn;
+				var conn = _conn;
 
 				try
 				{
@@ -659,7 +623,8 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 					command.Parameters.AddWithValue("@Action", global::PrivateWiki.Models.Pages.PageAction.Created);
 
 					conn.Open();
-					var result = command.ExecuteNonQuery();
+
+					command.ExecuteReader();
 
 					return true;
 				}
