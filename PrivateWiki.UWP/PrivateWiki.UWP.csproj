@@ -98,7 +98,6 @@
             <DependentUpon>App.xaml</DependentUpon>
         </Compile>
         <Compile Include="AppConfig.cs" />
-        <Compile Include="Data\DefaultPages.cs" />
         <Compile Include="Data\FileSystemAccess.cs" />
         <Compile Include="Data\PageExporter.cs" />
         <Compile Include="Data\UWPFilesystemProvider.cs" />
