@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PrivateWiki.Models.Pages;
-using PrivateWiki.StorageBackend;
+using PrivateWiki.DataModels.Pages;
 
 namespace PrivateWiki.UWP.StorageBackend
 {
-	public interface IMarkdownPageStorage : IPageStorage
+	public interface IMarkdownPageStorage
 	{
 		/// <summary>
 		/// Returns a Page with the given <paramref name="id"/>

@@ -6,9 +6,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:uwp="using:FontAwesome.UWP"
-    xmlns:models="using:PrivateWiki.Models"
     xmlns:xamlConverter="using:PrivateWiki.UWP.UI.XamlConverter"
     xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
+    xmlns:dataModels="using:PrivateWiki.DataModels"
     mc:Ignorable="d"
     Background="#EEEEEE">
     <Page.Resources>
@@ -526,7 +526,7 @@
                                       ItemContainerStyle="{StaticResource BorderedItem}">
 
                                 <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="models:RenderModel">
+                                    <DataTemplate x:DataType="dataModels:RenderModel">
                                         <Grid Padding="8,8,0,8">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />

@@ -6,10 +6,10 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using NLog;
 using NodaTime;
-using PrivateWiki.Models.Pages;
+using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.StorageBackend;
 using PrivateWiki.UWP.StorageBackend.SQLite;
-using Page = PrivateWiki.Models.Pages.Page;
+using Page = PrivateWiki.DataModels.Pages.Page;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 

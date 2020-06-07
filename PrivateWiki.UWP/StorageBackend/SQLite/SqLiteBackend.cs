@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using NodaTime;
-using PrivateWiki.Models.Pages;
-using PrivateWiki.StorageBackend;
+using PrivateWiki.DataModels.Pages;
+using PrivateWiki.Services.StorageBackendService;
 
 namespace PrivateWiki.UWP.StorageBackend.SQLite
 {
 #nullable enable
 
-	public class SqLiteBackend : ISqLiteBackend, IMarkdownPageStorage, IGenericPageStorage
+	public class SqLiteBackend : ISqLiteBackend, IMarkdownPageStorage, IPageStorageBackendServiceImpl
 	{
 		private const bool IsObsoleteError = false;
 
-		private readonly SqLiteStorage _sqLite;
+		private readonly SqLiteStorageOptions _sqLite;
 
 		private readonly SqliteConnection _conn;
 
@@ -22,7 +22,7 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 
 		private readonly IClock _clock;
 
-		public SqLiteBackend(SqLiteStorage sqLite, IClock clock)
+		public SqLiteBackend(SqLiteStorageOptions sqLite, IClock clock)
 		{
 			_sqLite = sqLite;
 			_clock = clock;
@@ -620,7 +620,7 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 					command.Parameters.AddWithValue("@Locked", page.IsLocked);
 					command.Parameters.AddWithValue("@ContentType", page.ContentType.Name);
 					command.Parameters.AddWithValue("@Now", _clock.GetCurrentInstant().ToUnixTimeMilliseconds());
-					command.Parameters.AddWithValue("@Action", global::PrivateWiki.Models.Pages.PageAction.Created);
+					command.Parameters.AddWithValue("@Action", global::PrivateWiki.DataModels.Pages.PageAction.Created);
 
 					conn.Open();
 

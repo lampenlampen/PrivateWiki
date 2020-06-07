@@ -1,5 +1,5 @@
 ﻿using System.Reactive.Disposables;
-using PrivateWiki.Models.ViewModels;
+using PrivateWiki.ViewModels;
 using ReactiveUI;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236

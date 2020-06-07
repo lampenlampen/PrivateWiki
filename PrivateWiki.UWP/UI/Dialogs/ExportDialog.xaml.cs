@@ -5,8 +5,8 @@ using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
 using JetBrains.Annotations;
 using NodaTime;
-using PrivateWiki.Models.Pages;
-using PrivateWiki.Rendering;
+using PrivateWiki.DataModels.Pages;
+using PrivateWiki.Services.RenderingService;
 using PrivateWiki.UWP.Data;
 using PrivateWiki.UWP.StorageBackend;
 using PrivateWiki.UWP.StorageBackend.SQLite;
@@ -27,7 +27,7 @@ namespace PrivateWiki.UWP.UI.Dialogs
 
 		private async void Export_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
-			var backend = new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance);
+			var backend = new SqLiteBackend(new SqLiteStorageOptions("test"), SystemClock.Instance);
 			var folder = await FileSystemAccess.PickFolderAsync();
 
 			var pages = new List<GenericPage>();

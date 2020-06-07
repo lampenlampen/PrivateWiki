@@ -2,15 +2,15 @@
 using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using NLog;
 using NodaTime;
-using PrivateWiki.Data;
-using PrivateWiki.StorageBackend;
+using PrivateWiki.Services.ApplicationLauncherService;
+using PrivateWiki.Services.FilesystemService;
+using PrivateWiki.Services.StorageBackendService;
 using PrivateWiki.UWP.Data;
 using PrivateWiki.UWP.StorageBackend;
 using PrivateWiki.UWP.StorageBackend.SQLite;
@@ -51,12 +51,9 @@ namespace PrivateWiki.UWP
 			InitializeComponent();
 			Suspending += OnSuspending;
 
-			Application.StorageBackend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
-			Application.Launcher = new Launcher();
-
-			Application.Container.Register<IFilesystemProvider, UWPFilesystemProvider>(Lifestyle.Singleton);
-			Application.Container.Register<IGenericPageStorage>(() => new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), Lifestyle.Singleton);
-			Application.Container.Register<ILauncherImpl, Launcher>(Lifestyle.Singleton);
+			Application.Container.Register<IFilesystemService, UWPFilesystemProvider>(Lifestyle.Singleton);
+			Application.Container.Register<IPageStorageBackendServiceImpl>(() => new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), Lifestyle.Singleton);
+			Application.Container.Register<IApplicationLauncherServiceImpl, Launcher>(Lifestyle.Singleton);
 
 			Application.VerifyContainer();
 

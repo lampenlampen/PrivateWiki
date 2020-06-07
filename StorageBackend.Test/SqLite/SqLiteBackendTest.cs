@@ -3,7 +3,7 @@ using System.IO;
 using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NodaTime;
-using PrivateWiki.Models.Pages;
+using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.StorageBackend;
 using PrivateWiki.UWP.StorageBackend.SQLite;
 
@@ -20,7 +20,7 @@ namespace StorageBackend.Test.SqLite
 		{
 			File.Delete("test.db");
 			clock = SystemClock.Instance;
-			var storage = new SqLiteStorage("test");
+			var storage = new SqLiteStorageOptions("test");
 			sqliteBackend = new SqLiteBackend(storage, clock);
 			sqliteBackend.CreateTablesAsync().Wait();
 		}

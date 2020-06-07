@@ -4,7 +4,7 @@ using System.Linq;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using PrivateWiki.Models;
+using PrivateWiki.DataModels;
 using PrivateWiki.UWP.Settings;
 using PrivateWiki.UWP.UI.Controls.Settings.Rendering;
 

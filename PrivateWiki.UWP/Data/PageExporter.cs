@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.Storage;
-using PrivateWiki.Models.Pages;
-using PrivateWiki.Rendering;
+using PrivateWiki.DataModels.Pages;
+using PrivateWiki.Services.RenderingService;
 
 namespace PrivateWiki.UWP.Data
 {

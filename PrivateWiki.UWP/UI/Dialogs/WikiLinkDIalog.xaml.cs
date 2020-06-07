@@ -21,7 +21,7 @@ namespace PrivateWiki.UWP.UI.Dialogs
 
 		private async void Initialize()
 		{
-			Pages = (await new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance).GetAllPagesAsync()).Select(p => p.Link).ToList();
+			Pages = (await new SqLiteBackend(new SqLiteStorageOptions("test"), SystemClock.Instance).GetAllPagesAsync()).Select(p => p.Link).ToList();
 			WikiLinkComboBox.ItemsSource = Pages;
 		}
 

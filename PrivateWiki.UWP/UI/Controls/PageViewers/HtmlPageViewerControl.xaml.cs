@@ -6,8 +6,8 @@ using System.Reactive.Subjects;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using NLog;
-using PrivateWiki.Models.Pages;
-using PrivateWiki.Models.ViewModels;
+using PrivateWiki.DataModels.Pages;
+using PrivateWiki.ViewModels;
 using ReactiveUI;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236

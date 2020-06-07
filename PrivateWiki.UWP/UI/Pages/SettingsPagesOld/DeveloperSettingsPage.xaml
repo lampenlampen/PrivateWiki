@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:uwp="using:FontAwesome.UWP"
-    xmlns:models="using:PrivateWiki.Models"
     xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
     mc:Ignorable="d"
     Background="#EEEEEE">

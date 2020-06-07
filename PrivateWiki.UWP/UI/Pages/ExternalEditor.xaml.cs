@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Navigation;
 using JetBrains.Annotations;
 using NLog;
 using NodaTime;
-using PrivateWiki.Models.Pages;
+using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.StorageBackend;
 using PrivateWiki.UWP.StorageBackend.SQLite;
 using PrivateWiki.UWP.Utilities;
@@ -35,7 +35,7 @@ namespace PrivateWiki.UWP.UI.Pages
 		public ExternalEditor()
 		{
 			InitializeComponent();
-			var storage = new SqLiteStorage("test");
+			var storage = new SqLiteStorageOptions("test");
 			_storage = new SqLiteBackend(storage, SystemClock.Instance);
 		}
 

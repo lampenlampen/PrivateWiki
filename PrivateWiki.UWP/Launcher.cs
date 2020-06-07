@@ -1,10 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using Windows.Storage;
+using PrivateWiki.Services.ApplicationLauncherService;
 
 namespace PrivateWiki.UWP
 {
-	public class Launcher : ILauncherImpl
+	public class Launcher : IApplicationLauncherServiceImpl
 	{
 		public async Task<bool> LaunchFileAsync(string path)
 		{

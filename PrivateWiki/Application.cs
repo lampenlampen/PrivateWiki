@@ -1,6 +1,6 @@
-using System;
 using NodaTime;
-using PrivateWiki.StorageBackend;
+using PrivateWiki.Services.DebugModeService;
+using PrivateWiki.Services.StorageBackendService;
 using SimpleInjector;
 
 namespace PrivateWiki
@@ -13,19 +13,15 @@ namespace PrivateWiki
 
 		public IGlobalNotificationManager GlobalNotificationManager { get; set; }
 
-		[Obsolete]
-		public IGenericPageStorage StorageBackend { get; set; }
-
-		[Obsolete]
-		public ILauncherImpl Launcher { get; set; }
-
 		public Container Container { get; }
 
 		public Application()
 		{
 			Container = new Container();
-			
+
 			Container.Register<IClock>(() => SystemClock.Instance, Lifestyle.Singleton);
+			Container.Register<IPageBackendService, PageBackendService>(Lifestyle.Transient);
+			Container.Register<IDebugModeService, DebugModeService>(Lifestyle.Singleton);
 
 			AppSettings = new AppSettings();
 		}

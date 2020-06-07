@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:privateWiki="using:PrivateWiki"
-    xmlns:models="using:PrivateWiki.Models"
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:templateSelector="using:PrivateWiki.UWP.UI.TemplateSelector"
     xmlns:controls="using:PrivateWiki.UWP.UI.Controls"

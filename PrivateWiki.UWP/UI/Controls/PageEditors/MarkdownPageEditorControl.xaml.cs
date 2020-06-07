@@ -3,8 +3,8 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Windows.UI.Xaml.Controls;
 using NLog;
-using PrivateWiki.Models.ViewModels;
-using PrivateWiki.Models.ViewModels.PageEditors;
+using PrivateWiki.ViewModels;
+using PrivateWiki.ViewModels.PageEditors;
 using ReactiveUI;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238

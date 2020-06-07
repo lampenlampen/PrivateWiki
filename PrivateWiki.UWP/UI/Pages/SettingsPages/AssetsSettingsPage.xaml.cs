@@ -2,8 +2,8 @@
 using System.Reactive.Disposables;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
-using PrivateWiki.Models.ViewModels.Settings;
 using PrivateWiki.UWP.UI.Events;
+using PrivateWiki.ViewModels.Settings;
 using ReactiveUI;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238

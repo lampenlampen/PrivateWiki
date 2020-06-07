@@ -4,7 +4,7 @@ using System.Linq;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using NLog;
-using PrivateWiki.Models.ViewModels;
+using PrivateWiki.ViewModels;
 
 // Die Elementvorlage "Inhaltsdialogfeld" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 

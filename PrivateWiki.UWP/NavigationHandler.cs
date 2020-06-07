@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NLog;
-using PrivateWiki.Models.Pages;
+using PrivateWiki.DataModels.Pages;
 
 #nullable enable
 

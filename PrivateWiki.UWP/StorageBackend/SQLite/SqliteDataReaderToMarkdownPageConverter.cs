@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Data.Sqlite;
 using NodaTime;
-using PrivateWiki.Models.Pages;
+using PrivateWiki.DataModels.Pages;
 
 namespace PrivateWiki.UWP.StorageBackend.SQLite
 {

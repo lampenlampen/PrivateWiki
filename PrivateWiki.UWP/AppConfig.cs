@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage;
-using PrivateWiki.Models.Pages;
+using PrivateWiki.DataModels.Pages;
 
 namespace PrivateWiki.UWP
 {

@@ -1,13 +1,14 @@
 using System;
 using System.Threading.Tasks;
+using PrivateWiki.Services.ApplicationLauncherService;
 
 namespace PrivateWiki
 {
 	public class Launcher
 	{
-		private ILauncherImpl _impl;
+		private IApplicationLauncherServiceImpl _impl;
 
-		public Launcher(ILauncherImpl impl)
+		public Launcher(IApplicationLauncherServiceImpl impl)
 		{
 		}
 

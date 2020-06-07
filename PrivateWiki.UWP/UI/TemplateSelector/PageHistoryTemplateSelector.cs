@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using PrivateWiki.Models.Pages;
+using PrivateWiki.DataModels.Pages;
 
 namespace PrivateWiki.UWP.UI.TemplateSelector
 {

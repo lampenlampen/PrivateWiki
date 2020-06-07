@@ -5,14 +5,14 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using NLog;
-using PrivateWiki.Models.Pages;
+using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.Data;
 using PrivateWiki.UWP.StorageBackend;
 using PrivateWiki.UWP.UI.Controls;
 using PrivateWiki.UWP.UI.Dialogs;
 using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 using RavinduL.LocalNotifications.Notifications;
-using Page = PrivateWiki.Models.Pages.Page;
+using Page = PrivateWiki.DataModels.Pages.Page;
 
 namespace PrivateWiki.UWP.UI.Pages.ContentPages
 {

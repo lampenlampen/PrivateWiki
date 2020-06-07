@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using NodaTime;
-using PrivateWiki.Models.Pages;
+using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.StorageBackend;
 using PrivateWiki.UWP.StorageBackend.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;

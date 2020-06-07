@@ -2,11 +2,11 @@ namespace PrivateWiki.UWP.StorageBackend
 {
 	public static class DefaultStorageBackends
 	{
-		private static SqLiteStorage sqLiteStorage = new SqLiteStorage("main");
+		private static SqLiteStorageOptions sqLiteStorage = new SqLiteStorageOptions("main");
 
-		private static SqLiteStorage testSqliteStorage = new SqLiteStorage("test");
+		private static SqLiteStorageOptions testSqliteStorage = new SqLiteStorageOptions("test");
 
-		public static SqLiteStorage GetSqliteStorage()
+		public static SqLiteStorageOptions GetSqliteStorage()
 		{
 			return testSqliteStorage;
 		}

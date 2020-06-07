@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Windows.Storage;
-using PrivateWiki.Models;
+using PrivateWiki.DataModels;
 
 #nullable enable
 

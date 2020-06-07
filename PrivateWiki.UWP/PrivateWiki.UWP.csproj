@@ -111,14 +111,13 @@
         <Compile Include="StorageBackend\IMarkdownPageStorage.cs" />
         <Compile Include="StorageBackend\ISqLiteBackend.cs" />
         <Compile Include="StorageBackend\IStorageBackend.cs" />
-        <Compile Include="StorageBackend\SqLiteStorage.cs" />
+        <Compile Include="StorageBackend\SqLiteStorageOptions.cs"/>
         <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs" />
         <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs" />
         <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs" />
         <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHtmlPageConverter.cs" />
         <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs" />
         <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs" />
-        <Compile Include="StorageBackend\IStorage.cs" />
         <Compile Include="UI\Controls\DiffControl.xaml.cs">
             <DependentUpon>DiffControl.xaml</DependentUpon>
         </Compile>

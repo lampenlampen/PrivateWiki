@@ -8,8 +8,8 @@ using Windows.UI.Xaml.Navigation;
 using JetBrains.Annotations;
 using NLog;
 using NodaTime;
-using PrivateWiki.Models.Pages;
-using PrivateWiki.Rendering;
+using PrivateWiki.DataModels.Pages;
+using PrivateWiki.Services.RenderingService;
 using PrivateWiki.UWP.Data;
 using PrivateWiki.UWP.StorageBackend;
 using PrivateWiki.UWP.StorageBackend.SQLite;
@@ -38,7 +38,7 @@ namespace PrivateWiki.UWP.UI.Pages
 		public MarkdownPageEditor()
 		{
 			InitializeComponent();
-			_storage = new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance);
+			_storage = new SqLiteBackend(new SqLiteStorageOptions("test"), SystemClock.Instance);
 		}
 
 		private void PreviewWebviewNavigationStartedAsync(WebView sender,

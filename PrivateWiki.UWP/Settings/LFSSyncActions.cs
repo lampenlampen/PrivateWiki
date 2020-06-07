@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using NodaTime;
-using PrivateWiki.Models.Pages;
+using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.Models;
 using PrivateWiki.UWP.StorageBackend;
 using PrivateWiki.UWP.StorageBackend.SQLite;
@@ -19,7 +19,7 @@ namespace PrivateWiki.UWP.Settings
 	{
 		public async void ForceSyncAsync(LFSModel model)
 		{
-			var storage = new SqLiteBackend(new SqLiteStorage("test"), SystemClock.Instance);
+			var storage = new SqLiteBackend(new SqLiteStorageOptions("test"), SystemClock.Instance);
 			var pages = await storage.GetAllMarkdownPagesAsync();
 
 			var folder = await Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.GetFolderAsync(model.TargetToken);

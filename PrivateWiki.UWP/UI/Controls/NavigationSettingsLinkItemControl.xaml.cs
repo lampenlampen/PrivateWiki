@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using NodaTime;
-using PrivateWiki.Models.Pages;
+using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.StorageBackend;
 using PrivateWiki.UWP.StorageBackend.SQLite;
-using Page = PrivateWiki.Models.Pages.Page;
+using Page = PrivateWiki.DataModels.Pages.Page;
 
 #nullable enable
 
@@ -25,7 +25,7 @@ namespace PrivateWiki.UWP.UI.Controls
 		public NavigationSettingsLinkItemControl()
 		{
 			this.InitializeComponent();
-			var storage = new SqLiteStorage("test");
+			var storage = new SqLiteStorageOptions("test");
 			var backend = new SqLiteBackend(storage, SystemClock.Instance);
 			LoadPages(backend);
 		}

@@ -15,7 +15,7 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 	/// </summary>
 	public sealed partial class PagesSettingsPage : Page
 	{
-		public ObservableCollection<PrivateWiki.Models.Pages.Page> Pages { get; set; } = new ObservableCollection<PrivateWiki.Models.Pages.Page>();
+		public ObservableCollection<DataModels.Pages.Page> Pages { get; set; } = new ObservableCollection<DataModels.Pages.Page>();
 
 		public PagesSettingsPage()
 		{

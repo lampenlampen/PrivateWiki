@@ -4,11 +4,12 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
-using PrivateWiki.Data;
+using PrivateWiki.DataModels;
+using PrivateWiki.Services.FilesystemService;
 
 namespace PrivateWiki.UWP.Data
 {
-	public class UWPFilesystemProvider : IFilesystemProvider
+	public class UWPFilesystemProvider : IFilesystemService
 	{
 		private readonly Dictionary<string, string> TokenStorage = new Dictionary<string, string>();
 

@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using PrivateWiki.Models.Pages;
-using PrivateWiki.Models.ViewModels;
-using PrivateWiki.Models.ViewModels.PageEditors;
+using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.UI.Controls.PageEditors;
+using PrivateWiki.ViewModels;
+using PrivateWiki.ViewModels.PageEditors;
 using ReactiveUI;
 using Page = Windows.UI.Xaml.Controls.Page;
 

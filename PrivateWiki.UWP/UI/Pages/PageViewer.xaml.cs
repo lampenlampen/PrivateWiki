@@ -8,9 +8,9 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Navigation;
 using NLog;
-using PrivateWiki.Models.Pages;
-using PrivateWiki.Models.ViewModels;
+using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.UI.Controls.PageViewers;
+using PrivateWiki.ViewModels;
 using ReactiveUI;
 using Page = Windows.UI.Xaml.Controls.Page;
 

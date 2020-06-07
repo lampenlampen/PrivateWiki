@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Windows.Storage;
 using NodaTime;
-using PrivateWiki.Models.Pages;
+using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.StorageBackend.SQLite;
 
 namespace PrivateWiki.UWP.Data

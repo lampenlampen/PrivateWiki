@@ -1,6 +1,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using PrivateWiki.Annotations;
+using DynamicData.Annotations;
 
 namespace PrivateWiki
 {
