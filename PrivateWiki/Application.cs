@@ -1,4 +1,5 @@
 using NodaTime;
+using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.DebugModeService;
 using PrivateWiki.Services.StorageBackendService;
 using SimpleInjector;
@@ -22,6 +23,7 @@ namespace PrivateWiki
 			Container.Register<IClock>(() => SystemClock.Instance, Lifestyle.Singleton);
 			Container.Register<IPageBackendService, PageBackendService>(Lifestyle.Transient);
 			Container.Register<IDebugModeService, DebugModeService>(Lifestyle.Singleton);
+			Container.Register<IApplicationLauncherService, ApplicationLauncherService>(Lifestyle.Singleton);
 
 			AppSettings = new AppSettings();
 		}
