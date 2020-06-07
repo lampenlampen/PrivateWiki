@@ -1,6 +1,9 @@
+using System.Threading.Tasks;
 using NodaTime;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.DebugModeService;
+using PrivateWiki.Services.DefaultPagesService;
+using PrivateWiki.Services.PackageService;
 using PrivateWiki.Services.StorageBackendService;
 using SimpleInjector;
 
@@ -18,19 +21,24 @@ namespace PrivateWiki
 
 		public Application()
 		{
+			AppSettings = new AppSettings();
+
 			Container = new Container();
 
 			Container.Register<IClock>(() => SystemClock.Instance, Lifestyle.Singleton);
 			Container.Register<IPageBackendService, PageBackendService>(Lifestyle.Transient);
 			Container.Register<IDebugModeService, DebugModeService>(Lifestyle.Singleton);
 			Container.Register<IApplicationLauncherService, ApplicationLauncherService>(Lifestyle.Singleton);
-
-			AppSettings = new AppSettings();
+			Container.Register<IDefaultPagesService, DefaultPagesService>(Lifestyle.Transient);
+			Container.Register<IAssetsService, AssetsService>(Lifestyle.Singleton);
 		}
 
-		public void VerifyContainer()
+		public async Task Initialize()
 		{
 			Container.Verify();
+
+			var defaultPageService = Container.GetInstance<IDefaultPagesService>();
+			await defaultPageService.InsertDefaultPages();
 		}
 	}
 }

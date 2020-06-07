@@ -55,9 +55,6 @@ namespace PrivateWiki.UWP
 			Application.Container.Register<IPageStorageBackendServiceImpl>(() => new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), Lifestyle.Singleton);
 			Application.Container.Register<IApplicationLauncherServiceImpl, Launcher>(Lifestyle.Singleton);
 
-			Application.VerifyContainer();
-
-
 			Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 			NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
 
@@ -80,9 +77,11 @@ namespace PrivateWiki.UWP
 		///     werden z. B. verwendet, wenn die Anwendung gestartet wird, um eine bestimmte Datei zu öffnen.
 		/// </summary>
 		/// <param name="e">Details über Startanforderung und -prozess.</param>
-		protected override void OnLaunched(LaunchActivatedEventArgs e)
+		protected override async void OnLaunched(LaunchActivatedEventArgs e)
 		{
 			Logger.Info("App Launched");
+
+			await Application.Initialize();
 
 			Grid rootGrid = Window.Current.Content as Grid;
 			Frame rootFrame = rootGrid?.Children.Where((c) => c is Frame).Cast<Frame>().FirstOrDefault();
@@ -114,8 +113,12 @@ namespace PrivateWiki.UWP
 			}
 		}
 
-		protected override void OnActivated(IActivatedEventArgs args)
+		protected override async void OnActivated(IActivatedEventArgs args)
 		{
+			Logger.Info("App Activated");
+
+			await Application.Initialize();
+
 			// Window management
 			if (!(Window.Current.Content is Frame rootFrame))
 			{
@@ -127,11 +130,8 @@ namespace PrivateWiki.UWP
 			Window.Current.Activate();
 		}
 
-		private async void ShowPage(Frame rootFrame)
+		private void ShowPage(Frame rootFrame)
 		{
-			// TODO Run only on first app start.
-			await DefaultPages.InsertDefaultMarkdownPagesAsync(new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), SystemClock.Instance);
-
 			rootFrame.Navigate(typeof(MainPage), "start");
 		}
 
