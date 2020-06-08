@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using PrivateWiki.Services.ApplicationLauncherService;
 
-namespace PrivateWiki.UWP
+namespace PrivateWiki.UWP.Services.ApplicationLauncherService
 {
-	public class Launcher : IApplicationLauncherServiceImpl
+	public class ApplicationLauncherService : IApplicationLauncherServiceImpl
 	{
 		public async Task<bool> LaunchFileAsync(string path)
 		{

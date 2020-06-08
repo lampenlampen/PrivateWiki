@@ -4,7 +4,7 @@ using System.Reactive.Concurrency;
 using NLog;
 using ReactiveUI;
 
-namespace PrivateWiki.UWP
+namespace PrivateWiki
 {
 	public class RxExceptionHandler : IObserver<Exception>
 	{

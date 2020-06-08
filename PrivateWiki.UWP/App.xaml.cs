@@ -11,7 +11,7 @@ using NodaTime;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.FilesystemService;
 using PrivateWiki.Services.StorageBackendService;
-using PrivateWiki.UWP.Data;
+using PrivateWiki.UWP.Services.FilesystemService;
 using PrivateWiki.UWP.StorageBackend;
 using PrivateWiki.UWP.StorageBackend.SQLite;
 using PrivateWiki.UWP.UI;
@@ -19,6 +19,7 @@ using PrivateWiki.UWP.UI.Pages;
 using RavinduL.LocalNotifications;
 using ReactiveUI;
 using SimpleInjector;
+using ApplicationLauncherService = PrivateWiki.UWP.Services.ApplicationLauncherService.ApplicationLauncherService;
 
 namespace PrivateWiki.UWP
 {
@@ -51,9 +52,9 @@ namespace PrivateWiki.UWP
 			InitializeComponent();
 			Suspending += OnSuspending;
 
-			Application.Container.Register<IFilesystemService, UWPFilesystemProvider>(Lifestyle.Singleton);
+			Application.Container.Register<IFilesystemService, FilesystemService>(Lifestyle.Singleton);
 			Application.Container.Register<IPageStorageBackendServiceImpl>(() => new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), Lifestyle.Singleton);
-			Application.Container.Register<IApplicationLauncherServiceImpl, Launcher>(Lifestyle.Singleton);
+			Application.Container.Register<IApplicationLauncherServiceImpl, ApplicationLauncherService>(Lifestyle.Singleton);
 
 			Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 			NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;

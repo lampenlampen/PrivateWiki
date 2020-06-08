@@ -8,10 +8,6 @@ namespace PrivateWiki.UWP.Data
 {
 	public class PageExporter
 	{
-		public PageExporter()
-		{
-		}
-
 		public async Task<StorageFile> ExportPage(MarkdownPage page)
 		{
 			var contentRenderer = new ContentRenderer();

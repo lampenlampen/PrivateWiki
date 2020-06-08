@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using DynamicData;
 
 #nullable enable
 
@@ -40,21 +39,6 @@ namespace PrivateWiki.UWP.Data
 			return await picker.PickSingleFileAsync();
 		}
 
-		public static async Task<StorageFile> PickMarkdownFileAsync()
-		{
-			var picker = new FileOpenPicker
-			{
-				SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
-				ViewMode = PickerViewMode.List
-			};
-
-			picker.FileTypeFilter.Add(".md");
-			picker.FileTypeFilter.Add(".markdown");
-			picker.FileTypeFilter.Add(".txt");
-
-			return await picker.PickSingleFileAsync();
-		}
-
 		public static async Task<StorageFolder> PickFolderAsync()
 		{
 			var picker = new FolderPicker
@@ -65,45 +49,6 @@ namespace PrivateWiki.UWP.Data
 			picker.FileTypeFilter.Add("*");
 
 			return await picker.PickSingleFolderAsync();
-		}
-
-		public static async Task<StorageFile> PickMarkdownWikiFileAsync()
-		{
-			var picker = new FileSavePicker
-			{
-				SuggestedFileName = "PrivateWiki",
-				SuggestedStartLocation = PickerLocationId.DocumentsLibrary
-			};
-			picker.FileTypeChoices.Add("MarkdownWiki", new[] {".mdwiki"});
-
-			return await picker.PickSaveFileAsync();
-		}
-
-		public static Task<StorageFile> PickFileAsync()
-		{
-			var picker = new FileOpenPicker
-			{
-				SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
-				ViewMode = PickerViewMode.List
-			};
-
-			picker.FileTypeFilter.Add("*");
-
-			return picker.PickSingleFileAsync().AsTask();
-		}
-
-		public static Task<StorageFile> PickFileAsync(params string[] fileTypes)
-		{
-			var picker = new FileOpenPicker
-			{
-				SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
-				ViewMode = PickerViewMode.List
-			};
-
-			picker.FileTypeFilter.Add(fileTypes);
-
-
-			return picker.PickSingleFileAsync().AsTask();
 		}
 	}
 }
