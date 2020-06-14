@@ -3,6 +3,7 @@ using NodaTime;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.DebugModeService;
 using PrivateWiki.Services.DefaultPagesService;
+using PrivateWiki.Services.LastRecentlyVisitedPageService;
 using PrivateWiki.Services.PackageService;
 using PrivateWiki.Services.StorageBackendService;
 using SimpleInjector;
@@ -31,6 +32,7 @@ namespace PrivateWiki
 			Container.Register<IApplicationLauncherService, ApplicationLauncherService>(Lifestyle.Singleton);
 			Container.Register<IDefaultPagesService, DefaultPagesService>(Lifestyle.Transient);
 			Container.Register<IAssetsService, AssetsService>(Lifestyle.Singleton);
+			Container.Register<IMostRecentlyVisitedPagesService, MostRecentlyViewedPagesManager>(Lifestyle.Singleton);
 		}
 
 		public async Task Initialize()

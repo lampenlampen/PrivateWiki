@@ -5,6 +5,7 @@ using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using NLog;
 using PrivateWiki.DataModels.Pages;
+using PrivateWiki.Services.LastRecentlyVisitedPageService;
 using PrivateWiki.Services.StorageBackendService;
 using ReactiveUI;
 
@@ -13,6 +14,8 @@ namespace PrivateWiki.ViewModels
 	public class PageViewerViewModel : ReactiveObject
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+		private readonly IMostRecentlyVisitedPagesService _mostRecentlyVisitedPagesService;
 
 		private readonly IPageBackendService _backend;
 
@@ -86,7 +89,7 @@ namespace PrivateWiki.ViewModels
 		public PageViewerViewModel()
 		{
 			_backend = Application.Instance.Container.GetInstance<IPageBackendService>();
-			;
+			_mostRecentlyVisitedPagesService = Application.Instance.Container.GetInstance<IMostRecentlyVisitedPagesService>();
 			CommandBarViewModel = new PageViewerCommandBarViewModel();
 
 			// Commands
@@ -144,6 +147,7 @@ namespace PrivateWiki.ViewModels
 		{
 			// TODO NavigationHandler
 			//NavigationHandler.AddPage(Page);
+			_mostRecentlyVisitedPagesService.AddPage(Page);
 
 			if (await _backend.ContainsPageAsync(link.FullPath))
 			{

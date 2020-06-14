@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using NLog;
 using PrivateWiki.DataModels.Pages;
 
@@ -7,6 +7,7 @@ using PrivateWiki.DataModels.Pages;
 
 namespace PrivateWiki.UWP
 {
+	[Obsolete]
 	internal static class NavigationHandler
 	{
 		private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
@@ -32,7 +33,7 @@ namespace PrivateWiki.UWP
 
 		private static bool Normalize()
 		{
-			if (Pages.Count() <= MaxItems) return false;
+			if (Pages.Count <= MaxItems) return false;
 
 			Pages.RemoveRange(0, Pages.Count - MaxItems);
 			Logger.Debug($"Normalize: {Pages.Count - MaxItems}");

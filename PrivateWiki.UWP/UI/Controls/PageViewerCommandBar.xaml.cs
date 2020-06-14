@@ -10,7 +10,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 using NLog;
-using PrivateWiki.DataModels.Pages;
 using PrivateWiki.ViewModels;
 using ReactiveUI;
 
@@ -86,75 +85,39 @@ namespace PrivateWiki.UWP.UI.Controls
 
 				SettingsBtn.Events().Click
 					.Select(x => Unit.Default)
-					.Subscribe(x =>
-					{
-						_showSettings.OnNext(x);
-						SettingsClick?.Invoke(this, new RoutedEventArgs());
-					}).DisposeWith(disposable);
+					.Subscribe(x => { _showSettings.OnNext(x); }).DisposeWith(disposable);
 
 				ToTopBtn.Events().Click
 					.Select(x => Unit.Default)
-					.Subscribe(x =>
-					{
-						_scrollToTop.OnNext(x);
-						TopClick?.Invoke(this, new RoutedEventArgs());
-					}).DisposeWith(disposable);
+					.Subscribe(x => { _scrollToTop.OnNext(x); }).DisposeWith(disposable);
 
 				PdfBtn.Events().Click
 					.Select(x => Unit.Default)
-					.Subscribe(x =>
-					{
-						_printPdf.OnNext(x);
-						PdfClick?.Invoke(this, new RoutedEventArgs());
-					}).DisposeWith(disposable);
+					.Subscribe(x => { _printPdf.OnNext(x); }).DisposeWith(disposable);
 
 				SearchBtn.Events().Click
 					.Select(x => Unit.Default)
-					.Subscribe(x =>
-					{
-						_search.OnNext(x);
-						SearchClick?.Invoke(this, new RoutedEventArgs());
-					}).DisposeWith(disposable);
+					.Subscribe(x => { _search.OnNext(x); }).DisposeWith(disposable);
 
 				HistoryBtn.Events().Click
 					.Select(x => Unit.Default)
-					.Subscribe(x =>
-					{
-						_showHistory.OnNext(x);
-						HistoryClick?.Invoke(this, new RoutedEventArgs());
-					}).DisposeWith(disposable);
+					.Subscribe(x => { _showHistory.OnNext(x); }).DisposeWith(disposable);
 
 				FullscreenBtn.Events().Click
 					.Select(x => Unit.Default)
-					.Subscribe(x =>
-					{
-						_toggleFullscreen.OnNext(x);
-						FullscreenClick?.Invoke(this, new RoutedEventArgs());
-					}).DisposeWith(disposable);
+					.Subscribe(x => { _toggleFullscreen.OnNext(x); }).DisposeWith(disposable);
 
 				ImportBtn.Events().Click
 					.Select(x => Unit.Default)
-					.Subscribe(x =>
-					{
-						_import.OnNext(x);
-						ImportClick?.Invoke(this, new RoutedEventArgs());
-					}).DisposeWith(disposable);
+					.Subscribe(x => { _import.OnNext(x); }).DisposeWith(disposable);
 
 				ExportBtn.Events().Click
 					.Select(x => Unit.Default)
-					.Subscribe(x =>
-					{
-						_export.OnNext(x);
-						ExportClick?.Invoke(this, new RoutedEventArgs());
-					}).DisposeWith(disposable);
+					.Subscribe(x => { _export.OnNext(x); }).DisposeWith(disposable);
 
 				EditBtn.Events().Click
 					.Select(_ => Unit.Default)
-					.Subscribe(x =>
-					{
-						_edit.OnNext(Unit.Default);
-						EditClick?.Invoke(this, new RoutedEventArgs());
-					}).DisposeWith(disposable);
+					.Subscribe(x => { _edit.OnNext(Unit.Default); }).DisposeWith(disposable);
 
 				NewPageBtn.Events().Click
 					.Select(_ => Unit.Default)
@@ -165,56 +128,18 @@ namespace PrivateWiki.UWP.UI.Controls
 					.Select(_ => Unit.Default)
 					.InvokeCommand(ViewModel.DevOptionsClick)
 					.DisposeWith(disposable);
+
+				ShowLastVisitedPages();
 			});
-
-			ShowLastVisitedPages();
 		}
-
-		[Obsolete] public event RoutedEventHandler TopClick;
-
-		[Obsolete] public event RoutedEventHandler PdfClick;
-
-		[Obsolete] public event RoutedEventHandler EditClick;
-
-		[Obsolete] public event RoutedEventHandler SearchClick;
-
-		[Obsolete] public event RoutedEventHandler HistoryClick;
-
-		[Obsolete] public event RoutedEventHandler FullscreenClick;
-
-		[Obsolete] public event RoutedEventHandler ExportClick;
-
-		[Obsolete] public event RoutedEventHandler ImportClick;
-
-		[Obsolete] public event RoutedEventHandler SettingsClick;
 
 		private void ShowLastVisitedPages()
 		{
-			var stackPanel = new StackPanel {Orientation = Orientation.Horizontal};
-			var stack = NavigationHandler.Pages;
-
-			if (stack.Count <= 0) return;
-
-			for (var index = 0; index < stack.Count - 1; index++)
-			{
-				var page = stack[index];
-				var textBlock = GetTextBlock(page);
-				stackPanel.Children.Add(textBlock);
-
-				var delimiterBox = GetDelimiterBlock();
-				stackPanel.Children.Add(delimiterBox);
-			}
-
-			var lastTextBox = GetTextBlock(stack.Last());
-			stackPanel.Children.Add(lastTextBox);
-
-			commandBar.Content = stackPanel;
-
-			Button GetTextBlock(Path path)
+			Button GetTextBlock(MostRecentlyViewedPagesItem item)
 			{
 				var button = new Button
 				{
-					Content = path.Title,
+					Content = item.Path.Title,
 					FontSize = 20,
 					VerticalAlignment = VerticalAlignment.Center,
 					Background = new RevealBackgroundBrush(),
@@ -223,7 +148,7 @@ namespace PrivateWiki.UWP.UI.Controls
 				};
 
 				var tooltip = new ToolTip();
-				tooltip.Content = path.FullPath;
+				tooltip.Content = item.Path.FullPath;
 				ToolTipService.SetToolTip(button, tooltip);
 
 				button.Click += (sender, args) =>
@@ -247,8 +172,31 @@ namespace PrivateWiki.UWP.UI.Controls
 					Margin = new Thickness(2, 0, 2, 0)
 				};
 			}
+
+			var root = new StackPanel {Orientation = Orientation.Horizontal};
+
+			var pages = ViewModel.MostRecentlyViewedPages;
+
+			if (!pages.Any()) return;
+
+			for (var i = 0; i < pages.Count() - 1; i++)
+			{
+				var page = pages.ElementAt(i);
+
+				var textBtn = GetTextBlock(page);
+				root.Children.Add(textBtn);
+
+				var delimiter = GetDelimiterBlock();
+				root.Children.Add(delimiter);
+			}
+
+			var textBox = GetTextBlock(pages.Last());
+			root.Children.Add(textBox);
+
+			commandBar.Content = root;
 		}
 
+		[Obsolete]
 		public delegate void NavigateToPageHandler(object sender, string id);
 
 		[Obsolete] public event NavigateToPageHandler NavigateToPage;

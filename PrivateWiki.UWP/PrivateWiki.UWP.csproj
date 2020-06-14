@@ -113,13 +113,13 @@
         <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs"/>
         <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs"/>
         <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs"/>
-        <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs" />
-        <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs" />
+        <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs"/>
+        <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs"/>
         <Compile Include="UI\Controls\DiffControl.xaml.cs">
             <DependentUpon>DiffControl.xaml</DependentUpon>
         </Compile>
-        <Compile Include="UI\Controls\IPageViewerCommandBar.cs" />
-        <Compile Include="UI\Controls\MyTreeViewNode.cs" />
+        <Compile Include="UI\Controls\IPageViewerCommandBar.cs"/>
+        <Compile Include="UI\Controls\MyTreeViewNode.cs"/>
         <Compile Include="UI\Controls\NavigationSettingsDividerItemControl.xaml.cs">
             <DependentUpon>NavigationSettingsDividerItemControl.xaml</DependentUpon>
         </Compile>

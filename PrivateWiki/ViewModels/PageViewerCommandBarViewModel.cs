@@ -1,16 +1,22 @@
 using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Subjects;
 using PrivateWiki.Services.DebugModeService;
+using PrivateWiki.Services.LastRecentlyVisitedPageService;
 using ReactiveUI;
 
 namespace PrivateWiki.ViewModels
 {
 	public class PageViewerCommandBarViewModel : ReactiveObject
 	{
-		private readonly IDebugModeService debug;
+		private readonly IDebugModeService _debugModeService;
 
-		public bool DevOptsEnabled => debug.RunningInDebugMode();
+		private readonly IMostRecentlyVisitedPagesService _mostRecentlyVisitedPagesService;
+
+		public IEnumerable<MostRecentlyViewedPagesItem> MostRecentlyViewedPages => _mostRecentlyVisitedPagesService.ToList();
+
+		public bool DevOptsEnabled => _debugModeService.RunningInDebugMode();
 
 		public ReactiveCommand<Unit, Unit> DevOptionsClick { get; }
 
@@ -25,7 +31,8 @@ namespace PrivateWiki.ViewModels
 
 		public PageViewerCommandBarViewModel()
 		{
-			debug = Application.Instance.Container.GetInstance<IDebugModeService>();
+			_debugModeService = Application.Instance.Container.GetInstance<IDebugModeService>();
+			_mostRecentlyVisitedPagesService = Application.Instance.Container.GetInstance<IMostRecentlyVisitedPagesService>();
 
 			DevOptionsClick = ReactiveCommand.Create<Unit>(x => { _onDevOptionsClick.OnNext(x); });
 			NewPageClick = ReactiveCommand.Create<Unit>(x => _onNewPage.OnNext(x));

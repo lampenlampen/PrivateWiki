@@ -43,15 +43,6 @@
             Grid.ColumnSpan="3"
             Height="Auto"
             Background="{ThemeResource SystemControlBackgroundAccentBrush}"
-            SettingsClick="Setting_Click"
-            TopClick="Top_Click"
-            PdfClick="Pdf_Click"
-            EditClick="Edit_Click"
-            SearchClick="Search_Click"
-            HistoryClick="Revision_Click"
-            FullscreenClick="Fullscreen_Click"
-            ExportClick="Export_Click"
-            ImportClick="Import_Click"
             NavigateToPage="CommandBar_OnNavigateToPage"/>
 
         <Border

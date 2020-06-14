@@ -2,7 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <LangVersion>latest</LangVersion>
+        <LangVersion>default</LangVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -49,6 +50,10 @@
         <EmbeddedResource Include="Assets\DefaultPages\TextTest.txt">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Remove="DataModels\RecentlyVisitedPagesManager.cs"/>
     </ItemGroup>
 
 </Project>
