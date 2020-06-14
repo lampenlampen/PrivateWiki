@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Subjects;
 using PrivateWiki.Services.DebugModeService;
-using PrivateWiki.Services.LastRecentlyVisitedPageService;
+using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using ReactiveUI;
 
 namespace PrivateWiki.ViewModels

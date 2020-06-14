@@ -3,10 +3,10 @@ using NodaTime;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.DebugModeService;
 using PrivateWiki.Services.DefaultPagesService;
-using PrivateWiki.Services.LastRecentlyVisitedPageService;
+using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.PackageService;
 using PrivateWiki.Services.StorageBackendService;
-using SimpleInjector;
+using SimpleInjector; //using PrivateWiki.Services.FileExplorerService;
 
 namespace PrivateWiki
 {

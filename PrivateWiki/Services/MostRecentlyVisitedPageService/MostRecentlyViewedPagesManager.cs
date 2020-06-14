@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using PrivateWiki.DataModels.Pages;
-using PrivateWiki.Services.LastRecentlyVisitedPageService;
 
-namespace PrivateWiki
+namespace PrivateWiki.Services.MostRecentlyVisitedPageService
 {
 	public class MostRecentlyViewedPagesManager : IMostRecentlyVisitedPagesService
 	{
@@ -49,19 +47,6 @@ namespace PrivateWiki
 		public IEnumerable<MostRecentlyViewedPagesItem> ToList()
 		{
 			return _mostRecentlyViewedPages.AsReadOnly();
-		}
-	}
-
-	public class MostRecentlyViewedPagesItem
-	{
-		public Guid Id { get; }
-
-		public Path Path { get; }
-
-		public MostRecentlyViewedPagesItem(Guid id, Path path)
-		{
-			Id = id;
-			Path = path;
 		}
 	}
 }

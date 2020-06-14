@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using PrivateWiki.DataModels.Pages;
 
-namespace PrivateWiki.Services.LastRecentlyVisitedPageService
+namespace PrivateWiki.Services.MostRecentlyVisitedPageService
 {
 	public interface IMostRecentlyVisitedPagesService
 	{

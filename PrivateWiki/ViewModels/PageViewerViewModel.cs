@@ -5,7 +5,7 @@ using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using NLog;
 using PrivateWiki.DataModels.Pages;
-using PrivateWiki.Services.LastRecentlyVisitedPageService;
+using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.StorageBackendService;
 using ReactiveUI;
 
