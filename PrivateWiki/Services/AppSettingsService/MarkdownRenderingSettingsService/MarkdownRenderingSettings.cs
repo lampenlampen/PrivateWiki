@@ -1,17 +1,10 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using DynamicData.Annotations;
-using PrivateWiki.Services.AppSettingsService;
-using PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService;
 
-namespace PrivateWiki
+namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService
 {
-	public class AppSettings : IAppSettingsService
-	{
-		public IMarkdownRenderingSettingsService MarkdownRenderingSettings { get; } = new MarkdownRenderingSettings();
-	}
-
-	public class MarkdownRenderingSettings : IMarkdownRenderingSettingsService, INotifyPropertyChanged
+	public class MarkdownRenderingSettings : IMarkdownRenderingSettingsService
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 

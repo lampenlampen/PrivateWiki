@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
 using NodaTime;
 using PrivateWiki.Services.ApplicationLauncherService;
+using PrivateWiki.Services.AppSettingsService;
+using PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService;
 using PrivateWiki.Services.DebugModeService;
 using PrivateWiki.Services.DefaultPagesService;
 using PrivateWiki.Services.MostRecentlyVisitedPageService;
@@ -14,7 +16,7 @@ namespace PrivateWiki
 	{
 		public static readonly Application Instance = new Application();
 
-		public AppSettings AppSettings { get; set; }
+		public IAppSettingsService AppSettings { get; }
 
 		public IGlobalNotificationManager GlobalNotificationManager { get; set; }
 
@@ -22,9 +24,9 @@ namespace PrivateWiki
 
 		public Application()
 		{
-			AppSettings = new AppSettings();
-
 			Container = new Container();
+
+			AppSettings = new Services.AppSettingsService.AppSettings(Container);
 
 			Container.Register<IClock>(() => SystemClock.Instance, Lifestyle.Singleton);
 			Container.Register<IPageBackendService, PageBackendService>(Lifestyle.Transient);
@@ -33,6 +35,8 @@ namespace PrivateWiki
 			Container.Register<IDefaultPagesService, DefaultPagesService>(Lifestyle.Transient);
 			Container.Register<IAssetsService, AssetsService>(Lifestyle.Singleton);
 			Container.Register<IMostRecentlyVisitedPagesService, MostRecentlyViewedPagesManager>(Lifestyle.Singleton);
+			Container.Register<IAppSettingsService, Services.AppSettingsService.AppSettings>(Lifestyle.Singleton);
+			Container.Register<IMarkdownRenderingSettingsService, Services.AppSettingsService.MarkdownRenderingSettingsService.MarkdownRenderingSettings>(Lifestyle.Singleton);
 		}
 
 		public async Task Initialize()
