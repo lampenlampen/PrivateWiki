@@ -5,10 +5,11 @@ using PrivateWiki.Services.AppSettingsService;
 using PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService;
 using PrivateWiki.Services.DebugModeService;
 using PrivateWiki.Services.DefaultPagesService;
+using PrivateWiki.Services.FileExplorerService;
 using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.PackageService;
 using PrivateWiki.Services.StorageBackendService;
-using SimpleInjector; //using PrivateWiki.Services.FileExplorerService;
+using SimpleInjector;
 
 namespace PrivateWiki
 {
@@ -37,6 +38,7 @@ namespace PrivateWiki
 			Container.Register<IMostRecentlyVisitedPagesService, MostRecentlyViewedPagesManager>(Lifestyle.Singleton);
 			Container.Register<IAppSettingsService, Services.AppSettingsService.AppSettings>(Lifestyle.Singleton);
 			Container.Register<IMarkdownRenderingSettingsService, Services.AppSettingsService.MarkdownRenderingSettingsService.MarkdownRenderingSettings>(Lifestyle.Singleton);
+			Container.Register<IFileExplorerService, FilesUWPService>();
 		}
 
 		public async Task Initialize()

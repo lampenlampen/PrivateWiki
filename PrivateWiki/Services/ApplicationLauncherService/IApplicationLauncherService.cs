@@ -1,12 +1,15 @@
 using System;
 using System.Threading.Tasks;
+using PrivateWiki.DataModels;
 
 namespace PrivateWiki.Services.ApplicationLauncherService
 {
 	public interface IApplicationLauncherService
 	{
-		public Task<bool> LaunchFileAsync(string path);
+		Task<bool> LaunchFileAsync(string path);
 
-		public Task<bool> LaunchUriAsync(Uri uri);
+		Task<bool> LaunchUriAsync(Uri uri);
+
+		Task<bool> LaunchFolder(Folder folder);
 	}
 }

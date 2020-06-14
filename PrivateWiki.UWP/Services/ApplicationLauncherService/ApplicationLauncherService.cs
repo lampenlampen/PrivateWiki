@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.System;
+using PrivateWiki.DataModels;
 using PrivateWiki.Services.ApplicationLauncherService;
 
 namespace PrivateWiki.UWP.Services.ApplicationLauncherService
@@ -17,6 +19,13 @@ namespace PrivateWiki.UWP.Services.ApplicationLauncherService
 		public Task<bool> LaunchUriAsync(Uri uri)
 		{
 			return Windows.System.Launcher.LaunchUriAsync(uri).AsTask();
+		}
+
+		public async Task<bool> LaunchFolderAsync(Folder folder)
+		{
+			var folder2 = await StorageFolder.GetFolderFromPathAsync(folder.Path);
+
+			return await Launcher.LaunchFolderAsync(folder2).AsTask().ConfigureAwait(false);
 		}
 	}
 }

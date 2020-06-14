@@ -2,6 +2,8 @@
 using System.Reactive.Disposables;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
+using PrivateWiki.DataModels;
+using PrivateWiki.Services.FileExplorerService;
 using PrivateWiki.UWP.UI.Events;
 using PrivateWiki.ViewModels.Settings;
 using ReactiveUI;
@@ -46,7 +48,12 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 					.DisposeWith(disposable);
 
 				OpenInExplorerText.Events().Click
-					.Subscribe(async _ => { Windows.System.Launcher.LaunchFolderAsync(await App.Current.Config.GetDataFolderAsync()); })
+					.Subscribe(async _ =>
+					{
+						var fileExplorerService = App.Current.Application.Container.GetInstance<IFileExplorerService>();
+						fileExplorerService.ShowFolderAsync(new Folder((await App.Current.Config.GetDataFolderAsync()).Path));
+						//Windows.System.Launcher.LaunchFolderAsync(await App.Current.Config.GetDataFolderAsync());
+					})
 					.DisposeWith(disposable);
 			});
 		}

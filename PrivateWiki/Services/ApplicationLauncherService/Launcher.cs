@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using PrivateWiki.DataModels;
 
 namespace PrivateWiki.Services.ApplicationLauncherService
 {
@@ -9,13 +10,19 @@ namespace PrivateWiki.Services.ApplicationLauncherService
 
 		public ApplicationLauncherService(IApplicationLauncherServiceImpl impl)
 		{
+			_impl = impl;
 		}
 
 		public Task<bool> LaunchFileAsync(string path) => _impl.LaunchFileAsync(path);
 
 		public Task<bool> LaunchUriAsync(Uri uri)
 		{
-			throw new NotImplementedException();
+			return _impl.LaunchUriAsync(uri);
+		}
+
+		public Task<bool> LaunchFolder(Folder folder)
+		{
+			return _impl.LaunchFolderAsync(folder);
 		}
 	}
 }
