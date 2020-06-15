@@ -16,7 +16,7 @@ namespace PrivateWiki.Services.FileExplorerService
 
 		public Task<bool> ShowFolderAsync(Folder folder)
 		{
-			var uri = new Uri($"files-uwp:///{folder.Path}");
+			var uri = new Uri($"files-uwp:?folder={folder.Path}");
 
 			return _launcher.LaunchUriAsync(uri);
 		}
