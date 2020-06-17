@@ -7,6 +7,7 @@ using Windows.Storage.Pickers;
 
 namespace PrivateWiki.UWP.Data
 {
+	[Obsolete]
 	internal class FileSystemAccess
 	{
 		public static Task<StorageFolder> GetAssetsFolderAsync()

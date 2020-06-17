@@ -6,7 +6,7 @@ namespace PrivateWiki.Services.ApplicationLauncherService
 {
 	public class ApplicationLauncherService : IApplicationLauncherService
 	{
-		private IApplicationLauncherServiceImpl _impl;
+		private readonly IApplicationLauncherServiceImpl _impl;
 
 		public ApplicationLauncherService(IApplicationLauncherServiceImpl impl)
 		{
