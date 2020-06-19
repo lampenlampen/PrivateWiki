@@ -19,18 +19,6 @@ steps:
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
-- task: VSTest@2
-  inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\*test*.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-    runInParallel: false
-    codeCoverageEnabled: true
-    otherConsoleOptions: '/InIsolation'
-    platform: 'x64'
 
 - task: VSBuild@1
   inputs:
