@@ -19,16 +19,6 @@ steps:
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
-
-- task: VSBuild@1
-  inputs:
-    platform: 'x86'
-    solution: '$(solution)'
-    configuration: '$(buildConfiguration)'
-    msbuildArgs: '/p:AppxBundlePlatforms="$(buildPlatform)"'
-
 - task: VSTest@2
   inputs:
     testSelector: 'testAssemblies'
@@ -40,3 +30,18 @@ steps:
     runInParallel: false
     codeCoverageEnabled: true
     otherConsoleOptions: '/InIsolation'
+    platform: 'x64'
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  inputs:
+    platform: 'x86'
+    solution: '$(solution)'
+    configuration: '$(buildConfiguration)'
+    msbuildArgs: '/p:AppxBundlePlatforms="$(buildPlatform)"'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/PrivateWiki.Test.csproj'
