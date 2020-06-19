@@ -4,6 +4,7 @@ using PrivateWiki.Rendering.Markdown.Markdig.Extensions;
 using PrivateWiki.Rendering.Markdown.Markdig.Extensions.MathExtension;
 using PrivateWiki.Rendering.Markdown.Markdig.Extensions.TagExtension;
 using PrivateWiki.Rendering.Markdown.Markdig.Extensions.WikiLinkExtension;
+using PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService;
 
 namespace PrivateWiki.Rendering.Markdown.Markdig
 {
@@ -133,7 +134,7 @@ namespace PrivateWiki.Rendering.Markdown.Markdig
 			htmlBuilder.AddKeyboardListener();
 			htmlBuilder.AddCharset();
 
-			var settings = Application.Instance.AppSettings.MarkdownRenderingSettings;
+			IMarkdownRenderingSettingsService settings = Application.Instance.AppSettings.MarkdownRenderingSettings;
 
 			if (!settings.IsHtmlEnabled) pipelineBuilder.DisableHtml();
 			if (settings.IsAbbreviationEnabled) pipelineBuilder.UseAbbreviations();
