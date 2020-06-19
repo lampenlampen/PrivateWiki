@@ -31,3 +31,4 @@ steps:
   inputs:
     command: 'test'
     projects: '**/PrivateWiki.Test.csproj'
+    arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
