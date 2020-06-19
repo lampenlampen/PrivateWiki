@@ -31,8 +31,6 @@ steps:
     codeCoverageEnabled: true
     otherConsoleOptions: '/InIsolation'
     platform: 'x64'
-  inputs:
-    restoreSolution: '$(solution)'
 
 - task: VSBuild@1
   inputs:
