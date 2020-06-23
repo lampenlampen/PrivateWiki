@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService
 {
-	public interface IMarkdownRenderingSettingsService : INotifyPropertyChanged
+	public interface IMarkdownRenderingSettingsService
 	{
 		#region Core
 

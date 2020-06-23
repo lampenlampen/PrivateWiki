@@ -1,415 +1,355 @@
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using DynamicData.Annotations;
+
+
+using PrivateWiki.Services.AppSettingsService.CoreAppSettings;
 
 namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService
 {
 	public class MarkdownRenderingSettings : IMarkdownRenderingSettingsService
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
+		private readonly ICoreAppSettings _coreAppSettings;
 
-		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		public MarkdownRenderingSettings(ICoreAppSettings coreAppSettings)
 		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+			_coreAppSettings = coreAppSettings;
 		}
 
 		#region Core
 
-		private bool _isHtmlEnabled = true;
-
 		public bool IsHtmlEnabled
 		{
-			get => _isHtmlEnabled;
-			set
+			get
 			{
-				_isHtmlEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isHtmlEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isHtmlEnabled", value);
 		}
-
-		private bool _isAbbreviationEnabled = true;
 
 		public bool IsAbbreviationEnabled
 		{
-			get => _isAbbreviationEnabled;
-			set
+			get
 			{
-				_isAbbreviationEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isAbbreviationEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isAbbreviationEnabled", value);
 		}
-
-		private bool _isAutoIdentifierEnabled = true;
 
 		public bool IsAutoIdentifierEnabled
 		{
-			get => _isAutoIdentifierEnabled;
-			set
+			get
 			{
-				_isAutoIdentifierEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isAutoIdentifierEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isAutoIdentifierEnabled", value);
 		}
-
-		private bool _isAutoLinkEnabled = true;
 
 		public bool IsAutoLinkEnabled
 		{
-			get => _isAbbreviationEnabled;
-			set
+			get
 			{
-				_isAutoIdentifierEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isAutoLinkEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isAutoLinkEnabled", value);
 		}
-
-		private bool _isBootstrapEnabled = false;
 
 		public bool IsBootstrapEnabled
 		{
-			get => _isBootstrapEnabled;
-			set
+			get
 			{
-				_isAbbreviationEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isBootstrapEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isBootstrapEnabled", value);
 		}
-
-		private bool _isCitationEnabled = false;
 
 		public bool IsCitationEnabled
 		{
-			get => _isCitationEnabled;
-			set
+			get
 			{
-				_isCitationEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isCitationEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isCitationEnabled", value);
 		}
-
-		private bool _isDefinitionListEnabled = false;
 
 		public bool IsDefinitionListEnabled
 		{
-			get => _isDefinitionListEnabled;
-			set
+			get
 			{
-				_isDefinitionListEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isDefinitionListEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isDefinitionListEnabled", value);
 		}
-
-		private bool _isEmojiSmileyEnabled = false;
 
 		public bool IsEmojiSmileyEnabled
 		{
-			get => _isEmojiSmileyEnabled;
-			set
+			get
 			{
-				_isEmojiSmileyEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isEmojiSmileyEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isEmojiSmileyEnabled", value);
 		}
-
-		private bool _isFigureEnabled = false;
 
 		public bool IsFigureEnabled
 		{
-			get => _isFigureEnabled;
-			set
+			get
 			{
-				_isFigureEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isFigureEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isFigureEnabled", value);
 		}
-
-		private bool _isFooterEnabled = false;
 
 		public bool IsFooterEnabled
 		{
-			get => _isFooterEnabled;
-			set
+			get
 			{
-				_isFooterEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isFooterEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isFooterEnabled", value);
 		}
-
-		private bool _isFootnoteEnabled = false;
 
 		public bool IsFootnoteEnabled
 		{
-			get => _isFootnoteEnabled;
-			set
+			get
 			{
-				_isFootnoteEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isFootnoteEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isFootnoteEnabled", value);
 		}
-
-		private bool _isMedialinkEnabled = true;
 
 		public bool IsMedialinkEnabled
 		{
-			get => _isMedialinkEnabled;
-			set
+			get
 			{
-				_isMedialinkEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isMediaLinkEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isMediaLinkEnabled", value);
 		}
-
-		private bool _isSoftlineAsHardlineBreakEnabled = false;
 
 		public bool IsSoftlineAsHardlineBreakEnabled
 		{
-			get => _isSoftlineAsHardlineBreakEnabled;
-			set
+			get
 			{
-				_isSoftlineAsHardlineBreakEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isSoftlineAsHardlineBreakEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isSoftlineAsHardlineBreakEnabled", value);
 		}
-
-		private bool _isSmartyPantEnabled = false;
 
 		public bool IsSmartyPantEnabled
 		{
-			get => _isSmartyPantEnabled;
-			set
+			get
 			{
-				_isSmartyPantEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isSmartyPantEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isSmartyPantEnabled", value);
 		}
-
-		private bool _isGenericAttributeEnabled = false;
 
 		public bool IsGenericAttributeEnabled
 		{
-			get => _isGenericAttributeEnabled;
-			set
+			get
 			{
-				_isGenericAttributeEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isGenericAttributeEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isGenericAttributeEnabled", value);
 		}
 
 		#endregion Core
 
 		#region Diagram
 
-		private bool _isDiagramEnabled = false;
-
 		public bool IsDiagramEnabled
 		{
-			get => _isDiagramEnabled;
-			set
+			get
 			{
-				_isDiagramEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isDiagramEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isDiagramEnabled", value);
 		}
-
-		private bool _isMermaidEnabled = false;
 
 		public bool IsMermaidEnabled
 		{
-			get => _isMermaidEnabled;
-			set
+			get
 			{
-				_isMermaidEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isMermaidEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isMermaidEnabled", value);
 		}
-
-		private bool _isNomnomlEnabled = false;
 
 		public bool IsNomnomlEnabled
 		{
-			get => _isNomnomlEnabled;
-			set
+			get
 			{
-				_isNomnomlEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isNomnomlEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isNomnomlEnabled", value);
 		}
 
 		#endregion Diagram
 
 		#region Emphasis
 
-		private bool _isEmphasisEnabled = false;
-
 		public bool IsEmphasisEnabled
 		{
-			get => _isEmphasisEnabled;
-			set
+			get
 			{
-				_isEmphasisEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isEmphasisEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isEmphasisEnabled", value);
 		}
-
-		private bool _isStrikethroughEnabled = false;
 
 		public bool IsStrikethroughEnabled
 		{
-			get => _isStrikethroughEnabled;
-			set
+			get
 			{
-				_isStrikethroughEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isStrikethroughEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isStrikethroughEnabled", value);
 		}
-
-		private bool _isSuperSubScriptEnabled = false;
 
 		public bool IsSuperSubScriptEnabled
 		{
-			get => _isSuperSubScriptEnabled;
-			set
+			get
 			{
-				_isSuperSubScriptEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isSuperSubScriptEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isSuperSubScriptEnabled", value);
 		}
-
-		private bool _isInsertedEnabled = false;
 
 		public bool IsInsertedEnabled
 		{
-			get => _isInsertedEnabled;
-			set
+			get
 			{
-				_isInsertedEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isInsertedEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isInsertedEnabled", value);
 		}
-
-		private bool _isMarkedEnabled = false;
 
 		public bool IsMarkedEnabled
 		{
-			get => _isMarkedEnabled;
-			set
+			get
 			{
-				_isMarkedEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isMarkedEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isMarkedEnabled", value);
 		}
 
 		#endregion Emphasis
 
 		#region List
 
-		private bool _isListEnabled = false;
-
 		public bool IsListEnabled
 		{
-			get => _isListEnabled;
-			set
+			get
 			{
-				_isListEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isListEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isListEnabled", value);
 		}
 
 		private bool _isTaskListEnabled = false;
 
 		public bool IsTaskListEnabled
 		{
-			get => _isTaskListEnabled;
-			set
+			get
 			{
-				_isTaskListEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isTaskListEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isTaskListEnabled", value);
 		}
-
-		private bool _isListExtraEnabled = false;
 
 		public bool IsListExtraEnabled
 		{
-			get => _isListExtraEnabled;
-			set
+			get
 			{
-				_isListExtraEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isListExtraEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isListExtraEnabled", value);
 		}
 
 		#endregion List
 
 		#region Math
 
-		private bool _isMathEnabled = false;
-
 		public bool IsMathEnabled
 		{
-			get => _isMathEnabled;
-			set
+			get
 			{
-				_isMathEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isMathEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isMathEnabled", value);
 		}
 
 		#endregion Math
 
 		#region SyntaxHighlighting
 
-		private bool _isSyntaxHighlightingEnabled = false;
-
 		public bool IsSyntaxHighlightingEnabled
 		{
-			get => _isSyntaxHighlightingEnabled;
-			set
+			get
 			{
-				_isSyntaxHighlightingEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isSyntaxHighlightingEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isSyntaxHighlightingEnabled", value);
 		}
 
 		#endregion SyntaxHighlighting
 
 		#region Table
 
-		private bool _isTableEnabled = false;
-
 		public bool IsTableEnabled
 		{
-			get => _isTableEnabled;
-			set
+			get
 			{
-				_isTableEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isTableEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isTableEnabled", value);
 		}
-
-		private bool _isGridTableEnabled = false;
+		
 
 		public bool IsGridTableEnabled
 		{
-			get => _isGridTableEnabled;
-			set
+			get
 			{
-				_isGridTableEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isGridTableEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isGridTableEnabled", value);
 		}
-
-		private bool _isPipeTableEnabled = false;
 
 		public bool IsPiepTableEnabled
 		{
-			get => _isPipeTableEnabled;
-			set
+			get
 			{
-				_isPipeTableEnabled = value;
-				OnPropertyChanged();
+				var result = _coreAppSettings.GetBoolean("rendering_markdown_isPipeTableEnabled");
+				return result.IsSuccess ? result.Value : false;
 			}
+			set => _coreAppSettings.Insert("rendering_markdown_isPipeTableEnabled", value);
 		}
 
 		#endregion Table

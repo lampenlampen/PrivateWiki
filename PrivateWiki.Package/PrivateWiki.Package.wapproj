@@ -74,5 +74,14 @@
   <ItemGroup>
     <ProjectReference Include="..\PrivateWiki.UWP\PrivateWiki.UWP.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FluentResults, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\FluentResults.2.0.0\lib\net45\FluentResults.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
 </Project>
