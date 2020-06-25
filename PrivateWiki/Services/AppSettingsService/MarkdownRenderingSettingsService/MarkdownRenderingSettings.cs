@@ -1,4 +1,4 @@
-using PrivateWiki.Services.AppSettingsService.KeyValueCaches;
+using PrivateWiki.Services.KeyValueCaches;
 
 // ReSharper disable RedundantArgumentDefaultValue
 
@@ -8,7 +8,7 @@ namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsServi
 	{
 		private readonly IKeyValueCache _cache;
 
-		public MarkdownRenderingSettings(IKeyValueCache cache)
+		public MarkdownRenderingSettings(IPersistentKeyValueCache cache)
 		{
 			_cache = cache;
 		}

@@ -1,4 +1,4 @@
-using PrivateWiki.Services.AppSettingsService.KeyValueCaches;
+using PrivateWiki.Services.KeyValueCaches;
 using Xunit;
 
 namespace PrivateWiki.Test.Services.KeyValueCaches

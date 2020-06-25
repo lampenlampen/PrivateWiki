@@ -1,14 +1,12 @@
-using System.IO;
 using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
 using NodaTime;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.AppSettingsService;
-using PrivateWiki.Services.AppSettingsService.KeyValueCaches;
 using PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService;
 using PrivateWiki.Services.DebugModeService;
 using PrivateWiki.Services.DefaultPagesService;
 using PrivateWiki.Services.FileExplorerService;
+using PrivateWiki.Services.KeyValueCaches;
 using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.PackageService;
 using PrivateWiki.Services.SqliteStorage;
@@ -40,13 +38,14 @@ namespace PrivateWiki
 			Container.Register<IDefaultPagesService, DefaultPagesService>(Lifestyle.Transient);
 			Container.Register<IAssetsService, AssetsService>(Lifestyle.Singleton);
 			Container.Register<IMostRecentlyVisitedPagesService, MostRecentlyViewedPagesManager>(Lifestyle.Singleton);
-			Container.Register<IAppSettingsService, Services.AppSettingsService.AppSettings>(Lifestyle.Singleton);
-			//Container.Register<IMarkdownRenderingSettingsService, Services.AppSettingsService.MarkdownRenderingSettingsService.MarkdownRenderingSettings>(Lifestyle.Singleton);
+			Container.Register<IAppSettingsService, AppSettings>(Lifestyle.Singleton);
+			Container.Register<IMarkdownRenderingSettingsService, MarkdownRenderingSettings>(Lifestyle.Singleton);
 			Container.Register<IInMemoryKeyValueCache, InMemoryCache>(Lifestyle.Singleton);
-			Container.Register<IPersistentKeyValueCache>(() => new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})), Lifestyle.Singleton);
+			Container.Register<IPersistentKeyValueCache>(() => new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = ""})), Lifestyle.Singleton);
 			Container.Register<IFileExplorerService, FilesUWPService>();
-			
-			Container.Collection.Register<IKeyValueCache>(new InMemoryCache(), new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})));
+			//Container.Register<IKeyValueCache>(() => new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})), Lifestyle.Singleton);
+
+			Container.Collection.Register<IKeyValueCache>(new InMemoryCache(), new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = ""})));
 		}
 
 		public async Task Initialize()

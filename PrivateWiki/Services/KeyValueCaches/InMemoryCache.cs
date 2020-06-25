@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using FluentResults;
 using NLog;
 
-namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
+namespace PrivateWiki.Services.KeyValueCaches
 {
 	public class InMemoryCache : IInMemoryKeyValueCache
 	{
@@ -18,7 +18,7 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 		{
 			_dict = new Dictionary<string, byte[]>();
 		}
-		
+
 		private bool Insert(string key, byte[] value)
 		{
 			lock (_dict)
@@ -45,7 +45,7 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 				if (!_dict.TryGetValue(key, out value))
 				{
 					Result.Fail(new KeyNotFoundError(key));
-				}	
+				}
 			}
 
 			return Result.Ok(value);
@@ -70,11 +70,11 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 
 			return Task.FromResult(Result.Ok());
 		}
-		
+
 		public Task<Result> InsertAsync(string key, string value)
 		{
 			Insert(key, Encoding.UTF8.GetBytes(value));
-			
+
 			return Task.FromResult(Result.Ok());
 		}
 
@@ -87,9 +87,9 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 				if (!_dict.TryGetValue(key, out value))
 				{
 					return Task.FromResult(Result.Fail<string>(new KeyNotFoundError(key)));
-				}	
+				}
 			}
-			
+
 			return Task.FromResult(Result.Ok(Encoding.UTF8.GetString(value)));
 		}
 
@@ -100,7 +100,7 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 				Array.Reverse(intBytes);
 
 			Insert(key, intBytes);
-			
+
 			return Task.FromResult(Result.Ok());
 		}
 
@@ -113,9 +113,9 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 				if (!_dict.TryGetValue(key, out value))
 				{
 					return Task.FromResult(Result.Fail<int>(new KeyNotFoundError(key)));
-				}	
+				}
 			}
-			
+
 			if (BitConverter.IsLittleEndian)
 				Array.Reverse(value);
 
@@ -125,7 +125,7 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 		public Task<Result> InsertAsync(string key, bool value)
 		{
 			Insert(key, BitConverter.GetBytes(value));
-			
+
 			return Task.FromResult(Result.Ok());
 		}
 
@@ -138,7 +138,7 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 				if (!_dict.TryGetValue(key, out value))
 				{
 					return Task.FromResult(Result.Fail<bool>(new KeyNotFoundError(key)));
-				}	
+				}
 			}
 
 			return Task.FromResult(Result.Ok(BitConverter.ToBoolean(value, 0)));
@@ -165,7 +165,7 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 				if (!_dict.TryGetValue(key, out data))
 				{
 					return Task.FromResult(Result.Fail<T>(new KeyNotFoundError(key)));
-				}	
+				}
 			}
 
 			var value = Deserialize<T>(data);

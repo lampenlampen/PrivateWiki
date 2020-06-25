@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using FluentResults;
 
-namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
+namespace PrivateWiki.Services.KeyValueCaches
 {
 	public interface IKeyValueCache
 	{

@@ -6,7 +6,7 @@ using FluentResults;
 using Microsoft.Data.Sqlite;
 using PrivateWiki.Services.SqliteStorage;
 
-namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
+namespace PrivateWiki.Services.KeyValueCaches
 {
 	public class SqliteKeyValueCache : IPersistentKeyValueCache
 	{
@@ -43,14 +43,14 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 			var result = (string?) await Get(key).ConfigureAwait(false);
 
 			if (result is null) return Result.Fail(new KeyNotFoundError(key));
-			
+
 			return Result.Ok(Convert.ToInt32(result));
 		}
 
 		public async Task<Result> InsertAsync(string key, string value)
 		{
 			await _initTask;
-			
+
 			var command = new SqliteCommand
 			{
 				CommandText = "INSERT INTO settings VALUES (@Key, @Value) ON CONFLICT (key) Do UPDATE  SET value = @Value;"
@@ -61,21 +61,21 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 			command.Parameters.AddWithValue("@Value", value);
 
 			await _db.ExecuteNonQueryAsync(command).ConfigureAwait(false);
-			
+
 			return Result.Ok();
 		}
 
 		public async Task<Result<string>> GetStringAsync(string key)
 		{
 			await _initTask;
-			
+
 			var result = (string?) await Get(key).ConfigureAwait(false);
 
 			if (result is null)
 			{
 				return Result.Fail(new KeyNotFoundError(key));
 			}
-			
+
 			return Result.Ok(result);
 		}
 
@@ -84,14 +84,14 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 		public async Task<Result<bool>> GetBooleanAsync(string key)
 		{
 			await _initTask;
-			
+
 			var result = (string?) await Get(key).ConfigureAwait(false);
-			
+
 			if (result is null)
 			{
 				return Result.Fail(new KeyNotFoundError(key));
 			}
-			
+
 			return Result.Ok(Convert.ToBoolean(result));
 		}
 
@@ -100,18 +100,18 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 		public async Task<Result<T>> GetObjectAsync<T>(string key)
 		{
 			await _initTask;
-			
+
 			var result = (string?) await Get(key).ConfigureAwait(false);
 
 			if (result is null) return Result.Fail(new KeyNotFoundError(key));
-			
+
 			return Result.Ok(Deserialize<T>(result));
 		}
 
 		public async Task<Result> RemoveAsync(string key)
 		{
 			await _initTask;
-			
+
 			var command = new SqliteCommand
 			{
 				CommandText = "DELETE FROM settings WHERE key == @Key"
@@ -127,7 +127,7 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 		public async Task<Result> RemoveAllAsync()
 		{
 			await _initTask;
-			
+
 			var command = new SqliteCommand
 			{
 				CommandText = "DELETE FROM settings"
@@ -152,7 +152,7 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 
 			return _db.ExecuteScalarAsync(command);
 		}
-		
+
 		public string this[string key]
 		{
 			get
@@ -160,12 +160,12 @@ namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 				var result = (string?) Get(key).GetAwaiter().GetResult();
 
 				if (result is null) throw new KeyNotFoundException(key);
-				
+
 				return result;
 			}
 			set => InsertAsync(key, value).GetAwaiter().GetResult();
 		}
-	
+
 		private string Serialize<T>(T value) => JsonSerializer.Serialize(value);
 
 		private T Deserialize<T>(string data) => JsonSerializer.Deserialize<T>(data);

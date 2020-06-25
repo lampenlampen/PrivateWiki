@@ -1,99 +1,96 @@
-using System.ComponentModel;
-
 namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService
 {
 	public interface IMarkdownRenderingSettingsService
 	{
 		#region Core
 
-		public bool IsHtmlEnabled { get; }
+		public bool IsHtmlEnabled { get; set; }
 
-		public bool IsAbbreviationEnabled { get; }
-
-
-		public bool IsAutoIdentifierEnabled { get; }
+		public bool IsAbbreviationEnabled { get; set; }
 
 
-		public bool IsAutoLinkEnabled { get; }
-
-		public bool IsBootstrapEnabled { get; }
+		public bool IsAutoIdentifierEnabled { get; set; }
 
 
-		public bool IsCitationEnabled { get; }
+		public bool IsAutoLinkEnabled { get; set; }
 
-		public bool IsDefinitionListEnabled { get; }
+		public bool IsBootstrapEnabled { get; set; }
 
-		public bool IsEmojiSmileyEnabled { get; }
+		public bool IsCitationEnabled { get; set; }
 
-		public bool IsFigureEnabled { get; }
+		public bool IsDefinitionListEnabled { get; set; }
 
-		public bool IsFooterEnabled { get; }
+		public bool IsEmojiSmileyEnabled { get; set; }
 
-		public bool IsFootnoteEnabled { get; }
+		public bool IsFigureEnabled { get; set; }
 
-		public bool IsMedialinkEnabled { get; }
+		public bool IsFooterEnabled { get; set; }
 
-		public bool IsSoftlineAsHardlineBreakEnabled { get; }
+		public bool IsFootnoteEnabled { get; set; }
 
-		public bool IsSmartyPantEnabled { get; }
+		public bool IsMedialinkEnabled { get; set; }
 
-		public bool IsGenericAttributeEnabled { get; }
+		public bool IsSoftlineAsHardlineBreakEnabled { get; set; }
+
+		public bool IsSmartyPantEnabled { get; set; }
+
+		public bool IsGenericAttributeEnabled { get; set; }
 
 		#endregion Core
 
 		#region Diagram
 
-		public bool IsDiagramEnabled { get; }
+		public bool IsDiagramEnabled { get; set; }
 
-		public bool IsMermaidEnabled { get; }
+		public bool IsMermaidEnabled { get; set; }
 
-		public bool IsNomnomlEnabled { get; }
+		public bool IsNomnomlEnabled { get; set; }
 
 		#endregion Diagram
 
 		#region Emphasis
 
-		public bool IsEmphasisEnabled { get; }
+		public bool IsEmphasisEnabled { get; set; }
 
-		public bool IsStrikethroughEnabled { get; }
+		public bool IsStrikethroughEnabled { get; set; }
 
-		public bool IsSuperSubScriptEnabled { get; }
+		public bool IsSuperSubScriptEnabled { get; set; }
 
-		public bool IsInsertedEnabled { get; }
+		public bool IsInsertedEnabled { get; set; }
 
-		public bool IsMarkedEnabled { get; }
+		public bool IsMarkedEnabled { get; set; }
 
 		#endregion Emphasis
 
 		#region List
 
-		public bool IsListEnabled { get; }
+		public bool IsListEnabled { get; set; }
 
-		public bool IsTaskListEnabled { get; }
+		public bool IsTaskListEnabled { get; set; }
 
-		public bool IsListExtraEnabled { get; }
+		public bool IsListExtraEnabled { get; set; }
 
 		#endregion List
 
 		#region Math
 
-		public bool IsMathEnabled { get; }
+		public bool IsMathEnabled { get; set; }
 
 		#endregion Math
 
 		#region SyntaxHighlighting
 
-		public bool IsSyntaxHighlightingEnabled { get; }
+		public bool IsSyntaxHighlightingEnabled { get; set; }
 
 		#endregion SyntaxHighlighting
 
 		#region Table
 
-		public bool IsTableEnabled { get; }
+		public bool IsTableEnabled { get; set; }
 
-		public bool IsGridTableEnabled { get; }
+		public bool IsGridTableEnabled { get; set; }
 
-		public bool IsPiepTableEnabled { get; }
+		public bool IsPiepTableEnabled { get; set; }
 
 		#endregion Table
 	}

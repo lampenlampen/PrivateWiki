@@ -1,6 +1,6 @@
 using FluentResults;
 
-namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
+namespace PrivateWiki.Services.KeyValueCaches
 {
 	public class KeyNotFoundError : Error
 	{
