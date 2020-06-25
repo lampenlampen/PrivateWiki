@@ -1,8 +1,10 @@
 using PrivateWiki.Services.AppSettingsService.KeyValueCaches;
 
+// ReSharper disable RedundantArgumentDefaultValue
+
 namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService
 {
-	public class MarkdownRenderingSettings
+	public class MarkdownRenderingSettings : IMarkdownRenderingSettingsService
 	{
 		private readonly IKeyValueCache _cache;
 
@@ -11,182 +13,110 @@ namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsServi
 			_cache = cache;
 		}
 
-		public bool IsHtmlEnabled
+		private bool Get(string key, bool defaultValue = false)
 		{
-			get
-			{
-				var result = _cache.GetBooleanAsync("rendering_markdown_isHtmlEnabled").GetAwaiter().GetResult();
-				
-				if (result.HasError<KeyNotFoundError>()) return false;
+			var result = _cache.GetBooleanAsync(key).GetAwaiter().GetResult();
 
-				return result.Value;
-			}
-			set
-			{
-				_cache.InsertAsync("rendering_markdown_isHtmlEnabled", value).GetAwaiter().GetResult();
-			}
+			if (result.HasError<KeyNotFoundError>()) return defaultValue;
+
+			return result.Value;
 		}
-		
-		
-		
-		/*
-		private readonly IKeyValueCache _coreAppSettings;
 
-		public MarkdownRenderingSettings(IKeyValueCache coreAppSettings)
+		private void Set(string key, bool value)
 		{
-			_coreAppSettings = coreAppSettings;
+			_cache.InsertAsync(key, value).GetAwaiter().GetResult();
 		}
 
 		#region Core
 
 		public bool IsHtmlEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isHtmlEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isHtmlEnabled", value);
+			get => Get("rendering_markdown_isHtmlEnabled", false);
+			set => Set("rendering_markdown_isHtmlEnabled", value);
 		}
 
 		public bool IsAbbreviationEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isAbbreviationEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isAbbreviationEnabled", value);
+			get => Get("rendering_markdown_isAbbreviationEnabled", false);
+			set => Set("rendering_markdown_isAbbreviationEnabled", value);
 		}
 
 		public bool IsAutoIdentifierEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isAutoIdentifierEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isAutoIdentifierEnabled", value);
+			get => Get("rendering_markdown_isAutoIdentifierEnabled", false);
+			set => Set("rendering_markdown_isAutoIdentifierEnabled", value);
 		}
 
 		public bool IsAutoLinkEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isAutoLinkEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isAutoLinkEnabled", value);
+			get => Get("rendering_markdown_isAutoLinkEnabled", false);
+			set => Set("rendering_markdown_isAutoLinkEnabled", value);
 		}
 
 		public bool IsBootstrapEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isBootstrapEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isBootstrapEnabled", value);
+			get => Get("rendering_markdown_isBootstrapEnabled", false);
+			set => Set("rendering_markdown_isBootstrapEnabled", value);
 		}
 
 		public bool IsCitationEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isCitationEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isCitationEnabled", value);
+			get => Get("rendering_markdown_isCitationEnabled", false);
+			set => Set("rendering_markdown_isCitationEnabled", value);
 		}
 
 		public bool IsDefinitionListEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isDefinitionListEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isDefinitionListEnabled", value);
+			get => Get("rendering_markdown_isDefinitionListEnabled", false);
+			set => Set("rendering_markdown_isDefinitionListEnabled", value);
 		}
 
 		public bool IsEmojiSmileyEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isEmojiSmileyEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isEmojiSmileyEnabled", value);
+			get => Get("rendering_markdown_isEmojiSmileyEnabled", false);
+			set => Set("rendering_markdown_isEmojiSmileyEnabled", value);
 		}
 
 		public bool IsFigureEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isFigureEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isFigureEnabled", value);
+			get => Get("rendering_markdown_isFigureEnabled", false);
+			set => Set("rendering_markdown_isFigureEnabled", value);
 		}
 
 		public bool IsFooterEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isFooterEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isFooterEnabled", value);
+			get => Get("rendering_markdown_isFooterEnabled", false);
+			set => Set("rendering_markdown_isFooterEnabled", value);
 		}
 
 		public bool IsFootnoteEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isFootnoteEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isFootnoteEnabled", value);
+			get => Get("rendering_markdown_isFootnoteEnabled", false);
+			set => Set("rendering_markdown_isFootnoteEnabled", value);
 		}
 
 		public bool IsMedialinkEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isMediaLinkEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isMediaLinkEnabled", value);
+			get => Get("rendering_markdown_isMediaLinkEnabled", false);
+			set => Set("rendering_markdown_isMediaLinkEnabled", value);
 		}
 
 		public bool IsSoftlineAsHardlineBreakEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isSoftlineAsHardlineBreakEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isSoftlineAsHardlineBreakEnabled", value);
+			get => Get("rendering_markdown_isSoftlineAsHardlineBreakEnabled", false);
+			set => Set("rendering_markdown_isSoftlineAsHardlineBreakEnabled", value);
 		}
 
 		public bool IsSmartyPantEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isSmartyPantEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isSmartyPantEnabled", value);
+			get => Get("rendering_markdown_isSmartyPantEnabled", false);
+			set => Set("rendering_markdown_isSmartyPantEnabled", value);
 		}
 
 		public bool IsGenericAttributeEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isGenericAttributeEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isGenericAttributeEnabled", value);
+			get => Get("rendering_markdown_isGenericAttributeEnabled", false);
+			set => Set("rendering_markdown_isGenericAttributeEnabled", value);
 		}
 
 		#endregion Core
@@ -195,32 +125,20 @@ namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsServi
 
 		public bool IsDiagramEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isDiagramEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isDiagramEnabled", value);
+			get => Get("rendering_markdown_isDiagramEnabled", false);
+			set => Set("rendering_markdown_isDiagramEnabled", value);
 		}
 
 		public bool IsMermaidEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isMermaidEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isMermaidEnabled", value);
+			get => Get("rendering_markdown_isMermaidEnabled", false);
+			set => Set("rendering_markdown_isMermaidEnabled", value);
 		}
 
 		public bool IsNomnomlEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isNomnomlEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isNomnomlEnabled", value);
+			get => Get("rendering_markdown_isNomnomlEnabled", false);
+			set => Set("rendering_markdown_isNomnomlEnabled", value);
 		}
 
 		#endregion Diagram
@@ -229,52 +147,32 @@ namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsServi
 
 		public bool IsEmphasisEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isEmphasisEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isEmphasisEnabled", value);
+			get => Get("rendering_markdown_isEmphasisEnabled", false);
+			set => Set("rendering_markdown_isEmphasisEnabled", value);
 		}
 
 		public bool IsStrikethroughEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isStrikethroughEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isStrikethroughEnabled", value);
+			get => Get("rendering_markdown_isStrikethroughEnabled", false);
+			set => Set("rendering_markdown_isStrikethroughEnabled", value);
 		}
 
 		public bool IsSuperSubScriptEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isSuperSubScriptEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isSuperSubScriptEnabled", value);
+			get => Get("rendering_markdown_isSuperSubScriptEnabled", false);
+			set => Set("rendering_markdown_isSuperSubScriptEnabled", value);
 		}
 
 		public bool IsInsertedEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isInsertedEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isInsertedEnabled", value);
+			get => Get("rendering_markdown_isInsertedEnabled", false);
+			set => Set("rendering_markdown_isInsertedEnabled", value);
 		}
 
 		public bool IsMarkedEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isMarkedEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isMarkedEnabled", value);
+			get => Get("rendering_markdown_isMarkedEnabled", false);
+			set => Set("rendering_markdown_isMarkedEnabled", value);
 		}
 
 		#endregion Emphasis
@@ -283,34 +181,20 @@ namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsServi
 
 		public bool IsListEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isListEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isListEnabled", value);
+			get => Get("rendering_markdown_isListEnabled", false);
+			set => Set("rendering_markdown_isListEnabled", value);
 		}
-
-		private bool _isTaskListEnabled = false;
 
 		public bool IsTaskListEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isTaskListEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isTaskListEnabled", value);
+			get => Get("rendering_markdown_isTaskListEnabled", false);
+			set => Set("rendering_markdown_isTaskListEnabled", value);
 		}
 
 		public bool IsListExtraEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isListExtraEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isListExtraEnabled", value);
+			get => Get("rendering_markdown_isListExtraEnabled", false);
+			set => Set("rendering_markdown_isListExtraEnabled", value);
 		}
 
 		#endregion List
@@ -319,12 +203,8 @@ namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsServi
 
 		public bool IsMathEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isMathEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isMathEnabled", value);
+			get => Get("rendering_markdown_isMathEnabled", false);
+			set => Set("rendering_markdown_isMathEnabled", value);
 		}
 
 		#endregion Math
@@ -333,12 +213,8 @@ namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsServi
 
 		public bool IsSyntaxHighlightingEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isSyntaxHighlightingEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isSyntaxHighlightingEnabled", value);
+			get => Get("rendering_markdown_isSyntaxHighlightingEnabled", false);
+			set => Set("rendering_markdown_isSyntaxHighlightingEnabled", value);
 		}
 
 		#endregion SyntaxHighlighting
@@ -347,36 +223,23 @@ namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsServi
 
 		public bool IsTableEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isTableEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isTableEnabled", value);
+			get => Get("rendering_markdown_isTableEnabled", false);
+			set => Set("rendering_markdown_isTableEnabled", value);
 		}
-		
+
 
 		public bool IsGridTableEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isGridTableEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isGridTableEnabled", value);
+			get => Get("rendering_markdown_isGridTableEnabled", false);
+			set => Set("rendering_markdown_isGridTableEnabled", value);
 		}
 
 		public bool IsPiepTableEnabled
 		{
-			get
-			{
-				var result = _coreAppSettings.GetBooleanAsync("rendering_markdown_isPipeTableEnabled");
-				return result.IsSuccess ? result.Value : false;
-			}
-			set => _coreAppSettings.InsertAsync("rendering_markdown_isPipeTableEnabled", value);
+			get => Get("rendering_markdown_isPipeTableEnabled", false);
+			set => Set("rendering_markdown_isPipeTableEnabled", value);
 		}
 
 		#endregion Table
-		*/
 	}
 }
