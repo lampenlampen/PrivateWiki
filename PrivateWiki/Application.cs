@@ -1,13 +1,17 @@
+using System.IO;
 using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
 using NodaTime;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.AppSettingsService;
+using PrivateWiki.Services.AppSettingsService.KeyValueCaches;
 using PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService;
 using PrivateWiki.Services.DebugModeService;
 using PrivateWiki.Services.DefaultPagesService;
 using PrivateWiki.Services.FileExplorerService;
 using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.PackageService;
+using PrivateWiki.Services.SqliteStorage;
 using PrivateWiki.Services.StorageBackendService;
 using SimpleInjector;
 
@@ -37,8 +41,12 @@ namespace PrivateWiki
 			Container.Register<IAssetsService, AssetsService>(Lifestyle.Singleton);
 			Container.Register<IMostRecentlyVisitedPagesService, MostRecentlyViewedPagesManager>(Lifestyle.Singleton);
 			Container.Register<IAppSettingsService, Services.AppSettingsService.AppSettings>(Lifestyle.Singleton);
-			Container.Register<IMarkdownRenderingSettingsService, Services.AppSettingsService.MarkdownRenderingSettingsService.MarkdownRenderingSettings>(Lifestyle.Singleton);
+			//Container.Register<IMarkdownRenderingSettingsService, Services.AppSettingsService.MarkdownRenderingSettingsService.MarkdownRenderingSettings>(Lifestyle.Singleton);
+			Container.Register<IInMemoryKeyValueCache, InMemoryCache>(Lifestyle.Singleton);
+			Container.Register<IPersistentKeyValueCache>(() => new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})), Lifestyle.Singleton);
 			Container.Register<IFileExplorerService, FilesUWPService>();
+			
+			Container.Collection.Register<IKeyValueCache>(new InMemoryCache(), new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})));
 		}
 
 		public async Task Initialize()

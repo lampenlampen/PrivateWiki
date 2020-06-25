@@ -1,3 +1,6 @@
+using PrivateWiki.Services.AppSettingsService.KeyValueCaches;
+using PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService;
+using PrivateWiki.Services.SqliteStorage;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -11,11 +14,6 @@ namespace PrivateWiki.Test
 		{
 			this.output = output;
 		}
-
-		[Fact]
-		public void Test1()
-		{
-			Assert.True(true);
-		}
+		
 	}
 }

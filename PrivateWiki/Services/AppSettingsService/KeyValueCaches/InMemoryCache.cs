@@ -2,18 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using FluentResults;
 using NLog;
 
-namespace PrivateWiki.Services.AppSettingsService.CoreAppSettings
+namespace PrivateWiki.Services.AppSettingsService.KeyValueCaches
 {
-	public class CoreAppSettings : ICoreAppSettings
+	public class InMemoryCache : IInMemoryKeyValueCache
 	{
 		private static Logger Logger = LogManager.GetCurrentClassLogger();
 
 		private Dictionary<string, byte[]> _dict;
 
-		public CoreAppSettings()
+		public InMemoryCache()
 		{
 			_dict = new Dictionary<string, byte[]>();
 		}
@@ -26,21 +27,6 @@ namespace PrivateWiki.Services.AppSettingsService.CoreAppSettings
 			}
 
 			return true;
-		}
-
-		private byte[]? Get(string key)
-		{
-			byte[] value;
-
-			lock (_dict)
-			{
-				if (!_dict.TryGetValue(key, out value))
-				{
-					// TODO Key not found
-				}	
-			}
-
-			return value;
 		}
 
 		public Result InsertBytes(string key, byte[] value)
@@ -65,34 +51,34 @@ namespace PrivateWiki.Services.AppSettingsService.CoreAppSettings
 			return Result.Ok(value);
 		}
 
-		public bool Remove(string key)
+		public Task<Result> RemoveAsync(string key)
 		{
 			lock (_dict)
 			{
 				_dict.Remove(key);
 			}
 
-			return true;
+			return Task.FromResult(Result.Ok());
 		}
 
-		public bool RemoveAll()
+		public Task<Result> RemoveAllAsync()
 		{
 			lock (_dict)
 			{
 				_dict.Clear();
 			}
 
-			return true;
+			return Task.FromResult(Result.Ok());
 		}
 		
-		public Result Insert(string key, string value)
+		public Task<Result> InsertAsync(string key, string value)
 		{
 			Insert(key, Encoding.UTF8.GetBytes(value));
 			
-			return Result.Ok();
+			return Task.FromResult(Result.Ok());
 		}
 
-		public Result<string> GetString(string key)
+		public Task<Result<string>> GetStringAsync(string key)
 		{
 			byte[] value;
 
@@ -100,14 +86,14 @@ namespace PrivateWiki.Services.AppSettingsService.CoreAppSettings
 			{
 				if (!_dict.TryGetValue(key, out value))
 				{
-					return Result.Fail(new KeyNotFoundError(key));
+					return Task.FromResult(Result.Fail<string>(new KeyNotFoundError(key)));
 				}	
 			}
 			
-			return Result.Ok(Encoding.UTF8.GetString(value));
+			return Task.FromResult(Result.Ok(Encoding.UTF8.GetString(value)));
 		}
 
-		public Result Insert(string key, int value)
+		public Task<Result> InsertAsync(string key, int value)
 		{
 			byte[] intBytes = BitConverter.GetBytes(value);
 			if (BitConverter.IsLittleEndian)
@@ -115,10 +101,10 @@ namespace PrivateWiki.Services.AppSettingsService.CoreAppSettings
 
 			Insert(key, intBytes);
 			
-			return Result.Ok();
+			return Task.FromResult(Result.Ok());
 		}
 
-		public Result<int> GetInt(string key)
+		public Task<Result<int>> GetIntAsync(string key)
 		{
 			byte[] value;
 
@@ -126,24 +112,24 @@ namespace PrivateWiki.Services.AppSettingsService.CoreAppSettings
 			{
 				if (!_dict.TryGetValue(key, out value))
 				{
-					return Result.Fail(new KeyNotFoundError(key));
+					return Task.FromResult(Result.Fail<int>(new KeyNotFoundError(key)));
 				}	
 			}
 			
 			if (BitConverter.IsLittleEndian)
 				Array.Reverse(value);
 
-			return Result.Ok(BitConverter.ToInt32(value, 0));
+			return Task.FromResult(Result.Ok(BitConverter.ToInt32(value, 0)));
 		}
 
-		public Result Insert(string key, bool value)
+		public Task<Result> InsertAsync(string key, bool value)
 		{
 			Insert(key, BitConverter.GetBytes(value));
 			
-			return Result.Ok();
+			return Task.FromResult(Result.Ok());
 		}
 
-		public Result<bool> GetBoolean(string key)
+		public Task<Result<bool>> GetBooleanAsync(string key)
 		{
 			byte[] value;
 
@@ -151,14 +137,14 @@ namespace PrivateWiki.Services.AppSettingsService.CoreAppSettings
 			{
 				if (!_dict.TryGetValue(key, out value))
 				{
-					return Result.Fail(new KeyNotFoundError(key));
+					return Task.FromResult(Result.Fail<bool>(new KeyNotFoundError(key)));
 				}	
 			}
 
-			return Result.Ok(BitConverter.ToBoolean(value, 0));
+			return Task.FromResult(Result.Ok(BitConverter.ToBoolean(value, 0)));
 		}
 
-		public Result Insert<T>(string key, T value)
+		public Task<Result> InsertAsync<T>(string key, T value)
 		{
 			var data = Serialize(value);
 
@@ -167,10 +153,10 @@ namespace PrivateWiki.Services.AppSettingsService.CoreAppSettings
 				_dict[key] = data;
 			}
 
-			return Result.Ok();
+			return Task.FromResult(Result.Ok());
 		}
 
-		public Result<T> GetObject<T>(string key)
+		public Task<Result<T>> GetObjectAsync<T>(string key)
 		{
 			byte[] data;
 
@@ -178,13 +164,13 @@ namespace PrivateWiki.Services.AppSettingsService.CoreAppSettings
 			{
 				if (!_dict.TryGetValue(key, out data))
 				{
-					return Result.Fail(new KeyNotFoundError(key));
+					return Task.FromResult(Result.Fail<T>(new KeyNotFoundError(key)));
 				}	
 			}
 
 			var value = Deserialize<T>(data);
 
-			return Result.Ok(value);
+			return Task.FromResult(Result.Ok(value));
 		}
 
 		private byte[] Serialize<T>(T value)
@@ -203,13 +189,6 @@ namespace PrivateWiki.Services.AppSettingsService.CoreAppSettings
 			var value = JsonSerializer.Deserialize<T>(data);
 
 			return value;
-		}
-	}
-	
-	public class KeyNotFoundError : Error
-	{
-		public KeyNotFoundError(string key) : base($"Key not found: {key}")
-		{
 		}
 	}
 }

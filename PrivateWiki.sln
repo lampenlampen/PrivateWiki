@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageBackend.Test", "Stor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrivateWiki", "PrivateWiki\PrivateWiki.csproj", "{E2799E21-DA92-4FA1-8DF2-0C08006FFFAA}"
 EndProject
-Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "PrivateWiki.Package", "PrivateWiki.Package\PrivateWiki.Package.wapproj", "{D53ACCB2-D7C3-42BC-A43F-CDC4637BF48E}"
+Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "PrivateWiki.Uwp.Package", "PrivateWiki.Uwp.Package\PrivateWiki.Uwp.Package.wapproj", "{D53ACCB2-D7C3-42BC-A43F-CDC4637BF48E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrivateWiki.Test", "PrivateWiki.Test\PrivateWiki.Test.csproj", "{F4CB6A91-614A-4500-938A-9EF8EC070384}"
 EndProject
