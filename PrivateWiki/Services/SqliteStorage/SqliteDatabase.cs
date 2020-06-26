@@ -60,7 +60,7 @@ namespace PrivateWiki.Services.SqliteStorage
 
 		public Task DeleteDatabase()
 		{
-			File.Delete(Path.GetFullPath("settings.db"));
+			File.Delete(Path.GetFullPath(_path));
 
 			return Task.CompletedTask;
 		}
