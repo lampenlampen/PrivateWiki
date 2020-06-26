@@ -24,6 +24,8 @@ namespace PrivateWiki.Services.KeyValueCaches
 		public Task<Result> RemoveAsync(string key);
 
 		public Task<Result> RemoveAllAsync();
+
+		public Task DeleteCache();
 	}
 
 	public interface IInMemoryKeyValueCache : IKeyValueCache

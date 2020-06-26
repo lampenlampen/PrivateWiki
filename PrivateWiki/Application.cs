@@ -41,7 +41,7 @@ namespace PrivateWiki
 			Container.Register<IAppSettingsService, AppSettings>(Lifestyle.Singleton);
 			Container.Register<IMarkdownRenderingSettingsService, MarkdownRenderingSettings>(Lifestyle.Singleton);
 			Container.Register<IInMemoryKeyValueCache, InMemoryCache>(Lifestyle.Singleton);
-			Container.Register<IPersistentKeyValueCache>(() => new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = ""})), Lifestyle.Singleton);
+			Container.Register<IPersistentKeyValueCache>(() => new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})), Lifestyle.Singleton);
 			Container.Register<IFileExplorerService, FilesUWPService>();
 			//Container.Register<IKeyValueCache>(() => new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})), Lifestyle.Singleton);
 

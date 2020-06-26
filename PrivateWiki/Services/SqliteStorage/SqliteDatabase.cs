@@ -6,26 +6,23 @@ namespace PrivateWiki.Services.SqliteStorage
 {
 	public class SqliteDatabase : ISqliteStorage
 	{
-		private const string SqliteName = "settings.db";
-		private readonly string _sqliteFolderPath;
-
-		private string _sqliteFullPath => Path.Combine(_sqliteFolderPath, SqliteName);
+		private readonly string _path;
 
 		public SqliteDatabase(ISqliteStorageOptions options)
 		{
-			_sqliteFolderPath = options.Path;
+			_path = options.Path;
 		}
 
 		public async Task<T> ExecuteReaderAsync<T>(SqliteCommand command, ISqliteReaderConverter<T> converter)
 		{
-			using var db = new SqliteConnection($"Filename={_sqliteFullPath}");
+			using var db = new SqliteConnection($"Filename={_path}");
 
 			command.Connection = db;
 
 			await db.OpenAsync();
 			var result = await command.ExecuteReaderAsync().ConfigureAwait(false);
 			db.Close();
-			
+
 			command.Connection = null;
 
 			var data = converter.Convert(result);
@@ -35,30 +32,37 @@ namespace PrivateWiki.Services.SqliteStorage
 
 		public async Task ExecuteNonQueryAsync(SqliteCommand command)
 		{
-			using var db = new SqliteConnection($"Filename={_sqliteFullPath}");
+			using var db = new SqliteConnection($"Filename={_path}");
 
 			command.Connection = db;
-			
+
 			await db.OpenAsync();
 			await command.ExecuteNonQueryAsync();
 			db.Close();
-			
+
 			command.Connection = null;
 		}
 
 		public async Task<object?> ExecuteScalarAsync(SqliteCommand command)
 		{
-			using var db = new SqliteConnection($"Filename={_sqliteFullPath}");
+			using var db = new SqliteConnection($"Filename={_path}");
 
 			command.Connection = db;
 
 			await db.OpenAsync();
 			var result = await command.ExecuteScalarAsync();
 			db.Close();
-			
+
 			command.Connection = null;
 
 			return result;
+		}
+
+		public Task DeleteDatabase()
+		{
+			File.Delete(Path.GetFullPath("settings.db"));
+
+			return Task.CompletedTask;
 		}
 	}
 }

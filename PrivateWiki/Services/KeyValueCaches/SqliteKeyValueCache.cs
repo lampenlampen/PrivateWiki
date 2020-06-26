@@ -138,6 +138,8 @@ namespace PrivateWiki.Services.KeyValueCaches
 			return Result.Ok();
 		}
 
+		public Task DeleteCache() => _db.DeleteDatabase();
+
 		private Task<object?> Get(string key)
 		{
 			var command = new SqliteCommand

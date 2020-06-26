@@ -1,3 +1,4 @@
+using System;
 using PrivateWiki.Services.KeyValueCaches;
 using PrivateWiki.Services.SqliteStorage;
 using PrivateWiki.Test.Utilities;
@@ -6,8 +7,17 @@ using Xunit.Repeat;
 
 namespace PrivateWiki.Test.Services.KeyValueCaches
 {
-	public class SqliteKeyValueCacheTest
+	public class SqliteKeyValueCacheTest : IDisposable
 	{
+		private readonly string _dbPath;
+		private readonly SqliteKeyValueCache _cache;
+
+		public SqliteKeyValueCacheTest()
+		{
+			_dbPath = Guid.NewGuid().ToString();
+			_cache = new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = $"{_dbPath}.db"}));
+		}
+
 		[Theory]
 		[Repeat(1)]
 		public async void InsertAndGetStringTest(int iteration)
@@ -15,9 +25,8 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 			var key = RandomStringGenerator.RandomString(iteration);
 			var value = RandomStringGenerator.RandomString(iteration);
 
-			var coreAppSettings = new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions() {Path = "C:\\Users\\felix"}));
-			await coreAppSettings.InsertAsync(key, value);
-			var actual = await coreAppSettings.GetStringAsync(key);
+			await _cache.InsertAsync(key, value);
+			var actual = await _cache.GetStringAsync(key);
 
 			Assert.True(actual.IsSuccess);
 
@@ -31,9 +40,8 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 			var key = RandomStringGenerator.RandomString(iteration);
 			var value = RandomStringGenerator.RandomString(iteration);
 
-			var coreAppSettings = new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions() {Path = "C:\\Users\\felix"}));
-			await coreAppSettings.InsertAsync(key, value);
-			var actual = await coreAppSettings.GetStringAsync(key + "d");
+			await _cache.InsertAsync(key, value);
+			var actual = await _cache.GetStringAsync(key + "d");
 
 			Assert.True(actual.IsFailed);
 			Assert.True(actual.HasError<KeyNotFoundError>());
@@ -46,11 +54,10 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 			var key = RandomStringGenerator.RandomString(iteration);
 			var value = RandomStringGenerator.RandomString(iteration);
 
-			var coreAppSettings = new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions() {Path = "C:\\Users\\felix"}));
-			await coreAppSettings.InsertAsync(key, value);
-			await coreAppSettings.InsertAsync(key, value);
+			await _cache.InsertAsync(key, value);
+			await _cache.InsertAsync(key, value);
 
-			var actual = await coreAppSettings.GetStringAsync(key);
+			var actual = await _cache.GetStringAsync(key);
 
 			Assert.True(actual.IsSuccess);
 
@@ -65,11 +72,10 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 			var value = RandomStringGenerator.RandomString(iteration);
 			var value2 = RandomStringGenerator.RandomString(iteration);
 
-			var coreAppSettings = new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions() {Path = "C:\\Users\\felix"}));
-			await coreAppSettings.InsertAsync(key, value);
-			await coreAppSettings.InsertAsync(key, value2);
+			await _cache.InsertAsync(key, value);
+			await _cache.InsertAsync(key, value2);
 
-			var actual = await coreAppSettings.GetStringAsync(key);
+			var actual = await _cache.GetStringAsync(key);
 
 			Assert.True(actual.IsSuccess);
 
@@ -83,10 +89,9 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 			var key = RandomStringGenerator.RandomString(iteration);
 			var value = RandomStringGenerator.RandomString(iteration);
 
-			var coreAppSettings = new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions() {Path = "C:\\Users\\felix"}));
-			coreAppSettings[key] = value;
+			_cache[key] = value;
 
-			var actual = coreAppSettings[key];
+			var actual = _cache[key];
 
 
 			Assert.Equal(value, actual);
@@ -99,10 +104,9 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 
 			var value = new TestObject();
 
-			var coreAppSettings = new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions() {Path = "C:\\Users\\felix"}));
-			await coreAppSettings.InsertAsync(key, value);
+			await _cache.InsertAsync(key, value);
 
-			var result = await coreAppSettings.GetObjectAsync<TestObject>(key);
+			var result = await _cache.GetObjectAsync<TestObject>(key);
 
 			Assert.True(result.IsSuccess);
 
@@ -111,6 +115,11 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 			Assert.Equal(value.test1, actual.test1);
 			Assert.Equal(value.test2, actual.test2);
 			Assert.Equal(value.test3, actual.test3);
+		}
+
+		public void Dispose()
+		{
+			_cache.DeleteCache();
 		}
 	}
 }

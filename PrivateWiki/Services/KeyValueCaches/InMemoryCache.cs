@@ -71,6 +71,11 @@ namespace PrivateWiki.Services.KeyValueCaches
 			return Task.FromResult(Result.Ok());
 		}
 
+		public Task DeleteCache()
+		{
+			return RemoveAllAsync();
+		}
+
 		public Task<Result> InsertAsync(string key, string value)
 		{
 			Insert(key, Encoding.UTF8.GetBytes(value));
