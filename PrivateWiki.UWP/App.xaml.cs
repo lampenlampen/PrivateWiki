@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Navigation;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using NLog;
 using NodaTime;
+using PrivateWiki.Services.ApplicationDataService;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.FilesystemService;
 using PrivateWiki.Services.StorageBackendService;
@@ -31,15 +32,15 @@ namespace PrivateWiki.UWP
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
 		// By default, current is an instance of the Application class, which needs to be changed to be an instance of the App class.
-		public new static App Current;
+		public new static App Current { get; private set; }
 
-		public AppConfig Config = new AppConfig();
+		public AppConfig Config { get; } = new AppConfig();
 
-		public Application Application = Application.Instance;
+		public Application Application { get; } = Application.Instance;
 
 		public GlobalNotificationManager GlobalNotificationManager { get; private set; }
 
-		public InAppNotification Notification;
+		public InAppNotification Notification { get; private set; }
 
 
 		/// <summary>
@@ -55,6 +56,7 @@ namespace PrivateWiki.UWP
 			Application.Container.Register<IFilesystemService, FilesystemService>(Lifestyle.Singleton);
 			Application.Container.Register<IPageStorageBackendServiceImpl>(() => new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), Lifestyle.Singleton);
 			Application.Container.Register<IApplicationLauncherServiceImpl, ApplicationLauncherService>(Lifestyle.Singleton);
+			Application.Container.Register<IApplicationDataService, ApplicationDataService>(Lifestyle.Singleton);
 
 			Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 			NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;

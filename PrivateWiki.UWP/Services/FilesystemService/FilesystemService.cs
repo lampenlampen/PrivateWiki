@@ -6,12 +6,16 @@ using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 using PrivateWiki.DataModels;
 using PrivateWiki.Services.FilesystemService;
+using PrivateWiki.Services.KeyValueCaches;
+using File = PrivateWiki.DataModels.File;
+using Guard = Microsoft.Toolkit.Diagnostics.Guard;
 
 namespace PrivateWiki.UWP.Services.FilesystemService
 {
 	public class FilesystemService : IFilesystemService
 	{
-		private readonly Dictionary<string, string> TokenStorage = new Dictionary<string, string>();
+		private static readonly Dictionary<string, string> TokenStorage = new Dictionary<string, string>();
+		private readonly IPersistentKeyValueCache _cache;
 
 		public async Task WriteTextAsync(File file, string content)
 		{
@@ -52,6 +56,35 @@ namespace PrivateWiki.UWP.Services.FilesystemService
 
 			var storageFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
 			return storageFile;
+		}
+
+		private async Task<StorageFolder> ToNative(Folder folder)
+		{
+			var token = TokenStorage[folder.Path];
+
+			var storageFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync(token);
+			return storageFolder;
+		}
+		
+		public async Task<Folder> GetDataFolder()
+		{
+			throw new NotImplementedException();
+		}
+
+		public async Task<IEnumerable<Folder>> GetAllFolders(Folder root)
+		{
+			Guard.IsNotNull(root, nameof(root));
+			
+			var storageFolder = await ToNative(root).ConfigureAwait(false);
+
+			var storageFolders = await storageFolder.GetFoldersAsync();
+
+			foreach (var folder in storageFolders)
+			{
+				
+			}
+			
+			return new List<Folder>();
 		}
 	}
 }

@@ -45,7 +45,7 @@ namespace PrivateWiki
 			Container.Register<IFileExplorerService, FilesUWPService>();
 			//Container.Register<IKeyValueCache>(() => new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})), Lifestyle.Singleton);
 
-			Container.Collection.Register<IKeyValueCache>(new InMemoryCache(), new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = ""})));
+			Container.Collection.Register<IKeyValueCache>(new InMemoryCache(), new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})));
 		}
 
 		public async Task Initialize()
