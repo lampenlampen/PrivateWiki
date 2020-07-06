@@ -272,6 +272,7 @@
         <Compile Include="Settings\DeveloperSettingsModelHandler.cs" />
         <Compile Include="Settings\RenderingModelHandler.cs" />
         <Compile Include="Utilities\ExtensionFunctions\ColorExtension.cs" />
+        <Compile Include="Utilities\ExtensionFunctions\LinqExtensions.cs"/>
         <Compile Include="Utilities\FullyObservableCollection.cs" />
     </ItemGroup>
   <ItemGroup>

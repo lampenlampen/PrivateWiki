@@ -12,11 +12,11 @@ using Windows.Storage.FileProperties;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
-using ColorCode.Common;
 using JetBrains.Annotations;
 using PrivateWiki.DataModels;
 using PrivateWiki.UWP.Services.FilesystemService;
 using PrivateWiki.UWP.UI.Events;
+using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 using PrivateWiki.ViewModels.Settings;
 using ReactiveUI;
 using muxc = Microsoft.UI.Xaml.Controls;
@@ -178,7 +178,7 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 					files
 						.AsParallel()
 						.Select(x => new StorageFileWrapperForThumbnailProperty(x))
-						.ForAll(async x => { await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Files2.Add(x); }); });
+						.RunOnUIThread(x => Files2.Add(x));
 				}
 			).ConfigureAwait(true);
 
@@ -218,17 +218,14 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 		{
 			_file = file;
 
-			Init();
+			Task.Run(async () => await Init().ConfigureAwait(false));
 		}
 
-		private async void Init()
+		private async Task Init()
 		{
 			var thumbnail = await _file.GetThumbnailAsync(ThumbnailMode.ListView);
 
-			await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-			{
-				Thumbnail = thumbnail;
-			});
+			await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Thumbnail = thumbnail; });
 		}
 	}
 }

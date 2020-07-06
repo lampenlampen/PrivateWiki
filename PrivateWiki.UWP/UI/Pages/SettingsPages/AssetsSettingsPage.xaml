@@ -8,6 +8,7 @@
     xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:xamlConverter="using:PrivateWiki.UWP.UI.XamlConverter"
+    xmlns:settingsPages="using:PrivateWiki.UWP.UI.Pages.SettingsPages"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
