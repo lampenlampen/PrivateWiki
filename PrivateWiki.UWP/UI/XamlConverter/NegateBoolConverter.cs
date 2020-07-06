@@ -1,24 +1,18 @@
-﻿using System;
-using Windows.UI.Xaml;
+using System;
 using Windows.UI.Xaml.Data;
 
 namespace PrivateWiki.UWP.UI.XamlConverter
 {
-	class BoolVisibilityConverter : IValueConverter
+	public class NegateBoolConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
-			if (value is bool b && b)
-			{
-				return Visibility.Visible;
-			}
-
-			return Visibility.Collapsed;
+			return !(value is bool);
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, string language)
 		{
-			return (value is Visibility visibility && visibility == Visibility.Visible);
+			return !(value is bool);
 		}
 	}
 }

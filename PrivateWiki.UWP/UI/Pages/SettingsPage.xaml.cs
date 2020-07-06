@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Media.Animation;
 using PrivateWiki.UWP.UI.Pages.SettingsPages;
 using PrivateWiki.UWP.UI.Pages.SettingsPagesOld;
 using muxc = Microsoft.UI.Xaml.Controls;
+using PagesSettingsPage = PrivateWiki.UWP.UI.Pages.SettingsPages.PagesSettingsPage;
 
 #nullable enable
 

@@ -44,7 +44,7 @@ namespace PrivateWiki.Services.DefaultPagesService
 
 			var instant = _clock.GetCurrentInstant();
 
-			var startPage = new GenericPage(Path.ofLink("system:syntax"), content, ContentType.Markdown, instant, instant, false);
+			var startPage = new GenericPage(Path.ofLink("system:syntax"), content, ContentType.Markdown, instant, instant, true);
 
 			await _backend.InsertPageAsync(startPage);
 
@@ -59,7 +59,7 @@ namespace PrivateWiki.Services.DefaultPagesService
 
 			var instant = _clock.GetCurrentInstant();
 
-			var startPage = new GenericPage(Path.ofLink("system:markdowntest"), content, ContentType.Markdown, instant, instant, false);
+			var startPage = new GenericPage(Path.ofLink("system:markdowntest"), content, ContentType.Markdown, instant, instant, true);
 
 			await _backend.InsertPageAsync(startPage);
 
@@ -74,7 +74,7 @@ namespace PrivateWiki.Services.DefaultPagesService
 
 			var instant = _clock.GetCurrentInstant();
 
-			var startPage = new GenericPage(Path.ofLink("system:htmltest"), content, ContentType.Markdown, instant, instant, false);
+			var startPage = new GenericPage(Path.ofLink("system:htmltest"), content, ContentType.Html, instant, instant, true);
 
 			await _backend.InsertPageAsync(startPage);
 
@@ -89,7 +89,7 @@ namespace PrivateWiki.Services.DefaultPagesService
 
 			var instant = _clock.GetCurrentInstant();
 
-			var startPage = new GenericPage(Path.ofLink("system:texttest"), content, ContentType.Markdown, instant, instant, false);
+			var startPage = new GenericPage(Path.ofLink("system:texttest"), content, ContentType.Text, instant, instant, true);
 
 			await _backend.InsertPageAsync(startPage);
 
