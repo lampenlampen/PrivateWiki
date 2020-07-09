@@ -80,7 +80,7 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 					.DisposeWith(disposable);
 
 				OpenInExplorerText.Events().Click
-					.Select(_ => Unit.Default)
+					.Select(_ => ViewModel.Root)
 					.InvokeCommand(ViewModel, x => x.OpenFolderInFileExplorer)
 					.DisposeWith(disposable);
 
@@ -183,6 +183,11 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 			).ConfigureAwait(true);
 
 			return Unit.Default;
+		}
+
+		private void OpenInExplorerClick(object sender, RoutedEventArgs e)
+		{
+			ViewModel.OpenFolderInFileExplorer.Execute().Subscribe();
 		}
 	}
 

@@ -33,6 +33,9 @@
                 <Grid.ContextFlyout>
                     <MenuFlyout>
                         <MenuFlyoutItem
+                            Text="Open in Explorer"
+                            Click="OpenInExplorerClick"/>
+                        <MenuFlyoutItem
                             Text="Create Folder"
                             Icon="Add" />
                         <MenuFlyoutItem

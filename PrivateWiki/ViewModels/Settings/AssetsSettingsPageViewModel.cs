@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Reactive;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace PrivateWiki.ViewModels.Settings
 			set => this.RaiseAndSetIfChanged(ref _selectedFolder, value);
 		}
 
-		public ReactiveCommand<Unit, Unit> OpenFolderInFileExplorer { get; }
+		public ReactiveCommand<Folder?, Unit> OpenFolderInFileExplorer { get; }
 
 		public ReactiveCommand<Unit, Unit> LoadDataFolder { get; }
 
@@ -41,15 +42,22 @@ namespace PrivateWiki.ViewModels.Settings
 			_fileExplorerService = Application.Instance.Container.GetInstance<IFileExplorerService>();
 			_applicationData = Application.Instance.Container.GetInstance<IApplicationDataService>();
 
-			OpenFolderInFileExplorer = ReactiveCommand.CreateFromTask(OpenFolderInFileExplorerAsync);
+			OpenFolderInFileExplorer = ReactiveCommand.CreateFromTask<Folder?>(OpenFolderInFileExplorerAsync);
 			LoadDataFolder = ReactiveCommand.CreateFromTask(LoadTreeViewAsync);
 		}
 
-		private async Task OpenFolderInFileExplorerAsync()
+		private async Task OpenFolderInFileExplorerAsync(Folder? folder)
 		{
-			var folder = Root;
+			if (SelectedFolder == null)
+			{
+				await _fileExplorerService.ShowFolderAsync(_root);
+			}
+			else
+			{
+				await _fileExplorerService.ShowFolderAsync(SelectedFolder);
+			}
 
-			if (folder != null) await _fileExplorerService.ShowFolderAsync(folder);
+			//await _fileExplorerService.ShowFolderAsync(SelectedFolder);
 		}
 
 		private async Task LoadTreeViewAsync()
