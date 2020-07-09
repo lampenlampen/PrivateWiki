@@ -62,7 +62,11 @@
 
             <AppBarButton x:Name="SettingsBtn" x:Uid="/PageViewer/SettingsButton" Icon="Setting" />
 
-            <AppBarButton x:Name="NewPageBtn" Label="New Page" Icon="Add"/>
+            <AppBarButton x:Name="NewPageBtn" Label="New Page" Icon="Add">
+                <AppBarButton.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="N"/>
+                </AppBarButton.KeyboardAccelerators>
+            </AppBarButton>
 
             <AppBarButton x:Name="DevOptBtn" Label="Developer Settings">
                 <AppBarButton.Icon>
