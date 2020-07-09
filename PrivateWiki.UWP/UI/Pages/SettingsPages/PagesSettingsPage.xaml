@@ -38,18 +38,25 @@
             AutoGenerateColumns="False"
             SelectionMode="Single"
             IsReadOnly="True"
-            GridLinesVisibility="Horizontal"
-            FocusVisualPrimaryThickness="0">
+            GridLinesVisibility="Horizontal">
 
             <controls1:DataGrid.ContextFlyout>
                 <MenuFlyout>
                     <MenuFlyoutItem
                         x:Name="DeletePage"
-                        Visibility="{x:Bind _selectedPage.IsLocked, Converter={StaticResource NegateBoolToVisibilityConverter}, Mode=OneWay}"
                         Text="Delete"
                         Icon="Delete" />
                 </MenuFlyout>
             </controls1:DataGrid.ContextFlyout>
+            
+            <controls1:DataGrid.CellStyle>
+                <Style TargetType="controls1:DataGridCell">
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="AllowFocusOnInteraction" Value="False" />
+                    <Setter Property="FocusVisualPrimaryThickness" Value="0" />
+                    <Setter Property="FocusVisualSecondaryThickness" Value="0" />
+                </Style>
+            </controls1:DataGrid.CellStyle>
 
             <controls1:DataGrid.Columns>
                 <controls1:DataGridTextColumn

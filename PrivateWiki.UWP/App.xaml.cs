@@ -86,7 +86,7 @@ namespace PrivateWiki.UWP
 
 			await Application.Initialize();
 
-			Grid rootGrid = Window.Current.Content as Grid;
+			Grid? rootGrid = Window.Current.Content as Grid;
 			Frame rootFrame = rootGrid?.Children.Where((c) => c is Frame).Cast<Frame>().FirstOrDefault();
 
 			if (rootGrid == null)

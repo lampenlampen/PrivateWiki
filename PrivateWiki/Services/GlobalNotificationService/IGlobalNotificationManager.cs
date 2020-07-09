@@ -1,4 +1,4 @@
-namespace PrivateWiki
+namespace PrivateWiki.Services.GlobalNotificationService
 {
 	public interface IGlobalNotificationManager
 	{

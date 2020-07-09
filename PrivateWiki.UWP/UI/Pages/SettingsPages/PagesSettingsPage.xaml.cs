@@ -57,7 +57,7 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 					.Subscribe(_ =>
 					{
 						var selectedPage = (GenericPage) PagesTable.SelectedItem;
-						_selectedPage = selectedPage;
+						GenericPage selectedPage1 = selectedPage;
 					})
 					.DisposeWith(disposable);
 
@@ -67,17 +67,26 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 						var a = x;
 						var b = a.OriginalSource;
 
-						var c = FindParent<DataGridRow>(b as DependencyObject);
-						var index = c.GetIndex();
-						PagesTable.SelectedIndex = index;
+						DataGridRow? c = FindParent<DataGridRow>((DependencyObject) b);
+
+						// ReSharper disable once ConditionIsAlwaysTrueOrFalse
+						if (c != null)
+						{
+							var index = c.GetIndex();
+							PagesTable.SelectedIndex = index;
+
+							x.Handled = true;
+						}
+						else
+						{
+							PagesTable.SelectedIndex = -1;
+							x.Handled = false;
+						}
 					})
 					.DisposeWith(disposable);
 
 				DeletePage.Events().Click
-					.Subscribe(x =>
-					{
-						var page = (GenericPage) PagesTable.SelectedItem;
-					})
+					.Subscribe(x => { App.Current.GlobalNotificationManager.ShowNotImplementedNotification(); })
 					.DisposeWith(disposable);
 			});
 		}

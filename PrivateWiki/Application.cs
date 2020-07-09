@@ -6,6 +6,7 @@ using PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService;
 using PrivateWiki.Services.DebugModeService;
 using PrivateWiki.Services.DefaultPagesService;
 using PrivateWiki.Services.FileExplorerService;
+using PrivateWiki.Services.GlobalNotificationService;
 using PrivateWiki.Services.KeyValueCaches;
 using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.PackageService;
@@ -25,7 +26,7 @@ namespace PrivateWiki
 
 		public Container Container { get; }
 
-		public Application()
+		private Application()
 		{
 			Container = new Container();
 
