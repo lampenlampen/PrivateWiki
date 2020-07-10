@@ -1,10 +1,12 @@
 ﻿using System;
-using Windows.Storage;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Windows.Storage.Pickers;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using PrivateWiki.UWP.Models;
-using PrivateWiki.UWP.Settings;
+using Windows.UI.Xaml.Controls.Primitives;
+using PrivateWiki.DataModels;
+using PrivateWiki.ViewModels.Settings;
+using ReactiveUI;
 
 #nullable enable
 
@@ -12,87 +14,52 @@ using PrivateWiki.UWP.Settings;
 
 namespace PrivateWiki.UWP.UI.Controls.Settings.Sync
 {
-	public sealed partial class LFSControl : UserControl
+	public class LFSControlBase : ReactiveUserControl<LFSBackupSyncTargetViewModel>
 	{
-		private LFSModel Model { get; set; }
+	}
 
+	public sealed partial class LFSControl : LFSControlBase
+	{
 		public LFSControl()
 		{
 			this.InitializeComponent();
+
+			this.WhenActivated(disposable =>
+			{
+				PickTargetFolderBtn.Events().Click
+					.SelectMany(async x => await PickTargetFolderAsync())
+					.WhereNotNull()
+					.Select(x => x.Path)
+					.ObserveOnDispatcher()
+					.BindTo(ViewModel, vm => vm.TargetPath)
+					.DisposeWith(disposable);
+
+				this.OneWayBind(ViewModel,
+						vm => vm.TargetPath,
+						view => view.TargetPath.Text)
+					.DisposeWith(disposable);
+			});
 		}
 
-		public void Init(LFSModel model)
+		private async Task<Folder?> PickTargetFolderAsync()
 		{
-			Model = model;
-			Bindings.Update();
-		}
+			var picker = new FolderPicker
+			{
+				ViewMode = PickerViewMode.List,
+				SuggestedStartLocation = PickerLocationId.DocumentsLibrary
+			};
 
-		private async void SelectSyncTarget(object sender, RoutedEventArgs e)
-		{
-			var picker = new FolderPicker();
-			picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
 			picker.FileTypeFilter.Add("*");
 
+			var result = await picker.PickSingleFolderAsync();
 
-			StorageFolder? folder = await picker.PickSingleFolderAsync();
-
-			if (folder != null)
+			if (result != null)
 			{
-				var token = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(folder);
-				Model.TargetToken = token;
-				Model.TargetPath = folder.Path;
-				//TargetPath.Text = Model.TargetPath;
+				var folder = new Folder(result.Path, result.Name);
+				return folder;
 			}
-		}
 
-		private void SyncFrequencyChecked(object sender, RoutedEventArgs e)
-		{
-			var radiobutton = (RadioButton) sender;
-
-			Model.SyncFrequency = radiobutton.Content switch
-			{
-				"Never" => SyncFrequency.Never,
-				"Hourly" => SyncFrequency.Hourly,
-				"Daily" => SyncFrequency.Daily,
-				"Weekly" => SyncFrequency.Weekly,
-				_ => Model.SyncFrequency
-			};
-		}
-
-		private async void DoLightSync(object sender, RoutedEventArgs e)
-		{
-			// TODO Light Sync
-			await new LFSSyncActions().ExportTask2(Model);
-
-			App.Current.GlobalNotificationManager.ShowOperationFinishedNotification();
-		}
-
-		private async void ImportData(object sender, RoutedEventArgs e)
-		{
-			throw new NotImplementedException("ImportData");
-
-			/*
-			var deserializer = new MarkdownDocToMarkdownPageDeserializer();
-
-			var folder = StorageApplicationPermissions.FutureAccessList.GetFolderAsync(Model.TargetToken);
-
-			var files = (await folder).GetFilesAsync(CommonFileQuery.DefaultQuery);
-			
-			foreach (var file in await files)
-			{
-				var content = await FileIO.ReadTextAsync(file);
-
-				var contentRenderer = new ContentRenderer();
-				var doc = contentRenderer.RenderContentAsync(content, ContentType.Markdown);
-				var yamlBlock = doc.Descendants<YamlFrontMatterBlock>().FirstOrDefault();
-
-				if (yamlBlock != null)
-				{
-					var yaml = content.Substring(yamlBlock.Span.Start, yamlBlock.Span.Length);
-					var a = deserializer.Deserialize(new StringReader(yaml));
-				}
-			}
-			*/
+			return null;
 		}
 	}
 }

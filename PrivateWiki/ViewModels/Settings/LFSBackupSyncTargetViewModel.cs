@@ -1,0 +1,80 @@
+using System;
+using ReactiveUI;
+
+namespace PrivateWiki.ViewModels.Settings
+{
+	public interface IBackupSyncTargetViewModel
+	{
+		public Guid Id { get; }
+
+		public string Name { get; }
+
+		public string TargetPath { get; }
+
+		public string FontGlyph { get; }
+
+		public bool IsEnabled { get; }
+
+		public BackupSyncTargetType Type { get; }
+	}
+
+	public class LFSBackupSyncTargetViewModel : ReactiveObject, IBackupSyncTargetViewModel
+	{
+		public BackupSyncTargetType Type { get; } = BackupSyncTargetType.LocalFileStorage;
+
+		private Guid _id;
+
+		public Guid Id
+		{
+			get => _id;
+			set => this.RaiseAndSetIfChanged(ref _id, value);
+		}
+
+		private string _name;
+
+		public string Name
+		{
+			get => _name;
+			set => this.RaiseAndSetIfChanged(ref _name, value);
+		}
+
+		public string FontGlyph { get; } = "\uE1DF";
+
+		private string _description;
+
+		public string Description
+		{
+			get => _description;
+			set => this.RaiseAndSetIfChanged(ref _description, value);
+		}
+
+		private string _targetPath;
+
+		public string TargetPath
+		{
+			get => _targetPath;
+			set => this.RaiseAndSetIfChanged(ref _targetPath, value);
+		}
+
+		private bool _isAssetsSyncEnabled;
+
+		public bool IsAssetsSyncEnabled
+		{
+			get => _isAssetsSyncEnabled;
+			set => this.RaiseAndSetIfChanged(ref _isAssetsSyncEnabled, value);
+		}
+
+		private bool _isEnabled;
+
+		public bool IsEnabled
+		{
+			get => _isEnabled;
+			set => this.RaiseAndSetIfChanged(ref _isEnabled, value);
+		}
+
+		public LFSBackupSyncTargetViewModel()
+		{
+			Id = Guid.NewGuid();
+		}
+	}
+}

@@ -31,7 +31,7 @@ namespace PrivateWiki.UWP.UI.Pages
 			("rendering", typeof(RenderingSettingsPage)),
 			("storage", typeof(StorageSettingsPage)),
 			("developertools", typeof(DeveloperSettingsPage)),
-			("sync", typeof(SyncSettingsPage))
+			("sync", typeof(BackupSyncSettingsPage))
 		};
 
 		public SettingsPage()

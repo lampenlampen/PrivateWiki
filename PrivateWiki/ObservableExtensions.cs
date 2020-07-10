@@ -5,6 +5,9 @@ namespace PrivateWiki
 {
 	public static class ObservableExtensions
 	{
-		public static IObservable<T> WhereNotNull<T>(this IObservable<T> source) => source.Where(x => x != null);
+		public static IObservable<T> WhereNotNull<T>(this IObservable<T?> source) where T : class
+		{
+			return source.Where(x => x != null)!;
+		}
 	}
 }

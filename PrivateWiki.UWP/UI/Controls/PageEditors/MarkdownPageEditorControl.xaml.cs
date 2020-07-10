@@ -15,7 +15,7 @@ namespace PrivateWiki.UWP.UI.Controls.PageEditors
 	{
 	}
 
-	public class MarkdownPageEditorControlBase : PageEditorControlBase<MarkdownPageEditorControlViewModel>
+	public abstract class MarkdownPageEditorControlBase : PageEditorControlBase<MarkdownPageEditorControlViewModel>
 	{
 	}
 

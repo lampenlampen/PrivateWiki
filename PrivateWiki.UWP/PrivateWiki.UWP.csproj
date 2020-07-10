@@ -246,11 +246,11 @@
     <Compile Include="UI\Pages\SettingsPagesOld\StorageSettingsPage.xaml.cs">
       <DependentUpon>StorageSettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pages\SettingsPagesOld\SyncSettingsPage.xaml.cs">
-      <DependentUpon>SyncSettingsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\Pages\SettingsPages\AssetsSettingsPage.xaml.cs">
       <DependentUpon>AssetsSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\SettingsPages\BackupSyncSettingsPage.xaml.cs">
+      <DependentUpon>BackupSyncSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Pages\SettingsPages\PagesSettingsPage.xaml.cs">
       <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
@@ -480,10 +480,11 @@
     <Page Include="UI\Pages\SettingsPagesOld\StorageSettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Pages\SettingsPagesOld\SyncSettingsPage.xaml">
+    <Page Include="UI\Pages\SettingsPages\AssetsSettingsPage.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Pages\SettingsPages\AssetsSettingsPage.xaml">
+    <Page Include="UI\Pages\SettingsPages\BackupSyncSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
