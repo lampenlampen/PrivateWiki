@@ -66,8 +66,8 @@ namespace PrivateWiki.ViewModels
 		private readonly ISubject<Path> _onNavigateToExistingPage;
 		public IObservable<Path> OnNavigateToExistingPage => _onNavigateToExistingPage;
 
-		private readonly ISubject<Path> _onNavigateToNewPage;
-		public IObservable<Path> OnNavigateToNewPage => _onNavigateToNewPage;
+		private readonly ISubject<Path?> _onNavigateToNewPage;
+		public IObservable<Path?> OnNavigateToNewPage => _onNavigateToNewPage;
 
 		private readonly ISubject<Path> _onEditPage;
 		public IObservable<Path> OnEditPage => _onEditPage;
@@ -137,6 +137,9 @@ namespace PrivateWiki.ViewModels
 					break;
 				case KeyboardShortcut.PrintPdfPage:
 					await PrintPage.Execute();
+					break;
+				case KeyboardShortcut.NewPage:
+					_onNavigateToNewPage.OnNext(null);
 					break;
 				default:
 					throw new ArgumentOutOfRangeException(nameof(key), key, null);
