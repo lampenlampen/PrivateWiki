@@ -13,6 +13,15 @@
 
     <UserControl.Resources>
         <xamlConverter:SyncFrequencyToRadioButtonConverter x:Key="SyncFrequencyToRadioButtonConverter" />
+
+        <Style x:Key="SettingsGroupStyle" TargetType="Grid">
+            <Setter Property="Margin" Value="0, 0, 0, 20" />
+        </Style>
+
+        <Style x:Key="SettingsGroupHeaderStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0, 0, 0, 6" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
     </UserControl.Resources>
 
     <Grid Padding="16">
@@ -21,34 +30,33 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <RelativePanel Grid.Row="0" Margin="0,0,0,12">
+        <RelativePanel Grid.Row="0" Margin="0,0,0,20">
             <TextBlock
                 RelativePanel.AlignLeftWithPanel="True"
-                FontSize="18" 
+                FontSize="18"
                 Text="Local File System" />
-            
+
             <ToggleSwitch
                 RelativePanel.AlignRightWithPanel="True"
                 OnContent="Enabled"
                 OffContent="Disabled"
-                IsOn="{x:Bind ViewModel.IsEnabled, Mode=TwoWay}"
-                />
+                IsOn="{x:Bind ViewModel.IsEnabled, Mode=TwoWay}" />
         </RelativePanel>
 
-        <StackPanel x:Name="stackpanel" Grid.Row="1" Padding="0">
+        <StackPanel x:Name="stackpanel" Grid.Row="1">
 
-
-            <Grid>
+            <Grid Style="{ThemeResource SettingsGroupStyle}">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
                 <TextBlock
                     Grid.Row="0"
-                    Text="Target Configuration" Style="{ThemeResource BaseTextBlockStyle}" />
+                    Text="Target Configuration"
+                    Style="{ThemeResource SettingsGroupHeaderStyle}" />
 
-                <Grid Grid.Row="1" Margin="0,4,0,12" Padding="8,0,0,0" BorderThickness="1" BorderBrush="Gray">
+                <Grid Grid.Row="1" Padding="8,0,0,0" BorderThickness="1" BorderBrush="Gray">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -67,52 +75,84 @@
 
                 </Grid>
             </Grid>
-            
 
-            <Grid>
+            <Grid Style="{ThemeResource SettingsGroupStyle}">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
+
                 <TextBlock
                     Grid.Row="0"
-                    Text="Sync Frequency" Style="{ThemeResource BaseTextBlockStyle}" />
+                    Text="Sync Frequency"
+                    Style="{ThemeResource SettingsGroupHeaderStyle}" />
 
                 <StackPanel Grid.Row="1">
-                    <RadioButton Content="Never" />
-                    <RadioButton IsEnabled="False" Content="Hourly" />
-                    <RadioButton IsEnabled="False" Content="Daily" />
-                    <RadioButton IsEnabled="False" Content="Weekly" />
+                    <RadioButton Content="Never" IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Never}" />
+                    <RadioButton IsEnabled="False" Content="Hourly" IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Hourly}" />
+                    <RadioButton IsEnabled="False" Content="Daily" IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Daily}" />
+                    <RadioButton IsEnabled="False" Content="Weekly" IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Weekly}" />
                 </StackPanel>
             </Grid>
 
-            
+            <Grid Style="{ThemeResource SettingsGroupStyle}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-            <TextBlock
-                Text="Actions" Style="{ThemeResource BaseTextBlockStyle}" />
+                <TextBlock
+                    Grid.Row="0"
+                    Text="Sync Options" Style="{ThemeResource SettingsGroupHeaderStyle}" />
 
-            <GridView IsItemClickEnabled="False" SelectionMode="None">
+                <ToggleSwitch
+                    Grid.Row="1"
+                    OnContent="Asset files are synced"
+                    OffContent="Asset files are not synced"
+                    IsOn="{x:Bind ViewModel.IsAssetsSyncEnabled, Mode=TwoWay}" />
 
-                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <StackPanel>
-                        <TextBlock Text="Export" Style="{ThemeResource BaseTextBlockStyle}" />
-                        <TextBlock
-                            Text="Sync all missing content to target. No existing content is overwritten."
-                            TextWrapping="WrapWholeWords" />
-                    </StackPanel>
-                </Button>
+            </Grid>
 
-                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <StackPanel>
-                        <TextBlock Text="Import" Style="{ThemeResource BaseTextBlockStyle}" />
-                        <TextBlock
-                            Text="Sync all content to target. Existing content will be overwritten!"
-                            TextWrapping="Wrap" />
-                    </StackPanel>
-                </Button>
+            <Grid Style="{ThemeResource SettingsGroupStyle}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-            </GridView>
+                <TextBlock
+                    Grid.Row="0"
+                    Text="Actions"
+                    Style="{ThemeResource SettingsGroupHeaderStyle}" />
 
+                <GridView
+                    Grid.Row="1"
+                    IsItemClickEnabled="False"
+                    SelectionMode="None">
+
+                    <Button
+                        x:Name="ExportContentBtn"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
+                        <StackPanel>
+                            <TextBlock Text="Export" Style="{ThemeResource BaseTextBlockStyle}" />
+                            <TextBlock
+                                Text="Export content."
+                                TextWrapping="WrapWholeWords" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button
+                        x:Name="CreateBackupBtn"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <StackPanel>
+                            <TextBlock Text="Import" Style="{ThemeResource BaseTextBlockStyle}" />
+                            <TextBlock
+                                Text="Create backup"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Button>
+                </GridView>
+            </Grid>
         </StackPanel>
     </Grid>
 </sync:LFSControlBase>

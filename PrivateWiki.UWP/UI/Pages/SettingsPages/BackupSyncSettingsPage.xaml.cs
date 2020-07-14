@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Windows.UI.Xaml;
@@ -58,6 +59,13 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 
 				ViewModel.OnDisplayBackupSyncTarget
 					.Subscribe(DisplayBackupSyncTarget)
+					.DisposeWith(disposable);
+
+				Observable.FromEventPattern<RoutedEventHandler, RoutedEventArgs>(
+						handler => Header.ApplyClick += handler,
+						handler => Header.ApplyClick -= handler)
+					.Select(_ => Unit.Default)
+					.InvokeCommand(ViewModel, x => x.SaveConfigurations)
 					.DisposeWith(disposable);
 			});
 		}

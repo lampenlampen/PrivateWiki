@@ -8,6 +8,7 @@ using PrivateWiki.Services.DefaultPagesService;
 using PrivateWiki.Services.FileExplorerService;
 using PrivateWiki.Services.GlobalNotificationService;
 using PrivateWiki.Services.KeyValueCaches;
+using PrivateWiki.Services.LFSBackupService;
 using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.PackageService;
 using PrivateWiki.Services.SqliteStorage;
@@ -44,9 +45,7 @@ namespace PrivateWiki
 			Container.Register<IInMemoryKeyValueCache, InMemoryCache>(Lifestyle.Singleton);
 			Container.Register<IPersistentKeyValueCache>(() => new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})), Lifestyle.Singleton);
 			Container.Register<IFileExplorerService, FilesUWPService>();
-			//Container.Register<IKeyValueCache>(() => new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})), Lifestyle.Singleton);
-
-			Container.Collection.Register<IKeyValueCache>(new InMemoryCache(), new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})));
+			Container.Register<ILFSBackupService, LFSBackupService>(Lifestyle.Transient);
 		}
 
 		public async Task Initialize()

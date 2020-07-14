@@ -9,6 +9,7 @@ namespace PrivateWiki.Services.AppSettingsService
 
 		public IMarkdownRenderingSettingsService MarkdownRenderingSettings => _container.GetInstance<IMarkdownRenderingSettingsService>();
 
+
 		public AppSettings(Container container)
 		{
 			_container = container;

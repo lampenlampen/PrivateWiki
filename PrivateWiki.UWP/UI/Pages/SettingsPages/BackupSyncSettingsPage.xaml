@@ -21,6 +21,7 @@
         </Grid.RowDefinitions>
 
         <controls:SettingsHeader
+            x:Name="Header"
             Grid.Row="0"
             Title="Backup &amp; Sync"
             Subtitle="Set backup and sync targets for your content">

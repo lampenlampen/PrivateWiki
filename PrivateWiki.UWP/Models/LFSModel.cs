@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
+using PrivateWiki.DataModels;
 
 namespace PrivateWiki.UWP.Models
 {
@@ -61,13 +62,5 @@ namespace PrivateWiki.UWP.Models
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
-	}
-
-	public enum SyncFrequency
-	{
-		Never,
-		Hourly,
-		Daily,
-		Weekly
 	}
 }

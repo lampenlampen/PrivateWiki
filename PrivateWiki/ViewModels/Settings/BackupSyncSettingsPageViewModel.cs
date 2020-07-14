@@ -9,7 +9,7 @@ namespace PrivateWiki.ViewModels.Settings
 {
 	public class BackupSyncSettingsPageViewModel : ReactiveObject
 	{
-		private IBackupSyncTargetViewModel _backupSyncTargetViewModel;
+		private IBackupSyncTargetViewModel? _backupSyncTargetViewModel;
 
 		public readonly ObservableCollection<IBackupSyncTargetViewModel> Targets = new ObservableCollection<IBackupSyncTargetViewModel>();
 
@@ -19,14 +19,17 @@ namespace PrivateWiki.ViewModels.Settings
 
 		public readonly ReactiveCommand<IBackupSyncTargetViewModel, Unit> SelectionChanged;
 
+		public readonly ReactiveCommand<Unit, Unit> SaveConfigurations;
+
 		private readonly ISubject<IBackupSyncTargetViewModel> _onDisplayBackupSyncTarget;
-		public ISubject<IBackupSyncTargetViewModel> OnDisplayBackupSyncTarget => _onDisplayBackupSyncTarget;
+		public IObservable<IBackupSyncTargetViewModel> OnDisplayBackupSyncTarget => _onDisplayBackupSyncTarget;
 
 		public BackupSyncSettingsPageViewModel()
 		{
 			AddTarget = ReactiveCommand.CreateFromTask<BackupSyncTargetType>(AddTargetAsync);
 			RemoveTarget = ReactiveCommand.CreateFromTask<Guid>(RemoveTargetAsync);
 			SelectionChanged = ReactiveCommand.CreateFromTask<IBackupSyncTargetViewModel>(SelectionChangedAsync);
+			SaveConfigurations = ReactiveCommand.CreateFromTask(SaveTargetConfigurationsAsync);
 
 			_onDisplayBackupSyncTarget = new Subject<IBackupSyncTargetViewModel>();
 		}
@@ -57,6 +60,14 @@ namespace PrivateWiki.ViewModels.Settings
 					break;
 				default:
 					throw new ArgumentOutOfRangeException();
+			}
+		}
+
+		private async Task SaveTargetConfigurationsAsync()
+		{
+			foreach (var target in Targets)
+			{
+				target.SaveConfiguration.Execute().Subscribe();
 			}
 		}
 	}

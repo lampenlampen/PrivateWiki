@@ -1,6 +1,6 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
-using PrivateWiki.UWP.Models;
+using PrivateWiki.DataModels;
 
 namespace PrivateWiki.UWP.UI.XamlConverter
 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -37,6 +38,26 @@ namespace PrivateWiki.UWP.UI.Controls.Settings.Sync
 				this.OneWayBind(ViewModel,
 						vm => vm.TargetPath,
 						view => view.TargetPath.Text)
+					.DisposeWith(disposable);
+
+				// Disable actions when target not enabled
+				this.OneWayBind(ViewModel,
+						vm => vm.IsEnabled,
+						view => view.CreateBackupBtn.IsEnabled)
+					.DisposeWith(disposable);
+				this.OneWayBind(ViewModel,
+						vm => vm.IsEnabled,
+						view => view.ExportContentBtn.IsEnabled)
+					.DisposeWith(disposable);
+
+				// Actions
+				CreateBackupBtn.Events().Click
+					.Select(_ => Unit.Default)
+					.InvokeCommand(ViewModel, vm => vm.CreateBackup)
+					.DisposeWith(disposable);
+				ExportContentBtn.Events().Click
+					.Select(_ => Unit.Default)
+					.InvokeCommand(ViewModel, vm => vm.ExportContent)
 					.DisposeWith(disposable);
 			});
 		}

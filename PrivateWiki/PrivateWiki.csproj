@@ -65,8 +65,4 @@
         <Compile Remove="DataModels\RecentlyVisitedPagesManager.cs"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="DataModels\Settings"/>
-    </ItemGroup>
-
 </Project>

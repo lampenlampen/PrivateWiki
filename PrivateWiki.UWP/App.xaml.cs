@@ -53,7 +53,7 @@ namespace PrivateWiki.UWP
 			InitializeComponent();
 			Suspending += OnSuspending;
 
-			Application.Container.Register<IFilesystemService, FilesystemService>(Lifestyle.Singleton);
+			Application.Container.Register<IFilesystemService, UWPFullTrustFilesystemService>(Lifestyle.Singleton);
 			Application.Container.Register<IPageStorageBackendServiceImpl>(() => new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), Lifestyle.Singleton);
 			Application.Container.Register<IApplicationLauncherServiceImpl, ApplicationLauncherService>(Lifestyle.Singleton);
 			Application.Container.Register<IApplicationDataService, ApplicationDataService>(Lifestyle.Singleton);
@@ -62,6 +62,11 @@ namespace PrivateWiki.UWP
 			NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
 
 			RegisterUncaughtExceptionLogger();
+
+			if (Window.Current.Content is FrameworkElement a)
+			{
+				a.RequestedTheme = ElementTheme.Dark;
+			}
 		}
 
 		private void RegisterUncaughtExceptionLogger()
@@ -112,6 +117,7 @@ namespace PrivateWiki.UWP
 				if (rootFrame.Content == null) ShowPage(rootFrame);
 
 				// Sicherstellen, dass das aktuelle Fenster aktiv ist
+
 				Window.Current.Activate();
 			}
 		}
@@ -160,6 +166,14 @@ namespace PrivateWiki.UWP
 			var deferral = e.SuspendingOperation.GetDeferral();
 			//TODO: Anwendungszustand speichern und alle Hintergrundaktivitäten beenden
 			deferral.Complete();
+		}
+
+		private void ChangeTheme()
+		{
+			if (Window.Current.Content is FrameworkElement a)
+			{
+				a.RequestedTheme = ElementTheme.Dark;
+			}
 		}
 	}
 }

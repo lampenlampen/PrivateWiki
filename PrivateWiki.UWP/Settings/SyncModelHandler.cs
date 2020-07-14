@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PrivateWiki.DataModels;
 using PrivateWiki.UWP.Models;
 
 namespace PrivateWiki.UWP.Settings
