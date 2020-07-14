@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentResults;
 using PrivateWiki.DataModels;
 
 namespace PrivateWiki.Services.FilesystemService
@@ -16,9 +17,15 @@ namespace PrivateWiki.Services.FilesystemService
 
 		Task<IEnumerable<Folder>> GetAllFolders(Folder folder);
 
-		Task<Folder> CreateFolder(Folder folder, string folderName);
+		Task<Result<Folder>> CreateFolder(Folder folder, string folderName);
 
-		Task<File> CreateFile(Folder folder, string fileName);
+		/// <summary>
+		/// Creates a new file in the given folder.
+		/// </summary>
+		/// <param name="folder"></param>
+		/// <param name="fileName"></param>
+		/// <returns></returns>
+		Task<Result<File>> CreateFile(Folder folder, string fileName);
 
 		Task<Folder> Copy(Folder source, Folder target);
 
