@@ -13,11 +13,9 @@ namespace PrivateWiki.Services.FilesystemService
 
 		Task<string> ReadTextAsync(File file);
 
-		Task<Folder> GetDataFolder();
+		Task<Result<IEnumerable<Folder>>> GetAllFoldersAsync(Folder folder);
 
-		Task<IEnumerable<Folder>> GetAllFolders(Folder folder);
-
-		Task<Result<Folder>> CreateFolder(Folder folder, string folderName);
+		Task<Result<Folder>> CreateFolderAsync(Folder folder, string folderName);
 
 		/// <summary>
 		/// Creates a new file in the given folder.
@@ -25,10 +23,10 @@ namespace PrivateWiki.Services.FilesystemService
 		/// <param name="folder"></param>
 		/// <param name="fileName"></param>
 		/// <returns></returns>
-		Task<Result<File>> CreateFile(Folder folder, string fileName);
+		Task<Result<File>> CreateFileAsync(Folder folder, string fileName);
 
-		Task<Folder> Copy(Folder source, Folder target);
+		Task<Result<Folder>> CopyAsync(Folder source, Folder target);
 
-		Task<File> Copy(File source, Folder target);
+		Task<Result<File>> CopyAsync(File source, Folder target);
 	}
 }
