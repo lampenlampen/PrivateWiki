@@ -1,6 +1,6 @@
 using FluentResults;
 
-namespace PrivateWiki
+namespace PrivateWiki.DataModels.Errors
 {
 	public class FileNotFoundError : Error
 	{

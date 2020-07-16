@@ -6,6 +6,7 @@ using Windows.Storage;
 using FluentResults;
 using Microsoft.Toolkit.Diagnostics;
 using PrivateWiki.DataModels;
+using PrivateWiki.DataModels.Errors;
 using PrivateWiki.Services.ApplicationDataService;
 using File = PrivateWiki.DataModels.File;
 

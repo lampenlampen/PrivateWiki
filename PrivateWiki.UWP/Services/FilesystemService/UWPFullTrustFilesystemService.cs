@@ -9,6 +9,7 @@ using ColorCode.Common;
 using FluentResults;
 using NLog;
 using PrivateWiki.DataModels;
+using PrivateWiki.DataModels.Errors;
 using PrivateWiki.Services.FilesystemService;
 using File = PrivateWiki.DataModels.File;
 

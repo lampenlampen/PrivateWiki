@@ -1,5 +1,6 @@
 using System.IO;
 using FluentResults;
+using PrivateWiki.DataModels.Errors;
 using Xunit;
 using Xunit.Abstractions;
 
