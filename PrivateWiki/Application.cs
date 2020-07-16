@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using FluentResults;
 using NodaTime;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.AppSettingsService;
@@ -32,7 +33,10 @@ namespace PrivateWiki
 		{
 			Container = new Container();
 
-			AppSettings = new Services.AppSettingsService.AppSettings(Container);
+			AppSettings = new AppSettings(Container);
+
+			var fluentResultLogger = new FluentResultLogger();
+			Result.Setup(cfg => cfg.Logger = fluentResultLogger);
 
 			Container.Register<IClock>(() => SystemClock.Instance, Lifestyle.Singleton);
 			Container.Register<IPageBackendService, PageBackendService>(Lifestyle.Transient);
