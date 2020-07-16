@@ -21,8 +21,14 @@ namespace PrivateWiki.UWP
 
 		private async Task<IInputStream> GetContent(string path)
 		{
+			if (!path.StartsWith("/data/"))
+			{
+				path = $"/data{path}";
+			}
+
 			try
 			{
+				// TODO Configurable data-Folder
 				var localUir = new Uri($"ms-appdata:///local/{path}");
 				var file = await StorageFile.GetFileFromApplicationUriAsync(localUir);
 
