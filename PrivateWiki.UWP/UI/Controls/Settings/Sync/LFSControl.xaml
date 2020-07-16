@@ -13,6 +13,7 @@
 
     <UserControl.Resources>
         <xamlConverter:SyncFrequencyToRadioButtonConverter x:Key="SyncFrequencyToRadioButtonConverter" />
+        <xamlConverter:BoolVisibilityConverter x:Key="BoolVisibilityConverter" />
 
         <Style x:Key="SettingsGroupStyle" TargetType="Grid">
             <Setter Property="Margin" Value="0, 0, 0, 20" />
@@ -95,7 +96,9 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Style="{ThemeResource SettingsGroupStyle}">
+            <!-- Feature Flag IsAssetsSyncEnabled -->
+            <Grid Style="{ThemeResource SettingsGroupStyle}"
+                  Visibility="{x:Bind ViewModel.FeatureFlags.IsAssetsSyncEnabled, Converter={StaticResource BoolVisibilityConverter},Mode=OneTime}">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -106,10 +109,10 @@
                     Text="Sync Options" Style="{ThemeResource SettingsGroupHeaderStyle}" />
 
                 <ToggleSwitch
+                    x:Name="IsAssetsSyncEnabledToogleSwitch"
                     Grid.Row="1"
                     OnContent="Asset files are synced"
-                    OffContent="Asset files are not synced"
-                    IsOn="{x:Bind ViewModel.IsAssetsSyncEnabled, Mode=TwoWay}" />
+                    OffContent="Asset files are not synced" />
 
             </Grid>
 

@@ -1,7 +1,7 @@
-using System;
 using System.Reactive;
 using System.Threading.Tasks;
 using PrivateWiki.DataModels;
+using PrivateWiki.Services.AppSettingsService.FeatureFlagsService;
 using PrivateWiki.Services.LFSBackupService;
 using ReactiveUI;
 
@@ -9,8 +9,6 @@ namespace PrivateWiki.ViewModels.Settings
 {
 	public interface IBackupSyncTargetViewModel
 	{
-		public Guid Id { get; }
-
 		public string Name { get; }
 
 		public string TargetPath { get; }
@@ -26,15 +24,11 @@ namespace PrivateWiki.ViewModels.Settings
 
 	public class LFSBackupSyncTargetViewModel : ReactiveObject, IBackupSyncTargetViewModel
 	{
+		public IFeatureFlagsService FeatureFlags { get; }
+
+		private readonly ILFSBackupService _lfsBackup;
+
 		public BackupSyncTargetType Type { get; } = BackupSyncTargetType.LocalFileStorage;
-
-		private Guid _id;
-
-		public Guid Id
-		{
-			get => _id;
-			set => this.RaiseAndSetIfChanged(ref _id, value);
-		}
 
 		private string? _name;
 
@@ -62,7 +56,7 @@ namespace PrivateWiki.ViewModels.Settings
 			set => this.RaiseAndSetIfChanged(ref _targetPath, value);
 		}
 
-		private bool _isAssetsSyncEnabled;
+		private bool _isAssetsSyncEnabled = false;
 
 		public bool IsAssetsSyncEnabled
 		{
@@ -70,7 +64,7 @@ namespace PrivateWiki.ViewModels.Settings
 			set => this.RaiseAndSetIfChanged(ref _isAssetsSyncEnabled, value);
 		}
 
-		private bool _isEnabled;
+		private bool _isEnabled = false;
 
 		public bool IsEnabled
 		{
@@ -78,7 +72,7 @@ namespace PrivateWiki.ViewModels.Settings
 			set => this.RaiseAndSetIfChanged(ref _isEnabled, value);
 		}
 
-		private SyncFrequency _frequency;
+		private SyncFrequency _frequency = SyncFrequency.Never;
 
 		public SyncFrequency Frequency
 		{
@@ -94,26 +88,19 @@ namespace PrivateWiki.ViewModels.Settings
 
 		public LFSBackupSyncTargetViewModel()
 		{
-			Id = Guid.NewGuid();
+			FeatureFlags = Application.Instance.AppSettings.FeatureFlags;
+			_lfsBackup = Application.Instance.Container.GetInstance<ILFSBackupService>();
 
 			ExportContent = ReactiveCommand.CreateFromTask(ExportContentAsync);
 			CreateBackup = ReactiveCommand.CreateFromTask(CreateBackupAsync);
 			SaveConfiguration = ReactiveCommand.CreateFromTask(SaveConfigurationAsync);
 		}
 
-		private Task ExportContentAsync() => Task.Run(async () =>
-		{
-			var lfsBackupService = Application.Instance.Container.GetInstance<ILFSBackupService>();
+		private Task ExportContentAsync() =>
+			Task.Run(async () => { await _lfsBackup.ExportAsync(new LFSBackupServiceOptions(IsAssetsSyncEnabled, new Folder(TargetPath, ""))).ConfigureAwait(false); });
 
-			await lfsBackupService.Sync(new LFSBackupServiceOptions(false, new Folder(TargetPath, ""))).ConfigureAwait(false);
-		});
-
-		private async Task CreateBackupAsync()
-		{
-			// TODO Create a backup at TargetPath
-
-			Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification();
-		}
+		private Task CreateBackupAsync() =>
+			Task.Run(async () => await _lfsBackup.CreateBackupAsync(new LFSBackupServiceOptions(IsAssetsSyncEnabled, new Folder(TargetPath, ""))).ConfigureAwait(false));
 
 		private async Task SaveConfigurationAsync()
 		{

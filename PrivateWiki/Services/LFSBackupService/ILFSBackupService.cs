@@ -4,6 +4,8 @@ namespace PrivateWiki.Services.LFSBackupService
 {
 	public interface ILFSBackupService
 	{
-		public Task Sync(LFSBackupServiceOptions options);
+		public Task ExportAsync(LFSBackupServiceOptions options);
+
+		public Task CreateBackupAsync(LFSBackupServiceOptions options);
 	}
 }

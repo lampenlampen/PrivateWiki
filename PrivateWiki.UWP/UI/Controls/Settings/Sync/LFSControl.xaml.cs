@@ -40,6 +40,12 @@ namespace PrivateWiki.UWP.UI.Controls.Settings.Sync
 						view => view.TargetPath.Text)
 					.DisposeWith(disposable);
 
+
+				this.Bind(ViewModel,
+						vm => vm.IsAssetsSyncEnabled,
+						view => view.IsAssetsSyncEnabledToogleSwitch.IsOn)
+					.DisposeWith(disposable);
+
 				// Disable actions when target not enabled
 				this.OneWayBind(ViewModel,
 						vm => vm.IsEnabled,

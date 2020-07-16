@@ -1,14 +1,9 @@
-using System.Collections.Generic;
-using System.IO;
 using System.Reactive;
-using System.Threading;
 using System.Threading.Tasks;
 using PrivateWiki.DataModels;
 using PrivateWiki.Services.ApplicationDataService;
 using PrivateWiki.Services.FileExplorerService;
-using PrivateWiki.Services.FilesystemService;
 using ReactiveUI;
-using SimpleInjector;
 
 namespace PrivateWiki.ViewModels.Settings
 {
@@ -62,7 +57,7 @@ namespace PrivateWiki.ViewModels.Settings
 
 		private async Task LoadTreeViewAsync()
 		{
-			Root = await _applicationData.GetDataFolder();
+			Root = await _applicationData.GetDataFolderAsync();
 		}
 	}
 }
