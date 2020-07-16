@@ -6,8 +6,8 @@ using Windows.Storage;
 using FluentResults;
 using Microsoft.Toolkit.Diagnostics;
 using PrivateWiki.DataModels;
-using File = PrivateWiki.DataModels.File;
 using PrivateWiki.Services.ApplicationDataService;
+using File = PrivateWiki.DataModels.File;
 
 namespace PrivateWiki.UWP.Services.FilesystemService
 {
@@ -43,7 +43,7 @@ namespace PrivateWiki.UWP.Services.FilesystemService
 			return await FileIO.ReadTextAsync(nativeFile).AsTask().ConfigureAwait(false);
 		}
 
-		public async Task<Folder> GetDataFolder()
+		public async Task<Folder> GetDataFolderAsync()
 		{
 			// TODO hardcoded data-Folder location
 			return (await ApplicationData.Current.LocalFolder.CreateFolderAsync("data", CreationCollisionOption.OpenIfExists)).ToFolder();
@@ -74,7 +74,7 @@ namespace PrivateWiki.UWP.Services.FilesystemService
 			Guard.IsNotNull(file, nameof(file));
 
 			StorageFile nativeFile;
-			
+
 			try
 			{
 				nativeFile = await StorageFile.GetFileFromPathAsync(file.Path).AsTask().ConfigureAwait(false);
@@ -106,7 +106,7 @@ namespace PrivateWiki.UWP.Services.FilesystemService
 			Guard.IsNotNull(folder, nameof(folder));
 
 			StorageFolder nativeFolder;
-			
+
 			try
 			{
 				nativeFolder = await StorageFolder.GetFolderFromPathAsync(folder.Path).AsTask().ConfigureAwait(false);
@@ -133,7 +133,7 @@ namespace PrivateWiki.UWP.Services.FilesystemService
 		public static Folder ToFolder(this StorageFolder nativeFolder)
 		{
 			Guard.IsNotNull(nativeFolder, nameof(nativeFolder));
-			
+
 			var folder = new Folder(nativeFolder.Path, nativeFolder.Name);
 
 			return folder;

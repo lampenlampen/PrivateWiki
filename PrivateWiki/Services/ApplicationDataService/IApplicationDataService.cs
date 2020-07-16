@@ -9,6 +9,6 @@ namespace PrivateWiki.Services.ApplicationDataService
 
 		public Task<string> ReadTextAsync(File file);
 
-		public Task<Folder> GetDataFolder();
+		public Task<Folder> GetDataFolderAsync();
 	}
 }
