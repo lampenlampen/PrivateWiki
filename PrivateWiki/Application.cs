@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using NodaTime;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.AppSettingsService;
+using PrivateWiki.Services.AppSettingsService.FeatureFlagsService;
 using PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService;
 using PrivateWiki.Services.DebugModeService;
 using PrivateWiki.Services.DefaultPagesService;
@@ -41,6 +42,7 @@ namespace PrivateWiki
 			Container.Register<IAssetsService, AssetsService>(Lifestyle.Singleton);
 			Container.Register<IMostRecentlyVisitedPagesService, MostRecentlyViewedPagesManager>(Lifestyle.Singleton);
 			Container.Register<IAppSettingsService, AppSettings>(Lifestyle.Singleton);
+			Container.Register<IFeatureFlagsService, FeatureFlagsService>(Lifestyle.Singleton);
 			Container.Register<IMarkdownRenderingSettingsService, MarkdownRenderingSettings>(Lifestyle.Singleton);
 			Container.Register<IInMemoryKeyValueCache, InMemoryCache>(Lifestyle.Singleton);
 			Container.Register<IPersistentKeyValueCache>(() => new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})), Lifestyle.Singleton);
