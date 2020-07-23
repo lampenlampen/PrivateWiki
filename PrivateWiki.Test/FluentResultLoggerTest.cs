@@ -30,7 +30,6 @@ namespace PrivateWiki.Test
 			{
 				result = Result.Fail<int>(new FileNotFoundError().CausedBy(new FileNotFoundException()))
 					.WithError(new ArgumentError());
-				throw;
 			}
 
 			result.Log();
