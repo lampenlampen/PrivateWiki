@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using FluentResults;
 using NLog;
+using PrivateWiki.Services.SerializationService;
 
 namespace PrivateWiki.Services.KeyValueCaches
 {
@@ -176,6 +177,22 @@ namespace PrivateWiki.Services.KeyValueCaches
 			var value = Deserialize<T>(data);
 
 			return Task.FromResult(Result.Ok(value));
+		}
+
+		public async Task<Result> InsertAsync<T>(string key, T value, IJsonSerializationService<T> serializer)
+		{
+			var data = await serializer.Serialize(value);
+
+			return await InsertAsync(key, data);
+		}
+
+		public async Task<Result<T>> GetObjectAsync<T>(string key, IJsonSerializationService<T> deserializer)
+		{
+			var data = await GetStringAsync(key);
+
+			if (data.IsFailed) return data.ToResult<T>();
+
+			return await deserializer.Deserialize(data.Value);
 		}
 
 		private byte[] Serialize<T>(T value)

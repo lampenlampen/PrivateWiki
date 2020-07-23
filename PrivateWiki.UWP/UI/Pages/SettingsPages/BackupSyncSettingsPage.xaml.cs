@@ -36,8 +36,6 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 
 		#endregion
 
-		private IBackupSyncTargetViewModel? _selectedItem;
-
 		public BackupSyncSettingsPage()
 		{
 			this.InitializeComponent();
@@ -54,11 +52,11 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 				TargetList.Events().SelectionChanged
 					.Select(_ => TargetList.SelectedItem as IBackupSyncTargetViewModel)
 					.WhereNotNull()
-					.InvokeCommand(ViewModel.SelectionChanged)
+					.BindTo(ViewModel, vm => vm.SelectedBackupSyncTarget)
 					.DisposeWith(disposable);
 
-				ViewModel.OnDisplayBackupSyncTarget
-					.Subscribe(DisplayBackupSyncTarget)
+				this.WhenAnyValue(x => x.ViewModel.SelectedBackupSyncTarget)
+					.Subscribe(SelectedTargetChanges)
 					.DisposeWith(disposable);
 
 				Observable.FromEventPattern<RoutedEventHandler, RoutedEventArgs>(
@@ -67,21 +65,37 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 					.Select(_ => Unit.Default)
 					.InvokeCommand(ViewModel, x => x.SaveConfigurations)
 					.DisposeWith(disposable);
+
+				Observable.FromEventPattern<RoutedEventHandler, RoutedEventArgs>(
+						handler => Header.ResetClick += handler,
+						handler => Header.ResetClick -= handler)
+					.Select(_ => Unit.Default)
+					.InvokeCommand(ViewModel, x => x.ResetTargets)
+					.DisposeWith(disposable);
+
+				ViewModel.LoadTargets.Execute().Subscribe().DisposeWith(disposable);
 			});
 		}
 
-		private void DisplayBackupSyncTarget(IBackupSyncTargetViewModel vm)
+		private void SelectedTargetChanges(IBackupSyncTargetViewModel? vm)
 		{
 			BackupSyncTargetContent.Children.Clear();
 
-			switch (vm.Type)
+			if (vm != null)
 			{
-				case BackupSyncTargetType.LocalFileStorage:
-					var control = new LFSControl {ViewModel = (LFSBackupSyncTargetViewModel) vm};
-					BackupSyncTargetContent.Children.Add(control);
-					break;
-				default:
-					throw new ArgumentOutOfRangeException();
+				switch (vm.Type)
+				{
+					case BackupSyncTargetType.LocalFileStorage:
+						var control = new LFSControl {ViewModel = (LFSBackupSyncTargetViewModel) vm};
+						BackupSyncTargetContent.Children.Add(control);
+						break;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
+			}
+			else
+			{
+				BackupSyncTargetContent.Children.Add(new NothingSelectedControl());
 			}
 		}
 

@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using FluentResults;
 using Microsoft.Data.Sqlite;
+using PrivateWiki.Services.SerializationService;
 using PrivateWiki.Services.SqliteStorage;
 
 namespace PrivateWiki.Services.KeyValueCaches
@@ -106,6 +107,23 @@ namespace PrivateWiki.Services.KeyValueCaches
 			if (result is null) return Result.Fail(new KeyNotFoundError(key));
 
 			return Result.Ok(Deserialize<T>(result));
+		}
+
+		public async Task<Result> InsertAsync<T>(string key, T value, IJsonSerializationService<T> serializer) => Result.Ok(InsertAsync(key, await serializer.Serialize(value)));
+
+		public async Task<Result<T>> GetObjectAsync<T>(string key, IJsonSerializationService<T> deserializer)
+		{
+			await _initTask;
+
+			var data = (string?) await Get(key).ConfigureAwait(false);
+
+			if (data is null) return Result.Fail(new KeyNotFoundError(key));
+
+			var result = await deserializer.Deserialize(data);
+
+			if (result.IsFailed) return result;
+
+			return Result.Ok(result.Value);
 		}
 
 		public async Task<Result> RemoveAsync(string key)

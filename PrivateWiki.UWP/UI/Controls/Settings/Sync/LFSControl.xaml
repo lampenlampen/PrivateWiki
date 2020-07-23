@@ -31,20 +31,43 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <RelativePanel Grid.Row="0" Margin="0,0,0,20">
-            <TextBlock
-                RelativePanel.AlignLeftWithPanel="True"
+        <Grid Margin="0, 0, 0, 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <FontIcon
+                x:Name="LfsIcon"
+                Grid.Column="0"
+                VerticalAlignment="Stretch"
+                FontFamily="Segoe MDL2 Assets"
+                Glyph="{x:Bind ViewModel.FontGlyph}"
+                Margin="0, 0, 12, 0" />
+
+            <TextBox
+                x:Name="NameTextBox"
+                Grid.Column="1"
                 FontSize="18"
-                Text="Local File System" />
+                Margin="0, 0, 14, 0"
+                Text="{x:Bind ViewModel.Name, Mode=TwoWay}">
+
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
 
             <ToggleSwitch
-                RelativePanel.AlignRightWithPanel="True"
+                Grid.Column="2"
                 OnContent="Enabled"
                 OffContent="Disabled"
                 IsOn="{x:Bind ViewModel.IsEnabled, Mode=TwoWay}" />
-        </RelativePanel>
+        </Grid>
 
-        <StackPanel x:Name="stackpanel" Grid.Row="1">
+        <StackPanel Grid.Row="1">
 
             <Grid Style="{ThemeResource SettingsGroupStyle}">
                 <Grid.RowDefinitions>
@@ -89,10 +112,14 @@
                     Style="{ThemeResource SettingsGroupHeaderStyle}" />
 
                 <StackPanel Grid.Row="1">
-                    <RadioButton Content="Never" IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Never}" />
-                    <RadioButton IsEnabled="False" Content="Hourly" IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Hourly}" />
-                    <RadioButton IsEnabled="False" Content="Daily" IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Daily}" />
-                    <RadioButton IsEnabled="False" Content="Weekly" IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Weekly}" />
+                    <RadioButton Content="Never"
+                                 IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Never}" />
+                    <RadioButton IsEnabled="False" Content="Hourly"
+                                 IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Hourly}" />
+                    <RadioButton IsEnabled="False" Content="Daily"
+                                 IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Daily}" />
+                    <RadioButton IsEnabled="False" Content="Weekly"
+                                 IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Weekly}" />
                 </StackPanel>
             </Grid>
 

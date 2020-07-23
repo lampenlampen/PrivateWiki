@@ -83,16 +83,16 @@
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+      <DebugType>pdbonly</DebugType>
+      <PlatformTarget>x64</PlatformTarget>
+      <UseVSHostingProcess>false</UseVSHostingProcess>
+      <ErrorReport>prompt</ErrorReport>
+      <Prefer32Bit>true</Prefer32Bit>
+      <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
-  <PropertyGroup>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-  </PropertyGroup>
+    <PropertyGroup>
+        <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    </PropertyGroup>
     <ItemGroup>
         <Compile Include="App.xaml.cs">
             <DependentUpon>App.xaml</DependentUpon>
@@ -131,16 +131,16 @@
             <DependentUpon>NavigationSettingsLinkItemControl.xaml</DependentUpon>
         </Compile>
         <Compile Include="UI\Controls\PageEditorCommandBar.xaml.cs">
-      <DependentUpon>PageEditorCommandBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\PageEditors\HtmlPageEditorControl.xaml.cs">
-      <DependentUpon>HtmlPageEditorControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\PageEditors\MarkdownPageEditorControl.xaml.cs">
-      <DependentUpon>MarkdownPageEditorControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\PageEditors\TextPageEditorControl.xaml.cs">
-      <DependentUpon>TextPageEditorControl.xaml</DependentUpon>
+            <DependentUpon>PageEditorCommandBar.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Controls\PageEditors\HtmlPageEditorControl.xaml.cs">
+            <DependentUpon>HtmlPageEditorControl.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Controls\PageEditors\MarkdownPageEditorControl.xaml.cs">
+            <DependentUpon>MarkdownPageEditorControl.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Controls\PageEditors\TextPageEditorControl.xaml.cs">
+            <DependentUpon>TextPageEditorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Controls\PageViewerCommandBar.xaml.cs">
       <DependentUpon>PageViewerCommandBar.xaml</DependentUpon>
@@ -166,25 +166,28 @@
     <Compile Include="UI\Controls\Settings\Rendering\MathControl.xaml.cs">
       <DependentUpon>MathControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controls\Settings\Rendering\SyntaxHighlightingControl.xaml.cs">
-      <DependentUpon>SyntaxHighlightingControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\Settings\Rendering\TableControl.xaml.cs">
-      <DependentUpon>TableControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\Settings\Sync\LFSControl.xaml.cs">
-      <DependentUpon>LFSControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Dialogs\DissmissableDialog.cs" />
-    <Compile Include="UI\Dialogs\EditorImagePickerDialog.xaml.cs">
-      <DependentUpon>EditorImagePickerDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Dialogs\ExportDialog.xaml.cs">
-      <DependentUpon>ExportDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Dialogs\GridViewDialog.xaml.cs">
-      <DependentUpon>GridViewDialog.xaml</DependentUpon>
-    </Compile>
+        <Compile Include="UI\Controls\Settings\Rendering\SyntaxHighlightingControl.xaml.cs">
+            <DependentUpon>SyntaxHighlightingControl.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Controls\Settings\Rendering\TableControl.xaml.cs">
+            <DependentUpon>TableControl.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Controls\Settings\Sync\LFSControl.xaml.cs">
+            <DependentUpon>LFSControl.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Controls\Settings\Sync\NothingSelectedControl.xaml.cs">
+            <DependentUpon>NothingSelectedControl.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Dialogs\DissmissableDialog.cs"/>
+        <Compile Include="UI\Dialogs\EditorImagePickerDialog.xaml.cs">
+            <DependentUpon>EditorImagePickerDialog.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Dialogs\ExportDialog.xaml.cs">
+            <DependentUpon>ExportDialog.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Dialogs\GridViewDialog.xaml.cs">
+            <DependentUpon>GridViewDialog.xaml</DependentUpon>
+        </Compile>
         <Compile Include="UI\Dialogs\HyperlinkDialog.xaml.cs">
             <DependentUpon>HyperlinkDialog.xaml</DependentUpon>
         </Compile>
@@ -208,16 +211,16 @@
             <DependentUpon>ImportDiffPage.xaml</DependentUpon>
         </Compile>
         <Compile Include="UI\Pages\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Pages\MarkdownPageEditor.xaml.cs">
-      <DependentUpon>MarkdownPageEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Pages\MarkdownPageViewer.xaml.cs">
-      <DependentUpon>MarkdownPageViewer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Pages\NewPage.xaml.cs">
-      <DependentUpon>NewPage.xaml</DependentUpon>
+            <DependentUpon>MainPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Pages\MarkdownPageEditor.xaml.cs">
+            <DependentUpon>MarkdownPageEditor.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Pages\MarkdownPageViewer.xaml.cs">
+            <DependentUpon>MarkdownPageViewer.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Pages\NewPage.xaml.cs">
+            <DependentUpon>NewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Pages\PageEditor.xaml.cs">
       <DependentUpon>PageEditor.xaml</DependentUpon>
@@ -240,15 +243,15 @@
     <Compile Include="UI\Pages\SettingsPagesOld\PagesSettingsPage.xaml.cs">
       <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pages\SettingsPagesOld\RenderingSettingsPage.xaml.cs">
-      <DependentUpon>RenderingSettingsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Pages\SettingsPagesOld\StorageSettingsPage.xaml.cs">
-      <DependentUpon>StorageSettingsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Pages\SettingsPages\AssetsSettingsPage.xaml.cs">
-      <DependentUpon>AssetsSettingsPage.xaml</DependentUpon>
-    </Compile>
+        <Compile Include="UI\Pages\SettingsPagesOld\RenderingSettingsPage.xaml.cs">
+            <DependentUpon>RenderingSettingsPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Pages\SettingsPagesOld\StorageSettingsPage.xaml.cs">
+            <DependentUpon>StorageSettingsPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Pages\SettingsPages\AssetsSettingsPage.xaml.cs">
+            <DependentUpon>AssetsSettingsPage.xaml</DependentUpon>
+        </Compile>
         <Compile Include="UI\Pages\SettingsPages\BackupSyncSettingsPage.xaml.cs">
             <DependentUpon>BackupSyncSettingsPage.xaml</DependentUpon>
         </Compile>
@@ -392,26 +395,30 @@
     <Page Include="UI\Controls\Settings\Rendering\ListControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Controls\Settings\Rendering\MathControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\Settings\Rendering\SyntaxHighlightingControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\Settings\Rendering\TableControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\Settings\Sync\LFSControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Dialogs\EditorImagePickerDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Dialogs\ExportDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Dialogs\GridViewDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Page Include="UI\Controls\Settings\Rendering\MathControl.xaml">
+          <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Include="UI\Controls\Settings\Rendering\SyntaxHighlightingControl.xaml">
+          <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Include="UI\Controls\Settings\Rendering\TableControl.xaml">
+          <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Include="UI\Controls\Settings\Sync\LFSControl.xaml">
+          <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Include="UI\Controls\Settings\Sync\NothingSelectedControl.xaml">
+          <SubType>Designer</SubType>
+          <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Include="UI\Dialogs\EditorImagePickerDialog.xaml">
+          <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Include="UI\Dialogs\ExportDialog.xaml">
+          <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Include="UI\Dialogs\GridViewDialog.xaml">
+          <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Dialogs\HyperlinkDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -580,11 +587,11 @@
       <Name>RuntimeComponent</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-      <SDKReference Include="WindowsDesktop, Version=10.0.19041.0">
-          <Name>Windows Desktop Extensions for the UWP</Name>
-      </SDKReference>
-  </ItemGroup>
+    <ItemGroup>
+        <SDKReference Include="WindowsDesktop, Version=10.0.19041.0">
+            <Name>Windows Desktop Extensions for the UWP</Name>
+        </SDKReference>
+    </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

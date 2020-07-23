@@ -1,14 +1,19 @@
+using System;
+using System.ComponentModel;
 using System.Reactive;
 using System.Threading.Tasks;
 using PrivateWiki.DataModels;
+using PrivateWiki.DataModels.Settings;
 using PrivateWiki.Services.AppSettingsService.FeatureFlagsService;
 using PrivateWiki.Services.LFSBackupService;
 using ReactiveUI;
 
 namespace PrivateWiki.ViewModels.Settings
 {
-	public interface IBackupSyncTargetViewModel
+	public interface IBackupSyncTargetViewModel : INotifyPropertyChanged
 	{
+		public Guid Id { get; }
+
 		public string Name { get; }
 
 		public string TargetPath { get; }
@@ -19,16 +24,33 @@ namespace PrivateWiki.ViewModels.Settings
 
 		public BackupSyncTargetType Type { get; }
 
-		public ReactiveCommand<Unit, Unit> SaveConfiguration { get; }
+		public ReactiveCommand<Unit, IBackupSyncTarget> SaveConfiguration { get; }
 	}
 
 	public class LFSBackupSyncTargetViewModel : ReactiveObject, IBackupSyncTargetViewModel
 	{
-		public IFeatureFlagsService FeatureFlags { get; }
-
+		private readonly IFeatureFlagsService _featureFlags;
 		private readonly ILFSBackupService _lfsBackup;
 
+		public IFeatureFlagsService FeatureFlags => _featureFlags;
+
+		private LfsBackupSyncTarget? _target;
+
+		public LfsBackupSyncTarget? Target
+		{
+			get => _target;
+			set => this.RaiseAndSetIfChanged(ref _target, value);
+		}
+
 		public BackupSyncTargetType Type { get; } = BackupSyncTargetType.LocalFileStorage;
+
+		private Guid _id = Guid.NewGuid();
+
+		public Guid Id
+		{
+			get => _id;
+			set => this.RaiseAndSetIfChanged(ref _id, value);
+		}
 
 		private string? _name;
 
@@ -84,27 +106,58 @@ namespace PrivateWiki.ViewModels.Settings
 
 		public ReactiveCommand<Unit, Unit> CreateBackup { get; }
 
-		public ReactiveCommand<Unit, Unit> SaveConfiguration { get; }
+		public ReactiveCommand<Unit, IBackupSyncTarget> SaveConfiguration { get; }
+
+		private ReactiveCommand<LfsBackupSyncTarget, Unit> LoadConfiguration { get; }
 
 		public LFSBackupSyncTargetViewModel()
 		{
-			FeatureFlags = Application.Instance.AppSettings.FeatureFlags;
+			_featureFlags = Application.Instance.AppSettings.FeatureFlags;
 			_lfsBackup = Application.Instance.Container.GetInstance<ILFSBackupService>();
 
 			ExportContent = ReactiveCommand.CreateFromTask(ExportContentAsync);
 			CreateBackup = ReactiveCommand.CreateFromTask(CreateBackupAsync);
 			SaveConfiguration = ReactiveCommand.CreateFromTask(SaveConfigurationAsync);
+			LoadConfiguration = ReactiveCommand.CreateFromTask<LfsBackupSyncTarget>(LoadConfigurationAsync);
+
+			this.WhenAnyValue(x => x.Target)
+				.WhereNotNull()
+				.InvokeCommand(LoadConfiguration);
 		}
 
 		private Task ExportContentAsync() =>
-			Task.Run(async () => { await _lfsBackup.ExportAsync(new LFSBackupServiceOptions(IsAssetsSyncEnabled, new Folder(TargetPath, ""))).ConfigureAwait(false); });
+			Task.Run(async () =>
+			{
+				await _lfsBackup
+					.ExportAsync(new LFSBackupServiceOptions(IsAssetsSyncEnabled, new Folder(TargetPath, "")))
+					.ConfigureAwait(false);
+			});
 
 		private Task CreateBackupAsync() =>
-			Task.Run(async () => await _lfsBackup.CreateBackupAsync(new LFSBackupServiceOptions(IsAssetsSyncEnabled, new Folder(TargetPath, ""))).ConfigureAwait(false));
+			Task.Run(async () =>
+				await _lfsBackup
+					.CreateBackupAsync(new LFSBackupServiceOptions(IsAssetsSyncEnabled, new Folder(TargetPath, "")))
+					.ConfigureAwait(false));
 
-		private async Task SaveConfigurationAsync()
+		private async Task<IBackupSyncTarget> SaveConfigurationAsync()
 		{
-			Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification();
+			// TODO SaveConfiguration
+
+			return new LfsBackupSyncTarget(Id, Name, Description, TargetPath, Frequency, IsEnabled,
+				IsAssetsSyncEnabled);
+		}
+
+		private Task LoadConfigurationAsync(LfsBackupSyncTarget target)
+		{
+			Id = target.Id;
+			Name = target.Name;
+			Description = target.Description;
+			TargetPath = target.TargetPath;
+			Frequency = target.Frequency;
+			IsAssetsSyncEnabled = target.IsAssetsSyncEnabled;
+			IsEnabled = target.IsEnabled;
+
+			return Task.CompletedTask;
 		}
 	}
 }

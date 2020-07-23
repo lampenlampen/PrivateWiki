@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using FluentResults;
+using PrivateWiki.Services.SerializationService;
 
 namespace PrivateWiki.Services.KeyValueCaches
 {
@@ -20,6 +21,10 @@ namespace PrivateWiki.Services.KeyValueCaches
 		public Task<Result> InsertAsync<T>(string key, T value);
 
 		public Task<Result<T>> GetObjectAsync<T>(string key);
+
+		public Task<Result> InsertAsync<T>(string key, T value, IJsonSerializationService<T> serializer);
+
+		public Task<Result<T>> GetObjectAsync<T>(string key, IJsonSerializationService<T> deserializer);
 
 		public Task<Result> RemoveAsync(string key);
 

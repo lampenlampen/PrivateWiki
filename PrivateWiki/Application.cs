@@ -3,6 +3,7 @@ using FluentResults;
 using NodaTime;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.AppSettingsService;
+using PrivateWiki.Services.AppSettingsService.BackupSyncSettingsService;
 using PrivateWiki.Services.AppSettingsService.FeatureFlagsService;
 using PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService;
 using PrivateWiki.Services.DebugModeService;
@@ -45,13 +46,20 @@ namespace PrivateWiki
 			Container.Register<IDefaultPagesService, DefaultPagesService>(Lifestyle.Transient);
 			Container.Register<IAssetsService, AssetsService>(Lifestyle.Singleton);
 			Container.Register<IMostRecentlyVisitedPagesService, MostRecentlyViewedPagesManager>(Lifestyle.Singleton);
-			Container.Register<IAppSettingsService, AppSettings>(Lifestyle.Singleton);
-			Container.Register<IFeatureFlagsService, FeatureFlagsService>(Lifestyle.Singleton);
-			Container.Register<IMarkdownRenderingSettingsService, MarkdownRenderingSettings>(Lifestyle.Singleton);
 			Container.Register<IInMemoryKeyValueCache, InMemoryCache>(Lifestyle.Singleton);
 			Container.Register<IPersistentKeyValueCache>(() => new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})), Lifestyle.Singleton);
 			Container.Register<IFileExplorerService, FilesUWPService>();
 			Container.Register<ILFSBackupService, LFSBackupService>(Lifestyle.Transient);
+
+			// Settings
+			Container.Register<IAppSettingsService, AppSettings>(Lifestyle.Singleton);
+			Container.Register<IFeatureFlagsService, FeatureFlagsService>(Lifestyle.Singleton);
+			Container.Register<IMarkdownRenderingSettingsService, MarkdownRenderingSettings>(Lifestyle.Singleton);
+			// Testing BackupSyncSettingsTestService change to BackupSyncSettingsService
+			Container.Register<IBackupSyncSettingsService, BackupSyncSettingsService>();
+
+			// Serialization
+			Container.Register<IBackupSyncTargetsJsonSerializer, BackupSyncTargetsJsonSerializer>(Lifestyle.Singleton);
 		}
 
 		public async Task Initialize()
