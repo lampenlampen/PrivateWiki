@@ -4,7 +4,9 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using PrivateWiki.UWP.UI.Controls.Settings.Sync;
+using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 using PrivateWiki.ViewModels.Settings;
 using ReactiveUI;
 
@@ -55,6 +57,13 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 					.BindTo(ViewModel, vm => vm.SelectedBackupSyncTarget)
 					.DisposeWith(disposable);
 
+				DeleteTargetBtn.Events().Click
+					.Select(_ => ViewModel.SelectedBackupSyncTarget)
+					.WhereNotNull()
+					.Select(x => x.Id)
+					.InvokeCommand(ViewModel, x => x.RemoveTarget)
+					.DisposeWith(disposable);
+
 				this.WhenAnyValue(x => x.ViewModel.SelectedBackupSyncTarget)
 					.Subscribe(SelectedTargetChanges)
 					.DisposeWith(disposable);
@@ -102,6 +111,15 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 		private void AddLocalFileSystemTargetClick(object sender, RoutedEventArgs e)
 		{
 			ViewModel.AddTarget.Execute(BackupSyncTargetType.LocalFileStorage).Subscribe();
+		}
+
+		private async void DeleteTargetClick(object sender, RoutedEventArgs e)
+		{
+			ListViewItem? item = ((DependencyObject) sender).FindParent<ListViewItem>();
+
+			var target = (IBackupSyncTargetViewModel) item.Content;
+
+			await ViewModel.RemoveTarget.Execute();
 		}
 	}
 }

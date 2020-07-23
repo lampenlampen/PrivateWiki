@@ -175,9 +175,9 @@
                         x:Name="CreateBackupBtn"
                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <StackPanel>
-                            <TextBlock Text="Import" Style="{ThemeResource BaseTextBlockStyle}" />
+                            <TextBlock Text="Create Backup" Style="{ThemeResource BaseTextBlockStyle}" />
                             <TextBlock
-                                Text="Create backup"
+                                Text="Creates a backup in a separate folder"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </Button>

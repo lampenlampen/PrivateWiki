@@ -25,6 +25,8 @@ namespace PrivateWiki.ViewModels.Settings
 		public BackupSyncTargetType Type { get; }
 
 		public ReactiveCommand<Unit, IBackupSyncTarget> SaveConfiguration { get; }
+
+		public ReactiveCommand<Unit, Unit> ResetConfiguration { get; }
 	}
 
 	public class LFSBackupSyncTargetViewModel : ReactiveObject, IBackupSyncTargetViewModel
@@ -108,6 +110,8 @@ namespace PrivateWiki.ViewModels.Settings
 
 		public ReactiveCommand<Unit, IBackupSyncTarget> SaveConfiguration { get; }
 
+		public ReactiveCommand<Unit, Unit> ResetConfiguration { get; }
+
 		private ReactiveCommand<LfsBackupSyncTarget, Unit> LoadConfiguration { get; }
 
 		public LFSBackupSyncTargetViewModel()
@@ -118,6 +122,7 @@ namespace PrivateWiki.ViewModels.Settings
 			ExportContent = ReactiveCommand.CreateFromTask(ExportContentAsync);
 			CreateBackup = ReactiveCommand.CreateFromTask(CreateBackupAsync);
 			SaveConfiguration = ReactiveCommand.CreateFromTask(SaveConfigurationAsync);
+			ResetConfiguration = ReactiveCommand.CreateFromTask(ResetConfigurationAsync);
 			LoadConfiguration = ReactiveCommand.CreateFromTask<LfsBackupSyncTarget>(LoadConfigurationAsync);
 
 			this.WhenAnyValue(x => x.Target)
@@ -139,12 +144,24 @@ namespace PrivateWiki.ViewModels.Settings
 					.CreateBackupAsync(new LFSBackupServiceOptions(IsAssetsSyncEnabled, new Folder(TargetPath, "")))
 					.ConfigureAwait(false));
 
-		private async Task<IBackupSyncTarget> SaveConfigurationAsync()
+		private Task<IBackupSyncTarget> SaveConfigurationAsync()
 		{
 			// TODO SaveConfiguration
 
-			return new LfsBackupSyncTarget(Id, Name, Description, TargetPath, Frequency, IsEnabled,
-				IsAssetsSyncEnabled);
+			return Task.FromResult<IBackupSyncTarget>(new LfsBackupSyncTarget(Id, Name, Description, TargetPath, Frequency, IsEnabled,
+				IsAssetsSyncEnabled));
+		}
+
+		private Task ResetConfigurationAsync()
+		{
+			Name = _target.Name;
+			Description = _target.Description;
+			TargetPath = _target.TargetPath;
+			Frequency = _target.Frequency;
+			IsEnabled = _target.IsEnabled;
+			IsAssetsSyncEnabled = _target.IsAssetsSyncEnabled;
+
+			return Task.CompletedTask;
 		}
 
 		private Task LoadConfigurationAsync(LfsBackupSyncTarget target)

@@ -46,16 +46,30 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-
-                <RelativePanel Grid.Row="0" Padding="0, 0, 0, 16">
-
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
                     <TextBlock
-                        RelativePanel.AlignLeftWithPanel="True"
+                        Grid.Column="0"
                         Text="Targets"
                         FontSize="18" />
+                    
+                    <Button
+                        x:Name="DeleteTargetBtn"
+                        Grid.Column="1"
+                        Background="Transparent">
+                        
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
+                        
+                    </Button>
 
                     <DropDownButton
-                        RelativePanel.AlignRightWithPanel="True"
+                        Grid.Column="2"
                         Background="Transparent">
 
                         <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="14" Text="&#xE109;" />
@@ -68,11 +82,8 @@
                                     Click="AddLocalFileSystemTargetClick" />
                             </MenuFlyout>
                         </DropDownButton.Flyout>
-
                     </DropDownButton>
-
-
-                </RelativePanel>
+                </Grid>
 
                 <ListView
                     x:Name="TargetList"
@@ -120,12 +131,9 @@
                                     Fill="{Binding Path=IsEnabled, Converter={StaticResource StateToColorConverter}}" />
 
                             </Grid>
-
                         </DataTemplate>
                     </ListView.ItemTemplate>
-
                 </ListView>
-
             </Grid>
 
             <Grid

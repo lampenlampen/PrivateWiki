@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Media;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.UI.Events;
+using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 using PrivateWiki.ViewModels.Settings;
 using ReactiveUI;
 using Page = Windows.UI.Xaml.Controls.Page;
@@ -67,9 +68,8 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 						var a = x;
 						var b = a.OriginalSource;
 
-						DataGridRow? c = FindParent<DataGridRow>((DependencyObject) b);
+						var c = ((DependencyObject) b).FindParent<DataGridRow>();
 
-						// ReSharper disable once ConditionIsAlwaysTrueOrFalse
 						if (c != null)
 						{
 							var index = c.GetIndex();

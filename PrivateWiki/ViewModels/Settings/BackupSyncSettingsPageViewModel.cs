@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using DynamicData;
 using PrivateWiki.DataModels.Settings;
@@ -42,8 +41,6 @@ namespace PrivateWiki.ViewModels.Settings
 
 		public ReactiveCommand<Unit, Unit> LoadTargets { get; }
 
-		private readonly ISubject<IBackupSyncTargetViewModel> _onDisplayBackupSyncTarget;
-
 		public BackupSyncSettingsPageViewModel()
 		{
 			_backupSyncSettings = Application.Instance.Container.GetInstance<IBackupSyncSettingsService>();
@@ -54,8 +51,6 @@ namespace PrivateWiki.ViewModels.Settings
 			SaveConfigurations = ReactiveCommand.CreateFromTask(SaveTargetConfigurationsAsync);
 			ResetTargets = ReactiveCommand.CreateFromTask(ResetTargetsAsync);
 			LoadTargets = ReactiveCommand.CreateFromTask(LoadTargetsAsync);
-
-			_onDisplayBackupSyncTarget = new Subject<IBackupSyncTargetViewModel>();
 
 			this.WhenAnyValue(x => x.SelectedBackupSyncTarget)
 				.WhereNotNull()
@@ -86,7 +81,7 @@ namespace PrivateWiki.ViewModels.Settings
 			return Task.CompletedTask;
 		}
 
-		private Task RemoveTargetAsync(Guid id) => Task.CompletedTask;
+		private Task RemoveTargetAsync(Guid id) => _backupSyncSettings.RemoveTargetAsync(id);
 
 		private Task SelectionChangedAsync(IBackupSyncTargetViewModel target)
 		{
@@ -94,7 +89,6 @@ namespace PrivateWiki.ViewModels.Settings
 			{
 				case BackupSyncTargetType.LocalFileStorage:
 					_backupSyncTargetViewModel = target;
-					_onDisplayBackupSyncTarget.OnNext(_backupSyncTargetViewModel);
 					break;
 				default:
 					throw new ArgumentOutOfRangeException();
@@ -122,7 +116,7 @@ namespace PrivateWiki.ViewModels.Settings
 
 			foreach (var target in Targets)
 			{
-				// TODO Reset every Target
+				await target.ResetConfiguration.Execute();
 			}
 		}
 
