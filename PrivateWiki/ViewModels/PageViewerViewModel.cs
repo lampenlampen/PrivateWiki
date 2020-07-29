@@ -122,6 +122,8 @@ namespace PrivateWiki.ViewModels
 
 			this.WhenAnyValue(x => x.SearchControlViewModel)
 				.Subscribe(x => { OnCloseSearchPopup = x.OnClose; });
+
+			SearchControlViewModel.OnPageSelected.Subscribe(async page => await NavigateToPageAsync(page.Path));
 		}
 
 		private async Task LoadPageAsync(string id)

@@ -30,8 +30,6 @@ namespace PrivateWiki.ViewModels
 		private IObservable<Func<GenericPage, bool>> observableSearchQuery;
 
 
-		public ReactiveCommand<GenericPage, Unit> NavigateToPage { get; }
-
 		public ReactiveCommand<KeyboardShortcut, Unit> KeyPressed { get; }
 
 		public ReactiveCommand<Unit, Unit> HideSearchWindow { get; }
@@ -50,7 +48,6 @@ namespace PrivateWiki.ViewModels
 			_backend = Application.Instance.Container.GetInstance<IPageBackendService>();
 			_pages = new SourceCache<GenericPage, Guid>(x => x.Id);
 
-			NavigateToPage = ReactiveCommand.CreateFromTask<GenericPage>(NavigateToPageAsync);
 			KeyPressed = ReactiveCommand.CreateFromTask<KeyboardShortcut>(KeyPressedAsync);
 			HideSearchWindow = ReactiveCommand.Create<Unit>(x => _onClose.OnNext(x));
 			PageSelected = ReactiveCommand.CreateFromTask<GenericPage>(NavigateToPageAsync);
@@ -80,6 +77,7 @@ namespace PrivateWiki.ViewModels
 		private async Task NavigateToPageAsync(GenericPage page)
 		{
 			_onPageSelected.OnNext(page);
+			_onClose.OnNext(Unit.Default);
 		}
 
 		private async Task KeyPressedAsync(KeyboardShortcut key)
