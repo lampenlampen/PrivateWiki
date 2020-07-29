@@ -7,7 +7,8 @@ namespace PrivateWiki
 		EditPage,
 		SearchPage,
 		PrintPdfPage,
-		NewPage
+		NewPage,
+		Escape
 	}
 
 	public static class KeyboardShortcutConverter
@@ -20,6 +21,7 @@ namespace PrivateWiki
 				"key:strg+p" => KeyboardShortcut.PrintPdfPage,
 				"key:strg+s" => KeyboardShortcut.SearchPage,
 				"key:strg+n" => KeyboardShortcut.NewPage,
+				"key:escape" => KeyboardShortcut.Escape,
 				_ => throw new Exception($"keyString ({keyString}) is not valid.")
 			};
 		}

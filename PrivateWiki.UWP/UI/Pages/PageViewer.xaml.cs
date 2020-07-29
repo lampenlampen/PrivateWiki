@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Navigation;
 using NLog;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.UI.Controls.PageViewers;
+using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 using PrivateWiki.ViewModels;
 using ReactiveUI;
 using Page = Windows.UI.Xaml.Controls.Page;
@@ -47,6 +48,8 @@ namespace PrivateWiki.UWP.UI.Pages
 		public PageViewer()
 		{
 			this.InitializeComponent();
+			// Testing
+			this.EnableFocusLogging();
 
 			ViewModel = new PageViewerViewModel();
 
@@ -105,6 +108,7 @@ namespace PrivateWiki.UWP.UI.Pages
 				ViewModel.OnNewPage.Subscribe(_ => NavigateToNewPage()).DisposeWith(disposable);
 				ViewModel.OnShowHistoryPage.Subscribe(a => ShowHistory(a)).DisposeWith(disposable);
 				ViewModel.OnSearch.Subscribe(_ => Search()).DisposeWith(disposable);
+				ViewModel.OnCloseSearchPopup.Subscribe(_ => SearchPopup.IsOpen = false).DisposeWith(disposable);
 
 				ViewModel.ShowPageLockedNotification.RegisterHandler(ShowPageLockedNotification)
 					.DisposeWith(disposable);
@@ -118,6 +122,8 @@ namespace PrivateWiki.UWP.UI.Pages
 							{ViewModel = (HtmlPageViewerControlViewModel) x};
 						ContentGrid.Children.Add(contentPresenter);
 					}).DisposeWith(disposable);
+
+				SearchPopupContentName.ViewModel = ViewModel.SearchControlViewModel;
 			});
 		}
 
@@ -166,14 +172,17 @@ namespace PrivateWiki.UWP.UI.Pages
 		{
 			_centerPopup(SearchPopup);
 			SearchPopup.IsOpen = true;
+
 			SearchPopup.Closed += (sender, e) =>
 			{
+				/*
 				var link = SearchPopupContentName.SelectedPageLink;
 
 				if (link != null)
 				{
 					NavigateToPage(Path.ofLink(link));
 				}
+				*/
 			};
 		}
 

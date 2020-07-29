@@ -35,6 +35,8 @@ namespace PrivateWiki.ViewModels
 			private set => this.RaiseAndSetIfChanged(ref _commandBarViewModel, value);
 		}
 
+		public GlobalSearchControlViewModel SearchControlViewModel { get; }
+
 		public GenericPage Page
 		{
 			get => _page;
@@ -86,11 +88,14 @@ namespace PrivateWiki.ViewModels
 		public IObservable<Unit> OnSearch => _onSearch;
 		private readonly ISubject<Unit> _onSearch;
 
+		public IObservable<Unit> OnCloseSearchPopup;
+
 		public PageViewerViewModel()
 		{
 			_backend = Application.Instance.Container.GetInstance<IPageBackendService>();
 			_mostRecentlyVisitedPagesService = Application.Instance.Container.GetInstance<IMostRecentlyVisitedPagesService>();
 			CommandBarViewModel = new PageViewerCommandBarViewModel();
+			SearchControlViewModel = new GlobalSearchControlViewModel();
 
 			// Commands
 			LoadPage = ReactiveCommand.CreateFromTask<string>(LoadPageAsync);
@@ -114,6 +119,9 @@ namespace PrivateWiki.ViewModels
 			// Interactions
 			_showPageLockedNotification = new Interaction<Path, Unit>();
 			_showPrintBrowserDialog = new Interaction<Path, bool>();
+
+			this.WhenAnyValue(x => x.SearchControlViewModel)
+				.Subscribe(x => { OnCloseSearchPopup = x.OnClose; });
 		}
 
 		private async Task LoadPageAsync(string id)

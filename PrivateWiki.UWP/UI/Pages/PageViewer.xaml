@@ -31,12 +31,9 @@
             Width="{Binding ElementName=PageViewerGrid, Path=Width}">
             
             <Border
-                Name="popupTestBorder"
-                Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
-                BorderBrush="{StaticResource ApplicationForegroundThemeBrush}"
-                BorderThickness="2">
+                Name="popupTestBorder">
                 
-                <ui:SearchPopupContent
+                <controls:GlobalSearchControl
                     x:Name="SearchPopupContentName" />
                 
             </Border>

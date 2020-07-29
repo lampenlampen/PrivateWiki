@@ -54,5 +54,7 @@ namespace PrivateWiki.DataModels.Pages
 				return new GenericPage(Id, Path, content, ContentType, Created, LastChanged, IsLocked, Tags);
 			}
 		}
+
+		public override string ToString() => Path.FullPath;
 	}
 }
