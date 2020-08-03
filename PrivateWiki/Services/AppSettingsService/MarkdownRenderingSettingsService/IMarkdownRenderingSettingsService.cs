@@ -1,5 +1,9 @@
+using System;
+using System.Threading.Tasks;
+
 namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService
 {
+	[Obsolete("", true)]
 	public interface IMarkdownRenderingSettingsService
 	{
 		#region Core

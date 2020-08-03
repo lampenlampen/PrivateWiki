@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using PrivateWiki.Rendering.Markdown.Markdig;
 
 namespace PrivateWiki.Rendering.Markdown
@@ -6,7 +7,7 @@ namespace PrivateWiki.Rendering.Markdown
 	{
 		private readonly Markdig.Markdig _renderer = new Markdig.Markdig();
 
-		public string RenderToHtml(string content)
+		public Task<string> RenderToHtml(string content)
 		{
 			return _renderer.ToHtml(content);
 		}

@@ -54,8 +54,7 @@ namespace PrivateWiki
 			// Settings
 			Container.Register<IAppSettingsService, AppSettings>(Lifestyle.Singleton);
 			Container.Register<IFeatureFlagsService, FeatureFlagsService>(Lifestyle.Singleton);
-			Container.Register<IMarkdownRenderingSettingsService, MarkdownRenderingSettings>(Lifestyle.Singleton);
-			// Testing BackupSyncSettingsTestService change to BackupSyncSettingsService
+			Container.Register<IRenderingMarkdownSettingsService, RenderingMarkdownSettingsService>(Lifestyle.Singleton);
 			Container.Register<IBackupSyncSettingsService, BackupSyncSettingsService>();
 
 			// Serialization

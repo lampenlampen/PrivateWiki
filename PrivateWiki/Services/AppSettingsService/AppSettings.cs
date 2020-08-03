@@ -7,8 +7,8 @@ namespace PrivateWiki.Services.AppSettingsService
 	public class AppSettings : IAppSettingsService
 	{
 		private readonly Container _container;
-
-		public IMarkdownRenderingSettingsService MarkdownRenderingSettings => _container.GetInstance<IMarkdownRenderingSettingsService>();
+		
+		public IRenderingMarkdownSettingsService RenderingMarkdownSettings => _container.GetInstance<IRenderingMarkdownSettingsService>();
 
 		public IFeatureFlagsService FeatureFlags => _container.GetInstance<IFeatureFlagsService>();
 

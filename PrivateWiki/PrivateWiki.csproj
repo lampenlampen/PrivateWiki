@@ -65,7 +65,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Remove="DataModels\RecentlyVisitedPagesManager.cs"/>
+        <Compile Remove="DataModels\RecentlyVisitedPagesManager.cs" />
     </ItemGroup>
 
 </Project>

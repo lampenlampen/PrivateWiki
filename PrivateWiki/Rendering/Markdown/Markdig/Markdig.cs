@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 using Markdig;
 using Markdig.Renderers;
 
@@ -6,9 +7,10 @@ namespace PrivateWiki.Rendering.Markdown.Markdig
 {
 	internal class Markdig
 	{
-		private readonly MarkdownPipeline _pipeline;
 		private readonly HtmlRenderer _renderer;
 		private readonly HtmlBuilder _htmlBuilder;
+
+		private readonly Task<MarkdownPipeline> _pipelineTask;
 
 		public Markdig()
 		{
@@ -16,21 +18,23 @@ namespace PrivateWiki.Rendering.Markdown.Markdig
 			_htmlBuilder.WriteHtmlStartTag();
 			_htmlBuilder.WriteHeadStartTag();
 
-			_pipeline = MarkdigPipelineBuilder.GetMarkdownPipeline(_htmlBuilder);
+			_pipelineTask = MarkdigPipelineBuilder.GetMarkdownPipeline(_htmlBuilder);
 
 			_htmlBuilder.WriteHeadEndTag();
 
 			_renderer = new HtmlRenderer(new StringWriter());
 		}
 
-		public string ToHtml(string content)
+		public async Task<string> ToHtml(string content)
 		{
 			var stringWriter = new StringWriter();
 			var renderer = new HtmlRenderer(stringWriter);
 
-			_pipeline.Setup(renderer);
+			var pipeline = await _pipelineTask;
+			
+			pipeline.Setup(renderer);
 
-			var dom2 = global::Markdig.Markdown.ToHtml(content, stringWriter, _pipeline);
+			var dom2 = global::Markdig.Markdown.ToHtml(content, stringWriter, pipeline);
 
 			stringWriter.Flush();
 

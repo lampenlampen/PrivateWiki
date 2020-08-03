@@ -181,16 +181,16 @@
       <Version>11.4.1</Version>
     </PackageReference>
   </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\PrivateWiki.UWP\PrivateWiki.UWP.csproj">
-            <Project>{e1b1092a-eee8-4c60-bd47-86bbde74b775}</Project>
-            <Name>PrivateWiki.UWP</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj">
-            <Project>{e2799e21-da92-4fa1-8df2-0c08006fffaa}</Project>
-            <Name>PrivateWiki</Name>
-        </ProjectReference>
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PrivateWiki.UWP\PrivateWiki.UWP.csproj">
+      <Project>{e1b1092a-eee8-4c60-bd47-86bbde74b775}</Project>
+      <Name>PrivateWiki.UWP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj">
+      <Project>{e2799e21-da92-4fa1-8df2-0c08006fffaa}</Project>
+      <Name>PrivateWiki</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="NodaTime">
       <HintPath>..\..\..\.nuget\packages\nodatime\2.4.7\lib\netstandard2.0\NodaTime.dll</HintPath>

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Markdig;
 using Markdig.Extensions.EmphasisExtras;
 using PrivateWiki.Rendering.Markdown.Markdig.Extensions;
@@ -10,7 +11,7 @@ namespace PrivateWiki.Rendering.Markdown.Markdig
 {
 	public static class MarkdigPipelineBuilder
 	{
-		public static MarkdownPipeline GetMarkdownPipeline(HtmlBuilder htmlBuilder)
+		public static Task<MarkdownPipeline> GetMarkdownPipeline(HtmlBuilder htmlBuilder)
 		{
 			return GetMarkdownPipelineImpl(htmlBuilder);
 		}
@@ -125,7 +126,7 @@ namespace PrivateWiki.Rendering.Markdown.Markdig
 			return pipelineBuilder.Build();
 		}
 
-		private static MarkdownPipeline GetMarkdownPipelineImpl(HtmlBuilder htmlBuilder)
+		private async static Task<MarkdownPipeline> GetMarkdownPipelineImpl(HtmlBuilder htmlBuilder)
 		{
 			var pipelineBuilder = new MarkdownPipelineBuilder();
 
@@ -134,69 +135,69 @@ namespace PrivateWiki.Rendering.Markdown.Markdig
 			htmlBuilder.AddKeyboardListener();
 			htmlBuilder.AddCharset();
 
-			IMarkdownRenderingSettingsService settings = Application.Instance.AppSettings.MarkdownRenderingSettings;
+			IRenderingMarkdownSettingsService settings = Application.Instance.AppSettings.RenderingMarkdownSettings;
 
-			if (!settings.IsHtmlEnabled) pipelineBuilder.DisableHtml();
-			if (settings.IsAbbreviationEnabled) pipelineBuilder.UseAbbreviations();
+			if (!await settings.IsHtmlEnabled()) pipelineBuilder.DisableHtml();
+			if (await settings.IsAbbreviationEnabled()) pipelineBuilder.UseAbbreviations();
 			// TODO AutoIdentifierOptions
-			if (settings.IsAutoIdentifierEnabled) pipelineBuilder.UseAutoIdentifiers();
-			if (settings.IsBootstrapEnabled) pipelineBuilder.UseBootstrap();
-			if (settings.IsCitationEnabled) pipelineBuilder.UseCitations();
-			if (settings.IsDefinitionListEnabled) pipelineBuilder.UseDefinitionLists();
+			if (await settings.IsAutoIdentifierEnabled()) pipelineBuilder.UseAutoIdentifiers();
+			if (await settings.IsBootstrapEnabled()) pipelineBuilder.UseBootstrap();
+			if (await settings.IsCitationEnabled()) pipelineBuilder.UseCitations();
+			if (await settings.IsDefinitionListEnabled()) pipelineBuilder.UseDefinitionLists();
 			// TODO EmojiSmileyOptions
-			if (settings.IsEmojiSmileyEnabled) pipelineBuilder.UseEmojiAndSmiley();
-			if (settings.IsFigureEnabled) pipelineBuilder.UseFigures();
-			if (settings.IsFooterEnabled) pipelineBuilder.UseFooters();
-			if (settings.IsFootnoteEnabled) pipelineBuilder.UseFootnotes();
+			if (await settings.IsEmojiSmileyEnabled()) pipelineBuilder.UseEmojiAndSmiley();
+			if (await settings.IsFigureEnabled()) pipelineBuilder.UseFigures();
+			if (await settings.IsFooterEnabled()) pipelineBuilder.UseFooters();
+			if (await settings.IsFootnoteEnabled()) pipelineBuilder.UseFootnotes();
 			// TODO MediaLinkOptions
-			if (settings.IsMedialinkEnabled) pipelineBuilder.UseMediaLinks();
-			if (settings.IsSoftlineAsHardlineBreakEnabled) pipelineBuilder.UseSoftlineBreakAsHardlineBreak();
+			if (await settings.IsMedialinkEnabled()) pipelineBuilder.UseMediaLinks();
+			if (await settings.IsSoftlineAsHardlineBreakEnabled()) pipelineBuilder.UseSoftlineBreakAsHardlineBreak();
 			// TODO SmartyPantsOptions
-			if (settings.IsSmartyPantEnabled) pipelineBuilder.UseSmartyPants();
-			if (settings.IsGenericAttributeEnabled) pipelineBuilder.UseGenericAttributes();
+			if (await settings.IsSmartyPantEnabled()) pipelineBuilder.UseSmartyPants();
+			if (await settings.IsGenericAttributeEnabled()) pipelineBuilder.UseGenericAttributes();
 
-			if (settings.IsDiagramEnabled)
+			if (await settings.IsDiagramEnabled())
 			{
 				pipelineBuilder.UseDiagrams();
 
-				if (settings.IsMermaidEnabled) htmlBuilder.UseMermaid();
-				if (settings.IsNomnomlEnabled) htmlBuilder.UseNomnoml();
+				if (await settings.IsMermaidEnabled()) htmlBuilder.UseMermaid();
+				if (await settings.IsNomnomlEnabled()) htmlBuilder.UseNomnoml();
 			}
 
-			if (settings.IsEmphasisEnabled)
+			if (await settings.IsEmphasisEnabled())
 			{
 				EmphasisExtraOptions options = 0;
 
-				if (settings.IsStrikethroughEnabled) options |= EmphasisExtraOptions.Strikethrough;
-				if (settings.IsInsertedEnabled) options |= EmphasisExtraOptions.Inserted;
-				if (settings.IsMarkedEnabled) options |= EmphasisExtraOptions.Marked;
-				if (settings.IsSuperSubScriptEnabled) options = options | EmphasisExtraOptions.Subscript | EmphasisExtraOptions.Superscript;
+				if (await settings.IsStrikethroughEnabled()) options |= EmphasisExtraOptions.Strikethrough;
+				if (await settings.IsInsertedEnabled()) options |= EmphasisExtraOptions.Inserted;
+				if (await settings.IsMarkedEnabled()) options |= EmphasisExtraOptions.Marked;
+				if (await settings.IsSuperSubScriptEnabled()) options = options | EmphasisExtraOptions.Subscript | EmphasisExtraOptions.Superscript;
 
 				pipelineBuilder.UseEmphasisExtras(options);
 			}
 
-			if (settings.IsListEnabled)
+			if (await settings.IsListEnabled())
 			{
-				if (settings.IsTaskListEnabled) pipelineBuilder.UseTaskLists();
-				if (settings.IsListExtraEnabled) pipelineBuilder.UseListExtras();
+				if (await settings.IsTaskListEnabled()) pipelineBuilder.UseTaskLists();
+				if (await settings.IsListExtraEnabled()) pipelineBuilder.UseListExtras();
 			}
 
-			if (settings.IsMathEnabled)
+			if (await settings.IsMathEnabled())
 			{
 				pipelineBuilder.UseMyMathExtension();
 				htmlBuilder.UseMathjax();
 			}
 
-			if (settings.IsSyntaxHighlightingEnabled)
+			if (await settings.IsSyntaxHighlightingEnabled())
 			{
 				htmlBuilder.UsePrismSyntaxHighlighting();
 			}
 
-			if (settings.IsTableEnabled)
+			if (await settings.IsTableEnabled())
 			{
-				if (settings.IsGridTableEnabled) pipelineBuilder.UseGridTables();
+				if (await settings.IsGridTableEnabled()) pipelineBuilder.UseGridTables();
 				// TODO PipeTableOptions
-				if (settings.IsPiepTableEnabled) pipelineBuilder.UsePipeTables();
+				if (await settings.IsPiepTableEnabled()) pipelineBuilder.UsePipeTables();
 			}
 
 			pipelineBuilder.UseMyWikiLinkExtension();

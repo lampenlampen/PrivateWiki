@@ -5,7 +5,7 @@ namespace PrivateWiki.Services.AppSettingsService
 {
 	public interface IAppSettingsService
 	{
-		IMarkdownRenderingSettingsService MarkdownRenderingSettings { get; }
+		IRenderingMarkdownSettingsService RenderingMarkdownSettings { get; }
 
 		IFeatureFlagsService FeatureFlags { get; }
 	}
