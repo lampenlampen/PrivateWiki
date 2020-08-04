@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using PrivateWiki.DataModels.Settings;
 
 namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService
 {
@@ -122,10 +123,13 @@ namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsServi
 		Task IsGridTableEnabled(bool value);
 		Task<bool> IsGridTableEnabled();
 
-		Task IsPiepTableEnabled(bool value);
-		Task<bool> IsPiepTableEnabled();
+		Task IsPipeTableEnabled(bool value);
+		Task<bool> IsPipeTableEnabled();
 
 		#endregion Table
 
+		public Task<RenderingMarkdownSettingsModel> GetRenderingMarkdownSettingsModelAsync();
+
+		public Task SaveRenderingMarkdownSettingsModelAsync(RenderingMarkdownSettingsModel model);
 	}
 }

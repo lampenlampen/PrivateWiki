@@ -197,7 +197,7 @@ namespace PrivateWiki.Rendering.Markdown.Markdig
 			{
 				if (await settings.IsGridTableEnabled()) pipelineBuilder.UseGridTables();
 				// TODO PipeTableOptions
-				if (await settings.IsPiepTableEnabled()) pipelineBuilder.UsePipeTables();
+				if (await settings.IsPipeTableEnabled()) pipelineBuilder.UsePipeTables();
 			}
 
 			pipelineBuilder.UseMyWikiLinkExtension();

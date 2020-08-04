@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using PrivateWiki.DataModels.Settings;
 using PrivateWiki.Services.KeyValueCaches;
 
 namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService
@@ -145,10 +146,85 @@ namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsServi
 
 		public Task<bool> IsGridTableEnabled() => GetBool(Keys.IsGridTableEnabled);
 
-		public Task IsPiepTableEnabled(bool value) => _cache.InsertAsync(Keys.IsPiepTableEnabled, value);
+		public Task IsPipeTableEnabled(bool value) => _cache.InsertAsync(Keys.IsPipeTableEnabled, value);
 
-		public Task<bool> IsPiepTableEnabled() => GetBool(Keys.IsPiepTableEnabled);
+		public Task<bool> IsPipeTableEnabled() => GetBool(Keys.IsPipeTableEnabled);
 
+		public async Task<RenderingMarkdownSettingsModel> GetRenderingMarkdownSettingsModelAsync()
+		{
+			// TODO Enhance IPersistentKeyValueCache to retrieve multiple values at once.
+			return new RenderingMarkdownSettingsModel
+			{
+				IsHtmlEnabled = await IsHtmlEnabled().ConfigureAwait(false),
+				IsAbbreviationEnabled = await IsAbbreviationEnabled().ConfigureAwait(false),
+				IsAutoIdentifierEnabled = await IsAutoIdentifierEnabled().ConfigureAwait(false),
+				IsAutoLinkEnabled = await IsAutoLinkEnabled().ConfigureAwait(false),
+				IsBootstrapEnabled = await IsBootstrapEnabled().ConfigureAwait(false),
+				IsCitationEnabled = await IsCitationEnabled().ConfigureAwait(false),
+				IsDefinitionListEnabled = await IsDefinitionListEnabled().ConfigureAwait(false),
+				IsEmojiSmileyEnabled = await IsEmojiSmileyEnabled().ConfigureAwait(false),
+				IsFigureEnabled = await IsFigureEnabled().ConfigureAwait(false),
+				IsFooterEnabled = await IsFooterEnabled().ConfigureAwait(false),
+				IsFootnoteEnabled = await IsFootnoteEnabled().ConfigureAwait(false),
+				IsMedialinkEnabled = await IsMedialinkEnabled().ConfigureAwait(false),
+				IsSoftlineAsHardlineBreakEnabled = await IsSoftlineAsHardlineBreakEnabled().ConfigureAwait(false),
+				IsSmartyPantEnabled = await IsSmartyPantEnabled().ConfigureAwait(false),
+				IsGenericAttributeEnabled = await IsGenericAttributeEnabled().ConfigureAwait(false),
+				IsDiagramEnabled = await IsDiagramEnabled().ConfigureAwait(false),
+				IsMermaidEnabled = await IsMermaidEnabled().ConfigureAwait(false),
+				IsNomnomlEnabled = await IsNomnomlEnabled().ConfigureAwait(false),
+				IsEmphasisEnabled = await IsEmphasisEnabled().ConfigureAwait(false),
+				IsStrikethroughEnabled = await IsStrikethroughEnabled().ConfigureAwait(false),
+				IsSuperSubScriptEnabled = await IsSuperSubScriptEnabled().ConfigureAwait(false),
+				IsInsertedEnabled = await IsInsertedEnabled().ConfigureAwait(false),
+				IsMarkedEnabled = await IsMarkedEnabled().ConfigureAwait(false),
+				IsListEnabled = await IsListEnabled().ConfigureAwait(false),
+				IsTaskListEnabled = await IsTaskListEnabled().ConfigureAwait(false),
+				IsListExtraEnabled = await IsListExtraEnabled().ConfigureAwait(false),
+				IsMathEnabled = await IsMathEnabled().ConfigureAwait(false),
+				IsSyntaxHighlightingEnabled = await IsSyntaxHighlightingEnabled().ConfigureAwait(false),
+				IsTableEnabled = await IsTableEnabled().ConfigureAwait(false),
+				IsGridTableEnabled = await IsGridTableEnabled().ConfigureAwait(false),
+				IsPipeTableEnabled = await IsPipeTableEnabled().ConfigureAwait(false)
+			};
+		}
+
+		public Task SaveRenderingMarkdownSettingsModelAsync(RenderingMarkdownSettingsModel model)
+		{
+			return Task.WhenAll(
+				IsHtmlEnabled(model.IsHtmlEnabled),
+				IsAbbreviationEnabled(model.IsAbbreviationEnabled),
+				IsAutoIdentifierEnabled(model.IsAutoIdentifierEnabled),
+				IsAutoLinkEnabled(model.IsAutoLinkEnabled),
+				IsBootstrapEnabled(model.IsBootstrapEnabled),
+				IsCitationEnabled(model.IsCitationEnabled),
+				IsDefinitionListEnabled(model.IsDefinitionListEnabled),
+				IsEmojiSmileyEnabled(model.IsEmojiSmileyEnabled),
+				IsFigureEnabled(model.IsFigureEnabled),
+				IsFooterEnabled(model.IsFooterEnabled),
+				IsFootnoteEnabled(model.IsFootnoteEnabled),
+				IsMedialinkEnabled(model.IsMedialinkEnabled),
+				IsSoftlineAsHardlineBreakEnabled(model.IsSoftlineAsHardlineBreakEnabled),
+				IsSmartyPantEnabled(model.IsSmartyPantEnabled),
+				IsGenericAttributeEnabled(model.IsGenericAttributeEnabled),
+				IsDiagramEnabled(model.IsDiagramEnabled),
+				IsMermaidEnabled(model.IsMermaidEnabled),
+				IsNomnomlEnabled(model.IsNomnomlEnabled),
+				IsEmphasisEnabled(model.IsEmphasisEnabled),
+				IsStrikethroughEnabled(model.IsStrikethroughEnabled),
+				IsSuperSubScriptEnabled(model.IsSuperSubScriptEnabled),
+				IsInsertedEnabled(model.IsInsertedEnabled),
+				IsMarkedEnabled(model.IsMarkedEnabled),
+				IsListEnabled(model.IsListEnabled),
+				IsTaskListEnabled(model.IsTaskListEnabled),
+				IsListExtraEnabled(model.IsListExtraEnabled),
+				IsMathEnabled(model.IsMathEnabled),
+				IsSyntaxHighlightingEnabled(model.IsSyntaxHighlightingEnabled),
+				IsTableEnabled(model.IsTableEnabled),
+				IsGridTableEnabled(model.IsGridTableEnabled),
+				IsPipeTableEnabled(model.IsPipeTableEnabled)
+			);
+		}
 
 		private static class Keys
 		{
@@ -212,7 +288,7 @@ namespace PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsServi
 
 			public const string IsGridTableEnabled = "settings_rendering_markdown_isGridTableEnabled";
 
-			public const string IsPiepTableEnabled = "settings_rendering_markdown_isPipeTableEnabled";
+			public const string IsPipeTableEnabled = "settings_rendering_markdown_isPipeTableEnabled";
 		}
 	}
 }
