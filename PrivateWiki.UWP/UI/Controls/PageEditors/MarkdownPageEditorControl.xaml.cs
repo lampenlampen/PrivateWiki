@@ -56,6 +56,11 @@ namespace PrivateWiki.UWP.UI.Controls.PageEditors
 					.Select(x => x.args)
 					.Subscribe(ShowPreviewLinksAsNotifications)
 					.DisposeWith(disposable);
+
+				this.WhenAnyValue(x => x.ViewModel.Labels)
+					.WhereNotNull()
+					.BindTo(LabelsListView, x => x.ItemsSource)
+					.DisposeWith(disposable);
 			});
 		}
 

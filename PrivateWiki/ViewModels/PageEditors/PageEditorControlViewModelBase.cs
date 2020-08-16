@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -37,6 +38,13 @@ namespace PrivateWiki.ViewModels.PageEditors
 			set => this.RaiseAndSetIfChanged(ref _content, value);
 		}
 
+		private IList<Label> _labels;
+
+		public IList<Label> Labels
+		{
+			get => _labels;
+			set => this.RaiseAndSetIfChanged(ref _labels, value);
+		}
 
 		public IObservable<GenericPage> OnSavePage => _onSavePage;
 		private protected ISubject<GenericPage> _onSavePage;
@@ -57,6 +65,10 @@ namespace PrivateWiki.ViewModels.PageEditors
 			CommandBarViewModel.OnSave.InvokeCommand(this, x => x.SavePage);
 			OnOpenInExternalEditor = CommandBarViewModel.OnOpenInExternalEditor.AsObservable();
 			OnDelete = CommandBarViewModel.OnDelete.AsObservable();
+
+			this.WhenAnyValue(x => x.Page)
+				.WhereNotNull()
+				.Subscribe(x => Labels = x.Labels);
 		}
 
 		public ReactiveCommand<Unit, Unit> SavePage { get; }

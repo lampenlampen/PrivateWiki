@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -9,9 +9,11 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Navigation;
 using NLog;
 using PrivateWiki.DataModels.Pages;
+using PrivateWiki.UWP.UI.Controls;
 using PrivateWiki.UWP.UI.Controls.PageViewers;
 using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 using PrivateWiki.ViewModels;
+using PrivateWiki.ViewModels.Controls;
 using ReactiveUI;
 using Page = Windows.UI.Xaml.Controls.Page;
 
@@ -44,6 +46,9 @@ namespace PrivateWiki.UWP.UI.Pages
 		#endregion
 
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+		private Label /**/
+			Label = new Label("testlabel", "testdescription", "huhu");
 
 		public PageViewer()
 		{
@@ -123,6 +128,29 @@ namespace PrivateWiki.UWP.UI.Pages
 						ContentGrid.Children.Add(contentPresenter);
 					}).DisposeWith(disposable);
 
+				this.WhenAnyValue(x => x.ViewModel.Labels)
+					.WhereNotNull()
+					.Subscribe(labels =>
+					{
+						foreach (var label in labels)
+						{
+							var control = new LabelControl
+							{
+								ViewModel = new LabelControlViewModel(),
+								Label = label.Key,
+								Value = label.Value,
+								Color = label.Color,
+								Description = label.Description
+							};
+
+							control.OnClick.Subscribe(x => Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification())
+								.DisposeWith(disposable);
+
+							TagsPanel.Children.Add(control);
+						}
+					})
+					.DisposeWith(disposable);
+
 				SearchPopupContentName.ViewModel = ViewModel.SearchControlViewModel;
 			});
 		}
@@ -172,18 +200,6 @@ namespace PrivateWiki.UWP.UI.Pages
 		{
 			_centerPopup(SearchPopup);
 			SearchPopup.IsOpen = true;
-
-			SearchPopup.Closed += (sender, e) =>
-			{
-				/*
-				var link = SearchPopupContentName.SelectedPageLink;
-
-				if (link != null)
-				{
-					NavigateToPage(Path.ofLink(link));
-				}
-				*/
-			};
 		}
 
 		private async Task ShowPrintPdfBrowserDialog(InteractionContext<Path, bool> context)

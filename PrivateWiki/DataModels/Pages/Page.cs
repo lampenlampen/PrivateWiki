@@ -6,6 +6,7 @@ namespace PrivateWiki.DataModels.Pages
 {
 	public abstract class Page
 	{
+		[Obsolete]
 		protected Page()
 		{
 		}
@@ -61,8 +62,6 @@ namespace PrivateWiki.DataModels.Pages
 
 		public List<Tag> Tags { get; }
 
-		//public string ContentType => GetContentType();
-
-		//public abstract string GetContentType();
+		public IList<Label> Labels { get; } = Label.GetTestData();
 	}
 }

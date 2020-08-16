@@ -7,6 +7,8 @@
     xmlns:privateWiki="using:PrivateWiki"
     xmlns:ui="using:PrivateWiki.UWP.UI"
     xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
+    xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls2="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -20,8 +22,11 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
+        
+        <controls:LabelControl
+            Label="{x:Bind Label}"/>
 
         <Popup
             x:Name="SearchPopup"
@@ -37,8 +42,6 @@
                     x:Name="SearchPopupContentName" />
                 
             </Border>
-
-            
         </Popup>
 
         <controls:PageViewerCommandBar
@@ -53,21 +56,6 @@
             Grid.Row="1"
             Grid.Column="0"
             x:Name="ContentGrid" />
-
-        <!--
-        <Border
-            Grid.Row="1"
-            Grid.Column="0"
-            BorderBrush="Gray"
-            BorderThickness="2"
-            CornerRadius="4"
-            Padding="5, 0, 5, 5">
-            <Grid
-            x:Name="ContentGrid"/>
-        </Border>
--->
-
-        <!--
 
         <controls1:GridSplitter
             Grid.Row="1"
@@ -100,24 +88,21 @@
 
             <controls2:TreeView
                 Name="Treeview"
-                ItemInvoked="TreeView_ItemInvoked"
                 MinWidth="250"
                 VerticalAlignment="Top" />
 
             <TextBlock
-                x:Uid="/PageViewer/Tags"
                 Name="TagsHeader"
                 HorizontalAlignment="Left"
                 FontSize="16"
                 TextDecorations="Underline"
+                Text="Labels"
                 Padding="10, 0, 0, 20" />
 
             <controls1:WrapPanel
                 x:Name="TagsPanel"/>
 
         </StackPanel>
-
-        -->
 
     </Grid>
 </Page>

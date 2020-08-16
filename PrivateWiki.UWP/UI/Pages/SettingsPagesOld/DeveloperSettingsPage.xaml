@@ -43,7 +43,7 @@
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch">
 
-                <StackPanel x:Name="stackpanel" Background="White" Padding="8">
+                <StackPanel x:Name="stackpanel" Background="White" Padding="8" Visibility="Collapsed">
 
                     <ToggleSwitch
                         OnContent="Acrylic background enabled"

@@ -175,7 +175,7 @@ namespace PrivateWiki.UWP.UI.Pages
 					{
 						CornerRadius = new CornerRadius(12),
 						BorderThickness = new Thickness(0),
-						Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 224, 224, 224)),
+						Background = new SolidColorBrush(Windows.UI.Color.FromArgb(La)),
 						Margin = new Thickness(5, 5, 5, 5),
 						Padding = new Thickness(10, 5, 10, 5),
 						Child = textblock

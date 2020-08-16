@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -44,6 +45,14 @@ namespace PrivateWiki.ViewModels
 		}
 
 		private GenericPage _page;
+
+		private IList<Label>? _labels = null;
+
+		public IList<Label>? Labels
+		{
+			get => _labels;
+			set => this.RaiseAndSetIfChanged(ref _labels, value);
+		}
 
 		public ReactiveCommand<string, Unit> LoadPage { get; }
 
@@ -111,7 +120,7 @@ namespace PrivateWiki.ViewModels
 
 			// Events
 			_onNavigateToExistingPage = new Subject<Path>();
-			_onNavigateToNewPage = new Subject<Path>();
+			_onNavigateToNewPage = new Subject<Path?>();
 			_onEditPage = new Subject<Path>();
 			_onShowHistoryPage = new Subject<Path>();
 			_onSearch = new Subject<Unit>();
@@ -123,6 +132,10 @@ namespace PrivateWiki.ViewModels
 			this.WhenAnyValue(x => x.SearchControlViewModel)
 				.Subscribe(x => { OnCloseSearchPopup = x.OnClose; });
 
+			this.WhenAnyValue(x => x.Page)
+				.WhereNotNull()
+				.Subscribe(x => Labels = x.Labels);
+
 			SearchControlViewModel.OnPageSelected.Subscribe(async page => await NavigateToPageAsync(page.Path));
 		}
 
@@ -131,7 +144,7 @@ namespace PrivateWiki.ViewModels
 			Page = await _backend.GetPageAsync(id);
 
 			PageContentViewer = new HtmlPageViewerControlViewModel {Page = Page};
-			PageContentViewer.OnWikiLinkClicked.Subscribe(x => NavigateToPageAsync(x));
+			PageContentViewer.OnWikiLinkClicked.Subscribe(async x => await NavigateToPageAsync(x));
 			PageContentViewer.OnKeyPressed.Subscribe(KeyPressed);
 		}
 

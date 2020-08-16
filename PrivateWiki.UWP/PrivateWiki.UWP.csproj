@@ -113,26 +113,29 @@
     <Compile Include="StorageBackend\SqLiteStorageOptions.cs" />
     <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs" />
     <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs" />
-    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs" />
-    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs" />
-    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs" />
-    <Compile Include="UI\Controls\DiffControl.xaml.cs">
-      <DependentUpon>DiffControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\GlobalSearchControl.xaml.cs">
-      <DependentUpon>GlobalSearchControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\IPageViewerCommandBar.cs" />
-    <Compile Include="UI\Controls\MyTreeViewNode.cs" />
-    <Compile Include="UI\Controls\NavigationSettingsDividerItemControl.xaml.cs">
-      <DependentUpon>NavigationSettingsDividerItemControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\NavigationSettingsHeaderItemControl.xaml.cs">
-      <DependentUpon>NavigationSettingsHeaderItemControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\NavigationSettingsLinkItemControl.xaml.cs">
-      <DependentUpon>NavigationSettingsLinkItemControl.xaml</DependentUpon>
-    </Compile>
+      <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs"/>
+      <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs"/>
+      <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs"/>
+      <Compile Include="UI\Controls\DiffControl.xaml.cs">
+          <DependentUpon>DiffControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Controls\GlobalSearchControl.xaml.cs">
+          <DependentUpon>GlobalSearchControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Controls\IPageViewerCommandBar.cs"/>
+      <Compile Include="UI\Controls\LabelControl.xaml.cs">
+          <DependentUpon>LabelControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Controls\MyTreeViewNode.cs"/>
+      <Compile Include="UI\Controls\NavigationSettingsDividerItemControl.xaml.cs">
+          <DependentUpon>NavigationSettingsDividerItemControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Controls\NavigationSettingsHeaderItemControl.xaml.cs">
+          <DependentUpon>NavigationSettingsHeaderItemControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Controls\NavigationSettingsLinkItemControl.xaml.cs">
+          <DependentUpon>NavigationSettingsLinkItemControl.xaml</DependentUpon>
+      </Compile>
     <Compile Include="UI\Controls\PageEditorCommandBar.xaml.cs">
       <DependentUpon>PageEditorCommandBar.xaml</DependentUpon>
     </Compile>
@@ -261,25 +264,28 @@
     <Compile Include="UI\Pages\SettingsPages\PagesSettingsPage.xaml.cs">
       <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\SearchPopupContent.xaml.cs">
-      <DependentUpon>SearchPopupContent.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\TemplateSelector\MediaManagerTreeViewItemTemplateSelector.cs" />
-    <Compile Include="UI\TemplateSelector\PageHistoryTemplateSelector.cs" />
-    <Compile Include="UI\TemplateSelector\SettingNavigationTemplateSelector.cs" />
-    <Compile Include="UI\TemplateSelector\SettingStorageTemplateSelector.cs" />
-    <Compile Include="UI\XamlConverter\NegateBoolConverter.cs" />
-    <Compile Include="UI\XamlConverter\NegateBoolToVisibilityConverter.cs" />
-    <Compile Include="UI\XamlConverter\ThumbnailToImageConverter.cs" />
-    <Compile Include="UI\XamlConverter\BoolToColorConverter.cs" />
-    <Compile Include="UI\XamlConverter\BoolVisibilityConverter.cs" />
-    <Compile Include="UI\XamlConverter\InstantToReadableDateTimeConverter.cs" />
-    <Compile Include="UI\XamlConverter\SyncFrequencyToRadioButtonConverter.cs" />
-    <Compile Include="Utilities\DiffMatchPatchAlg.cs" />
-    <Compile Include="Models\DeveloperSettingsModel.cs" />
-    <Compile Include="Models\NavigationItem.cs" />
-    <Compile Include="MyUriToStreamResolver.cs" />
-    <Compile Include="NavigationHandler.cs" />
+      <Compile Include="UI\SearchPopupContent.xaml.cs">
+          <DependentUpon>SearchPopupContent.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\TemplateSelector\MediaManagerTreeViewItemTemplateSelector.cs"/>
+      <Compile Include="UI\TemplateSelector\PageHistoryTemplateSelector.cs"/>
+      <Compile Include="UI\TemplateSelector\SettingNavigationTemplateSelector.cs"/>
+      <Compile Include="UI\TemplateSelector\SettingStorageTemplateSelector.cs"/>
+      <Compile Include="UI\XamlConverter\NegateBoolConverter.cs"/>
+      <Compile Include="UI\XamlConverter\NegateBoolToVisibilityConverter.cs"/>
+      <Compile Include="UI\XamlConverter\SystemDrawingColorToBrushConverter.cs"/>
+      <Compile Include="UI\XamlConverter\SystemDrawingColorToWindowsUiColorConverter.cs"/>
+      <Compile Include="UI\XamlConverter\TextColorBasedOnAccentColorConverter.cs"/>
+      <Compile Include="UI\XamlConverter\ThumbnailToImageConverter.cs"/>
+      <Compile Include="UI\XamlConverter\BoolToColorConverter.cs"/>
+      <Compile Include="UI\XamlConverter\BoolVisibilityConverter.cs"/>
+      <Compile Include="UI\XamlConverter\InstantToReadableDateTimeConverter.cs"/>
+      <Compile Include="UI\XamlConverter\SyncFrequencyToRadioButtonConverter.cs"/>
+      <Compile Include="Utilities\DiffMatchPatchAlg.cs"/>
+      <Compile Include="Models\DeveloperSettingsModel.cs"/>
+      <Compile Include="Models\NavigationItem.cs"/>
+      <Compile Include="MyUriToStreamResolver.cs"/>
+      <Compile Include="NavigationHandler.cs"/>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\DeveloperSettingsModelHandler.cs" />
     <Compile Include="Settings\RenderingModelHandler.cs" />
@@ -340,26 +346,30 @@
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="UI\Controls\DiffControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\GlobalSearchControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\NavigationSettingsDividerItemControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\NavigationSettingsHeaderItemControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+    <ItemGroup>
+        <ApplicationDefinition Include="App.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <SubType>Designer</SubType>
+        </ApplicationDefinition>
+        <Page Include="UI\Controls\DiffControl.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Include="UI\Controls\GlobalSearchControl.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Include="UI\Controls\LabelControl.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Include="UI\Controls\NavigationSettingsDividerItemControl.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Include="UI\Controls\NavigationSettingsHeaderItemControl.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Controls\NavigationSettingsLinkItemControl.xaml">
       <SubType>Designer</SubType>
