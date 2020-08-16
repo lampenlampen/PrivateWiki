@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Windows.UI.Xaml.Controls;
@@ -60,6 +60,28 @@ namespace PrivateWiki.UWP.UI.Controls.PageEditors
 				this.WhenAnyValue(x => x.ViewModel.Labels)
 					.WhereNotNull()
 					.BindTo(LabelsListView, x => x.ItemsSource)
+					.DisposeWith(disposable);
+
+				this.WhenAnyValue(x => x.ViewModel.Labels)
+					.WhereNotNull()
+					.Subscribe(labels =>
+					{
+						foreach (var label in labels)
+						{
+							var control = new LabelControl
+							{
+								Label = label.Key,
+								Value = label.Value,
+								Color = label.Color,
+								Description = label.Description
+							};
+
+							control.OnClick.Subscribe(x => Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification())
+								.DisposeWith(disposable);
+
+							LabelStackPanel.Children.Add(control);
+						}
+					})
 					.DisposeWith(disposable);
 			});
 		}

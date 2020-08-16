@@ -8,6 +8,7 @@
     xmlns:pageEditors="using:PrivateWiki.UWP.UI.Controls.PageEditors"
     xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
     xmlns:pages="using:PrivateWiki.DataModels.Pages"
+    xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
     <Grid>
@@ -161,7 +162,7 @@
                 Header="Metadaten">
                 <StackPanel>
 
-                    <TextBlock Text="Tags"
+                    <TextBlock Text="Labels"
                                HorizontalAlignment="Left"
                                FontSize="30"
                                TextDecorations="Underline"
@@ -172,6 +173,9 @@
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Margin" Value="5"/>
+                                <Setter Property="Padding" Value="10"/>
+                                <Setter Property="Background" Value="WhiteSmoke" />
                             </Style>
                         </ListView.ItemContainerStyle>
                     
@@ -200,8 +204,7 @@
                                                 Grid.Column="0"
                                                 Color="{x:Bind Color}"
                                                 Label="{x:Bind Key}"
-                                                Value="{x:Bind Value}"
-                                                />
+                                                Value="{x:Bind Value}"/>
                                             
                                         </Grid>
 
@@ -220,6 +223,9 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+
+                    <controls1:WrapPanel
+                        x:Name="LabelStackPanel"/>
 
                     <TextBox
                         Name="AddTagBox" />
