@@ -17,7 +17,6 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -103,16 +102,16 @@
     <Compile Include="Models\LFSModel.cs" />
     <Compile Include="Services\ApplicationLauncherService\ApplicationLauncherService.cs" />
     <Compile Include="Services\FilesystemService\ApplicationDataService.cs" />
-    <Compile Include="Services\FilesystemService\UWPFullTrustFilesystemService.cs" />
-    <Compile Include="Settings\LFSSyncActions.cs" />
-    <Compile Include="Settings\SyncModelHandler.cs" />
-    <Compile Include="StorageBackend\DefaultStorageBackends.cs" />
-    <Compile Include="StorageBackend\IMarkdownPageStorage.cs" />
-    <Compile Include="StorageBackend\ISqLiteBackend.cs" />
-    <Compile Include="StorageBackend\IStorageBackend.cs" />
-    <Compile Include="StorageBackend\SqLiteStorageOptions.cs" />
-    <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs" />
-    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs" />
+      <Compile Include="Services\FilesystemService\UWPFullTrustFilesystemService.cs"/>
+      <Compile Include="Settings\LFSSyncActions.cs"/>
+      <Compile Include="Settings\SyncModelHandler.cs"/>
+      <Compile Include="StorageBackend\DefaultStorageBackends.cs"/>
+      <Compile Include="StorageBackend\IMarkdownPageStorage.cs"/>
+      <Compile Include="StorageBackend\ISqLiteBackend.cs"/>
+      <Compile Include="StorageBackend\IStorageBackend.cs"/>
+      <Compile Include="StorageBackend\SqLiteStorageOptions.cs"/>
+      <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs"/>
+      <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs"/>
       <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs"/>
       <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs"/>
       <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs"/>
@@ -258,12 +257,12 @@
     <Compile Include="UI\Pages\SettingsPages\AssetsSettingsPage.xaml.cs">
       <DependentUpon>AssetsSettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pages\SettingsPages\BackupSyncSettingsPage.xaml.cs">
-      <DependentUpon>BackupSyncSettingsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Pages\SettingsPages\PagesSettingsPage.xaml.cs">
-      <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
-    </Compile>
+      <Compile Include="UI\Pages\SettingsPages\BackupSyncSettingsPage.xaml.cs">
+          <DependentUpon>BackupSyncSettingsPage.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Pages\SettingsPages\PagesSettingsPage.xaml.cs">
+          <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
+      </Compile>
       <Compile Include="UI\SearchPopupContent.xaml.cs">
           <DependentUpon>SearchPopupContent.xaml</DependentUpon>
       </Compile>
@@ -286,14 +285,14 @@
       <Compile Include="Models\NavigationItem.cs"/>
       <Compile Include="MyUriToStreamResolver.cs"/>
       <Compile Include="NavigationHandler.cs"/>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\DeveloperSettingsModelHandler.cs" />
-    <Compile Include="Settings\RenderingModelHandler.cs" />
-    <Compile Include="Utilities\ExtensionFunctions\ColorExtension.cs" />
-    <Compile Include="Utilities\ExtensionFunctions\DependencyObjectExtension.cs" />
-    <Compile Include="Utilities\ExtensionFunctions\LinqExtensions.cs" />
-    <Compile Include="Utilities\ExtensionFunctions\UIElementExtensions.cs" />
-    <Compile Include="Utilities\FullyObservableCollection.cs" />
+      <Compile Include="Properties\AssemblyInfo.cs"/>
+      <Compile Include="Settings\DeveloperSettingsModelHandler.cs"/>
+      <Compile Include="Settings\RenderingModelHandler.cs"/>
+      <Compile Include="Utilities\ExtensionFunctions\ColorExtension.cs"/>
+      <Compile Include="Utilities\ExtensionFunctions\DependencyObjectExtension.cs"/>
+      <Compile Include="Utilities\ExtensionFunctions\LinqExtensions.cs"/>
+      <Compile Include="Utilities\ExtensionFunctions\UIElementExtensions.cs"/>
+      <Compile Include="Utilities\FullyObservableCollection.cs"/>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
