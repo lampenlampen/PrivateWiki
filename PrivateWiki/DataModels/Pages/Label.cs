@@ -8,7 +8,7 @@ namespace PrivateWiki.DataModels.Pages
 	{
 		private static readonly Color DefaultColor = Color.FromArgb(255, 0, 0, 0);
 
-		public Guid Id { get; }
+		public Guid Id { get; } = Guid.NewGuid();
 
 		public string Key { get; }
 
@@ -33,7 +33,9 @@ namespace PrivateWiki.DataModels.Pages
 			Value = value;
 		}
 
-		public static IList<Label> GetTestData() => new List<Label>
+		public static IList<Label> GetTestData() => testData;
+
+		private static IList<Label> testData = new List<Label>
 		{
 			new Label("testKey1", "Description 1", Color.Red),
 			new Label("testKey2", "Description 2", "testValue2"),

@@ -27,7 +27,6 @@
         x:Name="RootGrid"
         BorderThickness="1"
         CornerRadius="12"
-        Margin="5, 5, 5, 5"
         Tapped="Label_Tapped">
 
         <Grid.ColumnDefinitions>

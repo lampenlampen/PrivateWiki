@@ -140,7 +140,8 @@ namespace PrivateWiki.UWP.UI.Pages
 								Label = label.Key,
 								Value = label.Value,
 								Color = label.Color,
-								Description = label.Description
+								Description = label.Description,
+								Margin = new Thickness(5)
 							};
 
 							control.OnClick.Subscribe(x => Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification())

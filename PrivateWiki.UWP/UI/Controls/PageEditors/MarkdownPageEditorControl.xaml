@@ -141,7 +141,7 @@
 
                     <WebView
                         Grid.Row="0"
-                        Name="Preview_WebView"/>
+                        Name="Preview_WebView" />
 
                 </Grid>
             </PivotItem>
@@ -153,94 +153,174 @@
                     <TextBox
                         x:Name="Preview_Html"
                         IsReadOnly="True"
-                        TextWrapping="Wrap"/>
+                        TextWrapping="Wrap" />
                 </Grid>
             </PivotItem>
 
             <PivotItem
                 x:Name="MetadataPivotItem"
                 Header="Metadaten">
-                <StackPanel>
 
-                    <TextBlock Text="Labels"
-                               HorizontalAlignment="Left"
-                               FontSize="30"
-                               TextDecorations="Underline"
-                               Padding="20, 0, 0, 20" />
-                    
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <RelativePanel
+                        Grid.Row="0">
+
+                        <TextBlock
+                            RelativePanel.AlignLeftWithPanel="True"
+                            Text="Labels"
+                            HorizontalAlignment="Left"
+                            FontSize="30"
+                            TextDecorations="Underline" />
+
+                        <Button
+                            x:Name="AddLabelBtn"
+                            RelativePanel.AlignRightWithPanel="True"
+                            Content="Add Label">
+
+                            <Button.Flyout>
+                                <Flyout>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+
+                                        <RelativePanel
+                                            Grid.Row="0">
+
+                                            <TextBlock
+                                                RelativePanel.AlignLeftWithPanel="True"
+                                                RelativePanel.AlignVerticalCenterWithPanel="True"
+                                                Text="Select Labels"/>
+
+                                            <StackPanel
+                                                RelativePanel.AlignRightWithPanel="True"
+                                                Orientation="Horizontal">
+
+                                                <Button
+                                                    x:Name="CreateNewLabelBtn"
+                                                    Style="{ThemeResource ButtonRevealStyle}"
+                                                    Background="Transparent">
+
+                                                    <Button.Content>
+                                                        <SymbolIcon Symbol="Add" />
+                                                    </Button.Content>
+
+                                                </Button>
+
+                                                <Button
+                                                    x:Name="ManageLabelsBtn"
+                                                    Style="{ThemeResource ButtonRevealStyle}"
+                                                    Background="Transparent">
+                                                    
+                                                    <Button.Content>
+                                                        <SymbolIcon Symbol="Edit"/>
+                                                    </Button.Content>
+                                                </Button>
+
+                                            </StackPanel>
+
+
+                                        </RelativePanel>
+
+
+                                        <TextBox
+                                            Grid.Row="1"
+                                            x:Name="FilterQueryTextBox"
+                                            PlaceholderText="Search"/>
+
+                                        <ListView
+                                            Grid.Row="2"
+                                            x:Name="AddLabelBox"
+                                            SelectionMode="Multiple">
+
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate x:DataType="pages:Label">
+                                                    <Grid Margin="10">
+                                                        <controls:LabelControl
+                                                            Color="{x:Bind Color}"
+                                                            Label="{x:Bind Key}"
+                                                            Value="{x:Bind Value}"
+                                                            Description="{x:Bind Description}" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+
+                                        </ListView>
+
+                                    </Grid>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+
+                    </RelativePanel>
+
                     <ListView
-                        x:Name="LabelsListView">
+                        x:Name="LabelsListView"
+                        Grid.Row="1">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                <Setter Property="Margin" Value="5"/>
-                                <Setter Property="Padding" Value="10"/>
+                                <Setter Property="Margin" Value="5" />
+                                <Setter Property="Padding" Value="10" />
                                 <Setter Property="Background" Value="WhiteSmoke" />
                             </Style>
                         </ListView.ItemContainerStyle>
-                    
+
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="pages:Label">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                
+
                                     <Grid Grid.Column="0">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
+                                            <RowDefinition />
+                                            <RowDefinition />
                                         </Grid.RowDefinitions>
-                                        
+
                                         <Grid
                                             Grid.Row="0">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            
+
                                             <controls:LabelControl
                                                 Grid.Column="0"
                                                 Color="{x:Bind Color}"
                                                 Label="{x:Bind Key}"
-                                                Value="{x:Bind Value}"/>
-                                            
+                                                Value="{x:Bind Value}" />
+
                                         </Grid>
 
                                         <TextBlock
                                             Grid.Row="1"
-                                            Text="{x:Bind Description}"/>
+                                            Text="{x:Bind Description}" />
                                     </Grid>
-                                
+
                                     <Button
                                         x:Name="DeleteLabelBtn"
+                                        Click="DeleteLabelBtn"
                                         Grid.Column="1">
-                                        <SymbolIcon Symbol="Delete"/>
+                                        <SymbolIcon Symbol="Clear" />
                                     </Button>
-                                
+
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-
-                    <controls1:WrapPanel
-                        x:Name="LabelStackPanel"/>
-
-                    <TextBox
-                        Name="AddTagBox" />
-
-                    <Button
-                        Name="AddTagButton"
-                        Content="Add Tag" />
-
-                    <ListView
-                        Name="ListView"
-                        SelectionMode="None" />
-
-                </StackPanel>
+                </Grid>
             </PivotItem>
-            
+
             <Pivot.RightHeader>
                 <controls:PageEditorCommandBar x:Name="commandBar" />
             </Pivot.RightHeader>

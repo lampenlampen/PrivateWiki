@@ -1,8 +1,11 @@
 using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using NLog;
+using PrivateWiki.DataModels.Pages;
 using PrivateWiki.ViewModels;
 using PrivateWiki.ViewModels.PageEditors;
 using ReactiveUI;
@@ -25,6 +28,8 @@ namespace PrivateWiki.UWP.UI.Controls.PageEditors
 	public sealed partial class MarkdownPageEditorControl : MarkdownPageEditorControlBase
 	{
 		private readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+		private readonly ISubject<Label> _onDeleteLabel = new Subject<Label>();
 
 		public MarkdownPageEditorControl()
 		{
@@ -57,31 +62,18 @@ namespace PrivateWiki.UWP.UI.Controls.PageEditors
 					.Subscribe(ShowPreviewLinksAsNotifications)
 					.DisposeWith(disposable);
 
-				this.WhenAnyValue(x => x.ViewModel.Labels)
+				this.WhenAnyValue(x => x.ViewModel.Labels2)
 					.WhereNotNull()
 					.BindTo(LabelsListView, x => x.ItemsSource)
 					.DisposeWith(disposable);
 
-				this.WhenAnyValue(x => x.ViewModel.Labels)
+				_onDeleteLabel
+					.InvokeCommand(ViewModel, vm => vm.DeleteLabel)
+					.DisposeWith(disposable);
+
+				this.WhenAnyValue(x => x.ViewModel.AddLabelsList)
 					.WhereNotNull()
-					.Subscribe(labels =>
-					{
-						foreach (var label in labels)
-						{
-							var control = new LabelControl
-							{
-								Label = label.Key,
-								Value = label.Value,
-								Color = label.Color,
-								Description = label.Description
-							};
-
-							control.OnClick.Subscribe(x => Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification())
-								.DisposeWith(disposable);
-
-							LabelStackPanel.Children.Add(control);
-						}
-					})
+					.BindTo(AddLabelBox, x => x.ItemsSource)
 					.DisposeWith(disposable);
 			});
 		}
@@ -135,6 +127,13 @@ namespace PrivateWiki.UWP.UI.Controls.PageEditors
 			// Normal Link
 			App.Current.GlobalNotificationManager.ShowLinkClickedNotification(uri.ToString());
 			args.Cancel = true;
+		}
+
+		private void DeleteLabelBtn(object sender, RoutedEventArgs e)
+		{
+			var label = (Label) ((Button) sender).DataContext;
+
+			_onDeleteLabel.OnNext(label);
 		}
 	}
 }

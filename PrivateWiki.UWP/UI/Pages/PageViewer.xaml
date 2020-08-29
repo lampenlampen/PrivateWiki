@@ -71,7 +71,6 @@
 
 
         <StackPanel
-            Name="RightMenu"
             Grid.Row="1"
             Grid.Column="2"
             Padding="0, 10, 10, 20"
@@ -80,29 +79,35 @@
 
             <TextBlock
                 x:Uid="/PageViewer/TOC"
-                Name="TOCHeader"
+                x:Name="TOCHeader"
                 HorizontalAlignment="Left"
                 FontSize="16"
                 TextDecorations="Underline"
                 Padding="10, 0, 0, 20" />
 
             <controls2:TreeView
-                Name="Treeview"
+                x:Name="Treeview"
                 MinWidth="250"
                 VerticalAlignment="Top" />
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                    
+                <TextBlock
+                        x:Name="TagsHeader"
+                        HorizontalAlignment="Left"
+                        FontSize="16"
+                        TextDecorations="Underline"
+                        Text="Labels"
+                        Padding="10, 0, 0, 20" />
 
-            <TextBlock
-                Name="TagsHeader"
-                HorizontalAlignment="Left"
-                FontSize="16"
-                TextDecorations="Underline"
-                Text="Labels"
-                Padding="10, 0, 0, 20" />
-
-            <controls1:WrapPanel
-                x:Name="TagsPanel"/>
-
+                    <controls1:WrapPanel
+                    Grid.Row="1"
+                    x:Name="TagsPanel"/>
+            </Grid>
         </StackPanel>
-
     </Grid>
 </Page>
