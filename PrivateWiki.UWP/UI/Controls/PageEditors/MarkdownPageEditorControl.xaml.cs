@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using NLog;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.ViewModels;
@@ -62,18 +64,28 @@ namespace PrivateWiki.UWP.UI.Controls.PageEditors
 					.Subscribe(ShowPreviewLinksAsNotifications)
 					.DisposeWith(disposable);
 
-				this.WhenAnyValue(x => x.ViewModel.Labels2)
+				this.WhenAnyValue(x => x.ViewModel.PageLabels)
 					.WhereNotNull()
 					.BindTo(LabelsListView, x => x.ItemsSource)
 					.DisposeWith(disposable);
 
 				_onDeleteLabel
-					.InvokeCommand(ViewModel, vm => vm.DeleteLabel)
+					.InvokeCommand(ViewModel, vm => vm.RemoveLabel)
 					.DisposeWith(disposable);
 
 				this.WhenAnyValue(x => x.ViewModel.AddLabelsList)
 					.WhereNotNull()
 					.BindTo(AddLabelBox, x => x.ItemsSource)
+					.DisposeWith(disposable);
+
+				AddLabelFlyout.Events().Closing
+					.Select(_ => AddLabelBox.SelectedItems.Select(x => (Label) x))
+					.InvokeCommand(ViewModel, vm => vm.AddLabels)
+					.DisposeWith(disposable);
+
+				this.Bind(ViewModel,
+						vm => vm.AddLabelsQueryText,
+						view => view.FilterQueryTextBox.Text)
 					.DisposeWith(disposable);
 			});
 		}

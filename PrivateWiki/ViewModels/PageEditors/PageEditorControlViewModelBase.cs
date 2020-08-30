@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using DynamicData;
 using NLog;
 using PrivateWiki.DataModels.Pages;
+using PrivateWiki.Utilities;
 using ReactiveUI;
 
 namespace PrivateWiki.ViewModels.PageEditors
@@ -40,15 +41,34 @@ namespace PrivateWiki.ViewModels.PageEditors
 			set => this.RaiseAndSetIfChanged(ref _content, value);
 		}
 
-		private readonly IList<Label> _labels2 = new List<Label>();
+		/// <summary>
+		/// Cache with all labels
+		/// </summary>
+		private readonly ISourceCache<Label, Guid> _allLabels = new SourceCache<Label, Guid>(label => label.Id);
 
-		public readonly ObservableCollection<Label> Labels2 = new ObservableCollection<Label>();
-
-		private readonly ISourceCache<Label, Guid> _allLabels2 = new SourceCache<Label, Guid>(label => label.Id);
-
+		/// <summary>
+		/// List with all labels that can be added to the page.
+		/// Consists of all labels except the ones already added to the page.
+		/// </summary>
 		public readonly ReadOnlyObservableCollection<Label> AddLabelsList;
 
-		private ISourceCache<Label, Guid> _pageLabels = new SourceCache<Label, Guid>(label => label.Id);
+		/// <summary>
+		/// List with all labels of the page
+		/// </summary>
+		private readonly ISourceCache<Label, Guid> _pageLabels = new SourceCache<Label, Guid>(label => label.Id);
+
+		/// <summary>
+		/// List with all labels of the page for binding
+		/// </summary>
+		public readonly ReadOnlyObservableCollection<Label> PageLabels;
+
+		private string _addLabelsQueryText = "";
+
+		public string AddLabelsQueryText
+		{
+			get => _addLabelsQueryText;
+			set => this.RaiseAndSetIfChanged(ref _addLabelsQueryText, value);
+		}
 
 		public IObservable<GenericPage> OnSavePage => _onSavePage;
 		private protected readonly ISubject<GenericPage> _onSavePage;
@@ -62,9 +82,10 @@ namespace PrivateWiki.ViewModels.PageEditors
 			CommandBarViewModel = new PageEditorCommandBarViewModel();
 
 			SavePage = ReactiveCommand.CreateFromTask(SavePageAsync);
-			DeleteLabel = ReactiveCommand.CreateFromTask<Label>(DeleteLabelAsync);
+			RemoveLabel = ReactiveCommand.CreateFromTask<Label>(RemoveLabelAsync);
 			AddLabel = ReactiveCommand.CreateFromTask<Label>(AddLabelAsync);
-			NewLabel = ReactiveCommand.CreateFromTask(NewLabelAsync);
+			AddLabels = ReactiveCommand.CreateFromTask<IEnumerable<Label>>(AddLabelsAsync);
+			CreateNewLabel = ReactiveCommand.CreateFromTask(CreateNewLabelAsync);
 
 			OnAbort = CommandBarViewModel.OnAbort.AsObservable();
 			_onSavePage = new Subject<GenericPage>();
@@ -77,37 +98,45 @@ namespace PrivateWiki.ViewModels.PageEditors
 				.WhereNotNull()
 				.Subscribe(x =>
 				{
-					_labels2.AddRange(x.Labels);
-					_labels2.RemoveAt(0);
-
 					_pageLabels.Clear();
 					_pageLabels.Edit(updater => updater.AddOrUpdate(x.Labels));
-
-					foreach (var label in x.Labels) Labels2.Add(label);
 				});
 
-			_allLabels2.Edit(updater => updater.AddOrUpdate(Label.GetTestData()));
+			_allLabels.Edit(updater => updater.AddOrUpdate(Label.GetTestData()));
 
-			_allLabels2.Connect()
+			var a = this.WhenAnyValue(x => x.AddLabelsQueryText);
+			var b = a.Select<string, Func<Label, bool>>(x =>
+			{
+				const StringComparison comp = StringComparison.OrdinalIgnoreCase;
+				return label => label.Key.Contains(x, comp) || label.Description.Contains(x, comp) || label.Value is not null && label.Value.Contains(x, comp);
+			});
+
+			_allLabels.Connect()
 				.Except(_pageLabels.Connect())
+				.Filter(b)
+				//.Filter(x => x.Key.Contains(AddLabelsQueryText) || x.Value.Contains(AddLabelsQueryText) || x.Description.Contains(AddLabelsQueryText))
 				.Bind(out AddLabelsList)
+				.Subscribe();
+
+			_pageLabels.Connect()
+				.Bind(out PageLabels)
 				.Subscribe();
 		}
 
 		public ReactiveCommand<Unit, Unit> SavePage { get; }
 
-		public ReactiveCommand<Label, Unit> DeleteLabel { get; }
+		public ReactiveCommand<Label, Unit> RemoveLabel { get; }
 
 		public ReactiveCommand<Label, Unit> AddLabel { get; }
 
-		public ReactiveCommand<Unit, Unit> NewLabel { get; }
+		public ReactiveCommand<IEnumerable<Label>, Unit> AddLabels { get; }
+
+		public ReactiveCommand<Unit, Unit> CreateNewLabel { get; }
 
 		private protected abstract Task SavePageAsync();
 
-		private Task DeleteLabelAsync(Label label)
+		private Task RemoveLabelAsync(Label label)
 		{
-			// TODO Delete Label
-			Labels2.Remove(label);
 			_pageLabels.Remove(label);
 
 			return Task.CompletedTask;
@@ -115,10 +144,19 @@ namespace PrivateWiki.ViewModels.PageEditors
 
 		private Task AddLabelAsync(Label label)
 		{
+			_pageLabels.AddOrUpdate(label);
+
 			return Task.CompletedTask;
 		}
 
-		private Task NewLabelAsync()
+		private Task AddLabelsAsync(IEnumerable<Label> labels)
+		{
+			_pageLabels.Edit(updater => updater.AddOrUpdate(labels));
+
+			return Task.CompletedTask;
+		}
+
+		private Task CreateNewLabelAsync()
 		{
 			return Task.CompletedTask;
 		}

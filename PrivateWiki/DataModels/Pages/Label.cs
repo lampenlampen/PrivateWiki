@@ -40,6 +40,14 @@ namespace PrivateWiki.DataModels.Pages
 			new Label("testKey1", "Description 1", Color.Red),
 			new Label("testKey2", "Description 2", "testValue2"),
 			new Label("testKey3", "Description 3", Color.Indigo, "testValue3"),
+			new Label("testKey3", "Description 3", Color.BurlyWood, "testValue3"),
+			new Label("testKey1", "Description 1", Color.Red),
+			new Label("testKey2", "Description 2", "testValue2"),
+			new Label("testKey3", "Description 3", Color.Indigo, "testValue3"),
+			new Label("testKey3", "Description 3", Color.BurlyWood, "testValue3"),
+			new Label("testKey1", "Description 1", Color.Red),
+			new Label("testKey2", "Description 2", "testValue2"),
+			new Label("testKey3", "Description 3", Color.Indigo, "testValue3"),
 			new Label("testKey3", "Description 3", Color.BurlyWood, "testValue3")
 		};
 	}

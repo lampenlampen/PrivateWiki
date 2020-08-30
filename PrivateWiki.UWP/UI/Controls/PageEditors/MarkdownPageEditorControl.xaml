@@ -183,8 +183,8 @@
                             Content="Add Label">
 
                             <Button.Flyout>
-                                <Flyout>
-                                    <Grid>
+                                <Flyout x:Name="AddLabelFlyout">
+                                    <Grid MinWidth="300">
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
                                             <RowDefinition />
