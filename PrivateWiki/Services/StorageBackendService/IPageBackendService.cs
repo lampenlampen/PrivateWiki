@@ -84,5 +84,15 @@ namespace PrivateWiki.Services.StorageBackendService
 		/// <param name="pageLink"></param>
 		/// <returns></returns>
 		Task<IEnumerable<GenericPageHistory>> GetPageHistoryAsync(string pageLink);
+
+		Task<bool> InsertLabelAsync(Label label);
+
+		Task<Label> GetLabelAsync(Guid id);
+
+		Task<IEnumerable<Label>> GetAllLabelsAsync();
+
+		Task<bool> DeleteLabelAsync(Guid id);
+
+		Task<bool> DeleteLabelAsync(Label label);
 	}
 }

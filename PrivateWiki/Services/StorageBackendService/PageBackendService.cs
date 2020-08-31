@@ -14,59 +14,84 @@ namespace PrivateWiki.Services.StorageBackendService
 			_storage = storage;
 		}
 
-		public async Task<GenericPage> GetPageAsync(Guid id)
+		public Task<GenericPage> GetPageAsync(Guid id)
 		{
-			return await _storage.GetPageAsync(id);
+			return _storage.GetPageAsync(id);
 		}
 
-		public async Task<GenericPage> GetPageAsync(string link)
+		public Task<GenericPage> GetPageAsync(string link)
 		{
-			return await _storage.GetPageAsync(link);
+			return _storage.GetPageAsync(link);
 		}
 
-		public async Task<IEnumerable<GenericPage>> GetAllPagesAsync()
+		public Task<IEnumerable<GenericPage>> GetAllPagesAsync()
 		{
-			return await _storage.GetAllPagesAsync();
+			return _storage.GetAllPagesAsync();
 		}
 
-		public async Task<bool> UpdatePage(GenericPage page, PageAction action)
+		public Task<bool> UpdatePage(GenericPage page, PageAction action)
 		{
-			return await _storage.UpdatePage(page, action);
+			return _storage.UpdatePage(page, action);
 		}
 
-		public async Task<bool> DeletePageAsync(GenericPage page)
+		public Task<bool> DeletePageAsync(GenericPage page)
 		{
-			return await _storage.DeletePageAsync(page);
+			return _storage.DeletePageAsync(page);
 		}
 
-		public async Task<bool> DeletePageAsync(Guid id)
+		public Task<bool> DeletePageAsync(Guid id)
 		{
-			return await _storage.DeletePageAsync(id);
+			return _storage.DeletePageAsync(id);
 		}
 
-		public async Task<bool> InsertPageAsync(GenericPage page)
+		public Task<bool> InsertPageAsync(GenericPage page)
 		{
-			return await _storage.InsertPageAsync(page);
+			return _storage.InsertPageAsync(page);
 		}
 
-		public async Task<bool> ContainsPageAsync(GenericPage page)
+		public Task<bool> ContainsPageAsync(GenericPage page)
 		{
-			return await _storage.ContainsPageAsync(page);
+			return _storage.ContainsPageAsync(page);
 		}
 
-		public async Task<bool> ContainsPageAsync(Guid id)
+		public Task<bool> ContainsPageAsync(Guid id)
 		{
-			return await _storage.ContainsPageAsync(id);
+			return _storage.ContainsPageAsync(id);
 		}
 
-		public async Task<bool> ContainsPageAsync(string link)
+		public Task<bool> ContainsPageAsync(string link)
 		{
-			return await _storage.ContainsPageAsync(link);
+			return _storage.ContainsPageAsync(link);
 		}
 
-		public async Task<IEnumerable<GenericPageHistory>> GetPageHistoryAsync(string pageLink)
+		public Task<IEnumerable<GenericPageHistory>> GetPageHistoryAsync(string pageLink)
 		{
-			return await _storage.GetPageHistoryAsync(pageLink);
+			return _storage.GetPageHistoryAsync(pageLink);
+		}
+
+		public Task<bool> InsertLabelAsync(Label label)
+		{
+			return _storage.InsertLabelAsync(label);
+		}
+
+		public Task<Label> GetLabelAsync(Guid id)
+		{
+			return _storage.GetLabelAsync(id);
+		}
+
+		public Task<IEnumerable<Label>> GetAllLabelsAsync()
+		{
+			return _storage.GetAllLabelsAsync();
+		}
+
+		public Task<bool> DeleteLabelAsync(Guid id)
+		{
+			return _storage.DeleteLabelAsync(id);
+		}
+
+		public Task<bool> DeleteLabelAsync(Label label)
+		{
+			return _storage.DeleteLabelAsync(label);
 		}
 	}
 }

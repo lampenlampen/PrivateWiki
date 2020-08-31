@@ -5,6 +5,7 @@ using Microsoft.Data.Sqlite;
 using NodaTime;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.StorageBackendService;
+using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 
 namespace PrivateWiki.UWP.StorageBackend.SQLite
 {
@@ -708,6 +709,70 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 			}
 
 			return new TaskFactory<IEnumerable<GenericPageHistory>>().StartNew(page => Action((string) page), pageLink);
+		}
+
+		public Task<bool> InsertLabelAsync(Label label)
+		{
+			bool Action(Label label)
+			{
+				try
+				{
+					using var conn = _conn;
+
+					var command = new SqliteCommand
+					{
+						Connection = conn,
+						CommandText = "INSERT INTO 'labels' (id, key, value, description, color) VALUES (@id, @key, @value, @description, @color)"
+					};
+
+					command.Parameters.AddWithValue("@id", label.Id.ToString());
+					command.Parameters.AddWithValue("@key", label.Key);
+					command.Parameters.AddWithValue("@value", label.Value);
+					command.Parameters.AddWithValue("@description", label.Description);
+					command.Parameters.AddWithValue("@color", label.Color.ToHexColor());
+
+					conn.Open();
+
+					command.ExecuteReader();
+
+					return true;
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
+			}
+
+			return new TaskFactory<bool>().StartNew((label) => Action((Label) label), label);
+		}
+
+		public async Task<Label> GetLabelAsync(Guid id)
+		{
+			// TODO GetLabel
+
+			throw new NotImplementedException();
+		}
+
+		public async Task<IEnumerable<Label>> GetAllLabelsAsync()
+		{
+			// TODO GetAllLabels
+
+			throw new NotImplementedException();
+		}
+
+		public async Task<bool> DeleteLabelAsync(Guid id)
+		{
+			// TODO DeleteLabel
+
+			throw new NotImplementedException();
+		}
+
+		public async Task<bool> DeleteLabelAsync(Label label)
+		{
+			// TODO DeleteLabel
+
+			throw new NotImplementedException();
 		}
 
 		#endregion
