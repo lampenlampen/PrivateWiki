@@ -18,6 +18,7 @@ namespace PrivateWiki.DataModels.Pages
 
 		public Color Color { get; } = DefaultColor;
 
+		[Obsolete]
 		public Label(string key, string description, string? value = null)
 		{
 			Description = description;
@@ -25,12 +26,36 @@ namespace PrivateWiki.DataModels.Pages
 			Value = value;
 		}
 
+		[Obsolete]
 		public Label(string key, string description, Color color, string? value = null)
 		{
 			Color = color;
 			Description = description;
 			Key = key;
 			Value = value;
+		}
+
+		public Label(string value, string description) : this(value, description, DefaultColor)
+		{
+		}
+
+		public Label(string value, string description, Color color)
+		{
+			var result = value.Split(new[] {"::"}, 1, StringSplitOptions.RemoveEmptyEntries);
+
+			if (result.Length == 1)
+			{
+				Key = result[0];
+				Value = "";
+			}
+			else
+			{
+				Key = result[0];
+				Value = result[1];
+			}
+
+			Description = description;
+			Color = color;
 		}
 
 		public static IList<Label> GetTestData() => testData;

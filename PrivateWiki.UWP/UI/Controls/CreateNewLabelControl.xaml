@@ -1,0 +1,186 @@
+<local:CreateNewLabelBaseControl
+    x:Class="PrivateWiki.UWP.UI.Controls.CreateNewLabelControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PrivateWiki.UWP.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
+    xmlns:controls1="using:PrivateWiki.UWP.UI.Controls"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    Background="White">
+
+    <local:CreateNewLabelBaseControl.Resources>
+        <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
+    </local:CreateNewLabelBaseControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Padding="20"
+            Grid.Row="0"
+            Style="{ThemeResource TitleTextBlockStyle}"
+            Text="New Label" />
+
+        <Grid
+            Padding="20"
+            Grid.Row="1">
+
+            <StackPanel>
+
+                <StackPanel
+                    Margin="10">
+                    <TextBox
+                        
+                        x:Name="LabelTextBox"
+                        Header="Title" />
+
+                    <TextBlock
+                        Margin="0, 6, 0, 0"
+                        Text="Use &quot;::&quot; to create a scoped label set (eg. &quot;priority::1&quot;)"/>
+                </StackPanel>
+
+                
+
+                <TextBox
+                    Margin="10"
+                    x:Name="DescriptionTextBox"
+                    Header="Description" />
+
+                <Grid Padding="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Text="Color" />
+
+                    <Grid
+                        Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            Grid.Column="0"
+                            x:Name="ColorBox"
+                            CornerRadius="0, 4, 4, 0"
+                            Margin="0, 0, 6, 0"
+                            IsReadOnly="True"/>
+
+                        <Button
+                            Grid.Column="1"
+                            Content="Pick Color">
+                            <Button.Flyout>
+                                <Flyout x:Name="ColorPickerFlyout">
+                                    <ColorPicker x:Name="ColorPicker"
+                                                 ColorSpectrumShape="Ring"
+                                                 IsColorPreviewVisible="True"
+                                                 IsColorChannelTextInputVisible="False"
+                                                 IsHexInputVisible="True"
+                                                 IsColorSliderVisible="False"/>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+
+                    </Grid>
+
+                    
+
+                </Grid>
+
+                <Border 
+                    BorderThickness="1"
+                    BorderBrush="LightGray"
+                    Margin="0, 10, 0, 0"
+                    VerticalAlignment="Bottom"/>
+
+
+                <Grid
+                    Padding="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Text="Preview"/>
+
+                    <Grid
+                        Grid.Row="1">
+                        <Grid.Background>
+                            <SolidColorBrush Color="#FFFAFAFA"/>
+                        </Grid.Background>
+
+                        <TextBlock
+                            Text="No Preview available! Please enter data"
+                            Margin="20"
+                            Visibility="{x:Bind LabelTextBox.Text, Converter={StaticResource StringVisibilityConverter}, ConverterParameter=True, Mode=OneWay}"/>
+
+                        <local:LabelControl
+                            x:Name="LabelPreview"
+                            Margin="20"
+                            HorizontalAlignment="Left"
+                            Description="{x:Bind DescriptionTextBox.Text, Mode=OneWay}"
+                            ScopedLabelValue="{x:Bind LabelTextBox.Text, Mode=OneWay}" 
+                            Visibility="{x:Bind LabelTextBox.Text, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}"/>
+
+                    </Grid>
+
+                    
+
+                </Grid>
+
+                <Border 
+                    BorderThickness="1"
+                    BorderBrush="LightGray"
+                    Margin="0, 10, 0, 0"
+                    VerticalAlignment="Bottom"/>
+            </StackPanel>
+
+        </Grid>
+
+        <Grid
+            Grid.Row="2">
+
+            <RelativePanel>
+                <Grid
+                    RelativePanel.AlignHorizontalCenterWithPanel="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                        Grid.Column="0"
+                        x:Name="CreateLabelBtn"
+                        Margin="0, 0, 4, 0"
+                        Content="Create Label"/>
+
+                    <Button
+                        Grid.Column="1"
+                        x:Name="CancelBtn"
+                        Margin="4, 0, 0, 0"
+                        Content="Cancel"/>
+
+                </Grid>
+            </RelativePanel>
+
+
+        </Grid>
+
+    </Grid>
+</local:CreateNewLabelBaseControl>

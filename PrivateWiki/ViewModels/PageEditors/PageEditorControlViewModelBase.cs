@@ -86,6 +86,7 @@ namespace PrivateWiki.ViewModels.PageEditors
 			AddLabel = ReactiveCommand.CreateFromTask<Label>(AddLabelAsync);
 			AddLabels = ReactiveCommand.CreateFromTask<IEnumerable<Label>>(AddLabelsAsync);
 			CreateNewLabel = ReactiveCommand.CreateFromTask(CreateNewLabelAsync);
+			ManageLabels = ReactiveCommand.CreateFromTask(ManageLabelsAsync);
 
 			OnAbort = CommandBarViewModel.OnAbort.AsObservable();
 			_onSavePage = new Subject<GenericPage>();
@@ -102,19 +103,18 @@ namespace PrivateWiki.ViewModels.PageEditors
 					_pageLabels.Edit(updater => updater.AddOrUpdate(x.Labels));
 				});
 
+			// Testing populate with the real data
 			_allLabels.Edit(updater => updater.AddOrUpdate(Label.GetTestData()));
-
-			var a = this.WhenAnyValue(x => x.AddLabelsQueryText);
-			var b = a.Select<string, Func<Label, bool>>(x =>
-			{
-				const StringComparison comp = StringComparison.OrdinalIgnoreCase;
-				return label => label.Key.Contains(x, comp) || label.Description.Contains(x, comp) || label.Value is not null && label.Value.Contains(x, comp);
-			});
 
 			_allLabels.Connect()
 				.Except(_pageLabels.Connect())
-				.Filter(b)
-				//.Filter(x => x.Key.Contains(AddLabelsQueryText) || x.Value.Contains(AddLabelsQueryText) || x.Description.Contains(AddLabelsQueryText))
+				.Filter(
+					this.WhenAnyValue(x => x.AddLabelsQueryText)
+						.Select<string, Func<Label, bool>>(x =>
+						{
+							const StringComparison comp = StringComparison.OrdinalIgnoreCase;
+							return label => label.Key.Contains(x, comp) || label.Description.Contains(x, comp) || label.Value is not null && label.Value.Contains(x, comp);
+						}))
 				.Bind(out AddLabelsList)
 				.Subscribe();
 
@@ -132,6 +132,8 @@ namespace PrivateWiki.ViewModels.PageEditors
 		public ReactiveCommand<IEnumerable<Label>, Unit> AddLabels { get; }
 
 		public ReactiveCommand<Unit, Unit> CreateNewLabel { get; }
+
+		public ReactiveCommand<Unit, Unit> ManageLabels { get; }
 
 		private protected abstract Task SavePageAsync();
 
@@ -158,6 +160,19 @@ namespace PrivateWiki.ViewModels.PageEditors
 
 		private Task CreateNewLabelAsync()
 		{
+			Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification();
+
+			// TODO Create a new Label
+
+			return Task.CompletedTask;
+		}
+
+		private Task ManageLabelsAsync()
+		{
+			Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification();
+
+			// TODO Navigate to "Manage Labels"-Page
+
 			return Task.CompletedTask;
 		}
 	}

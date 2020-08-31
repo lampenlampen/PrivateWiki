@@ -9,5 +9,10 @@ namespace PrivateWiki
 		{
 			return source.Where(x => x != null)!;
 		}
+
+		public static IObservable<string> WhereNotNullAndWhitespace(this IObservable<string?> source)
+		{
+			return source.Where(x => !string.IsNullOrWhiteSpace(x))!;
+		}
 	}
 }

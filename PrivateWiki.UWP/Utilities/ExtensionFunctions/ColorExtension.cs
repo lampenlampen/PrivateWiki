@@ -5,14 +5,12 @@ namespace PrivateWiki.UWP.Utilities.ExtensionFunctions
 {
 	static class ColorExtension
 	{
-		public static Windows.UI.Color ToWindowsUiColor(this System.Drawing.Color color)
-		{
-			return Color.FromArgb(color.A, color.R, color.G, color.B);
-		}
+		public static Windows.UI.Color ToWindowsUiColor(this System.Drawing.Color color) => Color.FromArgb(color.A, color.R, color.G, color.B);
 
-		public static SolidColorBrush ToBrush(this System.Drawing.Color color)
-		{
-			return new SolidColorBrush(color.ToWindowsUiColor());
-		}
+		public static SolidColorBrush ToBrush(this System.Drawing.Color color) => new SolidColorBrush(color.ToWindowsUiColor());
+
+		public static System.Drawing.Color ToSystemDrawingColor(this Color color) => System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+
+		public static string ToHexColor(this System.Drawing.Color color) => $"#{color.R:X2}{color.G:X2}{color.B:X2}";
 	}
 }

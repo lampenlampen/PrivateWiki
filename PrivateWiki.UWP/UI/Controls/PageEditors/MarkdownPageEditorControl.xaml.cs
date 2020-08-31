@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -16,8 +17,16 @@ using ReactiveUI;
 
 namespace PrivateWiki.UWP.UI.Controls.PageEditors
 {
-	public abstract class PageEditorControlBase<T> : ReactiveUserControl<T> where T : PageEditorControlViewModelBase
+	public class PageEditorControlBase<T> : ReactiveUserControl<T> where T : PageEditorControlViewModelBase
 	{
+		protected readonly ISubject<Label> OnDeleteLabel = new Subject<Label>();
+
+		protected void DeleteLabelBtn(object sender, RoutedEventArgs e)
+		{
+			var label = (Label) ((Button) sender).DataContext;
+
+			OnDeleteLabel.OnNext(label);
+		}
 	}
 
 	public abstract class MarkdownPageEditorControlBase : PageEditorControlBase<MarkdownPageEditorControlViewModel>
@@ -30,8 +39,6 @@ namespace PrivateWiki.UWP.UI.Controls.PageEditors
 	public sealed partial class MarkdownPageEditorControl : MarkdownPageEditorControlBase
 	{
 		private readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
-		private readonly ISubject<Label> _onDeleteLabel = new Subject<Label>();
 
 		public MarkdownPageEditorControl()
 		{
@@ -69,7 +76,7 @@ namespace PrivateWiki.UWP.UI.Controls.PageEditors
 					.BindTo(LabelsListView, x => x.ItemsSource)
 					.DisposeWith(disposable);
 
-				_onDeleteLabel
+				OnDeleteLabel
 					.InvokeCommand(ViewModel, vm => vm.RemoveLabel)
 					.DisposeWith(disposable);
 
@@ -86,6 +93,16 @@ namespace PrivateWiki.UWP.UI.Controls.PageEditors
 				this.Bind(ViewModel,
 						vm => vm.AddLabelsQueryText,
 						view => view.FilterQueryTextBox.Text)
+					.DisposeWith(disposable);
+
+				CreateNewLabelBtn.Events().Click
+					.Select(_ => Unit.Default)
+					.InvokeCommand(ViewModel, vm => vm.CreateNewLabel)
+					.DisposeWith(disposable);
+
+				ManageLabelsBtn.Events().Click
+					.Select(_ => Unit.Default)
+					.InvokeCommand(ViewModel, vm => vm.ManageLabels)
 					.DisposeWith(disposable);
 			});
 		}
@@ -139,13 +156,6 @@ namespace PrivateWiki.UWP.UI.Controls.PageEditors
 			// Normal Link
 			App.Current.GlobalNotificationManager.ShowLinkClickedNotification(uri.ToString());
 			args.Cancel = true;
-		}
-
-		private void DeleteLabelBtn(object sender, RoutedEventArgs e)
-		{
-			var label = (Label) ((Button) sender).DataContext;
-
-			_onDeleteLabel.OnNext(label);
 		}
 	}
 }

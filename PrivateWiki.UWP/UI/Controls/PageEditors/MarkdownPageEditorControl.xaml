@@ -125,14 +125,12 @@
                         Text="Lorem Ipsum"
                         AcceptsReturn="True"
                         TextWrapping="Wrap" />
-
                 </Grid>
             </PivotItem>
 
             <PivotItem
                 x:Name="PreviewPivotItem"
                 Header="Preview">
-
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -142,7 +140,6 @@
                     <WebView
                         Grid.Row="0"
                         Name="Preview_WebView" />
-
                 </Grid>
             </PivotItem>
 
@@ -160,7 +157,6 @@
             <PivotItem
                 x:Name="MetadataPivotItem"
                 Header="Metadaten">
-
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -169,7 +165,6 @@
 
                     <RelativePanel
                         Grid.Row="0">
-
                         <TextBlock
                             RelativePanel.AlignLeftWithPanel="True"
                             Text="Labels"
@@ -181,7 +176,6 @@
                             x:Name="AddLabelBtn"
                             RelativePanel.AlignRightWithPanel="True"
                             Content="Add Label">
-
                             <Button.Flyout>
                                 <Flyout x:Name="AddLabelFlyout">
                                     <Grid MinWidth="300">
@@ -197,7 +191,7 @@
                                             <TextBlock
                                                 RelativePanel.AlignLeftWithPanel="True"
                                                 RelativePanel.AlignVerticalCenterWithPanel="True"
-                                                Text="Select Labels"/>
+                                                Text="Select Labels" />
 
                                             <StackPanel
                                                 RelativePanel.AlignRightWithPanel="True"
@@ -218,22 +212,18 @@
                                                     x:Name="ManageLabelsBtn"
                                                     Style="{ThemeResource ButtonRevealStyle}"
                                                     Background="Transparent">
-                                                    
+
                                                     <Button.Content>
-                                                        <SymbolIcon Symbol="Edit"/>
+                                                        <SymbolIcon Symbol="Edit" />
                                                     </Button.Content>
                                                 </Button>
-
                                             </StackPanel>
-
-
                                         </RelativePanel>
-
 
                                         <TextBox
                                             Grid.Row="1"
                                             x:Name="FilterQueryTextBox"
-                                            PlaceholderText="Search"/>
+                                            PlaceholderText="Search" />
 
                                         <ListView
                                             Grid.Row="2"
@@ -251,14 +241,11 @@
                                                     </Grid>
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
-
                                         </ListView>
-
                                     </Grid>
                                 </Flyout>
                             </Button.Flyout>
                         </Button>
-
                     </RelativePanel>
 
                     <ListView
@@ -313,7 +300,6 @@
                                         Grid.Column="1">
                                         <SymbolIcon Symbol="Clear" />
                                     </Button>
-
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

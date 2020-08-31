@@ -75,6 +75,19 @@ namespace PrivateWiki.UWP.UI.Controls
 			set => SetValue(ColorProperty, value);
 		}
 
+		public static readonly DependencyProperty ScopedLabelValueProperty =
+			DependencyProperty.Register(
+				"ScopedLabelValue",
+				typeof(string),
+				typeof(LabelControl),
+				new PropertyMetadata(""));
+
+		public string ScopedLabelValue
+		{
+			get => (string) GetValue(ScopedLabelValueProperty);
+			set => SetValue(ScopedLabelValueProperty, value);
+		}
+
 		private bool IsAccentColorDark()
 		{
 			// TODO Extract to ThemeSettings
@@ -101,7 +114,7 @@ namespace PrivateWiki.UWP.UI.Controls
 			_onClick = new Subject<Label>();
 
 			this.WhenAnyValue(x => x.Description)
-				.WhereNotNull()
+				.WhereNotNullAndWhitespace()
 				.Subscribe(x =>
 				{
 					var toolTip = new ToolTip {Content = x};
@@ -110,6 +123,26 @@ namespace PrivateWiki.UWP.UI.Controls
 
 			this.WhenAnyValue(x => x.Color)
 				.Subscribe(x => { OnPropertyChanged(nameof(IsDarkAccent)); });
+
+			this.WhenAnyValue(x => x.ScopedLabelValue)
+				.Subscribe(x =>
+				{
+					var result = x.Split("::", 2, StringSplitOptions.RemoveEmptyEntries);
+
+					if (result.Length == 1)
+					{
+						Label = result[0];
+						Value = "";
+					}
+					else if (result.Length == 2)
+					{
+						Label = result[0];
+						Value = result[1];
+					}
+				});
+
+			this.WhenAnyValue(x => x.Label, x => x.Value)
+				.Subscribe(x => ScopedLabelValue = $"{x.Item1}::{x.Item2}");
 		}
 
 		private void Label_Tapped(object sender, TappedRoutedEventArgs e)

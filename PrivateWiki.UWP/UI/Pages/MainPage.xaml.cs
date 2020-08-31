@@ -2,6 +2,7 @@
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
+using PrivateWiki.ViewModels;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x407 dokumentiert.
 
@@ -17,7 +18,7 @@ namespace PrivateWiki.UWP.UI.Pages
 			InitializeComponent();
 
 			// TODO Acrylic
-			//ExtendAcrylicIntoTitleBar();
+			// ExtendAcrylicIntoTitleBar();
 
 			// Reverse Acrylic Titlebar
 			CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
@@ -25,7 +26,10 @@ namespace PrivateWiki.UWP.UI.Pages
 			ApplicationView.GetForCurrentView().TitleBar.ButtonBackgroundColor =
 				new UISettings().GetColorValue(UIColorType.Accent);
 
-			EditorFrame.Navigate(typeof(PageViewer), "start");
+			//Testing
+			// EditorFrame.Navigate(typeof(PageViewer), "start");
+
+			CreateLabelControl.ViewModel = new CreateNewLabelControlViewModel();
 		}
 
 		/// Extend acrylic into the title bar.

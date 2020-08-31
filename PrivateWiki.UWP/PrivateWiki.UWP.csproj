@@ -93,15 +93,15 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AppConfig.cs" />
-    <Compile Include="Data\FileSystemAccess.cs" />
-    <Compile Include="Data\PageExporter.cs" />
-    <Compile Include="Models\LFSModel.cs" />
-    <Compile Include="Services\ApplicationLauncherService\ApplicationLauncherService.cs" />
-    <Compile Include="Services\FilesystemService\ApplicationDataService.cs" />
+      <Compile Include="App.xaml.cs">
+          <DependentUpon>App.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="AppConfig.cs"/>
+      <Compile Include="Data\FileSystemAccess.cs"/>
+      <Compile Include="Data\PageExporter.cs"/>
+      <Compile Include="Models\LFSModel.cs"/>
+      <Compile Include="Services\ApplicationLauncherService\ApplicationLauncherService.cs"/>
+      <Compile Include="Services\FilesystemService\ApplicationDataService.cs"/>
       <Compile Include="Services\FilesystemService\UWPFullTrustFilesystemService.cs"/>
       <Compile Include="Settings\LFSSyncActions.cs"/>
       <Compile Include="Settings\SyncModelHandler.cs"/>
@@ -115,6 +115,9 @@
       <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs"/>
       <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs"/>
       <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs"/>
+      <Compile Include="UI\Controls\CreateNewLabelControl.xaml.cs">
+          <DependentUpon>CreateNewLabelControl.xaml</DependentUpon>
+      </Compile>
       <Compile Include="UI\Controls\DiffControl.xaml.cs">
           <DependentUpon>DiffControl.xaml</DependentUpon>
       </Compile>
@@ -135,16 +138,16 @@
       <Compile Include="UI\Controls\NavigationSettingsLinkItemControl.xaml.cs">
           <DependentUpon>NavigationSettingsLinkItemControl.xaml</DependentUpon>
       </Compile>
-    <Compile Include="UI\Controls\PageEditorCommandBar.xaml.cs">
-      <DependentUpon>PageEditorCommandBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\PageEditors\HtmlPageEditorControl.xaml.cs">
-      <DependentUpon>HtmlPageEditorControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\PageEditors\MarkdownPageEditorControl.xaml.cs">
-      <DependentUpon>MarkdownPageEditorControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\PageEditors\TextPageEditorControl.xaml.cs">
+      <Compile Include="UI\Controls\PageEditorCommandBar.xaml.cs">
+          <DependentUpon>PageEditorCommandBar.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Controls\PageEditors\HtmlPageEditorControl.xaml.cs">
+          <DependentUpon>HtmlPageEditorControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Controls\PageEditors\MarkdownPageEditorControl.xaml.cs">
+          <DependentUpon>MarkdownPageEditorControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Controls\PageEditors\TextPageEditorControl.xaml.cs">
       <DependentUpon>TextPageEditorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Controls\PageViewerCommandBar.xaml.cs">
@@ -248,15 +251,15 @@
     <Compile Include="UI\Pages\SettingsPagesOld\PagesSettingsPage.xaml.cs">
       <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pages\SettingsPagesOld\RenderingSettingsPage.xaml.cs">
-      <DependentUpon>RenderingSettingsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Pages\SettingsPagesOld\StorageSettingsPage.xaml.cs">
-      <DependentUpon>StorageSettingsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Pages\SettingsPages\AssetsSettingsPage.xaml.cs">
-      <DependentUpon>AssetsSettingsPage.xaml</DependentUpon>
-    </Compile>
+      <Compile Include="UI\Pages\SettingsPagesOld\RenderingSettingsPage.xaml.cs">
+          <DependentUpon>RenderingSettingsPage.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Pages\SettingsPagesOld\StorageSettingsPage.xaml.cs">
+          <DependentUpon>StorageSettingsPage.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Pages\SettingsPages\AssetsSettingsPage.xaml.cs">
+          <DependentUpon>AssetsSettingsPage.xaml</DependentUpon>
+      </Compile>
       <Compile Include="UI\Pages\SettingsPages\BackupSyncSettingsPage.xaml.cs">
           <DependentUpon>BackupSyncSettingsPage.xaml</DependentUpon>
       </Compile>
@@ -336,20 +339,24 @@
     <Content Include="Assets\WebView\preferred.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Properties\Default.rd.xml" />
-    <Content Include="Assets\LockScreenLogo.scale-200.png" />
-    <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+      <Content Include="Properties\Default.rd.xml"/>
+      <Content Include="Assets\LockScreenLogo.scale-200.png"/>
+      <Content Include="Assets\SplashScreen.scale-200.png"/>
+      <Content Include="Assets\Square150x150Logo.scale-200.png"/>
+      <Content Include="Assets\Square44x44Logo.scale-200.png"/>
+      <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png"/>
+      <Content Include="Assets\StoreLogo.png"/>
+      <Content Include="Assets\Wide310x150Logo.scale-200.png"/>
   </ItemGroup>
     <ItemGroup>
         <ApplicationDefinition Include="App.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
+        <Page Include="UI\Controls\CreateNewLabelControl.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
         <Page Include="UI\Controls\DiffControl.xaml">
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
@@ -369,16 +376,16 @@
         <Page Include="UI\Controls\NavigationSettingsHeaderItemControl.xaml">
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\NavigationSettingsLinkItemControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\PageEditorCommandBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\PageEditors\HtmlPageEditorControl.xaml">
+        </Page>
+        <Page Include="UI\Controls\NavigationSettingsLinkItemControl.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Include="UI\Controls\PageEditorCommandBar.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Include="UI\Controls\PageEditors\HtmlPageEditorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
