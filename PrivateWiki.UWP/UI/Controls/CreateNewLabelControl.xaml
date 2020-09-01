@@ -10,8 +10,7 @@
     xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="400"
-    Background="White">
+    d:DesignWidth="400">
 
     <local:CreateNewLabelBaseControl.Resources>
         <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
@@ -35,11 +34,9 @@
             Grid.Row="1">
 
             <StackPanel>
-
                 <StackPanel
                     Margin="10">
                     <TextBox
-                        
                         x:Name="LabelTextBox"
                         Header="Title" />
 
@@ -94,11 +91,7 @@
                                 </Flyout>
                             </Button.Flyout>
                         </Button>
-
                     </Grid>
-
-                    
-
                 </Grid>
 
                 <Border 
@@ -137,11 +130,7 @@
                             Description="{x:Bind DescriptionTextBox.Text, Mode=OneWay}"
                             ScopedLabelValue="{x:Bind LabelTextBox.Text, Mode=OneWay}" 
                             Visibility="{x:Bind LabelTextBox.Text, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}"/>
-
                     </Grid>
-
-                    
-
                 </Grid>
 
                 <Border 
@@ -150,7 +139,6 @@
                     Margin="0, 10, 0, 0"
                     VerticalAlignment="Bottom"/>
             </StackPanel>
-
         </Grid>
 
         <Grid
@@ -175,12 +163,8 @@
                         x:Name="CancelBtn"
                         Margin="4, 0, 0, 0"
                         Content="Cancel"/>
-
                 </Grid>
             </RelativePanel>
-
-
         </Grid>
-
     </Grid>
 </local:CreateNewLabelBaseControl>
