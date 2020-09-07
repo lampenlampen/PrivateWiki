@@ -26,10 +26,7 @@ namespace PrivateWiki.UWP.UI.Pages
 			ApplicationView.GetForCurrentView().TitleBar.ButtonBackgroundColor =
 				new UISettings().GetColorValue(UIColorType.Accent);
 
-			//Testing
-			// EditorFrame.Navigate(typeof(PageViewer), "start");
-
-			CreateLabelControl.ViewModel = new CreateNewLabelControlViewModel();
+			EditorFrame.Navigate(typeof(PageViewer), "start");
 		}
 
 		/// Extend acrylic into the title bar.

@@ -23,18 +23,12 @@
             x:Name="Seitenleiste"
             Grid.Column="0" />
 
-<!--
         <Frame
             Name="EditorFrame"
             Width="Auto"
             Height="Auto"
             Grid.Column="1"
             d:DataContext="{d:DesignInstance Type=pages:MarkdownPageEditor, IsDesignTimeCreatable=True}" />
-            -->
-        
-        <controls:CreateNewLabelControl
-            Grid.Column="1"
-            x:Name="CreateLabelControl"/>
 
-        </Grid>
+    </Grid>
 </Page>

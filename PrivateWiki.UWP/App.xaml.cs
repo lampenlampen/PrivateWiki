@@ -62,11 +62,6 @@ namespace PrivateWiki.UWP
 			NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
 
 			RegisterUncaughtExceptionLogger();
-
-			if (Window.Current.Content is FrameworkElement a)
-			{
-				a.RequestedTheme = ElementTheme.Dark;
-			}
 		}
 
 		private void RegisterUncaughtExceptionLogger()

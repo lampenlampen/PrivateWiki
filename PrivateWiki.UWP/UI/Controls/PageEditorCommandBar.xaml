@@ -1,4 +1,4 @@
-﻿<controls:PageEditorCommandBarBase
+<controls:PageEditorCommandBarBase
     x:Class="PrivateWiki.UWP.UI.Controls.PageEditorCommandBar"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,7 +10,8 @@
     d:DesignWidth="400">
 
     <CommandBar
-        DefaultLabelPosition="Right">
+        DefaultLabelPosition="Right"
+        Background="Transparent">
         <AppBarButton x:Name="SaveBtn" Icon="Save" Label="Save">
             <AppBarButton.KeyboardAccelerators>
                 <KeyboardAccelerator

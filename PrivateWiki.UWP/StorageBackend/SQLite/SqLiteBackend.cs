@@ -5,11 +5,12 @@ using Microsoft.Data.Sqlite;
 using NodaTime;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.StorageBackendService;
+using PrivateWiki.Utilities;
 using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 
 namespace PrivateWiki.UWP.StorageBackend.SQLite
 {
-#nullable enable
+	#nullable enable
 
 	public class SqLiteBackend : ISqLiteBackend, IMarkdownPageStorage, IPageStorageBackendServiceImpl
 	{
@@ -100,6 +101,20 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 					valid_to INTEGER,
 					action Integer,
 					PRIMARY KEY (id, valid_from, valid_to)
+				    );
+				    Create TABLE IF NOT EXISTS labels (
+				        id TEXT PRIMARY KEY ,
+				        key TEXT,
+				        value TEXT,
+				        description TEXT,
+				        color TEXT
+				    );
+				    CREATE TABLE IF NOT EXISTS page_labels (
+				        page_id TEXT,
+				        label_id TEXT,
+				        PRIMARY KEY (page_id, label_id),
+				        FOREIGN KEY (page_id) REFERENCES pages(id) on delete CASCADE,
+				        FOREIGN KEY (label_id) REFERENCES labels(id) on delete CASCADE
 				    );"
 			};
 
@@ -747,32 +762,168 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 			return new TaskFactory<bool>().StartNew((label) => Action((Label) label), label);
 		}
 
-		public async Task<Label> GetLabelAsync(Guid id)
+		public Task<Label> GetLabelAsync(Guid id)
 		{
-			// TODO GetLabel
+			Label Action(Guid id)
+			{
+				try
+				{
+					using var conn = _conn;
+					
+					var command = new SqliteCommand
+					{
+						Connection = conn,
+						CommandText = "SELECT * FROM labels WHERE id == @id"
+					};
 
-			throw new NotImplementedException();
+					command.Parameters.AddWithValue("@id", id.ToString());
+					
+					conn.Open();
+
+					var reader = command.ExecuteReader();
+					
+					id = Guid.Parse(reader.GetString(reader.GetOrdinal("id")));
+					var key = reader.GetString(reader.GetOrdinal("key"));
+					var value = reader.GetString(reader.GetOrdinal("value"));
+					var description = reader.GetString(reader.GetOrdinal("description"));
+					var color = reader.GetString(reader.GetOrdinal("color")).HexToColor();
+					
+					var label = new Label(id, key, value, description, color);
+
+					return label;
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
+			}
+			
+			return new TaskFactory<Label>().StartNew((id) => Action((Guid) id), id);
 		}
 
-		public async Task<IEnumerable<Label>> GetAllLabelsAsync()
+		public Task<IEnumerable<Label>> GetAllLabelsAsync()
 		{
-			// TODO GetAllLabels
+			IEnumerable<Label> Action()
+			{
+				try
+				{
+					using var conn = _conn;
+					
+					var command = new SqliteCommand
+					{
+						Connection = conn,
+						CommandText = "SELECT * FROM labels"
+					};
 
-			throw new NotImplementedException();
+					conn.Open();
+
+					var reader = command.ExecuteReader();
+					
+					var labels = new List<Label>();
+
+					while (reader.Read())
+					{
+						var id = Guid.Parse(reader.GetString(reader.GetOrdinal("id")));
+						var key = reader.GetString(reader.GetOrdinal("key"));
+						var value = reader.GetString(reader.GetOrdinal("value"));
+						var description = reader.GetString(reader.GetOrdinal("description"));
+						var color = reader.GetString(reader.GetOrdinal("color")).HexToColor();
+					
+						var label = new Label(id, key, value, description, color);
+						
+						labels.Add(label);
+					}
+					
+					return labels;
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
+			}
+			
+			return new TaskFactory<IEnumerable<Label>>().StartNew(Action);
 		}
 
-		public async Task<bool> DeleteLabelAsync(Guid id)
+		public Task<bool> DeleteLabelAsync(Guid id)
 		{
-			// TODO DeleteLabel
+			bool Action(Guid id)
+			{
+				try
+				{
+					using var conn = _conn;
+					
+					var command = new SqliteCommand
+					{
+						Connection = conn,
+						CommandText = "DELETE FROM labels WHERE id == @id"
+					};
 
-			throw new NotImplementedException();
+					command.Parameters.AddWithValue("@id", id.ToString());
+					
+					conn.Open();
+
+					command.ExecuteNonQuery();
+
+					return true;
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
+			}
+			
+			return new TaskFactory<bool>().StartNew((id) => Action((Guid) id), id);
 		}
 
-		public async Task<bool> DeleteLabelAsync(Label label)
-		{
-			// TODO DeleteLabel
+		public Task<bool> DeleteLabelAsync(Label label) => DeleteLabelAsync(label.Id);
 
-			throw new NotImplementedException();
+		public Task<IEnumerable<Label>> GetLabelsForPage(Guid pageId)
+		{
+			IEnumerable<Label> Action(Guid pageId)
+			{
+				try
+				{
+					using var conn = _conn;
+					
+					var command = new SqliteCommand
+					{
+						Connection = conn,
+						CommandText = "SELECT l.id, l.key, l.value, l.description, l.color\nFROM page_labels a, labels l\nWHERE a.label_id == l.id AND a.page_id == @id"
+					};
+
+					command.Parameters.AddWithValue("@id", pageId.ToString());
+
+					var reader = command.ExecuteReader();
+
+					var labels = new List<Label>();
+					
+					while (reader.Read())
+					{
+						var id = Guid.Parse(reader.GetString(reader.GetOrdinal("id")));
+						var key = reader.GetString(reader.GetOrdinal("key"));
+						var value = reader.GetString(reader.GetOrdinal("value"));
+						var description = reader.GetString(reader.GetOrdinal("description"));
+						var color = reader.GetString(reader.GetOrdinal("color")).HexToColor();
+						
+						var label = new Label(id, key, value, description, color);
+						
+						labels.Add(label);
+					}
+
+					return labels;
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
+			}
+			
+			return new TaskFactory<IEnumerable<Label>>().StartNew((id) => Action((Guid) id), pageId);
 		}
 
 		#endregion

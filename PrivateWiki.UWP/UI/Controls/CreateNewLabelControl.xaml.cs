@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 using PrivateWiki.ViewModels;
 using ReactiveUI;
+using ReactiveUI.Validation.Extensions;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -26,6 +27,11 @@ namespace PrivateWiki.UWP.UI.Controls
 				this.Bind(ViewModel,
 						vm => vm.ScopedLabelValue,
 						view => view.LabelTextBox.Text)
+					.DisposeWith(disposable);
+
+				this.BindValidation(ViewModel,
+						vm => vm.ValidLabelRule,
+						view => view.LabelTextBoxError.Text)
 					.DisposeWith(disposable);
 
 				this.Bind(ViewModel,

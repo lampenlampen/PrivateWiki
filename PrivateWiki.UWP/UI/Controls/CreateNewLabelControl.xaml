@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
-    xmlns:controls1="using:PrivateWiki.UWP.UI.Controls"
     xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
@@ -43,9 +42,12 @@
                     <TextBlock
                         Margin="0, 6, 0, 0"
                         Text="Use &quot;::&quot; to create a scoped label set (eg. &quot;priority::1&quot;)"/>
+                    
+                    <TextBlock
+                        x:Name="LabelTextBoxError"
+                        Foreground="Red"
+                        Visibility="{x:Bind LabelTextBoxError.Text, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}"/>
                 </StackPanel>
-
-                
 
                 <TextBox
                     Margin="10"

@@ -39,8 +39,14 @@ namespace PrivateWiki.DataModels.Pages
 		{
 		}
 
-		public Label(string value, string description, Color color)
+		public Label(string value, string description, Color color) : this(Guid.NewGuid(), value, description, color)
 		{
+		}
+
+		public Label(Guid id, string value, string description, Color color)
+		{
+			Id = id;
+
 			var result = value.Split(new[] {"::"}, 1, StringSplitOptions.RemoveEmptyEntries);
 
 			if (result.Length == 1)
@@ -54,6 +60,15 @@ namespace PrivateWiki.DataModels.Pages
 				Value = result[1];
 			}
 
+			Description = description;
+			Color = color;
+		}
+		
+		public Label(Guid id,string key, string value, string description, Color color)
+		{
+			Id = id;
+			Key = key;
+			Value = value;
 			Description = description;
 			Color = color;
 		}

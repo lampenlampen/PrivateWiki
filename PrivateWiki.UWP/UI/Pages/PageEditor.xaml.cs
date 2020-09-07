@@ -57,6 +57,7 @@ namespace PrivateWiki.UWP.UI.Pages
 				ViewModel.OnSave.Subscribe(NavigateToCurrentPage).DisposeWith(disposable);
 				ViewModel.OnDelete.Subscribe(_ => NavigateToPreviousOrDefaultPage()).DisposeWith(disposable);
 				ViewModel.OnOpenInExternalEditor.Subscribe(x => Frame.Navigate(typeof(ExternalEditor), x.FullPath)).DisposeWith(disposable);
+				ViewModel.OnNavigateToCreateNewLabelPage.Subscribe(_ => Frame.Navigate(typeof(CreateNewLabelPage))).DisposeWith(disposable);
 			});
 		}
 

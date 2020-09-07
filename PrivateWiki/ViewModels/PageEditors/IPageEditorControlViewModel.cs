@@ -16,5 +16,9 @@ namespace PrivateWiki.ViewModels.PageEditors
 		IObservable<Unit> OnOpenInExternalEditor { get; }
 
 		IObservable<Unit> OnDelete { get; }
+
+		IObservable<Unit> OnCreateNewLabel { get; }
+
+		IObservable<Unit> OnManageLabels { get; }
 	}
 }

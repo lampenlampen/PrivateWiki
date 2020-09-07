@@ -77,6 +77,12 @@ namespace PrivateWiki.ViewModels.PageEditors
 		public IObservable<Unit> OnOpenInExternalEditor { get; }
 		public IObservable<Unit> OnDelete { get; }
 
+		public IObservable<Unit> OnCreateNewLabel => _onCreateNewLabel;
+		private readonly ISubject<Unit> _onCreateNewLabel;
+
+		public IObservable<Unit> OnManageLabels => _onManageLabels;
+		private readonly ISubject<Unit> _onManageLabels;
+
 		protected PageEditorControlViewModelBase()
 		{
 			CommandBarViewModel = new PageEditorCommandBarViewModel();
@@ -85,8 +91,8 @@ namespace PrivateWiki.ViewModels.PageEditors
 			RemoveLabel = ReactiveCommand.CreateFromTask<Label>(RemoveLabelAsync);
 			AddLabel = ReactiveCommand.CreateFromTask<Label>(AddLabelAsync);
 			AddLabels = ReactiveCommand.CreateFromTask<IEnumerable<Label>>(AddLabelsAsync);
-			CreateNewLabel = ReactiveCommand.CreateFromTask(CreateNewLabelAsync);
-			ManageLabels = ReactiveCommand.CreateFromTask(ManageLabelsAsync);
+			CreateNewLabel = ReactiveCommand.Create<Unit>(x => _onCreateNewLabel.OnNext(x));
+			ManageLabels = ReactiveCommand.Create<Unit>(x => _onManageLabels.OnNext(x));
 
 			OnAbort = CommandBarViewModel.OnAbort.AsObservable();
 			_onSavePage = new Subject<GenericPage>();
@@ -94,6 +100,8 @@ namespace PrivateWiki.ViewModels.PageEditors
 			CommandBarViewModel.OnSave.InvokeCommand(this, x => x.SavePage);
 			OnOpenInExternalEditor = CommandBarViewModel.OnOpenInExternalEditor.AsObservable();
 			OnDelete = CommandBarViewModel.OnDelete.AsObservable();
+			_onCreateNewLabel = new Subject<Unit>();
+			_onManageLabels = new Subject<Unit>();
 
 			this.WhenAnyValue(x => x.Page)
 				.WhereNotNull()
@@ -154,24 +162,6 @@ namespace PrivateWiki.ViewModels.PageEditors
 		private Task AddLabelsAsync(IEnumerable<Label> labels)
 		{
 			_pageLabels.Edit(updater => updater.AddOrUpdate(labels));
-
-			return Task.CompletedTask;
-		}
-
-		private Task CreateNewLabelAsync()
-		{
-			Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification();
-
-			// TODO Create a new Label
-
-			return Task.CompletedTask;
-		}
-
-		private Task ManageLabelsAsync()
-		{
-			Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification();
-
-			// TODO Navigate to "Manage Labels"-Page
 
 			return Task.CompletedTask;
 		}

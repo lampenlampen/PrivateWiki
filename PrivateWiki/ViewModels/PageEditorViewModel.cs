@@ -19,7 +19,7 @@ namespace PrivateWiki.ViewModels
 
 		private GenericPage Page = null!;
 
-		private IPageEditorControlViewModel _pageContentViewModel = null!;
+		private IPageEditorControlViewModel? _pageContentViewModel = null!;
 
 		public IPageEditorControlViewModel PageContentViewModel
 		{
@@ -27,15 +27,19 @@ namespace PrivateWiki.ViewModels
 			set => this.RaiseAndSetIfChanged(ref _pageContentViewModel, value);
 		}
 
-		public readonly ReactiveCommand<Path, Unit> ShowPage;
+		public ReactiveCommand<Path, Unit> ShowPage { get; }
 
-		public readonly ReactiveCommand<GenericPage, Unit> SavePage;
+		public ReactiveCommand<GenericPage, Unit> SavePage { get; }
 
-		public readonly ReactiveCommand<Unit, Unit> Abort;
+		public ReactiveCommand<Unit, Unit> Abort { get; }
 
-		public readonly ReactiveCommand<Unit, Unit> OpenInExternalEditor;
+		public ReactiveCommand<Unit, Unit> OpenInExternalEditor { get; }
 
-		public readonly ReactiveCommand<Unit, Unit> DeletePage;
+		public ReactiveCommand<Unit, Unit> DeletePage { get; }
+		
+		public ReactiveCommand<Unit, Unit> NavigateToCreateNewLabelPage { get; }
+		
+		public ReactiveCommand<Unit, Unit> NavigateToManageLabelsPage { get; }
 
 		private readonly Interaction<Path, bool> _confirmDelete;
 		public Interaction<Path, bool> ConfirmDelete => _confirmDelete;
@@ -52,6 +56,14 @@ namespace PrivateWiki.ViewModels
 		private readonly ISubject<Path> _onOpenInExternalEditor;
 		public IObservable<Path> OnOpenInExternalEditor => _onOpenInExternalEditor;
 
+		private readonly ISubject<Unit> _onNavigateToCreateNewLabelPage;
+
+		public IObservable<Unit> OnNavigateToCreateNewLabelPage => _onNavigateToCreateNewLabelPage;
+
+		private readonly ISubject<Unit> _onNavigateToManageLabelsPage;
+
+		public IObservable<Unit> OnNavigateToManageLabelsPage => _onNavigateToManageLabelsPage;
+
 		public PageEditorViewModel()
 		{
 			_backend = Application.Instance.Container.GetInstance<IPageBackendService>();
@@ -62,11 +74,15 @@ namespace PrivateWiki.ViewModels
 			Abort = ReactiveCommand.CreateFromTask(AbortAsync);
 			OpenInExternalEditor = ReactiveCommand.CreateFromTask(OpenInExternalEditorAsync);
 			DeletePage = ReactiveCommand.CreateFromTask(DeletePageAsync);
+			NavigateToCreateNewLabelPage = ReactiveCommand.Create<Unit>(x => _onNavigateToCreateNewLabelPage.OnNext(x));
+			NavigateToManageLabelsPage = ReactiveCommand.Create<Unit>(x => _onNavigateToManageLabelsPage.OnNext(x));
 
 			_onAbort = new Subject<Unit>();
 			_onSave = new Subject<Path>();
 			_onOpenInExternalEditor = new Subject<Path>();
 			_onDelete = new Subject<Unit>();
+			_onNavigateToCreateNewLabelPage = new Subject<Unit>();
+			_onNavigateToManageLabelsPage = new Subject<Unit>();
 
 			_confirmDelete = new Interaction<Path, bool>();
 
@@ -78,6 +94,8 @@ namespace PrivateWiki.ViewModels
 					x.OnSavePage.InvokeCommand(this, b => b.SavePage);
 					x.OnDelete.InvokeCommand(this, b => b.DeletePage);
 					x.OnOpenInExternalEditor.InvokeCommand(this, b => b.OpenInExternalEditor);
+					x.OnCreateNewLabel.InvokeCommand(this, a => a.NavigateToCreateNewLabelPage);
+					x.OnManageLabels.InvokeCommand(this, a => a.NavigateToManageLabelsPage);
 				});
 		}
 
