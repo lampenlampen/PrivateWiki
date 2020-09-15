@@ -10,7 +10,7 @@
     xmlns:xamlConverter="using:PrivateWiki.UWP.UI.XamlConverter"
     xmlns:settingsPages="using:PrivateWiki.UWP.UI.Pages.SettingsPages"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource AppPageBackgroundBrush}">
 
     <Page.Resources>
         <xamlConverter:ThumbnailToImageConverter x:Key="ThumbnailToImageConverter" />

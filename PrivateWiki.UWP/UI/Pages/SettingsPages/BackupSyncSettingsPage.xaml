@@ -8,7 +8,7 @@
     xmlns:settings="using:PrivateWiki.ViewModels.Settings"
     xmlns:xamlConverter="using:PrivateWiki.UWP.UI.XamlConverter"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource AppPageBackgroundBrush}">
 
     <Page.Resources>
         <xamlConverter:EnableStateToColorConverter x:Key="StateToColorConverter" />

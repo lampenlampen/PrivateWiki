@@ -24,9 +24,6 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
-        
-        <controls:LabelControl
-            Label="{x:Bind Label}"/>
 
         <Popup
             x:Name="SearchPopup"
@@ -75,7 +72,7 @@
             Grid.Column="2"
             Padding="0, 10, 10, 20"
             Margin="0,0,0,0"
-            Background="#EEEEEE">
+            Background="{ThemeResource AppPageBackgroundBrush}">
 
             <TextBlock
                 x:Uid="/PageViewer/TOC"

@@ -8,7 +8,7 @@
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     xmlns:pages="using:PrivateWiki.DataModels.Pages"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource AppPageBackgroundBrush}">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -29,10 +29,7 @@
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
 
             </Button>
-
         </RelativePanel>
-
-        
 
         <StackPanel
             Grid.Row="1"

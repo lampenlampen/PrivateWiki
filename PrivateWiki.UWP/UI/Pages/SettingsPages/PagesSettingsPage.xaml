@@ -9,7 +9,7 @@
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:xamlConverter="using:PrivateWiki.UWP.UI.XamlConverter"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource AppPageBackgroundBrush}">
 
     <Page.Resources>
         <xamlConverter:InstantToReadableDateTimeConverter x:Key="InstantToReadableDateTimeConverter" />

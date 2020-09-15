@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PrivateWiki"
     xmlns:media="using:Microsoft.UI.Xaml.Media"
-    RequestedTheme="Light">
+    RequestedTheme="Dark">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -37,10 +37,21 @@
                                  default high contrast resources are used when the user
                                  turns on high contrast mode. -->
                         </ResourceDictionary>
+                        
+                        <ResourceDictionary x:Key="Light">
+                            <SolidColorBrush
+                                x:Key="AppPageBackgroundBrush"
+                                Color="White"/>
+                        </ResourceDictionary>
+                        
+                        <ResourceDictionary x:Key="Dark">
+                            <SolidColorBrush
+                                x:Key="AppPageBackgroundBrush"
+                                Color="#212121"/>
+                        </ResourceDictionary>
                     </ResourceDictionary.ThemeDictionaries>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
-
 </Application>

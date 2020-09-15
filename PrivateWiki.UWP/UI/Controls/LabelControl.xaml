@@ -17,9 +17,8 @@
         <xamlConverter:TextColorBasedOnAccentColorConverter x:Key="TextColorBasedOnAccentColorConverter"/>
         <converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
 
-        <RevealBorderBrush x:Key="LabelRevealBorderBrush"
-                           Color="{x:Bind Color, Mode=OneWay, Converter={StaticResource SystemDrawingColorToWindowsUiColorConverter}}"
-                           FallbackColor="{x:Bind Color, Mode=OneWay, Converter={StaticResource SystemDrawingColorToWindowsUiColorConverter}}" />
+        <SolidColorBrush x:Key="LabelRevealBorderBrush"
+                           Color="{x:Bind Color, Mode=OneWay, Converter={StaticResource SystemDrawingColorToWindowsUiColorConverter}}"/>
 
     </local:LabelControlBase.Resources>
 
