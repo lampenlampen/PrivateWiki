@@ -1,4 +1,4 @@
-namespace PrivateWiki.UWP.StorageBackend
+namespace PrivateWiki.Services.StorageBackendService
 {
 	public class SqLiteStorageOptions
 	{

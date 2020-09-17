@@ -4,8 +4,8 @@ using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NodaTime;
 using PrivateWiki.DataModels.Pages;
-using PrivateWiki.UWP.StorageBackend;
-using PrivateWiki.UWP.StorageBackend.SQLite;
+using PrivateWiki.Services.StorageBackendService;
+using PrivateWiki.Services.StorageBackendService.SQLite;
 
 namespace StorageBackend.Test.SqLite
 {

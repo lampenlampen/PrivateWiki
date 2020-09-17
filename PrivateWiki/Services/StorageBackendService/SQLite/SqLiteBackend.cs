@@ -4,13 +4,11 @@ using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using NodaTime;
 using PrivateWiki.DataModels.Pages;
-using PrivateWiki.Services.StorageBackendService;
 using PrivateWiki.Utilities;
-using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 
-namespace PrivateWiki.UWP.StorageBackend.SQLite
+namespace PrivateWiki.Services.StorageBackendService.SQLite
 {
-	#nullable enable
+#nullable enable
 
 	public class SqLiteBackend : ISqLiteBackend, IMarkdownPageStorage, IPageStorageBackendServiceImpl
 	{
@@ -769,7 +767,7 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 				try
 				{
 					using var conn = _conn;
-					
+
 					var command = new SqliteCommand
 					{
 						Connection = conn,
@@ -777,17 +775,17 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 					};
 
 					command.Parameters.AddWithValue("@id", id.ToString());
-					
+
 					conn.Open();
 
 					var reader = command.ExecuteReader();
-					
+
 					id = Guid.Parse(reader.GetString(reader.GetOrdinal("id")));
 					var key = reader.GetString(reader.GetOrdinal("key"));
 					var value = reader.GetString(reader.GetOrdinal("value"));
 					var description = reader.GetString(reader.GetOrdinal("description"));
 					var color = reader.GetString(reader.GetOrdinal("color")).HexToColor();
-					
+
 					var label = new Label(id, key, value, description, color);
 
 					return label;
@@ -798,7 +796,7 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 					throw;
 				}
 			}
-			
+
 			return new TaskFactory<Label>().StartNew((id) => Action((Guid) id), id);
 		}
 
@@ -809,7 +807,7 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 				try
 				{
 					using var conn = _conn;
-					
+
 					var command = new SqliteCommand
 					{
 						Connection = conn,
@@ -819,7 +817,7 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 					conn.Open();
 
 					var reader = command.ExecuteReader();
-					
+
 					var labels = new List<Label>();
 
 					while (reader.Read())
@@ -829,12 +827,12 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 						var value = reader.GetString(reader.GetOrdinal("value"));
 						var description = reader.GetString(reader.GetOrdinal("description"));
 						var color = reader.GetString(reader.GetOrdinal("color")).HexToColor();
-					
+
 						var label = new Label(id, key, value, description, color);
-						
+
 						labels.Add(label);
 					}
-					
+
 					return labels;
 				}
 				catch (Exception e)
@@ -843,7 +841,7 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 					throw;
 				}
 			}
-			
+
 			return new TaskFactory<IEnumerable<Label>>().StartNew(Action);
 		}
 
@@ -854,7 +852,7 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 				try
 				{
 					using var conn = _conn;
-					
+
 					var command = new SqliteCommand
 					{
 						Connection = conn,
@@ -862,7 +860,7 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 					};
 
 					command.Parameters.AddWithValue("@id", id.ToString());
-					
+
 					conn.Open();
 
 					command.ExecuteNonQuery();
@@ -875,7 +873,7 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 					throw;
 				}
 			}
-			
+
 			return new TaskFactory<bool>().StartNew((id) => Action((Guid) id), id);
 		}
 
@@ -888,7 +886,7 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 				try
 				{
 					using var conn = _conn;
-					
+
 					var command = new SqliteCommand
 					{
 						Connection = conn,
@@ -900,7 +898,7 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 					var reader = command.ExecuteReader();
 
 					var labels = new List<Label>();
-					
+
 					while (reader.Read())
 					{
 						var id = Guid.Parse(reader.GetString(reader.GetOrdinal("id")));
@@ -908,9 +906,9 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 						var value = reader.GetString(reader.GetOrdinal("value"));
 						var description = reader.GetString(reader.GetOrdinal("description"));
 						var color = reader.GetString(reader.GetOrdinal("color")).HexToColor();
-						
+
 						var label = new Label(id, key, value, description, color);
-						
+
 						labels.Add(label);
 					}
 
@@ -922,7 +920,7 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 					throw;
 				}
 			}
-			
+
 			return new TaskFactory<IEnumerable<Label>>().StartNew((id) => Action((Guid) id), pageId);
 		}
 

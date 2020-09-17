@@ -11,8 +11,8 @@ using JetBrains.Annotations;
 using NLog;
 using NodaTime;
 using PrivateWiki.DataModels.Pages;
-using PrivateWiki.UWP.StorageBackend;
-using PrivateWiki.UWP.StorageBackend.SQLite;
+using PrivateWiki.Services.StorageBackendService;
+using PrivateWiki.Services.StorageBackendService.SQLite;
 using PrivateWiki.UWP.Utilities;
 using Page = Windows.UI.Xaml.Controls.Page;
 

@@ -4,8 +4,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using NodaTime;
 using PrivateWiki.DataModels.Pages;
-using PrivateWiki.UWP.StorageBackend;
-using PrivateWiki.UWP.StorageBackend.SQLite;
+using PrivateWiki.Services.StorageBackendService;
+using PrivateWiki.Services.StorageBackendService.SQLite;
 using Page = Windows.UI.Xaml.Controls.Page;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238

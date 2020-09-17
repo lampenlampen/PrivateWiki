@@ -10,7 +10,5 @@ namespace PrivateWiki.UWP.Utilities.ExtensionFunctions
 		public static SolidColorBrush ToBrush(this System.Drawing.Color color) => new SolidColorBrush(color.ToWindowsUiColor());
 
 		public static System.Drawing.Color ToSystemDrawingColor(this Color color) => System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
-
-		public static string ToHexColor(this System.Drawing.Color color) => $"#{color.R:X2}{color.G:X2}{color.B:X2}";
 	}
 }

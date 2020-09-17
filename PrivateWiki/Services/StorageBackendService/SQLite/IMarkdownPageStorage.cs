@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using PrivateWiki.DataModels.Pages;
 
-namespace PrivateWiki.UWP.StorageBackend
+namespace PrivateWiki.Services.StorageBackendService.SQLite
 {
+	[Obsolete]
 	public interface IMarkdownPageStorage
 	{
 		/// <summary>

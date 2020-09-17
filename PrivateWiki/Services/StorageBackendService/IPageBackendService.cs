@@ -5,7 +5,7 @@ using PrivateWiki.DataModels.Pages;
 
 namespace PrivateWiki.Services.StorageBackendService
 {
-	public interface IPageBackendService
+	public interface IPageBackendService : ILabelBackendService
 	{
 		/// <summary>
 		/// Returns a Page with the given <paramref name="id"/>
@@ -84,7 +84,10 @@ namespace PrivateWiki.Services.StorageBackendService
 		/// <param name="pageLink"></param>
 		/// <returns></returns>
 		Task<IEnumerable<GenericPageHistory>> GetPageHistoryAsync(string pageLink);
+	}
 
+	public interface ILabelBackendService
+	{
 		Task<bool> InsertLabelAsync(Label label);
 
 		Task<Label> GetLabelAsync(Guid id);

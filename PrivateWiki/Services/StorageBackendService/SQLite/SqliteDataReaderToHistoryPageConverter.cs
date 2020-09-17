@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 using NodaTime;
 using PrivateWiki.DataModels.Pages;
 
-namespace PrivateWiki.UWP.StorageBackend.SQLite
+namespace PrivateWiki.Services.StorageBackendService.SQLite
 {
 	class SqliteDataReaderToHistoryPageConverter : SqliteDataReaderToPageConverter
 	{

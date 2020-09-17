@@ -2,8 +2,8 @@
 using System.Linq;
 using Windows.UI.Xaml.Controls;
 using NodaTime;
-using PrivateWiki.UWP.StorageBackend;
-using PrivateWiki.UWP.StorageBackend.SQLite;
+using PrivateWiki.Services.StorageBackendService;
+using PrivateWiki.Services.StorageBackendService.SQLite;
 
 #nullable enable
 

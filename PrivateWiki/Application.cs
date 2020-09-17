@@ -16,6 +16,7 @@ using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.PackageService;
 using PrivateWiki.Services.SqliteStorage;
 using PrivateWiki.Services.StorageBackendService;
+using PrivateWiki.Services.StorageBackendService.SQLite;
 using SimpleInjector;
 
 namespace PrivateWiki
@@ -40,7 +41,9 @@ namespace PrivateWiki
 			Result.Setup(cfg => cfg.Logger = fluentResultLogger);
 
 			Container.Register<IClock>(() => SystemClock.Instance, Lifestyle.Singleton);
-			Container.Register<IPageBackendService, PageBackendService>(Lifestyle.Transient);
+			Container.Register<IPageBackendService, PageBackendService>(Lifestyle.Singleton);
+			Container.Register<IPageStorageBackendServiceImpl>(() => new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), Lifestyle.Singleton);
+			Container.Register<ILabelBackendService, PageBackendService>(Lifestyle.Singleton);
 			Container.Register<IDebugModeService, DebugModeService>(Lifestyle.Singleton);
 			Container.Register<IApplicationLauncherService, ApplicationLauncherService>(Lifestyle.Singleton);
 			Container.Register<IDefaultPagesService, DefaultPagesService>(Lifestyle.Transient);

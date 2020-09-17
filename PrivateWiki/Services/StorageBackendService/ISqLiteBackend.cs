@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace PrivateWiki.UWP.StorageBackend
+namespace PrivateWiki.Services.StorageBackendService
 {
 	public interface ISqLiteBackend : IStorageBackend
 	{

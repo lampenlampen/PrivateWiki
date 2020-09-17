@@ -10,9 +10,9 @@ using NLog;
 using NodaTime;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.RenderingService;
+using PrivateWiki.Services.StorageBackendService;
+using PrivateWiki.Services.StorageBackendService.SQLite;
 using PrivateWiki.UWP.Data;
-using PrivateWiki.UWP.StorageBackend;
-using PrivateWiki.UWP.StorageBackend.SQLite;
 using PrivateWiki.UWP.UI.Dialogs;
 using Page = Windows.UI.Xaml.Controls.Page;
 

@@ -1,32 +1,35 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.Data.Sqlite;
 using NodaTime;
 using PrivateWiki.DataModels.Pages;
 
-namespace PrivateWiki.UWP.StorageBackend.SQLite
+namespace PrivateWiki.Services.StorageBackendService.SQLite
 {
-	public class SqliteDataReaderToMarkdownPageConverter
+	class SqliteDataReaderToPageConverter
 	{
-		public static SqliteDataReaderToMarkdownPageConverter Instance => new SqliteDataReaderToMarkdownPageConverter();
+		public static SqliteDataReaderToPageConverter Instance = new SqliteDataReaderToPageConverter();
 
-		public bool ConvertToMarkdownPageModel(SqliteDataReader reader, MarkdownPage page)
+		public bool ConvertToPageModel(SqliteDataReader reader, GenericPage page)
 		{
 			while (reader.Read())
 			{
-				return SqliteDataToMarkdownModel(reader, page);
+				return SqliteDataToPageModel(reader, page);
 			}
 
 			return false;
 		}
 
-		protected bool SqliteDataToMarkdownModel(SqliteDataReader reader, MarkdownPage page)
+		protected bool SqliteDataToPageModel(SqliteDataReader reader, GenericPage page)
 		{
 			page.Id = Guid.Parse(reader.GetString(reader.GetOrdinal("id")));
+			page.Link = reader.GetString(reader.GetOrdinal("link"));
 			page.Content = reader.GetString(reader.GetOrdinal("content"));
 			page.Created = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("created")));
 			page.LastChanged = Instant.FromUnixTimeMilliseconds(reader.GetInt64(reader.GetOrdinal("changed")));
 			page.IsLocked = reader.GetBoolean(reader.GetOrdinal("locked"));
+			//page.ContentType = reader.GetString(reader.GetOrdinal("contentType"));
+			page.ContentType = ContentType.Parse(reader.GetString(reader.GetOrdinal("contentType")));
 
 			var link = reader.GetString(reader.GetOrdinal("link"));
 			var path = link.Split(new[] {':'}, StringSplitOptions.RemoveEmptyEntries);
@@ -46,14 +49,15 @@ namespace PrivateWiki.UWP.StorageBackend.SQLite
 			return true;
 		}
 
-		public IList<MarkdownPage> ConvertToPageModels(SqliteDataReader reader)
+
+		public IList<GenericPage> ConvertToPageModels(SqliteDataReader reader)
 		{
-			var pages = new List<MarkdownPage>();
+			var pages = new List<GenericPage>();
 
 			while (reader.Read())
 			{
-				var page = new MarkdownPage();
-				if (SqliteDataToMarkdownModel(reader, page)) pages.Add(page);
+				var page = new GenericPage();
+				if (SqliteDataToPageModel(reader, page)) pages.Add(page);
 			}
 
 			return pages;

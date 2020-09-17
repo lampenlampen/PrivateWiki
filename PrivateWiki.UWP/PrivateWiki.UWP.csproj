@@ -103,16 +103,6 @@
     <Compile Include="Services\ApplicationLauncherService\ApplicationLauncherService.cs" />
     <Compile Include="Services\FilesystemService\ApplicationDataService.cs" />
     <Compile Include="Services\FilesystemService\UWPFullTrustFilesystemService.cs" />
-    <Compile Include="StorageBackend\DefaultStorageBackends.cs" />
-    <Compile Include="StorageBackend\IMarkdownPageStorage.cs" />
-    <Compile Include="StorageBackend\ISqLiteBackend.cs" />
-    <Compile Include="StorageBackend\IStorageBackend.cs" />
-    <Compile Include="StorageBackend\SqLiteStorageOptions.cs" />
-    <Compile Include="StorageBackend\SQLite\SqLiteBackend.cs" />
-    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryMarkdownPageConverter.cs" />
-    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToHistoryPageConverter.cs" />
-    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToMarkdownPageConverter.cs" />
-    <Compile Include="StorageBackend\SQLite\SqliteDataReaderToPageConverter.cs" />
     <Compile Include="UI\Controls\CreateNewLabelControl.xaml.cs">
       <DependentUpon>CreateNewLabelControl.xaml</DependentUpon>
     </Compile>
@@ -607,25 +597,25 @@
       <Project>{e2799e21-da92-4fa1-8df2-0c08006fffaa}</Project>
       <Name>PrivateWiki</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RuntimeComponent\RuntimeComponent.csproj">
-      <Project>{a58a6b6d-679f-42e3-b415-eb310c14907a}</Project>
-      <Name>RuntimeComponent</Name>
-    </ProjectReference>
+      <ProjectReference Include="..\RuntimeComponent\RuntimeComponent.csproj">
+          <Project>{a58a6b6d-679f-42e3-b415-eb310c14907a}</Project>
+          <Name>RuntimeComponent</Name>
+      </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <SDKReference Include="WindowsDesktop, Version=10.0.19041.0">
-      <Name>Windows Desktop Extensions for the UWP</Name>
-    </SDKReference>
-  </ItemGroup>
-  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
-    <VisualStudioVersion>14.0</VisualStudioVersion>
-  </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-           Other similar extension points exist, see Microsoft.Common.targets.
-      <Target Name="BeforeBuild">
-      </Target>
-      <Target Name="AfterBuild">
-      </Target>
-      -->
+    <ItemGroup>
+        <SDKReference Include="WindowsDesktop, Version=10.0.19041.0">
+            <Name>Windows Desktop Extensions for the UWP</Name>
+        </SDKReference>
+    </ItemGroup>
+    <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+        <VisualStudioVersion>14.0</VisualStudioVersion>
+    </PropertyGroup>
+    <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets"/>
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+             Other similar extension points exist, see Microsoft.Common.targets.
+        <Target Name="BeforeBuild">
+        </Target>
+        <Target Name="AfterBuild">
+        </Target>
+        -->
 </Project>

@@ -3,6 +3,7 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Windows.UI.Xaml.Controls.Primitives;
+using PrivateWiki.Utilities;
 using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 using PrivateWiki.ViewModels;
 using ReactiveUI;

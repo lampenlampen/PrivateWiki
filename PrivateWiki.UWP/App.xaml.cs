@@ -7,14 +7,10 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using NLog;
-using NodaTime;
 using PrivateWiki.Services.ApplicationDataService;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.FilesystemService;
-using PrivateWiki.Services.StorageBackendService;
 using PrivateWiki.UWP.Services.FilesystemService;
-using PrivateWiki.UWP.StorageBackend;
-using PrivateWiki.UWP.StorageBackend.SQLite;
 using PrivateWiki.UWP.UI;
 using PrivateWiki.UWP.UI.Pages;
 using RavinduL.LocalNotifications;
@@ -54,7 +50,6 @@ namespace PrivateWiki.UWP
 			Suspending += OnSuspending;
 
 			Application.Container.Register<IFilesystemService, UWPFullTrustFilesystemService>(Lifestyle.Singleton);
-			Application.Container.Register<IPageStorageBackendServiceImpl>(() => new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), Lifestyle.Singleton);
 			Application.Container.Register<IApplicationLauncherServiceImpl, ApplicationLauncherService>(Lifestyle.Singleton);
 			Application.Container.Register<IApplicationDataService, ApplicationDataService>(Lifestyle.Singleton);
 
