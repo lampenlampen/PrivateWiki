@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml;
@@ -8,7 +7,6 @@ using Windows.UI.Xaml.Controls;
 using PrivateWiki.DataModels;
 using PrivateWiki.DataModels.Settings;
 using PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService;
-using PrivateWiki.UWP.Settings;
 using PrivateWiki.UWP.UI.Controls.Settings.Rendering;
 
 #nullable enable
@@ -26,8 +24,6 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 
 		private List<RenderModel> RenderMarkdownToHtmlModels = new List<RenderModel>();
 
-		private List<RenderModel> RenderHtmlModels = new List<RenderModel>();
-
 		public RenderingSettingsPage()
 		{
 			this.InitializeComponent();
@@ -42,54 +38,6 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 		private void OnRoamingDataChanged(ApplicationData sender, object args)
 		{
 			LoadMarkdownToHtmlListItems();
-		}
-
-		private void LoadMarkdownToHtmlListItems2()
-		{
-			RenderMarkdownToHtmlModels.Clear();
-
-			/*
-			RenderMarkdownToHtmlModels.Add(new CoreRenderModel());
-			RenderMarkdownToHtmlModels.Add(new EmphasisExtraRenderModel());
-			RenderMarkdownToHtmlModels.Add(new TableRenderModel());
-			RenderMarkdownToHtmlModels.Add(new ListRenderModel());
-			RenderMarkdownToHtmlModels.Add(new MathRenderModel());
-			RenderMarkdownToHtmlModels.Add(new SyntaxHighlightingRenderModel());
-			RenderMarkdownToHtmlModels.Add(new DiagramRenderModel());
-			*/
-
-
-			/*
-			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Yaml Frontmatter", Subtitle = "", Type = RenderMarkdownToHtmlType.YamlFrontMatter });
-			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Globalization", Subtitle = "", Type = RenderMarkdownToHtmlType.Globalization });
-			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Jira Links", Subtitle = "", Type = RenderMarkdownToHtmlType.JiraLinks });
-			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Precise Source Location", Subtitle = "", Type = RenderMarkdownToHtmlType.PreciseSourceLocation });
-			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Self Pipeline", Subtitle = "", Type = RenderMarkdownToHtmlType.SelfPipeline });
-			RenderMarkdownToHtmlModels.Add(new RenderModel { Title = "Custom Container", Subtitle = "", Type = RenderMarkdownToHtmlType.CustomContainer });
-			*/
-
-			var handler = new RenderingModelHandler();
-
-			try
-			{
-				var models = handler.LoadRenderingModels().ToList();
-
-				RenderMarkdownToHtmlModels = models;
-			}
-			catch (NullReferenceException e)
-			{
-				Console.WriteLine(e);
-
-				RenderMarkdownToHtmlModels.Clear();
-
-				RenderMarkdownToHtmlModels.Add(new CoreRenderModel());
-				RenderMarkdownToHtmlModels.Add(new EmphasisExtraRenderModel());
-				RenderMarkdownToHtmlModels.Add(new TableRenderModel());
-				RenderMarkdownToHtmlModels.Add(new ListRenderModel());
-				RenderMarkdownToHtmlModels.Add(new MathRenderModel());
-				RenderMarkdownToHtmlModels.Add(new SyntaxHighlightingRenderModel());
-				RenderMarkdownToHtmlModels.Add(new DiagramRenderModel());
-			}
 		}
 
 		private async Task LoadMarkdownToHtmlListItems()
@@ -169,12 +117,6 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 			RenderMarkdownToHtmlModels.Add(diagramRenderModel);
 		}
 
-		private void SaveRenderingOptions()
-		{
-			var handler = new RenderingModelHandler();
-			handler.SaveRenderingModels(RenderMarkdownToHtmlModels);
-		}
-
 		private async Task SaveRenderingMarkdownModel()
 		{
 			var model = new RenderingMarkdownSettingsModel();
@@ -211,6 +153,8 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 					{
 						var sourceModel = (EmphasisExtraRenderModel) renderModel;
 
+						model.IsEmphasisEnabled = sourceModel.IsEnabled;
+
 						model.IsStrikethroughEnabled = sourceModel.IsStrikethroughEnabled;
 						model.IsSuperSubScriptEnabled = sourceModel.IsSuperSubScriptEnabled;
 						model.IsInsertedEnabled = sourceModel.IsInsertedEnabled;
@@ -239,6 +183,8 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 					{
 						var sourceModel = (TableRenderModel) renderModel;
 
+						model.IsTableEnabled = sourceModel.IsEnabled;
+
 						model.IsGridTableEnabled = sourceModel.IsGridTableEnabled;
 						model.IsPipeTableEnabled = sourceModel.IsPipeTableEnabled;
 
@@ -256,6 +202,8 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 					case RenderMarkdownToHtmlType.Diagram:
 					{
 						var sourceModel = (DiagramRenderModel) renderModel;
+
+						model.IsDiagramEnabled = sourceModel.IsEnabled;
 
 						model.IsMermaidEnabled = sourceModel.IsMermaidEnabled;
 						model.IsNomnomlEnabled = sourceModel.IsNomnomlEnabled;
@@ -283,17 +231,10 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 			await LoadMarkdownToHtmlListItems();
 		}
 
-		private void HtmlExpander_OnExpanded(object sender, EventArgs e)
-		{
-			MarkdownHtmlExpander.IsExpanded = false;
-		}
-
-
 		private void MarkdownHtmlExpander_OnExpanded(object sender, EventArgs e)
 		{
 			//HtmlExpander.IsExpanded = false;
 		}
-
 
 		private void ListviewMarkdownHtml_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -343,11 +284,6 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 					// TODO Analytics
 					break;
 			}
-		}
-
-		private void ListviewHtml_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			// TODO
 		}
 
 		private void SettingsHeader_OnApplyClick(object sender, RoutedEventArgs e)

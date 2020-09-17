@@ -24,13 +24,6 @@ namespace PrivateWiki.UWP
 			return true;
 		}
 
-		public static bool RemovePage(Page page)
-		{
-			Pages.Remove(page.Path);
-
-			return true;
-		}
-
 		private static bool Normalize()
 		{
 			if (Pages.Count <= MaxItems) return false;

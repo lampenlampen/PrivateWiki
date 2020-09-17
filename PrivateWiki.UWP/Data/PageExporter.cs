@@ -19,16 +19,5 @@ namespace PrivateWiki.UWP.Data
 
 			return file;
 		}
-
-		public async Task<StorageFile> ExportPage(GenericPage page)
-		{
-			var renderer = new ContentRenderer();
-			var data = renderer.RenderPageAsync(page);
-			var file = ApplicationData.Current.TemporaryFolder.CreateFileAsync($"{page.Path.FullPath.Replace(':', '_')}.html", CreationCollisionOption.ReplaceExisting);
-
-			await FileIO.WriteTextAsync(await file, await data);
-
-			return await file;
-		}
 	}
 }

@@ -103,8 +103,6 @@
     <Compile Include="Services\ApplicationLauncherService\ApplicationLauncherService.cs" />
     <Compile Include="Services\FilesystemService\ApplicationDataService.cs" />
     <Compile Include="Services\FilesystemService\UWPFullTrustFilesystemService.cs" />
-    <Compile Include="Settings\LFSSyncActions.cs" />
-    <Compile Include="Settings\SyncModelHandler.cs" />
     <Compile Include="StorageBackend\DefaultStorageBackends.cs" />
     <Compile Include="StorageBackend\IMarkdownPageStorage.cs" />
     <Compile Include="StorageBackend\ISqLiteBackend.cs" />
@@ -242,17 +240,11 @@
     <Compile Include="UI\Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pages\SettingsPagesOld\AssetsSettingsPageOld.xaml.cs">
-      <DependentUpon>AssetsSettingsPageOld.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\Pages\SettingsPagesOld\DeveloperSettingsPage.xaml.cs">
       <DependentUpon>DeveloperSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Pages\SettingsPagesOld\NavigationSettingsPage.xaml.cs">
       <DependentUpon>NavigationSettingsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Pages\SettingsPagesOld\PagesSettingsPage.xaml.cs">
-      <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Pages\SettingsPagesOld\RenderingSettingsPage.xaml.cs">
       <DependentUpon>RenderingSettingsPage.xaml</DependentUpon>
@@ -504,16 +496,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Pages\SettingsPagesOld\AssetsSettingsPageOld.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UI\Pages\SettingsPagesOld\DeveloperSettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Pages\SettingsPagesOld\NavigationSettingsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Pages\SettingsPagesOld\PagesSettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Pages\SettingsPagesOld\RenderingSettingsPage.xaml">

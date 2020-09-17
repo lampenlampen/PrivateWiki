@@ -6,25 +6,93 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
+    xmlns:pages="using:PrivateWiki.DataModels.Pages"
     mc:Ignorable="d"
     Background="{ThemeResource AppPageBackgroundBrush}">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
+
         <controls:SettingsHeader
             Grid.Row="0"
             Title="Labels"
             Subtitle="Manage your labels">
-            
+
             <controls:SettingsHeader.Icon>
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1CB;" />
             </controls:SettingsHeader.Icon>
-            
+
         </controls:SettingsHeader>
-        
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid
+                Grid.Column="0"
+                MinWidth="300">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <RelativePanel
+                    Grid.Row="0">
+
+                    <TextBlock
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignVerticalCenterWithPanel="True"
+                        Text="Select Labels" />
+
+                    <StackPanel
+                        RelativePanel.AlignRightWithPanel="True"
+                        Orientation="Horizontal">
+
+                        <Button
+                            x:Name="CreateNewLabelBtn"
+                            Style="{ThemeResource ButtonRevealStyle}"
+                            Background="Transparent">
+
+                            <Button.Content>
+                                <SymbolIcon Symbol="Add" />
+                            </Button.Content>
+
+                        </Button>
+                    </StackPanel>
+                </RelativePanel>
+
+                <TextBox
+                    Grid.Row="1"
+                    x:Name="FilterQueryTextBox"
+                    PlaceholderText="Search" />
+
+                <ListView
+                    Grid.Row="2"
+                    x:Name="AddLabelBox"
+                    SelectionMode="Multiple">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="pages:Label">
+                            <Grid Margin="10">
+                                <controls:LabelControl
+                                    Color="{x:Bind Color}"
+                                    Label="{x:Bind Key}"
+                                    Value="{x:Bind Value}"
+                                    Description="{x:Bind Description}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+            
+            
+
+        </Grid>
     </Grid>
 </Page>

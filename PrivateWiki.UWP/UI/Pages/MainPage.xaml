@@ -27,8 +27,7 @@
             Name="EditorFrame"
             Width="Auto"
             Height="Auto"
-            Grid.Column="1"
-            d:DataContext="{d:DesignInstance Type=pages:MarkdownPageEditor, IsDesignTimeCreatable=True}" />
+            Grid.Column="1"/>
 
     </Grid>
 </Page>
