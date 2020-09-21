@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace PrivateWiki.DataModels.Pages
 {
-	public class Label
+	public readonly struct Label
 	{
-		private static readonly Color DefaultColor = Color.FromArgb(255, 0, 0, 0);
+		private static readonly Color DefaultColor = new Color(0, 0, 0);
 
-		public Guid Id { get; } = Guid.NewGuid();
+		public Guid Id { get; }
 
 		public string Key { get; }
 
@@ -16,26 +15,13 @@ namespace PrivateWiki.DataModels.Pages
 
 		public string Description { get; }
 
-		public Color Color { get; } = DefaultColor;
-
-		[Obsolete]
-		public Label(string key, string description, string? value = null)
+		public Color Color { get; }
+		
+		public Label(string value, string description) : this(Guid.NewGuid(), value, description, DefaultColor)
 		{
-			Description = description;
-			Key = key;
-			Value = value;
 		}
-
-		[Obsolete]
-		public Label(string key, string description, Color color, string? value = null)
-		{
-			Color = color;
-			Description = description;
-			Key = key;
-			Value = value;
-		}
-
-		public Label(string value, string description) : this(value, description, DefaultColor)
+		
+		public Label(Guid id, string value, string description) : this(id, value, description, DefaultColor)
 		{
 		}
 
@@ -64,31 +50,24 @@ namespace PrivateWiki.DataModels.Pages
 			Color = color;
 		}
 		
-		public Label(Guid id,string key, string value, string description, Color color)
-		{
-			Id = id;
-			Key = key;
-			Value = value;
-			Description = description;
-			Color = color;
-		}
+		
 
 		public static IList<Label> GetTestData() => testData;
 
 		private static IList<Label> testData = new List<Label>
 		{
-			new Label("testKey1", "Description 1", Color.Red),
-			new Label("testKey2", "Description 2", "testValue2"),
-			new Label("testKey3", "Description 3", Color.Indigo, "testValue3"),
-			new Label("testKey3", "Description 3", Color.BurlyWood, "testValue3"),
-			new Label("testKey1", "Description 1", Color.Red),
-			new Label("testKey2", "Description 2", "testValue2"),
-			new Label("testKey3", "Description 3", Color.Indigo, "testValue3"),
-			new Label("testKey3", "Description 3", Color.BurlyWood, "testValue3"),
-			new Label("testKey1", "Description 1", Color.Red),
-			new Label("testKey2", "Description 2", "testValue2"),
-			new Label("testKey3", "Description 3", Color.Indigo, "testValue3"),
-			new Label("testKey3", "Description 3", Color.BurlyWood, "testValue3")
+			new Label("testKey1", "Description 1", System.Drawing.Color.Red.ToColor()),
+			new Label("testKey2::testValue2", "Description 2"),
+			new Label("testKey3::testValue3", "Description 3", System.Drawing.Color.Indigo.ToColor()),
+			new Label("testKey3::testValue3", "Description 3", System.Drawing.Color.BurlyWood.ToColor()),
+			new Label("testKey1", "Description 1", System.Drawing.Color.Red.ToColor()),
+			new Label("testKey2::testValue2", "Description 2"),
+			new Label("testKey3::testValue3", "Description 3", System.Drawing.Color.Indigo.ToColor()),
+			new Label("testKey3::testValue3", "Description 3", System.Drawing.Color.BurlyWood.ToColor()),
+			new Label("testKey1", "Description 1", System.Drawing.Color.Red.ToColor()),
+			new Label("testKey2::testValue2", "Description 2"),
+			new Label("testKey3::testValue3", "Description 3", System.Drawing.Color.Indigo.ToColor()),
+			new Label("testKey3::testValue3", "Description 3", System.Drawing.Color.BurlyWood.ToColor())
 		};
 	}
 }

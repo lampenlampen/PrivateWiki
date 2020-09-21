@@ -81,7 +81,7 @@
                         <DataTemplate x:DataType="pages:Label">
                             <Grid Margin="10">
                                 <controls:LabelControl
-                                    Color="{x:Bind Color}"
+                                    Color="{x:Bind SystemDrawingColor}"
                                     Label="{x:Bind Key}"
                                     Value="{x:Bind Value}"
                                     Description="{x:Bind Description}" />

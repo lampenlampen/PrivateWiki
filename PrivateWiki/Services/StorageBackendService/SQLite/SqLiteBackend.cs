@@ -8,8 +8,6 @@ using PrivateWiki.Utilities;
 
 namespace PrivateWiki.Services.StorageBackendService.SQLite
 {
-#nullable enable
-
 	public class SqLiteBackend : ISqLiteBackend, IMarkdownPageStorage, IPageStorageBackendServiceImpl
 	{
 		private const bool IsObsoleteError = false;
@@ -742,7 +740,7 @@ namespace PrivateWiki.Services.StorageBackendService.SQLite
 					command.Parameters.AddWithValue("@key", label.Key);
 					command.Parameters.AddWithValue("@value", label.Value);
 					command.Parameters.AddWithValue("@description", label.Description);
-					command.Parameters.AddWithValue("@color", label.Color.ToHexColor());
+					command.Parameters.AddWithValue("@color", label.SystemDrawingColor.ToHexColor());
 
 					conn.Open();
 

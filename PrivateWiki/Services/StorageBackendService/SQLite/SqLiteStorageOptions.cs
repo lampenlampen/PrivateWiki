@@ -1,4 +1,4 @@
-namespace PrivateWiki.Services.StorageBackendService
+namespace PrivateWiki.Services.StorageBackendService.SQLite
 {
 	public class SqLiteStorageOptions
 	{

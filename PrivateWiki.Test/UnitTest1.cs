@@ -1,3 +1,5 @@
+using FluentAssertions;
+using PrivateWiki.DataModels.Pages;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -15,6 +17,11 @@ namespace PrivateWiki.Test
 		[Fact]
 		public void Main()
 		{
+			var color1 = new Color(15, 15, 15);
+			var color2 = new Color(15, 15, 15);
+			
+			color2.Should().BeEquivalentTo(color1);
+
 		}
 	}
 }

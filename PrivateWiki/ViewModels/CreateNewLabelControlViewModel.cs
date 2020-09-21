@@ -11,6 +11,7 @@ using ReactiveUI.Validation.Abstractions;
 using ReactiveUI.Validation.Contexts;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
+using Color = System.Drawing.Color;
 
 namespace PrivateWiki.ViewModels
 {

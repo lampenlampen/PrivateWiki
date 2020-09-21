@@ -12,6 +12,7 @@ using PrivateWiki.UWP.UI.Controls;
 using PrivateWiki.UWP.UI.Dialogs;
 using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 using RavinduL.LocalNotifications.Notifications;
+using Color = System.Drawing.Color;
 using Page = PrivateWiki.DataModels.Pages.Page;
 
 namespace PrivateWiki.UWP.UI.Pages.ContentPages

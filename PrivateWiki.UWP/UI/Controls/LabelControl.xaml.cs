@@ -11,6 +11,7 @@ using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 using PrivateWiki.ViewModels.Controls;
 using ReactiveUI;
+using Color = System.Drawing.Color;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 

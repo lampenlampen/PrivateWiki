@@ -1,3 +1,5 @@
+using PrivateWiki.Services.StorageBackendService.SQLite;
+
 namespace PrivateWiki.Services.StorageBackendService
 {
 	public static class DefaultStorageBackends

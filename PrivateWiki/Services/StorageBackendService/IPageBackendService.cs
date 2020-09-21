@@ -85,17 +85,4 @@ namespace PrivateWiki.Services.StorageBackendService
 		/// <returns></returns>
 		Task<IEnumerable<GenericPageHistory>> GetPageHistoryAsync(string pageLink);
 	}
-
-	public interface ILabelBackendService
-	{
-		Task<bool> InsertLabelAsync(Label label);
-
-		Task<Label> GetLabelAsync(Guid id);
-
-		Task<IEnumerable<Label>> GetAllLabelsAsync();
-
-		Task<bool> DeleteLabelAsync(Guid id);
-
-		Task<bool> DeleteLabelAsync(Label label);
-	}
 }

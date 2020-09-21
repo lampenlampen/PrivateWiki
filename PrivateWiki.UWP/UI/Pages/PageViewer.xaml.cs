@@ -139,7 +139,7 @@ namespace PrivateWiki.UWP.UI.Pages
 								ViewModel = new LabelControlViewModel(),
 								Label = label.Key,
 								Value = label.Value,
-								Color = label.Color,
+								Color = label.SystemDrawingColor,
 								Description = label.Description,
 								Margin = new Thickness(5)
 							};
