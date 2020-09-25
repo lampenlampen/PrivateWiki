@@ -1,13 +1,12 @@
 using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
+using FluentAssertions;
 using NodaTime;
-using PrivateWiki.Services.StorageBackendService;
+using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.StorageBackendService.SQLite;
 using Xunit;
-using Label = PrivateWiki.DataModels.Pages.Label;
-using FluentAssertions;
+using Path = System.IO.Path;
 
 namespace PrivateWiki.Test.Services.StorageBackendService.SQLite
 {
@@ -28,21 +27,10 @@ namespace PrivateWiki.Test.Services.StorageBackendService.SQLite
 			var label = Label.GetTestData()[0];
 
 			await _backend.InsertLabelAsync(label);
-			
+
 			var actualLabel = (await _backend.GetAllLabelsAsync()).First();
 
-			actualLabel.Should().BeEquivalentTo(label, options => options
-				.Using<Color>(ctx =>
-				{
-					var actual = ctx.Subject;
-					var expected = ctx.Expectation;
-
-					actual.A.Should().Be(expected.A);
-					actual.B.Should().Be(expected.B);
-					actual.G.Should().Be(expected.G);
-					actual.R.Should().Be(expected.R);
-				})
-				.WhenTypeIs<Color>());
+			actualLabel.Should().BeEquivalentTo(label);
 		}
 
 		public void Dispose()

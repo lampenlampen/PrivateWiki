@@ -740,7 +740,7 @@ namespace PrivateWiki.Services.StorageBackendService.SQLite
 					command.Parameters.AddWithValue("@key", label.Key);
 					command.Parameters.AddWithValue("@value", label.Value);
 					command.Parameters.AddWithValue("@description", label.Description);
-					command.Parameters.AddWithValue("@color", label.SystemDrawingColor.ToHexColor());
+					command.Parameters.AddWithValue("@color", label.Color.ToHexColor());
 
 					conn.Open();
 

@@ -9,6 +9,6 @@ namespace PrivateWiki.UWP.Utilities.ExtensionFunctions
 
 		public static SolidColorBrush ToBrush(this System.Drawing.Color color) => new SolidColorBrush(color.ToWindowsUiColor());
 
-		public static System.Drawing.Color ToSystemDrawingColor(this Color color) => System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+		public static Color ToWindowsUiColor(this DataModels.Pages.Color color) => Color.FromArgb(255, color.R, color.G, color.B);
 	}
 }

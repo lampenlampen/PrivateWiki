@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -11,14 +10,13 @@ using ReactiveUI.Validation.Abstractions;
 using ReactiveUI.Validation.Contexts;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
-using Color = System.Drawing.Color;
 
 namespace PrivateWiki.ViewModels
 {
 	public class CreateNewLabelControlViewModel : ReactiveObject, IValidatableViewModel
 	{
 		public ValidationContext ValidationContext { get; } = new ValidationContext();
-		
+
 		private readonly ObservableAsPropertyHelper<Color> _color;
 		public Color Color => _color.Value;
 
@@ -53,7 +51,7 @@ namespace PrivateWiki.ViewModels
 		private readonly ISubject<Unit> _onCancel;
 
 		public IObservable<Unit> OnCancel => _onCancel;
-		
+
 		public ValidationHelper ValidLabelRule { get; }
 
 		public CreateNewLabelControlViewModel()

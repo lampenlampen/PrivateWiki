@@ -47,9 +47,6 @@ namespace PrivateWiki.UWP.UI.Pages
 
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-		private Label /**/
-			Label = new Label("testlabel", "testdescription", "huhu");
-
 		public PageViewer()
 		{
 			this.InitializeComponent();
@@ -139,7 +136,7 @@ namespace PrivateWiki.UWP.UI.Pages
 								ViewModel = new LabelControlViewModel(),
 								Label = label.Key,
 								Value = label.Value,
-								Color = label.SystemDrawingColor,
+								Color = label.Color,
 								Description = label.Description,
 								Margin = new Thickness(5)
 							};

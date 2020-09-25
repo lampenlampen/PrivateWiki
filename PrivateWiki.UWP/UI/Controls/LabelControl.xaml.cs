@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
@@ -11,7 +10,6 @@ using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 using PrivateWiki.ViewModels.Controls;
 using ReactiveUI;
-using Color = System.Drawing.Color;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -68,7 +66,7 @@ namespace PrivateWiki.UWP.UI.Controls
 				"Color",
 				typeof(Color),
 				typeof(LabelControl),
-				new PropertyMetadata(Color.FromArgb(255, 255, 255, 255)));
+				new PropertyMetadata(new Color(255, 255, 255)));
 
 		public Color Color
 		{
