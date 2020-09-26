@@ -11,7 +11,6 @@ using JetBrains.Annotations;
 using NLog;
 using NodaTime;
 using PrivateWiki.DataModels.Pages;
-using PrivateWiki.Services.StorageBackendService;
 using PrivateWiki.Services.StorageBackendService.SQLite;
 using PrivateWiki.UWP.Utilities;
 using Page = Windows.UI.Xaml.Controls.Page;
@@ -109,22 +108,7 @@ namespace PrivateWiki.UWP.UI.Pages
 				file.DeleteAsync();
 			}
 
-			RemovePageEditorFromBackStack();
 			if (Frame.CanGoBack) Frame.GoBack();
-		}
-
-		private void RemovePageEditorFromBackStack()
-		{
-			if (Frame.CanGoBack)
-			{
-				var backstack = Frame.BackStack;
-				var lastEntry = backstack[Frame.BackStackDepth - 1];
-				if (lastEntry.SourcePageType == typeof(MarkdownPageEditor))
-				{
-					Logger.Debug("Remove PageEditor from BackStack");
-					backstack.Remove(lastEntry);
-				}
-			}
 		}
 
 		private void GenerateDiff(MarkdownPage page, string newPage)

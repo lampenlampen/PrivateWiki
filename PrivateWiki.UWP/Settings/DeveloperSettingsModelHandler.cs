@@ -6,6 +6,7 @@ using PrivateWiki.UWP.Models;
 
 namespace PrivateWiki.UWP.Settings
 {
+	[Obsolete]
 	class DeveloperSettingsModelHandler
 	{
 		public bool SaveDeveloperSettingsModel(DeveloperSettingsModel model)

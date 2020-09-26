@@ -10,11 +10,13 @@ namespace PrivateWiki.UWP.Data
 	[Obsolete]
 	internal class FileSystemAccess
 	{
+		[Obsolete]
 		public static Task<StorageFolder> GetAssetsFolderAsync()
 		{
 			return Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets").AsTask();
 		}
 
+		[Obsolete]
 		public static async Task<StorageFolder> GetImageFolder()
 		{
 			var localFolder = ApplicationData.Current.LocalFolder;
@@ -23,6 +25,7 @@ namespace PrivateWiki.UWP.Data
 			return imageFolder;
 		}
 
+		[Obsolete]
 		public static async Task<StorageFile> PickImageFileAsync()
 		{
 			var picker = new FileOpenPicker
@@ -40,6 +43,7 @@ namespace PrivateWiki.UWP.Data
 			return await picker.PickSingleFileAsync();
 		}
 
+		[Obsolete]
 		public static async Task<StorageFolder> PickFolderAsync()
 		{
 			var picker = new FolderPicker

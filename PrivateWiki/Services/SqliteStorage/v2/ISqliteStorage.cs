@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
 
-namespace PrivateWiki.Services.SqliteStorage
+namespace PrivateWiki.Services.SqliteStorage.v2
 {
 	public interface ISqliteStorage
 	{
@@ -9,7 +8,7 @@ namespace PrivateWiki.Services.SqliteStorage
 
 		public Task ExecuteNonQueryAsync(SqliteCommand command);
 
-		public Task<object?> ExecuteScalarAsync(SqliteCommand command);
+		public Task<string?> ExecuteScalarAsync(SqliteCommand command);
 
 		public Task DeleteDatabase();
 	}

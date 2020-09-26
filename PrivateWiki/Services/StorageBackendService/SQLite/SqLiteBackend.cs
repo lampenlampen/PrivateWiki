@@ -922,6 +922,12 @@ namespace PrivateWiki.Services.StorageBackendService.SQLite
 			return new TaskFactory<IEnumerable<Label>>().StartNew((id) => Action((Guid) id), pageId);
 		}
 
+		public Task<IEnumerable<Label>> GetLabelsForPage(GenericPage page)
+		{
+			// TODO
+			throw new NotImplementedException();
+		}
+
 		#endregion
 	}
 }

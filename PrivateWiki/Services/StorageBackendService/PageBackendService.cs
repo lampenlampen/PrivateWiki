@@ -93,5 +93,15 @@ namespace PrivateWiki.Services.StorageBackendService
 		{
 			return _storage.DeleteLabelAsync(label);
 		}
+
+		public Task<IEnumerable<Label>> GetLabelsForPage(Guid pageId)
+		{
+			return _storage.GetLabelsForPage(pageId);
+		}
+
+		public Task<IEnumerable<Label>> GetLabelsForPage(GenericPage page)
+		{
+			return _storage.GetLabelsForPage(page);
+		}
 	}
 }

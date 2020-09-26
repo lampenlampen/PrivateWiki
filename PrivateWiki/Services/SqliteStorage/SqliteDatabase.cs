@@ -53,8 +53,6 @@ namespace PrivateWiki.Services.SqliteStorage
 			var result = await command.ExecuteScalarAsync();
 			db.Close();
 
-			command.Connection = null;
-
 			return result;
 		}
 

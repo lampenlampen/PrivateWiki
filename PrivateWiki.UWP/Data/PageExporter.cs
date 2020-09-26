@@ -6,8 +6,10 @@ using PrivateWiki.Services.RenderingService;
 
 namespace PrivateWiki.UWP.Data
 {
+	[Obsolete]
 	public class PageExporter
 	{
+		[Obsolete]
 		public async Task<StorageFile> ExportPage(MarkdownPage page)
 		{
 			var contentRenderer = new ContentRenderer();

@@ -16,5 +16,9 @@ namespace PrivateWiki.Services.StorageBackendService
 		Task<bool> DeleteLabelAsync(Guid id);
 
 		Task<bool> DeleteLabelAsync(Label label);
+
+		Task<IEnumerable<Label>> GetLabelsForPage(Guid pageId);
+
+		Task<IEnumerable<Label>> GetLabelsForPage(GenericPage page);
 	}
 }

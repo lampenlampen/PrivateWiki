@@ -24,7 +24,7 @@ namespace PrivateWiki.Test.Services.StorageBackendService.SQLite
 		[Fact]
 		public async void InsertGetLabelsTest()
 		{
-			var label = Label.GetTestData()[0];
+			var label = new Label("testKey1", "Description 1", System.Drawing.Color.Red.ToColor());
 
 			await _backend.InsertLabelAsync(label);
 
