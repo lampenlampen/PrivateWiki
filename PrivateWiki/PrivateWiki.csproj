@@ -67,4 +67,11 @@
         <Compile Remove="DataModels\RecentlyVisitedPagesManager.cs" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Core\Labels" />
+      <Folder Include="Core\Queries" />
+      <Folder Include="Services\LabelBackendService" />
+      <Folder Include="Services\SqliteStorage\v2" />
+    </ItemGroup>
+
 </Project>

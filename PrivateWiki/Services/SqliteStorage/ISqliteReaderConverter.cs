@@ -1,9 +1,10 @@
 using Microsoft.Data.Sqlite;
+using PrivateWiki.DataModels.Pages;
 
 namespace PrivateWiki.Services.SqliteStorage
 {
-	public interface ISqliteReaderConverter<out T>
+	public interface ISqliteReaderConverter<out TResult>
 	{
-		T Convert(SqliteDataReader reader);
+		TResult Convert<TInput>(TInput reader);
 	}
 }

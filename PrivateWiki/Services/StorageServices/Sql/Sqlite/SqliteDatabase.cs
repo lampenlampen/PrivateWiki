@@ -2,8 +2,9 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
+using PrivateWiki.Services.SqliteStorage;
 
-namespace PrivateWiki.Services.SqliteStorage.v2
+namespace PrivateWiki.Services.StorageServices.Sql.Sqlite
 {
 	public class SqliteDatabase : ISqliteStorage
 	{
@@ -20,7 +21,7 @@ namespace PrivateWiki.Services.SqliteStorage.v2
 			}.ToString();
 		}
 
-		public async Task<T> ExecuteReaderAsync<T>(SqliteCommand command, ISqliteReaderConverter<T> converter)
+		public async Task<T> ExecuteReaderAsync<T>(SqlCommand command, IConverter<SqliteDataReader, T> converter)
 		{
 			using var db = new SqliteConnection(_connString);
 
@@ -44,7 +45,7 @@ namespace PrivateWiki.Services.SqliteStorage.v2
 			return data;
 		}
 
-		public async Task ExecuteNonQueryAsync(SqliteCommand command)
+		public async Task ExecuteNonQueryAsync(SqlCommand command)
 		{
 			using var db = new SqliteConnection(_connString);
 
@@ -58,7 +59,7 @@ namespace PrivateWiki.Services.SqliteStorage.v2
 			db.Close();
 		}
 
-		public async Task<string?> ExecuteScalarAsync(SqliteCommand command)
+		public async Task<string?> ExecuteScalarAsync(SqlCommand command)
 		{
 			using var db = new SqliteConnection(_connString);
 
