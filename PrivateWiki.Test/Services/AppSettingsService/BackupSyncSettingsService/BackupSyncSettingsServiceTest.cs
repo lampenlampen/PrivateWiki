@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Reactive.Linq;
 using PrivateWiki.DataModels;
 using PrivateWiki.DataModels.Settings;
 using PrivateWiki.Services.AppSettingsService.BackupSyncSettingsService;
 using PrivateWiki.Services.KeyValueCaches;
-using PrivateWiki.Services.SqliteStorage;
+using PrivateWiki.Services.StorageServices.Sql.Sqlite;
 using Xunit;
 
 namespace PrivateWiki.Test.Services.AppSettingsService.BackupSyncSettingsService

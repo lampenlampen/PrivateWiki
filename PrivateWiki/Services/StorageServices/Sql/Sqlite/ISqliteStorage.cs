@@ -1,12 +1,12 @@
+using System.Data.Common;
 using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
-using PrivateWiki.Services.SqliteStorage;
+using PrivateWiki.Core;
 
 namespace PrivateWiki.Services.StorageServices.Sql.Sqlite
 {
 	public interface ISqliteStorage
 	{
-		public Task<T> ExecuteReaderAsync<T>(SqlCommand command, IConverter<SqliteDataReader, T> converter);
+		public Task<T> ExecuteReaderAsync<T>(SqlCommand command, IConverter<DbDataReader, T> converter);
 
 		public Task ExecuteNonQueryAsync(SqlCommand command);
 

@@ -1,6 +1,6 @@
 using System;
 using PrivateWiki.Services.KeyValueCaches;
-using PrivateWiki.Services.SqliteStorage;
+using PrivateWiki.Services.StorageServices.Sql.Sqlite;
 using PrivateWiki.Test.Utilities;
 using Xunit;
 using Xunit.Repeat;

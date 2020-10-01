@@ -68,40 +68,5 @@ namespace PrivateWiki.Services.StorageBackendService
 		{
 			return _storage.GetPageHistoryAsync(pageLink);
 		}
-
-		public Task<bool> InsertLabelAsync(Label label)
-		{
-			return _storage.InsertLabelAsync(label);
-		}
-
-		public Task<Label> GetLabelAsync(Guid id)
-		{
-			return _storage.GetLabelAsync(id);
-		}
-
-		public Task<IEnumerable<Label>> GetAllLabelsAsync()
-		{
-			return _storage.GetAllLabelsAsync();
-		}
-
-		public Task<bool> DeleteLabelAsync(Guid id)
-		{
-			return _storage.DeleteLabelAsync(id);
-		}
-
-		public Task<bool> DeleteLabelAsync(Label label)
-		{
-			return _storage.DeleteLabelAsync(label);
-		}
-
-		public Task<IEnumerable<Label>> GetLabelsForPage(Guid pageId)
-		{
-			return _storage.GetLabelsForPage(pageId);
-		}
-
-		public Task<IEnumerable<Label>> GetLabelsForPage(GenericPage page)
-		{
-			return _storage.GetLabelsForPage(page);
-		}
 	}
 }

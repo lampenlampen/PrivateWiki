@@ -5,7 +5,7 @@ using PrivateWiki.DataModels.Pages;
 
 namespace PrivateWiki.Services.StorageBackendService
 {
-	public interface IPageBackendService : ILabelBackendService
+	public interface IPageBackendService
 	{
 		/// <summary>
 		/// Returns a Page with the given <paramref name="id"/>

@@ -2,9 +2,10 @@ using System;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
-using NodaTime;
 using PrivateWiki.DataModels.Pages;
-using PrivateWiki.Services.StorageBackendService.SQLite;
+using PrivateWiki.Services.AppSettingsService.BackendSettings;
+using PrivateWiki.Services.Backends;
+using PrivateWiki.Services.Backends.Sqlite;
 using Xunit;
 using Path = System.IO.Path;
 
@@ -13,12 +14,17 @@ namespace PrivateWiki.Test.Services.StorageBackendService.SQLite
 	public class LabelBackendTest : IDisposable
 	{
 		private readonly string _dbPath;
-		private readonly SqLiteBackend _backend;
+		private readonly ILabelBackend _backend;
 
 		public LabelBackendTest()
 		{
-			_dbPath = Guid.NewGuid().ToString();
-			_backend = new SqLiteBackend(new SqLiteStorageOptions(_dbPath), SystemClock.Instance);
+			IBackendSettingsService settings = new BackendSettingsTestService();
+
+			_dbPath = settings.GetSqliteBackendPath();
+
+			var conv1 = new DbReaderToLabelConverter();
+
+			_backend = new LabelSqliteBackend(settings, conv1, new DbReaderToLabelsConverter(conv1));
 		}
 
 		[Fact]
@@ -35,7 +41,9 @@ namespace PrivateWiki.Test.Services.StorageBackendService.SQLite
 
 		public void Dispose()
 		{
-			File.Delete(Path.GetFullPath($"{_dbPath}.db"));
+			var path = Path.GetFullPath(_dbPath);
+
+			File.Delete(path);
 		}
 	}
 }

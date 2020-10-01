@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using FluentResults;
-using Microsoft.Data.Sqlite;
 using PrivateWiki.Services.SerializationService;
-using PrivateWiki.Services.SqliteStorage;
+using PrivateWiki.Services.StorageServices.Sql;
 
 namespace PrivateWiki.Services.KeyValueCaches
 {
 	public class SqliteKeyValueCache : IPersistentKeyValueCache
 	{
-		private readonly ISqliteStorage _db;
+		private readonly StorageServices.Sql.Sqlite.ISqliteStorage _db;
 		private readonly Task _initTask;
 
 		private const string TableName = "settings";
 
 
-		public SqliteKeyValueCache(ISqliteStorage db)
+		public SqliteKeyValueCache(StorageServices.Sql.Sqlite.ISqliteStorage db)
 		{
 			_db = db;
 			_initTask = InitializeDatabase();
@@ -25,12 +24,14 @@ namespace PrivateWiki.Services.KeyValueCaches
 
 		private async Task InitializeDatabase()
 		{
-			var command = new SqliteCommand
+			var sql = "CREATE TABLE IF NOT EXISTS settings (key Text PRIMARY KEY, value TEXT)";
+
+			var parameter = new List<KeyValuePair<string, string>>
 			{
-				CommandText = "CREATE TABLE IF NOT EXISTS settings (key Text PRIMARY KEY, value TEXT);"
+				new KeyValuePair<string, string>("@TableName", TableName)
 			};
 
-			command.Parameters.AddWithValue("@TableName", TableName);
+			var command = new SqlCommand(sql, parameter);
 
 			await _db.ExecuteNonQueryAsync(command);
 		}
@@ -52,14 +53,15 @@ namespace PrivateWiki.Services.KeyValueCaches
 		{
 			await _initTask;
 
-			var command = new SqliteCommand
+			var sql = "INSERT INTO settings VALUES (@Key, @Value) ON CONFLICT (key) Do UPDATE  SET value = @Value;";
+			var parameter = new List<KeyValuePair<string, string>>
 			{
-				CommandText = "INSERT INTO settings VALUES (@Key, @Value) ON CONFLICT (key) Do UPDATE  SET value = @Value;"
+				new KeyValuePair<string, string>("@TableName", TableName),
+				new KeyValuePair<string, string>("@Key", key),
+				new KeyValuePair<string, string>("@Value", value)
 			};
 
-			command.Parameters.AddWithValue("@TableName", TableName);
-			command.Parameters.AddWithValue("@Key", key);
-			command.Parameters.AddWithValue("@Value", value);
+			var command = new SqlCommand(sql, parameter);
 
 			await _db.ExecuteNonQueryAsync(command).ConfigureAwait(false);
 
@@ -130,12 +132,13 @@ namespace PrivateWiki.Services.KeyValueCaches
 		{
 			await _initTask;
 
-			var command = new SqliteCommand
+			var sql = "DELETE FROM settings WHERE key == @Key";
+			var parameters = new List<KeyValuePair<string, string>>
 			{
-				CommandText = "DELETE FROM settings WHERE key == @Key"
+				new KeyValuePair<string, string>("@Key", key)
 			};
 
-			command.Parameters.AddWithValue("@Key", key);
+			var command = new SqlCommand(sql, parameters);
 
 			await _db.ExecuteNonQueryAsync(command).ConfigureAwait(false);
 
@@ -146,10 +149,10 @@ namespace PrivateWiki.Services.KeyValueCaches
 		{
 			await _initTask;
 
-			var command = new SqliteCommand
-			{
-				CommandText = "DELETE FROM settings"
-			};
+			var sql = "DELETE FROM settings";
+			var parameters = new List<KeyValuePair<string, string>>();
+
+			var command = new SqlCommand(sql, parameters);
 
 			await _db.ExecuteNonQueryAsync(command).ConfigureAwait(false);
 
@@ -158,17 +161,16 @@ namespace PrivateWiki.Services.KeyValueCaches
 
 		public Task DeleteCache() => _db.DeleteDatabase();
 
-		private Task<object?> Get(string key)
+		private Task<string?> Get(string key)
 		{
-			var command = new SqliteCommand
+			var sql = "SELECT value FROM settings WHERE key == @Key";
+			var parameters = new List<KeyValuePair<string, string>>
 			{
-				CommandText = "SELECT value FROM settings WHERE key == @Key"
+				new KeyValuePair<string, string>("@TableName", TableName),
+				new KeyValuePair<string, string>("@Key", key)
 			};
 
-			command.Parameters.AddWithValue("@TableName", TableName);
-			// command.Parameters.AddWithValue("@ValueCol", ValueCol);
-			// command.Parameters.AddWithValue("@KeyCol", KeyCol);
-			command.Parameters.AddWithValue("@Key", key);
+			var command = new SqlCommand(sql, parameters);
 
 			return _db.ExecuteScalarAsync(command);
 		}

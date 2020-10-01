@@ -1,8 +1,9 @@
 using System;
+using System.Data.Common;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
-using PrivateWiki.Services.SqliteStorage;
+using PrivateWiki.Core;
 
 namespace PrivateWiki.Services.StorageServices.Sql.Sqlite
 {
@@ -21,11 +22,11 @@ namespace PrivateWiki.Services.StorageServices.Sql.Sqlite
 			}.ToString();
 		}
 
-		public async Task<T> ExecuteReaderAsync<T>(SqlCommand command, IConverter<SqliteDataReader, T> converter)
+		public async Task<T> ExecuteReaderAsync<T>(SqlCommand command, IConverter<DbDataReader, T> converter)
 		{
 			using var db = new SqliteConnection(_connString);
 
-			var sqliteCommand = new Microsoft.Data.Sqlite.SqliteCommand
+			var sqliteCommand = new SqliteCommand
 			{
 				Connection = db,
 				CommandText = command.Sql,
@@ -38,7 +39,6 @@ namespace PrivateWiki.Services.StorageServices.Sql.Sqlite
 
 			await db.OpenAsync().ConfigureAwait(false);
 			var result = await sqliteCommand.ExecuteReaderAsync().ConfigureAwait(false);
-			db.Close();
 
 			var data = converter.Convert(result);
 
@@ -49,30 +49,40 @@ namespace PrivateWiki.Services.StorageServices.Sql.Sqlite
 		{
 			using var db = new SqliteConnection(_connString);
 
-			var sqliteCommand = new Microsoft.Data.Sqlite.SqliteCommand
+			var sqliteCommand = new SqliteCommand
 			{
+				Connection = db,
 				CommandText = command.Sql
 			};
 
+			foreach (var pair in command.Parameters)
+			{
+				sqliteCommand.Parameters.AddWithValue(pair.Key, pair.Value);
+			}
+
 			await db.OpenAsync().ConfigureAwait(false);
 			await sqliteCommand.ExecuteNonQueryAsync().ConfigureAwait(false);
-			db.Close();
 		}
 
 		public async Task<string?> ExecuteScalarAsync(SqlCommand command)
 		{
 			using var db = new SqliteConnection(_connString);
 
-			var sqliteCommand = new Microsoft.Data.Sqlite.SqliteCommand
+			var sqliteCommand = new SqliteCommand
 			{
+				Connection = db,
 				CommandText = command.Sql
 			};
 
+			foreach (var pair in command.Parameters)
+			{
+				sqliteCommand.Parameters.AddWithValue(pair.Key, pair.Value);
+			}
+
 			await db.OpenAsync().ConfigureAwait(false);
 			var result = await sqliteCommand.ExecuteScalarAsync().ConfigureAwait(false);
-			db.Close();
 
-			return result is DBNull ? null : result.ToString();
+			return result is null || result is DBNull ? null : result.ToString();
 		}
 
 		public Task DeleteDatabase()
