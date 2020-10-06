@@ -1,5 +1,4 @@
 using System;
-using PrivateWiki.Test.Utilities;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Repeat;
@@ -19,8 +18,8 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 		[Repeat(100)]
 		public async void InsertGetStringsTest(int iteration)
 		{
-			var key = RandomStringGenerator.RandomString(iteration);
-			var value = RandomStringGenerator.RandomString(iteration);
+			var key = FakeDataGenerator.RandomString(iteration);
+			var value = FakeDataGenerator.RandomString(iteration);
 
 			var coreAppSettings = new PrivateWiki.Services.KeyValueCaches.InMemoryCache();
 			await coreAppSettings.InsertAsync(key, value);
@@ -35,7 +34,7 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 		[Repeat(100)]
 		public async void InsertGetIntsTest(int iteration)
 		{
-			var key = RandomStringGenerator.RandomString(iteration);
+			var key = FakeDataGenerator.RandomString(iteration);
 			var value = new Random().Next();
 
 			var coreAppSettings = new PrivateWiki.Services.KeyValueCaches.InMemoryCache();
@@ -51,7 +50,7 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 		[Repeat(100)]
 		public void InsertGetBytesTest(int iteration)
 		{
-			var key = RandomStringGenerator.RandomString(iteration);
+			var key = FakeDataGenerator.RandomString(iteration);
 
 			var length = new Random().Next(iteration);
 			var value = new byte[iteration];
@@ -68,7 +67,7 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 		[Fact]
 		public async void InsertGetObjectsTest()
 		{
-			var key = RandomStringGenerator.RandomString(10);
+			var key = FakeDataGenerator.RandomString(10);
 
 			var value = new TestObject();
 

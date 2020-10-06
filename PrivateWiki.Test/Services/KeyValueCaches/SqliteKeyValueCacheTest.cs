@@ -1,7 +1,6 @@
 using System;
 using PrivateWiki.Services.KeyValueCaches;
 using PrivateWiki.Services.StorageServices.Sql.Sqlite;
-using PrivateWiki.Test.Utilities;
 using Xunit;
 using Xunit.Repeat;
 
@@ -22,8 +21,8 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 		[Repeat(1)]
 		public async void InsertAndGetStringTest(int iteration)
 		{
-			var key = RandomStringGenerator.RandomString(iteration);
-			var value = RandomStringGenerator.RandomString(iteration);
+			var key = FakeDataGenerator.RandomString(iteration);
+			var value = FakeDataGenerator.RandomString(iteration);
 
 			await _cache.InsertAsync(key, value);
 			var actual = await _cache.GetStringAsync(key);
@@ -37,8 +36,8 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 		[Repeat(1)]
 		public async void GetKeyNotInDb(int iteration)
 		{
-			var key = RandomStringGenerator.RandomString(iteration);
-			var value = RandomStringGenerator.RandomString(iteration);
+			var key = FakeDataGenerator.RandomString(iteration);
+			var value = FakeDataGenerator.RandomString(iteration);
 
 			await _cache.InsertAsync(key, value);
 			var actual = await _cache.GetStringAsync(key + "d");
@@ -51,8 +50,8 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 		[Repeat(1)]
 		public async void InsertDuplicateKeyValuePairs(int iteration)
 		{
-			var key = RandomStringGenerator.RandomString(iteration);
-			var value = RandomStringGenerator.RandomString(iteration);
+			var key = FakeDataGenerator.RandomString(iteration);
+			var value = FakeDataGenerator.RandomString(iteration);
 
 			await _cache.InsertAsync(key, value);
 			await _cache.InsertAsync(key, value);
@@ -68,9 +67,9 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 		[Repeat(1)]
 		public async void InsertDuplicateKeysWithDifferentValues(int iteration)
 		{
-			var key = RandomStringGenerator.RandomString(iteration);
-			var value = RandomStringGenerator.RandomString(iteration);
-			var value2 = RandomStringGenerator.RandomString(iteration);
+			var key = FakeDataGenerator.RandomString(iteration);
+			var value = FakeDataGenerator.RandomString(iteration);
+			var value2 = FakeDataGenerator.RandomString(iteration);
 
 			await _cache.InsertAsync(key, value);
 			await _cache.InsertAsync(key, value2);
@@ -86,8 +85,8 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 		[Repeat(1)]
 		public async void UseIndexerToInsertAndGet(int iteration)
 		{
-			var key = RandomStringGenerator.RandomString(iteration);
-			var value = RandomStringGenerator.RandomString(iteration);
+			var key = FakeDataGenerator.RandomString(iteration);
+			var value = FakeDataGenerator.RandomString(iteration);
 
 			_cache[key] = value;
 
@@ -100,7 +99,7 @@ namespace PrivateWiki.Test.Services.KeyValueCaches
 		[Fact]
 		public async void InsertGetObjectsTest()
 		{
-			var key = RandomStringGenerator.RandomString(10);
+			var key = FakeDataGenerator.RandomString(10);
 
 			var value = new TestObject();
 

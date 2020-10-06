@@ -9,14 +9,14 @@ using PrivateWiki.Services.StorageServices.Sql.Sqlite;
 
 namespace PrivateWiki.Services.Backends.Sqlite
 {
-	public class PageLabelsBackend : IPageLabelsBackend
+	public class PageLabelsSqliteBackend : IPageLabelsBackend
 	{
 		private readonly ISqliteStorage _sqliteStorage;
 		private readonly IConverter<DbDataReader, IEnumerable<Guid>> _toLabelsIdConverter;
 
 		private readonly Task _initTask;
 
-		public PageLabelsBackend(IBackendSettingsService backendSettings, IConverter<DbDataReader, IEnumerable<Guid>> toLabelsIdConverter)
+		public PageLabelsSqliteBackend(IBackendSettingsService backendSettings, IConverter<DbDataReader, IEnumerable<Guid>> toLabelsIdConverter)
 		{
 			_sqliteStorage = new SqliteDatabase(new SqliteStorageOptions {Path = backendSettings.GetSqliteBackendPath()});
 			_toLabelsIdConverter = toLabelsIdConverter;

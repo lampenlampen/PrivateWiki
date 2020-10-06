@@ -37,4 +37,8 @@
         <None Remove="bin\**"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="Utilities"/>
+    </ItemGroup>
+
 </Project>

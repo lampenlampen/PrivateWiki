@@ -57,12 +57,13 @@ namespace PrivateWiki
 			Container.Register<IAssetsService, AssetsService>(Lifestyle.Singleton);
 			Container.Register<IMostRecentlyVisitedPagesService, MostRecentlyViewedPagesManager>(Lifestyle.Singleton);
 			Container.Register<IInMemoryKeyValueCache, InMemoryCache>(Lifestyle.Singleton);
-			Container.Register<IPersistentKeyValueCache>(() => new SqliteKeyValueCache(new Services.StorageServices.Sql.Sqlite.SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})),
+			Container.Register<IPersistentKeyValueCache>(() => new SqliteKeyValueCache(new SqliteDatabase(new SqliteStorageOptions {Path = "settings.db"})),
 				Lifestyle.Singleton);
 			Container.Register<IFileExplorerService, FilesUWPService>();
 			Container.Register<ILFSBackupService, LFSBackupService>(Lifestyle.Transient);
-			Container.RegisterSingleton<IPageBackend>(() => new PageSqliteBackend(new Services.StorageServices.Sql.Sqlite.SqliteDatabase(new SqliteStorageOptions {Path = "test.db"})));
+			Container.RegisterSingleton<IPageBackend>(() => new PageSqliteBackend(new SqliteDatabase(new SqliteStorageOptions {Path = "test.db"})));
 			Container.RegisterSingleton<ILabelBackend, LabelSqliteBackend>();
+			Container.RegisterSingleton<IPageLabelsBackend, PageLabelsSqliteBackend>();
 			// TODO Lifestyle
 
 			// Converter
