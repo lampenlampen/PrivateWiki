@@ -10,9 +10,15 @@ namespace PrivateWiki.UWP.UI.XamlConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
+			// TODO 
+
 			if (value is Color color)
 			{
 				return new SolidColorBrush(color.ToWindowsUiColor());
+			}
+			else if (value is DataModels.Pages.Color color2)
+			{
+				return new SolidColorBrush(color2.ToWindowsUiColor());
 			}
 
 			throw new ArgumentException();

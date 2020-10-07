@@ -27,7 +27,9 @@ namespace PrivateWiki.Services.Backends.Sqlite
 		private Task CreateTable()
 		{
 			const string sql =
-				"CREATE TABLE IF NOT EXISTS page_labels (page_id TEXT,label_id TEXT,PRIMARY KEY (page_id, label_id),FOREIGN KEY (page_id) REFERENCES pages(id) on delete CASCADE,FOREIGN KEY (label_id) REFERENCES labels(id) on delete CASCADE);";
+				"CREATE TABLE IF NOT EXISTS page_labels (page_id TEXT,label_id TEXT, PRIMARY KEY (page_id, label_id));";
+			// const string sql =
+			// 	"CREATE TABLE IF NOT EXISTS page_labels (page_id TEXT,label_id TEXT,PRIMARY KEY (page_id, label_id),FOREIGN KEY (page_id) REFERENCES pages(id) on delete CASCADE,FOREIGN KEY (label_id) REFERENCES labels(id) on delete CASCADE);";
 
 			var command = new SqlCommand(sql, new List<KeyValuePair<string, string>>());
 
@@ -50,6 +52,72 @@ namespace PrivateWiki.Services.Backends.Sqlite
 			var result = await _sqliteStorage.ExecuteReaderAsync(command, _toLabelsIdConverter);
 
 			return result;
+		}
+
+		public async Task AddLabelToPage(Guid pageId, Guid labelId)
+		{
+			await _initTask;
+
+			const string sql = "INSERT INTO page_labels (page_id, label_id) VALUES (@pageId, @labelId);";
+
+			var parameter = new List<KeyValuePair<string, string>>
+			{
+				new KeyValuePair<string, string>("pageId", pageId.ToString()),
+				new KeyValuePair<string, string>("labelId", labelId.ToString())
+			};
+
+			var command = new SqlCommand(sql, parameter);
+
+			await _sqliteStorage.ExecuteNonQueryAsync(command);
+		}
+
+		public async Task DeleteLabel(Guid labelId)
+		{
+			await _initTask;
+
+			const string sql = "DELETE FROM page_labels WHERE label_id = @labelId";
+
+			var parameter = new List<KeyValuePair<string, string>>
+			{
+				new KeyValuePair<string, string>("@labelId", labelId.ToString())
+			};
+
+			var command = new SqlCommand(sql, parameter);
+
+			await _sqliteStorage.ExecuteNonQueryAsync(command);
+		}
+
+		public async Task DeletePage(Guid pageId)
+		{
+			await _initTask;
+
+			const string sql = "DELETE FROM page_labels WHERE page_id = @pageId";
+
+			var parameter = new List<KeyValuePair<string, string>>
+			{
+				new KeyValuePair<string, string>("@pageId", pageId.ToString())
+			};
+
+			var command = new SqlCommand(sql, parameter);
+
+			await _sqliteStorage.ExecuteNonQueryAsync(command);
+		}
+
+		public async Task RemoveLabelFromPage(Guid pageId, Guid labelId)
+		{
+			await _initTask;
+
+			const string sql = "DELETE FROM page_labels WHERE page_id = @pageId AND label_id = @labelId";
+
+			var parameter = new List<KeyValuePair<string, string>>
+			{
+				new KeyValuePair<string, string>("@pageId", pageId.ToString()),
+				new KeyValuePair<string, string>("@labelId", labelId.ToString())
+			};
+
+			var command = new SqlCommand(sql, parameter);
+
+			await _sqliteStorage.ExecuteNonQueryAsync(command);
 		}
 	}
 }
