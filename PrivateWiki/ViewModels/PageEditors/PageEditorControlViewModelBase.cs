@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using DynamicData;
 using NLog;
 using PrivateWiki.DataModels.Pages;
+using PrivateWiki.Services.Backends;
 using PrivateWiki.Utilities;
 using ReactiveUI;
 
@@ -16,6 +17,9 @@ namespace PrivateWiki.ViewModels.PageEditors
 	public abstract class PageEditorControlViewModelBase : ReactiveObject, IPageEditorControlViewModel
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+		private readonly IPageLabelsBackend _pageLabelsBackend;
+		private readonly ILabelBackend _labelBackend;
 
 		private IPageEditorCommandBarViewModel _commandBarViewModel = null!;
 
@@ -57,13 +61,15 @@ namespace PrivateWiki.ViewModels.PageEditors
 		/// </summary>
 		private readonly ISourceCache<Label, Guid> _pageLabels = new SourceCache<Label, Guid>(label => label.Id);
 
-		/// <summary>
-		/// List with all labels of the page for binding
-		/// </summary>
+		/// <inheritdoc cref="_pageLabels"/>
 		public readonly ReadOnlyObservableCollection<Label> PageLabels;
 
+		/// <summary>
+		/// Query to filter the labels.
+		/// </summary>
 		private string _addLabelsQueryText = "";
 
+		/// <inheritdoc cref="_addLabelsQueryText"/>
 		public string AddLabelsQueryText
 		{
 			get => _addLabelsQueryText;
@@ -85,6 +91,9 @@ namespace PrivateWiki.ViewModels.PageEditors
 
 		protected PageEditorControlViewModelBase()
 		{
+			_pageLabelsBackend = Application.Instance.Container.GetInstance<IPageLabelsBackend>();
+			_labelBackend = Application.Instance.Container.GetInstance<ILabelBackend>();
+
 			CommandBarViewModel = new PageEditorCommandBarViewModel();
 
 			SavePage = ReactiveCommand.CreateFromTask(SavePageAsync);
@@ -105,14 +114,11 @@ namespace PrivateWiki.ViewModels.PageEditors
 
 			this.WhenAnyValue(x => x.Page)
 				.WhereNotNull()
-				.Subscribe(x =>
-				{
-					_pageLabels.Clear();
-					_pageLabels.Edit(updater => updater.AddOrUpdate(x.Labels));
-				});
+				.Do(async x => await LoadLabelsForPage(x))
+				.Subscribe();
 
 			// Testing populate with the real data
-			_allLabels.Edit(updater => updater.AddOrUpdate(Label.GetTestData()));
+			PopulateAllLabelsCache();
 
 			_allLabels.Connect()
 				.Except(_pageLabels.Connect())
@@ -121,7 +127,9 @@ namespace PrivateWiki.ViewModels.PageEditors
 						.Select<string, Func<Label, bool>>(x =>
 						{
 							const StringComparison comp = StringComparison.OrdinalIgnoreCase;
-							return label => label.Key.Contains(x, comp) || label.Description.Contains(x, comp) || label.Value is not null && label.Value.Contains(x, comp);
+							return label =>
+								label.Key.Contains(x, comp) || label.Description.Contains(x, comp) ||
+								label.Value is not null && label.Value.Contains(x, comp);
 						}))
 				.Bind(out AddLabelsList)
 				.Subscribe();
@@ -145,25 +153,59 @@ namespace PrivateWiki.ViewModels.PageEditors
 
 		private protected abstract Task SavePageAsync();
 
-		private Task RemoveLabelAsync(Label label)
+		private async Task RemoveLabelAsync(Label label)
 		{
 			_pageLabels.Remove(label);
 
-			return Task.CompletedTask;
+			await _pageLabelsBackend.RemoveLabelFromPage(Page.Id, label.Id);
 		}
 
-		private Task AddLabelAsync(Label label)
+		private async Task AddLabelAsync(Label label)
 		{
 			_pageLabels.AddOrUpdate(label);
 
-			return Task.CompletedTask;
+			await _pageLabelsBackend.AddLabelToPage(Page.Id, label.Id);
 		}
 
-		private Task AddLabelsAsync(IEnumerable<Label> labels)
+		private async Task AddLabelsAsync(IEnumerable<Label> labels)
 		{
-			_pageLabels.Edit(updater => updater.AddOrUpdate(labels));
+			foreach (var label in labels)
+			{
+				await _pageLabelsBackend.AddLabelToPage(Page.Id, label.Id);
+			}
 
-			return Task.CompletedTask;
+			_pageLabels.Edit(updater => updater.AddOrUpdate(labels));
+		}
+
+		private async Task PopulateAllLabelsCache()
+		{
+			var labels = await _labelBackend.GetAllLabelsAsync();
+
+			_allLabels.Edit(updater => updater.AddOrUpdate(labels));
+		}
+
+		private async Task LoadLabelsForPage(GenericPage page)
+		{
+			var labelIds = await _pageLabelsBackend.GetLabelIdsForPageId(page.Id);
+			var labels = new List<Label>();
+
+			foreach (var id in labelIds)
+			{
+				var label = await _labelBackend.GetLabelAsync(id);
+
+				if (label.IsSuccess)
+				{
+					labels.Add(label.Value);
+				}
+
+				// TODO Failed Case, log
+			}
+
+			_pageLabels.Edit(updater =>
+			{
+				updater.Clear();
+				updater.AddOrUpdate(labels);
+			});
 		}
 	}
 }

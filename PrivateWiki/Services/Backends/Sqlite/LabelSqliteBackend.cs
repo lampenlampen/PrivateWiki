@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
+using FluentResults;
 using PrivateWiki.Core;
+using PrivateWiki.DataModels.Errors;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.AppSettingsService.BackendSettings;
 using PrivateWiki.Services.StorageServices.Sql;
@@ -56,7 +58,7 @@ namespace PrivateWiki.Services.Backends.Sqlite
 			await _sqliteStorage.ExecuteNonQueryAsync(command);
 		}
 
-		public async Task<Label> GetLabelAsync(Guid id)
+		public async Task<Result<Label>> GetLabelAsync(Guid id)
 		{
 			await _initTask;
 
@@ -68,9 +70,17 @@ namespace PrivateWiki.Services.Backends.Sqlite
 
 			var command = new SqlCommand(sql, parameter);
 
-			var label = await _sqliteStorage.ExecuteReaderAsync(command, _toLabelConverter);
+			Label label;
+			try
+			{
+				label = await _sqliteStorage.ExecuteReaderAsync(command, _toLabelConverter);
+			}
+			catch (Exception e)
+			{
+				return Result.Fail(new NotFoundError().CausedBy(e));
+			}
 
-			return label;
+			return Result.Ok(label);
 		}
 
 		public async Task<IEnumerable<Label>> GetAllLabelsAsync()

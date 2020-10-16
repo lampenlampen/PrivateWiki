@@ -1,8 +1,10 @@
 using System;
 using System.IO;
 using FluentAssertions;
+using PrivateWiki.DataModels.Errors;
 using PrivateWiki.Services.Backends;
 using PrivateWiki.Services.Backends.Sqlite;
+using PrivateWiki.Test.FluentResultsFluentAssertionsExtensions;
 using PrivateWiki.Test.Services.StorageBackendService.SQLite;
 using Xunit;
 
@@ -39,7 +41,15 @@ namespace PrivateWiki.Test.Services.Backends
 
 			var actual = await _backend.GetLabelAsync(label.Id);
 
-			actual.Should().BeEquivalentTo(label);
+			AssertionExtensions.Should(actual).BeEquivalentTo(label);
+		}
+
+		[Fact]
+		public async void GetLabelAsyncTest()
+		{
+			var actualLabel = await _backend.GetLabelAsync(Guid.NewGuid());
+
+			actualLabel.Should().HaveError<NotFoundError>();
 		}
 
 		public void Dispose()

@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using PrivateWiki.DataModels.Pages;
+using PrivateWiki.Services.Backends;
 using PrivateWiki.Utilities;
 using ReactiveUI;
 using ReactiveUI.Validation.Abstractions;
@@ -15,6 +16,8 @@ namespace PrivateWiki.ViewModels
 {
 	public class CreateNewLabelControlViewModel : ReactiveObject, IValidatableViewModel
 	{
+		private readonly ILabelBackend _labelBackend;
+
 		public ValidationContext ValidationContext { get; } = new ValidationContext();
 
 		private readonly ObservableAsPropertyHelper<Color> _color;
@@ -56,6 +59,8 @@ namespace PrivateWiki.ViewModels
 
 		public CreateNewLabelControlViewModel()
 		{
+			_labelBackend = Application.Instance.Container.GetInstance<ILabelBackend>();
+
 			CreateLabel = ReactiveCommand.CreateFromTask(x => CreateLabelAsync(), this.IsValid());
 			Cancel = ReactiveCommand.CreateFromTask(CancelAsync);
 
@@ -71,14 +76,13 @@ namespace PrivateWiki.ViewModels
 				.ToProperty(this, x => x.Color, out _color);
 		}
 
-		private Task CreateLabelAsync()
+		private async Task CreateLabelAsync()
 		{
 			var label = new Label(ScopedLabelValue, Description, Color);
 
-			// TODO Create Label
+			await _labelBackend.InsertLabelAsync(label);
 
-			Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification();
-			return Task.CompletedTask;
+			_onCancel.OnNext(Unit.Default);
 		}
 
 		private Task CancelAsync()

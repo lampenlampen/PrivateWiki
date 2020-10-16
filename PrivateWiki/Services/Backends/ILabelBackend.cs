@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentResults;
 using PrivateWiki.DataModels.Pages;
 
 namespace PrivateWiki.Services.Backends
@@ -9,7 +10,7 @@ namespace PrivateWiki.Services.Backends
 	{
 		Task InsertLabelAsync(Label label);
 
-		Task<Label> GetLabelAsync(Guid id);
+		Task<Result<Label>> GetLabelAsync(Guid id);
 
 		Task<IEnumerable<Label>> GetAllLabelsAsync();
 

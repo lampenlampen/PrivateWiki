@@ -62,6 +62,6 @@ namespace PrivateWiki.DataModels.Pages
 
 		public List<Tag> Tags { get; }
 
-		public IList<Label> Labels { get; } = Label.GetTestData();
+		[Obsolete] public IList<Label> Labels { get; } = Label.GetTestData();
 	}
 }

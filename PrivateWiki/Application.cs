@@ -63,7 +63,9 @@ namespace PrivateWiki
 			Container.Register<ILFSBackupService, LFSBackupService>(Lifestyle.Transient);
 			Container.RegisterSingleton<IPageBackend>(() => new PageSqliteBackend(new SqliteDatabase(new SqliteStorageOptions {Path = "test.db"})));
 			Container.RegisterSingleton<ILabelBackend, LabelSqliteBackend>();
+			// Container.RegisterSingleton<ILabelBackend, TestBackend>();
 			Container.RegisterSingleton<IPageLabelsBackend, PageLabelsSqliteBackend>();
+			// Container.RegisterSingleton<IPageLabelsBackend, TestBackend>();
 			// TODO Lifestyle
 
 			// Converter

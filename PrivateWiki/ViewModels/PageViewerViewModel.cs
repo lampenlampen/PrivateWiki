@@ -6,6 +6,7 @@ using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using NLog;
 using PrivateWiki.DataModels.Pages;
+using PrivateWiki.Services.Backends;
 using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.StorageBackendService;
 using ReactiveUI;
@@ -17,6 +18,8 @@ namespace PrivateWiki.ViewModels
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
 		private readonly IMostRecentlyVisitedPagesService _mostRecentlyVisitedPagesService;
+		private readonly IPageLabelsBackend _pageLabelsBackend;
+		private readonly ILabelBackend _labelBackend;
 
 		private readonly IPageBackendService _backend;
 
@@ -102,6 +105,8 @@ namespace PrivateWiki.ViewModels
 		public PageViewerViewModel()
 		{
 			_backend = Application.Instance.Container.GetInstance<IPageBackendService>();
+			_pageLabelsBackend = Application.Instance.Container.GetInstance<IPageLabelsBackend>();
+			_labelBackend = Application.Instance.Container.GetInstance<ILabelBackend>();
 			_mostRecentlyVisitedPagesService = Application.Instance.Container.GetInstance<IMostRecentlyVisitedPagesService>();
 			CommandBarViewModel = new PageViewerCommandBarViewModel();
 			SearchControlViewModel = new GlobalSearchControlViewModel();
@@ -132,9 +137,15 @@ namespace PrivateWiki.ViewModels
 			this.WhenAnyValue(x => x.SearchControlViewModel)
 				.Subscribe(x => { OnCloseSearchPopup = x.OnClose; });
 
+			// Testing Remove
+			/*this.WhenAnyValue(x => x.Page)
+				.WhereNotNull()
+				.Subscribe(x => Labels = x.Labels);*/
+
 			this.WhenAnyValue(x => x.Page)
 				.WhereNotNull()
-				.Subscribe(x => Labels = x.Labels);
+				.Do(x => LoadPageLabels(x.Id))
+				.Subscribe();
 
 			SearchControlViewModel.OnPageSelected.Subscribe(async page => await NavigateToPageAsync(page.Path));
 		}
@@ -267,6 +278,27 @@ namespace PrivateWiki.ViewModels
 			PageContentViewer.ScrollToTop.OnNext(Unit.Default);
 
 			return Task.CompletedTask;
+		}
+
+		private async Task LoadPageLabels(Guid pageId)
+		{
+			var labelIds = await _pageLabelsBackend.GetLabelIdsForPageId(pageId);
+
+			var labels = new List<Label>();
+
+			foreach (var labelId in labelIds)
+			{
+				var label = await _labelBackend.GetLabelAsync(labelId);
+
+				if (label.IsSuccess)
+				{
+					labels.Add(label.Value);
+				}
+
+				// TODO Failed case, log
+			}
+
+			Labels = labels;
 		}
 	}
 }
