@@ -6,4 +6,9 @@ namespace PrivateWiki.Core
 	{
 		public Task Execute(T command);
 	}
+
+	public interface IAsyncCommandHandler
+	{
+		public Task Execute();
+	}
 }

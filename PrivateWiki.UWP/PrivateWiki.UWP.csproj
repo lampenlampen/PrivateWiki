@@ -274,6 +274,7 @@
     <Compile Include="Utilities\ExtensionFunctions\LinqExtensions.cs" />
     <Compile Include="Utilities\ExtensionFunctions\UIElementExtensions.cs" />
     <Compile Include="Utilities\FullyObservableCollection.cs" />
+    <Compile Include="UWPCompositionRoot.cs"/>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
