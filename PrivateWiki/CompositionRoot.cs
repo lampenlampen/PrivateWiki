@@ -23,6 +23,8 @@ using PrivateWiki.Services.StartupTask;
 using PrivateWiki.Services.StorageBackendService;
 using PrivateWiki.Services.StorageBackendService.SQLite;
 using PrivateWiki.Services.StorageServices.Sql.Sqlite;
+using PrivateWiki.Services.TranslationService;
+using PrivateWiki.ViewModels.Controls;
 using SimpleInjector;
 
 namespace PrivateWiki
@@ -70,12 +72,18 @@ namespace PrivateWiki
 			container.RegisterSingleton<IStartupTask, CompositeStartupTask>();
 			container.Collection.Register<IStartupTask>(new[] {typeof(InsertDefaultPagesStartupTask), typeof(FluentResultLoggerStartupTask)}, Lifestyle.Singleton);
 
+			container.RegisterSingleton<TranslationResources, InCodeTranslationResources>();
+
 			// Bug see https://github.com/reactiveui/splat/issues/597
 			/*
 			Container.UseSimpleInjectorDependencyResolver();
 			Locator.CurrentMutable.InitializeSplat();
 			Locator.CurrentMutable.InitializeReactiveUI();
 			*/
+
+
+			// ViewModels
+			container.Register<AddLabelsToPageControlViewModel>();
 		}
 	}
 }

@@ -17,9 +17,9 @@ namespace PrivateWiki.DataModels.Pages
 
 		public Color Color { get; }
 
-		public Label(string value, string description, Color color) : this(Guid.NewGuid(), value, description, color)
-		{
-		}
+		public LabelId LabelId => new LabelId(Id);
+
+		public Label(string value, string description, Color color) : this(Guid.NewGuid(), value, description, color) { }
 
 		public Label(Guid id, string key, string value, string description, Color color)
 		{

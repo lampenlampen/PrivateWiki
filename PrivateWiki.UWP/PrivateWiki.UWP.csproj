@@ -93,25 +93,28 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AppConfig.cs" />
-    <Compile Include="Data\FileSystemAccess.cs" />
-    <Compile Include="Data\PageExporter.cs" />
-    <Compile Include="Services\ApplicationLauncherService\ApplicationLauncherService.cs" />
-    <Compile Include="Services\FilesystemService\ApplicationDataService.cs" />
-    <Compile Include="Services\FilesystemService\UWPFullTrustFilesystemService.cs" />
-    <Compile Include="UI\Controls\CreateNewLabelControl.xaml.cs">
-      <DependentUpon>CreateNewLabelControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\DiffControl.xaml.cs">
-      <DependentUpon>DiffControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\GlobalSearchControl.xaml.cs">
-      <DependentUpon>GlobalSearchControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\IPageViewerCommandBar.cs" />
+      <Compile Include="App.xaml.cs">
+          <DependentUpon>App.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="AppConfig.cs"/>
+      <Compile Include="Data\FileSystemAccess.cs"/>
+      <Compile Include="Data\PageExporter.cs"/>
+      <Compile Include="Services\ApplicationLauncherService\ApplicationLauncherService.cs"/>
+      <Compile Include="Services\FilesystemService\ApplicationDataService.cs"/>
+      <Compile Include="Services\FilesystemService\UWPFullTrustFilesystemService.cs"/>
+      <Compile Include="UI\Controls\AddLabelsToPageControl.xaml.cs">
+          <DependentUpon>AddLabelsToPageControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Controls\CreateNewLabelControl.xaml.cs">
+          <DependentUpon>CreateNewLabelControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Controls\DiffControl.xaml.cs">
+          <DependentUpon>DiffControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Controls\GlobalSearchControl.xaml.cs">
+          <DependentUpon>GlobalSearchControl.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\Controls\IPageViewerCommandBar.cs"/>
     <Compile Include="UI\Controls\LabelControl.xaml.cs">
       <DependentUpon>LabelControl.xaml</DependentUpon>
     </Compile>
@@ -274,7 +277,7 @@
     <Compile Include="Utilities\ExtensionFunctions\LinqExtensions.cs" />
     <Compile Include="Utilities\ExtensionFunctions\UIElementExtensions.cs" />
     <Compile Include="Utilities\FullyObservableCollection.cs" />
-    <Compile Include="UWPCompositionRoot.cs"/>
+      <Compile Include="UWPCompositionRoot.cs"/>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -327,21 +330,25 @@
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="UI\Controls\CreateNewLabelControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\DiffControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\GlobalSearchControl.xaml">
-      <SubType>Designer</SubType>
+    <ItemGroup>
+        <ApplicationDefinition Include="App.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <SubType>Designer</SubType>
+        </ApplicationDefinition>
+        <Page Include="UI\Controls\AddLabelsToPageControl.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Include="UI\Controls\CreateNewLabelControl.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Include="UI\Controls\DiffControl.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Include="UI\Controls\GlobalSearchControl.xaml">
+            <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Controls\LabelControl.xaml">
@@ -575,33 +582,33 @@
       <Version>8.1.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj">
-      <Project>{e2799e21-da92-4fa1-8df2-0c08006fffaa}</Project>
-      <Name>PrivateWiki</Name>
-    </ProjectReference>
-      <ProjectReference Include="..\RuntimeComponent\RuntimeComponent.csproj">
-          <Project>{a58a6b6d-679f-42e3-b415-eb310c14907a}</Project>
-          <Name>RuntimeComponent</Name>
-      </ProjectReference>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj">
+            <Project>{e2799e21-da92-4fa1-8df2-0c08006fffaa}</Project>
+            <Name>PrivateWiki</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\RuntimeComponent\RuntimeComponent.csproj">
+            <Project>{a58a6b6d-679f-42e3-b415-eb310c14907a}</Project>
+            <Name>RuntimeComponent</Name>
+        </ProjectReference>
+    </ItemGroup>
     <ItemGroup>
         <SDKReference Include="WindowsDesktop, Version=10.0.19041.0">
             <Name>Windows Desktop Extensions for the UWP</Name>
         </SDKReference>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="UI\Pages\ContentPages"/>
+        <Folder Include="UI\Pages\ContentPages\"/>
     </ItemGroup>
     <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
         <VisualStudioVersion>14.0</VisualStudioVersion>
     </PropertyGroup>
     <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-             Other similar extension points exist, see Microsoft.Common.targets.
-        <Target Name="BeforeBuild">
-        </Target>
-        <Target Name="AfterBuild">
-        </Target>
-        -->
+               Other similar extension points exist, see Microsoft.Common.targets.
+          <Target Name="BeforeBuild">
+          </Target>
+          <Target Name="AfterBuild">
+          </Target>
+          -->
 </Project>

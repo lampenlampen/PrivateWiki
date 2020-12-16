@@ -9,6 +9,7 @@ using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.Backends;
 using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.StorageBackendService;
+using PrivateWiki.Services.TranslationService;
 using ReactiveUI;
 
 namespace PrivateWiki.ViewModels
@@ -20,8 +21,11 @@ namespace PrivateWiki.ViewModels
 		private readonly IMostRecentlyVisitedPagesService _mostRecentlyVisitedPagesService;
 		private readonly IPageLabelsBackend _pageLabelsBackend;
 		private readonly ILabelBackend _labelBackend;
+		private readonly TranslationResources _translation;
 
 		private readonly IPageBackendService _backend;
+
+		public readonly Translation Translations;
 
 		private IContentPageViewerViewModel _pageContentViewer;
 
@@ -77,6 +81,8 @@ namespace PrivateWiki.ViewModels
 
 		public ReactiveCommand<Path, Unit> NavigateToPage { get; }
 
+		public ReactiveCommand<IEnumerable<Label>, Unit> AddLabels { get; }
+
 		private readonly ISubject<Path> _onNavigateToExistingPage;
 		public IObservable<Path> OnNavigateToExistingPage => _onNavigateToExistingPage;
 
@@ -108,8 +114,11 @@ namespace PrivateWiki.ViewModels
 			_pageLabelsBackend = Application.Instance.Container.GetInstance<IPageLabelsBackend>();
 			_labelBackend = Application.Instance.Container.GetInstance<ILabelBackend>();
 			_mostRecentlyVisitedPagesService = Application.Instance.Container.GetInstance<IMostRecentlyVisitedPagesService>();
+			_translation = Application.Instance.Container.GetInstance<TranslationResources>();
 			CommandBarViewModel = new PageViewerCommandBarViewModel();
 			SearchControlViewModel = new GlobalSearchControlViewModel();
+
+			Translations = new Translation(this);
 
 			// Commands
 			LoadPage = ReactiveCommand.CreateFromTask<string>(LoadPageAsync);
@@ -136,11 +145,6 @@ namespace PrivateWiki.ViewModels
 
 			this.WhenAnyValue(x => x.SearchControlViewModel)
 				.Subscribe(x => { OnCloseSearchPopup = x.OnClose; });
-
-			// Testing Remove
-			/*this.WhenAnyValue(x => x.Page)
-				.WhereNotNull()
-				.Subscribe(x => Labels = x.Labels);*/
 
 			this.WhenAnyValue(x => x.Page)
 				.WhereNotNull()
@@ -299,6 +303,26 @@ namespace PrivateWiki.ViewModels
 			}
 
 			Labels = labels;
+		}
+
+		public class Translation
+		{
+			private readonly PageViewerViewModel _parent;
+
+			private readonly TranslationResources _translation;
+
+			public Translation(PageViewerViewModel parent)
+			{
+				_parent = parent;
+
+				_translation = _parent._translation;
+			}
+
+			public string Labels => _translation.GetStringResource("labels");
+			public string TableOfContents => _translation.GetStringResource("table_of_contents");
+			public string Edit => _translation.GetStringResource("edit");
+
+			public string Test => _translation.GetStringResource("invariant_only_test");
 		}
 	}
 }

@@ -144,9 +144,17 @@ namespace PrivateWiki.UWP.UI.Pages
 							control.OnClick.Subscribe(x => Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification())
 								.DisposeWith(disposable);
 
-							TagsPanel.Children.Add(control);
+							//TagsPanel.Children.Add(control);
+							TagsPanel2.Children.Add(control);
 						}
 					})
+					.DisposeWith(disposable);
+
+				AddLabelsToPageControl.ViewModel = Application.Instance.Container.GetInstance<AddLabelsToPageControlViewModel>();
+
+				AddLabelFlyout.Events().Opening
+					.Select(_ => new PageId(ViewModel.Page.Id))
+					.InvokeCommand(AddLabelsToPageControl.ViewModel.PopulateForPage)
 					.DisposeWith(disposable);
 
 				SearchPopupContentName.ViewModel = ViewModel.SearchControlViewModel;
@@ -191,7 +199,8 @@ namespace PrivateWiki.UWP.UI.Pages
 
 		private void ShowHistory(Path link)
 		{
-			Frame.Navigate(typeof(HistoryPage), link.FullPath);
+			// TODO Show History
+			//Frame.Navigate(typeof(HistoryPage), link.FullPath);
 		}
 
 		private void Search()
@@ -218,11 +227,13 @@ namespace PrivateWiki.UWP.UI.Pages
 			context.SetOutput(result);
 		}
 
-		private async Task ShowPageLockedNotification(InteractionContext<Path, Unit> context)
+		private Task ShowPageLockedNotification(InteractionContext<Path, Unit> context)
 		{
 			App.Current.GlobalNotificationManager.ShowPageLockedNotification();
 
 			context.SetOutput(Unit.Default);
+
+			return Task.CompletedTask;
 		}
 
 		private void _centerPopup(Popup popup, FrameworkElement? extraElement = null)
