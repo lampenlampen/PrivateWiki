@@ -1,7 +1,10 @@
+using System;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Windows.UI.Xaml.Controls.Primitives;
+using Microsoft.Toolkit.Uwp.UI.Extensions;
 using PrivateWiki.ViewModels.Controls;
 using ReactiveUI;
 
@@ -19,9 +22,18 @@ namespace PrivateWiki.UWP.UI.Controls
 
 			this.WhenActivated(disposable =>
 			{
-				this.WhenAnyValue(x => x.ViewModel.AllLabels)
+				this.WhenAnyValue(x => x.ViewModel.AllLabelsSelectable)
 					.WhereNotNull()
 					.BindTo(AddLabelBox, x => x.ItemsSource)
+					.DisposeWith(disposable);
+
+				this.WhenAnyValue(x => x.ViewModel.SelectedLabels)
+					.Do(x =>
+					{
+						AddLabelBox.DeselectAll();
+						AddLabelBox.SelectedItems.Add(x);
+					})
+					.Subscribe()
 					.DisposeWith(disposable);
 
 				this.Bind(ViewModel,
@@ -39,6 +51,8 @@ namespace PrivateWiki.UWP.UI.Controls
 					.Do(_ =>
 					{
 						var vm = ViewModel;
+
+						AddLabelBox.SelectedItems.Add(vm.SelectedLabels.First());
 					})
 					.InvokeCommand(ViewModel, vm => vm.ManageLabels)
 					.DisposeWith(disposable);

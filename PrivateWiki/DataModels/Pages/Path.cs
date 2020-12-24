@@ -3,17 +3,13 @@ using System.Linq;
 
 namespace PrivateWiki.DataModels.Pages
 {
-	public class Path : IEquatable<Path>
+	public record Path
 	{
-		private string[]? _namespaces;
+		private readonly string[]? _namespaces;
 
 		public string? NamespaceString => _namespaces?.Aggregate((acc, el) => acc + ":" + el);
 
-		public string[]? Namespaces => _namespaces;
-
-		private string _title;
-
-		public string Title => _title;
+		public string Title { get; }
 
 		public string FullPath
 		{
@@ -21,11 +17,11 @@ namespace PrivateWiki.DataModels.Pages
 			{
 				if (_namespaces != null)
 				{
-					return _namespaces.Aggregate((acc, el) => acc + ":" + el) + ":" + _title;
+					return _namespaces.Aggregate((acc, el) => acc + ":" + el) + ":" + Title;
 				}
 				else
 				{
-					return _title;
+					return Title;
 				}
 			}
 		}
@@ -33,12 +29,12 @@ namespace PrivateWiki.DataModels.Pages
 		private Path(string[] path, string name)
 		{
 			_namespaces = path;
-			_title = name;
+			Title = name;
 		}
 
 		private Path(string name)
 		{
-			_title = name;
+			Title = name;
 		}
 
 		/// <summary>
@@ -52,16 +48,6 @@ namespace PrivateWiki.DataModels.Pages
 			var a = _namespaces[0];
 
 			return a != null && a.ToUpperInvariant() == "SYSTEM";
-		}
-
-		public override bool Equals(object obj)
-		{
-			return obj is Path path && FullPath.Equals(path.FullPath);
-		}
-
-		public override int GetHashCode()
-		{
-			return FullPath.GetHashCode();
 		}
 
 		public override string ToString()
@@ -87,11 +73,6 @@ namespace PrivateWiki.DataModels.Pages
 		public static Path of(string[] path, string name)
 		{
 			return new Path(path, name);
-		}
-
-		public bool Equals(Path other)
-		{
-			return FullPath == other.FullPath;
 		}
 	}
 }

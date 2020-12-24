@@ -27,10 +27,17 @@ namespace PrivateWiki.ViewModels.Controls
 		public readonly ReadOnlyObservableCollection<Label> AllLabels;
 
 		/// <summary>
-		/// List with all labels that can be added to the page.
-		/// Consists of all labels except the ones already added to the page.
+		/// Cache with all labels
 		/// </summary>
-		public readonly ReadOnlyObservableCollection<Label> AddLabelsList;
+		private readonly ISourceCache<SelectableLabel, LabelId> _allLabelsSelectable = new SourceCache<SelectableLabel, LabelId>(label => label.Id);
+
+		private readonly ISourceCache<SelectableLabel, LabelId> _allLabelsSelectableFiltered = new SourceCache<SelectableLabel, LabelId>(label => label.Id);
+
+		private readonly ISourceCache<LabelId, LabelId> _selectedLabelIds = new SourceCache<LabelId, LabelId>(id => id);
+
+		public readonly ReadOnlyObservableCollection<SelectableLabel> AllLabelsSelectable;
+
+		public readonly ReadOnlyObservableCollection<SelectableLabel> SelectedLabels;
 
 		/// <summary>
 		/// List with all labels of the page
@@ -39,17 +46,6 @@ namespace PrivateWiki.ViewModels.Controls
 
 		/// <inheritdoc cref="_pageLabels"/>
 		public readonly ReadOnlyObservableCollection<Label> PageLabels;
-
-		private ISourceCache<LabelId, Guid> _pageLabelIds = new SourceCache<LabelId, Guid>(x => x.Id);
-
-		public readonly ReadOnlyObservableCollection<LabelId> PageLabelIds;
-
-		public ReadOnlyObservableCollection<Label> SelectedLabels;
-
-		/// <summary>
-		/// List of all selected ids.
-		/// </summary>
-		private readonly IList<Guid> _selectedLabelIds2;
 
 		/// <summary>
 		/// Query to filter the labels.
@@ -63,23 +59,15 @@ namespace PrivateWiki.ViewModels.Controls
 			set => this.RaiseAndSetIfChanged(ref _addLabelsQueryText, value);
 		}
 
-		private ISourceCache<Guid, Guid> _selectedLabelIds = new SourceCache<Guid, Guid>(x => x);
-
 		public IObservable<Unit> OnCreateNewLabel => _onCreateNewLabel;
 		private readonly ISubject<Unit> _onCreateNewLabel;
 
 		public IObservable<Unit> OnManageLabels => _onManageLabels;
 		private readonly ISubject<Unit> _onManageLabels;
 
-		public ReactiveCommand<IEnumerable<Label>, Unit> AddLabels { get; }
-
 		public ReactiveCommand<Unit, Unit> CreateNewLabel { get; }
 
 		public ReactiveCommand<Unit, Unit> ManageLabels { get; }
-
-		public ReactiveCommand<Unit, Unit> PopulateListWithAllLabels { get; }
-
-		public ReactiveCommand<PageId, Unit> SelectLabelsForPage { get; }
 
 		public ReactiveCommand<PageId, Unit> PopulateForPage { get; }
 
@@ -89,12 +77,9 @@ namespace PrivateWiki.ViewModels.Controls
 			_pageLabelsBackend = pageLabelsBackend;
 			_labelBackend = labelBackend;
 
-			AddLabels = ReactiveCommand.CreateFromTask<IEnumerable<Label>>(AddLabelsAsync);
 			CreateNewLabel = ReactiveCommand.Create<Unit>(x => _onCreateNewLabel.OnNext(x));
 			ManageLabels = ReactiveCommand.Create<Unit>(x => _onManageLabels.OnNext(x));
-			PopulateListWithAllLabels = ReactiveCommand.CreateFromTask(PopulateAllLabelsCache);
 			PopulateForPage = ReactiveCommand.CreateFromTask<PageId>(PopulateForPageAsync);
-			SelectLabelsForPage = ReactiveCommand.CreateFromTask<PageId>(SelectLabelsForPageAsync);
 
 			_onCreateNewLabel = new Subject<Unit>();
 			_onManageLabels = new Subject<Unit>();
@@ -112,73 +97,57 @@ namespace PrivateWiki.ViewModels.Controls
 				.Bind(out AllLabels)
 				.Subscribe();
 
-			_allLabels.Connect()
-				.Except(_pageLabels.Connect())
+
+			_pageLabels.Connect()
+				.Bind(out PageLabels)
+				.Subscribe();
+
+			_allLabelsSelectable.Connect()
 				.Filter(
 					this.WhenAnyValue(x => x.AddLabelsQueryText)
-						.Select<string, Func<Label, bool>>(x =>
+						.Select<string, Func<SelectableLabel, bool>>(x =>
 						{
 							const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 							return label =>
 								label.Key.Contains(x, comp) || label.Description.Contains(x, comp) ||
 								label.Value is not null && label.Value.Contains(x, comp);
 						}))
-				.Bind(out AddLabelsList)
+				.PopulateInto(_allLabelsSelectableFiltered);
+
+			_allLabelsSelectableFiltered.Connect()
+				.Bind(out AllLabelsSelectable)
 				.Subscribe();
 
-			_pageLabels.Connect()
-				.Bind(out PageLabels)
-				.Subscribe();
+			IObservable<Func<SelectableLabel, bool>> a;
 
-			_pageLabelIds.Connect()
-				.Bind(out PageLabelIds)
-				.Subscribe();
-
-			/*
-			
-			_allLabels.Connect()
-				.Filter()
+			_allLabelsSelectableFiltered.Connect()
+				//	.Filter(a)
 				.Bind(out SelectedLabels)
 				.Subscribe();
-
-			var a = _selectedLabelIds.Connect();
-
-			*/
-
-			var b = _allLabels.Connect().Take(1).Transform(label => label.Id).PopulateInto(_selectedLabelIds);
 		}
 
-		private async Task AddLabelsAsync(IEnumerable<Label> labels)
+		private async Task LoadAllLabelsAsync()
 		{
-			foreach (var label in labels)
-			{
-				//await _pageLabelsBackend.AddLabelToPage(_pageId.Id, label.Id);
-			}
+			var labels = (await _labelBackend.GetAllLabelsAsync()).Select(label => new SelectableLabel(label, false));
 
-			_pageLabels.Edit(updater => updater.AddOrUpdate(labels));
+			_allLabelsSelectable.Edit(updater => updater.AddOrUpdate(labels));
 		}
 
-		private async Task PopulateAllLabelsCache()
+		private async Task LoadSelectedLabelsAsync(PageId id)
 		{
-			var labels = await _labelBackend.GetAllLabelsAsync();
+			var ids = (await _pageLabelsBackend.GetLabelIdsForPageId(id.Id)).Select(id => new LabelId(id));
 
-			_allLabels.Edit(updater => updater.AddOrUpdate(labels));
+			_selectedLabelIds.Edit(updater => updater.AddOrUpdate(ids));
 		}
 
 		private async Task PopulateForPageAsync(PageId id)
 		{
+			await LoadAllLabelsAsync();
+			await LoadSelectedLabelsAsync(id);
+
 			var labels = await _labelBackend.GetAllLabelsAsync();
 
 			_allLabels.Edit(updater => updater.AddOrUpdate(labels));
-
-			await LoadLabelsForPage(id);
-		}
-
-		private async Task PopulatePageLabelIds(PageId id)
-		{
-			var labels = (await _labelBackend.GetAllLabelsAsync()).AsParallel().Select(label => new LabelId(label.Id));
-
-			_pageLabelIds.Edit(updater => updater.AddOrUpdate(labels));
 
 			await LoadLabelsForPage(id);
 		}
@@ -206,16 +175,28 @@ namespace PrivateWiki.ViewModels.Controls
 				updater.AddOrUpdate(labels);
 			});
 		}
+	}
 
-		private async Task SelectLabelsForPageAsync(PageId pageId)
+	public class SelectableLabel
+	{
+		private readonly Label _label;
+
+		public LabelId Id => _label.LabelId;
+
+		public Color Color => _label.Color;
+
+		public string Description => _label.Description;
+
+		public string Key => _label.Key;
+
+		public string? Value => _label.Value;
+
+		public bool IsSelected { get; set; }
+
+		public SelectableLabel(Label label, bool selected)
 		{
-			var labelIds = await _pageLabelsBackend.GetLabelIdsForPageId(pageId.Id);
-
-			_selectedLabelIds.Edit(updater =>
-			{
-				updater.Clear();
-				updater.AddOrUpdate(labelIds);
-			});
+			_label = label;
+			IsSelected = selected;
 		}
 	}
 }

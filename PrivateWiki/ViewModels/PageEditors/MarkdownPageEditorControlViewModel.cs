@@ -50,7 +50,7 @@ namespace PrivateWiki.ViewModels.PageEditors
 		{
 			if (Content != Page.Content)
 			{
-				var newPage = Page.Clone(content: Content);
+				var newPage = Page with {Content = Content};
 				_onSavePage.OnNext(newPage);
 			}
 			else

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace PrivateWiki.DataModels.Pages
 {
-	public class Label
+	public record Label
 	{
 		private static readonly Color DefaultColor = new Color(0, 0, 0);
 
-		public Guid Id { get; }
+		[Obsolete] public Guid Id { get; }
 
 		public string Key { get; }
 
@@ -17,13 +17,14 @@ namespace PrivateWiki.DataModels.Pages
 
 		public Color Color { get; }
 
-		public LabelId LabelId => new LabelId(Id);
+		public LabelId LabelId { get; }
 
 		public Label(string value, string description, Color color) : this(Guid.NewGuid(), value, description, color) { }
 
 		public Label(Guid id, string key, string value, string description, Color color)
 		{
 			Id = id;
+			LabelId = new LabelId(id);
 			Key = key;
 			Value = value;
 			Description = description;
@@ -33,6 +34,7 @@ namespace PrivateWiki.DataModels.Pages
 		public Label(Guid id, string value, string description, Color color)
 		{
 			Id = id;
+			LabelId = new LabelId(id);
 
 			var result = value.Split(new[] {"::"}, 2, StringSplitOptions.RemoveEmptyEntries);
 
@@ -49,42 +51,6 @@ namespace PrivateWiki.DataModels.Pages
 
 			Description = description;
 			Color = color;
-		}
-
-		protected bool Equals(Label other)
-		{
-			return Id.Equals(other.Id) && Key == other.Key && Value == other.Value && Description == other.Description && Color.Equals(other.Color);
-		}
-
-		public override bool Equals(object? obj)
-		{
-			if (ReferenceEquals(null, obj)) return false;
-			if (ReferenceEquals(this, obj)) return true;
-			if (obj.GetType() != this.GetType()) return false;
-			return Equals((Label) obj);
-		}
-
-		public override int GetHashCode()
-		{
-			unchecked
-			{
-				var hashCode = Id.GetHashCode();
-				hashCode = (hashCode * 397) ^ Key.GetHashCode();
-				hashCode = (hashCode * 397) ^ (Value != null ? Value.GetHashCode() : 0);
-				hashCode = (hashCode * 397) ^ Description.GetHashCode();
-				hashCode = (hashCode * 397) ^ Color.GetHashCode();
-				return hashCode;
-			}
-		}
-
-		public static bool operator ==(Label? left, Label? right)
-		{
-			return Equals(left, right);
-		}
-
-		public static bool operator !=(Label? left, Label? right)
-		{
-			return !Equals(left, right);
 		}
 
 		[Obsolete]

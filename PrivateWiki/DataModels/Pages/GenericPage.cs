@@ -4,7 +4,7 @@ using NodaTime;
 
 namespace PrivateWiki.DataModels.Pages
 {
-	public class GenericPage : Page
+	public record GenericPage : Page
 	{
 		public new string Link
 		{
@@ -17,9 +17,7 @@ namespace PrivateWiki.DataModels.Pages
 		public new ContentType ContentType { get; set; }
 
 		[Obsolete]
-		public GenericPage()
-		{
-		}
+		public GenericPage() { }
 
 		[Obsolete]
 		public GenericPage(Path path, string content, string contentType, Instant created, Instant lastChanged, bool isLocked, List<Tag>? tags = null) : base(path, content, created, lastChanged,
@@ -41,18 +39,6 @@ namespace PrivateWiki.DataModels.Pages
 			tags)
 		{
 			ContentType = contentType;
-		}
-
-		public GenericPage Clone(string? content = null)
-		{
-			if (content == null)
-			{
-				return new GenericPage(Id, Path, Content, ContentType, Created, LastChanged, IsLocked, Tags);
-			}
-			else
-			{
-				return new GenericPage(Id, Path, content, ContentType, Created, LastChanged, IsLocked, Tags);
-			}
 		}
 
 		public override string ToString() => Path.FullPath;

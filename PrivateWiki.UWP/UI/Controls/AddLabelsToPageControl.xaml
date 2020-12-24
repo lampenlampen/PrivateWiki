@@ -5,7 +5,7 @@
     xmlns:local="using:PrivateWiki.UWP.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pages="using:PrivateWiki.DataModels.Pages"
+    xmlns:controls="using:PrivateWiki.ViewModels.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -63,7 +63,7 @@
             SelectionMode="Multiple">
 
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="pages:Label">
+                <DataTemplate x:DataType="controls:SelectableLabel">
                     <Grid Margin="10">
                         <local:LabelControl
                             Color="{x:Bind Color}"

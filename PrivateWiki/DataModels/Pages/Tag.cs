@@ -1,10 +1,8 @@
-using System;
-
 namespace PrivateWiki.DataModels.Pages
 {
-	public class Tag
+	public record Tag
 	{
-		public Guid Id { get; set; }
+		public TagId Id { get; set; }
 
 		public string Title { get; set; }
 	}

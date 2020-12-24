@@ -4,12 +4,10 @@ using NodaTime;
 
 namespace PrivateWiki.DataModels.Pages
 {
-	public abstract class Page
+	public abstract record Page
 	{
 		[Obsolete]
-		protected Page()
-		{
-		}
+		protected Page() { }
 
 		[Obsolete]
 		protected Page(string link, Guid id, string content, Instant created, Instant lastChanged, bool isLocked)
@@ -48,17 +46,17 @@ namespace PrivateWiki.DataModels.Pages
 
 		[Obsolete] public string Link => Path.FullPath;
 
-		public Guid Id { get; set; }
+		public Guid Id { get; [Obsolete] set; }
 
-		public string Content { get; set; }
+		public string Content { get; [Obsolete] set; }
 
-		public Instant Created { get; set; }
+		public Instant Created { get; [Obsolete] set; }
 
-		public Instant LastChanged { get; set; }
+		public Instant LastChanged { get; [Obsolete] set; }
 
-		public bool IsLocked { get; set; }
+		public bool IsLocked { get; [Obsolete] set; }
 
-		public Path Path { get; set; }
+		public Path Path { get; [Obsolete] internal set; }
 
 		public List<Tag> Tags { get; }
 
