@@ -1,10 +1,10 @@
-using System;
-using System.Linq;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Windows.UI.Xaml.Controls.Primitives;
-using Microsoft.Toolkit.Uwp.UI.Extensions;
+using Windows.UI.Xaml.Data;
 using PrivateWiki.ViewModels.Controls;
 using ReactiveUI;
 
@@ -24,9 +24,11 @@ namespace PrivateWiki.UWP.UI.Controls
 			{
 				this.WhenAnyValue(x => x.ViewModel.AllLabelsSelectable)
 					.WhereNotNull()
+					.Select(x => new SelectableItemsSource(x))
 					.BindTo(AddLabelBox, x => x.ItemsSource)
 					.DisposeWith(disposable);
 
+				/*
 				this.WhenAnyValue(x => x.ViewModel.SelectedLabels)
 					.Do(x =>
 					{
@@ -35,6 +37,8 @@ namespace PrivateWiki.UWP.UI.Controls
 					})
 					.Subscribe()
 					.DisposeWith(disposable);
+				*/
+
 
 				this.Bind(ViewModel,
 						vm => vm.AddLabelsQueryText,
@@ -50,13 +54,81 @@ namespace PrivateWiki.UWP.UI.Controls
 					.Select(_ => Unit.Default)
 					.Do(_ =>
 					{
+						var items = AddLabelBox.ItemsSource;
 						var vm = ViewModel;
-
-						AddLabelBox.SelectedItems.Add(vm.SelectedLabels.First());
 					})
 					.InvokeCommand(ViewModel, vm => vm.ManageLabels)
 					.DisposeWith(disposable);
 			});
+		}
+	}
+
+	public class SelectableItemsSource : ReadOnlyObservableCollection<SelectableLabel>, ISelectionInfo
+	{
+		private readonly IList<SelectableLabel> _listImplementation;
+
+		public SelectableItemsSource(ObservableCollection<SelectableLabel> listImplementation) : base(listImplementation)
+		{
+			_listImplementation = listImplementation;
+		}
+
+		public void SelectRange(ItemIndexRange itemIndexRange)
+		{
+			for (int i = itemIndexRange.FirstIndex; i <= itemIndexRange.LastIndex; i++)
+			{
+				_listImplementation[i].IsSelected = true;
+			}
+		}
+
+		public void DeselectRange(ItemIndexRange itemIndexRange)
+		{
+			for (int i = itemIndexRange.FirstIndex; i <= itemIndexRange.LastIndex; i++)
+			{
+				_listImplementation[i].IsSelected = false;
+			}
+		}
+
+		public bool IsSelected(int index)
+		{
+			if (index < 0 || index >= _listImplementation.Count) return false;
+
+			return _listImplementation[index].IsSelected;
+		}
+
+		public IReadOnlyList<ItemIndexRange> GetSelectedRanges()
+		{
+			var list = new List<ItemIndexRange>();
+
+			int startIndex = -1;
+			int lastIndex = -1;
+
+			for (int i = 0; i < _listImplementation.Count; i++)
+			{
+				var label = _listImplementation[i];
+
+				if (label.IsSelected)
+				{
+					if (startIndex == -1)
+					{
+						startIndex = i;
+						lastIndex = -1;
+					}
+					else
+					{
+						lastIndex = i;
+					}
+				}
+				else
+				{
+					if (startIndex == -1) { }
+					else
+					{
+						list.Add(new ItemIndexRange(startIndex, (uint) (lastIndex - startIndex + 1)));
+					}
+				}
+			}
+
+			return list;
 		}
 	}
 }

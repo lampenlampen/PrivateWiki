@@ -7,6 +7,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using DynamicData;
+using DynamicData.Binding;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.Backends;
 using PrivateWiki.Utilities;
@@ -35,7 +36,7 @@ namespace PrivateWiki.ViewModels.Controls
 
 		private readonly ISourceCache<LabelId, LabelId> _selectedLabelIds = new SourceCache<LabelId, LabelId>(id => id);
 
-		public readonly ReadOnlyObservableCollection<SelectableLabel> AllLabelsSelectable;
+		public readonly ObservableCollection<SelectableLabel> AllLabelsSelectable = new ObservableCollectionExtended<SelectableLabel>();
 
 		public readonly ReadOnlyObservableCollection<SelectableLabel> SelectedLabels;
 
@@ -115,10 +116,8 @@ namespace PrivateWiki.ViewModels.Controls
 				.PopulateInto(_allLabelsSelectableFiltered);
 
 			_allLabelsSelectableFiltered.Connect()
-				.Bind(out AllLabelsSelectable)
+				.Bind((IObservableCollection<SelectableLabel>) AllLabelsSelectable)
 				.Subscribe();
-
-			IObservable<Func<SelectableLabel, bool>> a;
 
 			_allLabelsSelectableFiltered.Connect()
 				//	.Filter(a)
@@ -136,6 +135,15 @@ namespace PrivateWiki.ViewModels.Controls
 		private async Task LoadSelectedLabelsAsync(PageId id)
 		{
 			var ids = (await _pageLabelsBackend.GetLabelIdsForPageId(id.Id)).Select(id => new LabelId(id));
+
+			foreach (var labelId in ids)
+			{
+				var label = _allLabelsSelectable.Lookup(labelId).Value;
+
+				label.IsSelected = true;
+
+				_allLabelsSelectable.AddOrUpdate(label);
+			}
 
 			_selectedLabelIds.Edit(updater => updater.AddOrUpdate(ids));
 		}
