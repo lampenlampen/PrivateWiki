@@ -26,7 +26,6 @@ namespace PrivateWiki.UWP.UI.Controls
 					.BindTo(AddLabelBox, x => x.ItemsSource)
 					.DisposeWith(disposable);
 
-
 				this.Bind(ViewModel,
 						vm => vm.AddLabelsQueryText,
 						view => view.FilterQueryTextBox.Text)
@@ -39,11 +38,6 @@ namespace PrivateWiki.UWP.UI.Controls
 
 				ManageLabelsBtn.Events().Click
 					.Select(_ => Unit.Default)
-					.Do(_ =>
-					{
-						var items = AddLabelBox.ItemsSource;
-						var vm = ViewModel;
-					})
 					.InvokeCommand(ViewModel, vm => vm.ManageLabels)
 					.DisposeWith(disposable);
 			});
