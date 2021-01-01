@@ -57,25 +57,31 @@ namespace PrivateWiki.ViewModels.Controls
 		public IObservable<Unit> OnManageLabels => _onManageLabels;
 		private readonly ISubject<Unit> _onManageLabels;
 
+		public IObservable<Label> OnLabelSelected => _onLabelSelected;
+		private readonly ISubject<Label> _onLabelSelected;
+
 		public ReactiveCommand<Unit, Unit> CreateNewLabel { get; }
 
 		public ReactiveCommand<Unit, Unit> ManageLabels { get; }
 
 		public ReactiveCommand<PageId, Unit> PopulateForPage { get; }
+		
+		public ReactiveCommand<SelectableLabel, Unit> LabelSelected { get; }
 
 
 		public AddLabelsToPageControlViewModel(IPageLabelsBackend pageLabelsBackend, ILabelBackend labelBackend)
 		{
 			_pageLabelsBackend = pageLabelsBackend;
 			_labelBackend = labelBackend;
+			
+			_onCreateNewLabel = new Subject<Unit>();
+			_onManageLabels = new Subject<Unit>();
+			_onLabelSelected = new Subject<Label>();
 
 			CreateNewLabel = ReactiveCommand.Create<Unit>(x => _onCreateNewLabel.OnNext(x));
 			ManageLabels = ReactiveCommand.Create<Unit>(x => _onManageLabels.OnNext(x));
 			PopulateForPage = ReactiveCommand.CreateFromTask<PageId>(PopulateForPageAsync);
-
-			_onCreateNewLabel = new Subject<Unit>();
-			_onManageLabels = new Subject<Unit>();
-
+			LabelSelected = ReactiveCommand.Create<SelectableLabel>(x => _onLabelSelected.OnNext(x.Label));
 
 			_allLabelsCache.Connect()
 				.Filter(
@@ -126,23 +132,23 @@ namespace PrivateWiki.ViewModels.Controls
 
 	public class SelectableLabel : ISelectable
 	{
-		private readonly Label _label;
+		public Label Label { get; }
 
-		public LabelId Id => _label.LabelId;
+		public LabelId Id => Label.LabelId;
 
-		public Color Color => _label.Color;
+		public Color Color => Label.Color;
 
-		public string Description => _label.Description;
+		public string Description => Label.Description;
 
-		public string Key => _label.Key;
+		public string Key => Label.Key;
 
-		public string? Value => _label.Value;
+		public string? Value => Label.Value;
 
 		public bool IsSelected { get; set; }
 
 		public SelectableLabel(Label label, bool selected)
 		{
-			_label = label;
+			Label = label;
 			IsSelected = selected;
 		}
 	}

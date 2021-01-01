@@ -307,15 +307,11 @@ namespace PrivateWiki.ViewModels
 
 		public class Translation
 		{
-			private readonly PageViewerViewModel _parent;
-
 			private readonly TranslationResources _translation;
 
 			public Translation(PageViewerViewModel parent)
 			{
-				_parent = parent;
-
-				_translation = _parent._translation;
+				_translation = parent._translation;
 			}
 
 			public string Labels => _translation.GetStringResource("labels");

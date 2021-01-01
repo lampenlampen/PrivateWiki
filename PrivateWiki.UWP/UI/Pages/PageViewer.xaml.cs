@@ -50,8 +50,6 @@ namespace PrivateWiki.UWP.UI.Pages
 		public PageViewer()
 		{
 			this.InitializeComponent();
-			// Testing
-			this.EnableFocusLogging();
 
 			ViewModel = new PageViewerViewModel();
 
@@ -61,7 +59,6 @@ namespace PrivateWiki.UWP.UI.Pages
 					.Where(x => x != null)
 					.Subscribe(x => commandBar.ViewModel = x)
 					.DisposeWith(disposable);
-
 
 				commandBar.ShowSettings.Subscribe(_ => Frame.Navigate(typeof(SettingsPage))).DisposeWith(disposable);
 
@@ -152,9 +149,33 @@ namespace PrivateWiki.UWP.UI.Pages
 
 				AddLabelsToPageControl.ViewModel = Application.Instance.Container.GetInstance<AddLabelsToPageControlViewModel>();
 
-				AddLabelFlyout.Events().Opening
+				AddLabelsToPageControl.ViewModel.OnManageLabels
+					.Subscribe()
+					.DisposeWith(disposable);
+
+				AddLabelsToPageControl.ViewModel.OnCreateNewLabel
+					.Subscribe(_ => NavigateToCreateNewLabelPage())
+					.DisposeWith(disposable);
+
+				AddLabelFlyout.Events().Opened
 					.Select(_ => new PageId(ViewModel.Page.Id))
 					.InvokeCommand(AddLabelsToPageControl.ViewModel.PopulateForPage)
+					.DisposeWith(disposable);
+
+				AddLabelsToPageControl.ViewModel.OnLabelSelected
+					.Subscribe(label =>
+					{
+
+					})
+					.DisposeWith(disposable);
+
+				AddLabelFlyout.Events().Closing
+					.Subscribe(_ =>
+					{
+						var labels = AddLabelsToPageControl.ViewModel.AllLabelsCollection;
+
+
+					})
 					.DisposeWith(disposable);
 
 				SearchPopupContentName.ViewModel = ViewModel.SearchControlViewModel;
@@ -179,6 +200,11 @@ namespace PrivateWiki.UWP.UI.Pages
 
 			Logger.Info($"Show Page: {id}");
 			ViewModel.LoadPage.Execute(id);
+		}
+
+		private void NavigateToCreateNewLabelPage()
+		{
+			Frame.Navigate(typeof(CreateNewLabelPage));
 		}
 
 		private void NavigateToPage(Path link)
