@@ -42,12 +42,6 @@ namespace PrivateWiki.UWP.UI.Controls
 					.Select(_ => Unit.Default)
 					.InvokeCommand(ViewModel, vm => vm.ManageLabels)
 					.DisposeWith(disposable);
-
-				AddLabelBox.Events().SelectionChanged
-					.Subscribe(x =>
-					{
-						var a = AddLabelBox.SelectedItem;
-					});
 			});
 		}
 	}

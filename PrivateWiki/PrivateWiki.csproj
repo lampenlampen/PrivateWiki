@@ -5,6 +5,10 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <WarningLevel>999</WarningLevel>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="Dawn.Guard">
             <Version>1.12.0</Version>

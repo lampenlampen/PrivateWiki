@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
@@ -67,6 +68,8 @@ namespace PrivateWiki.ViewModels.Controls
 		public ReactiveCommand<PageId, Unit> PopulateForPage { get; }
 		
 		public ReactiveCommand<SelectableLabel, Unit> LabelSelected { get; }
+		
+		public ReactiveCommand<PageId, Unit> SaveChanges { get; }
 
 
 		public AddLabelsToPageControlViewModel(IPageLabelsBackend pageLabelsBackend, ILabelBackend labelBackend)
@@ -82,6 +85,7 @@ namespace PrivateWiki.ViewModels.Controls
 			ManageLabels = ReactiveCommand.Create<Unit>(x => _onManageLabels.OnNext(x));
 			PopulateForPage = ReactiveCommand.CreateFromTask<PageId>(PopulateForPageAsync);
 			LabelSelected = ReactiveCommand.Create<SelectableLabel>(x => _onLabelSelected.OnNext(x.Label));
+			SaveChanges = ReactiveCommand.CreateFromTask<PageId>(SaveChangesForPage);
 
 			_allLabelsCache.Connect()
 				.Filter(
@@ -98,6 +102,28 @@ namespace PrivateWiki.ViewModels.Controls
 			_allLabelsFilteredCache.Connect()
 				.Bind((IObservableCollection<SelectableLabel>) AllLabelsCollection)
 				.Subscribe();
+		}
+
+		private async Task SaveChangesForPage(PageId pageId)
+		{
+			var LabelsAddedToSelection = new List<LabelId>();
+			var LabelsRemovedToSelection = new List<LabelId>();
+			
+			var preSelectedLabels = _selectedLabelIds.Items;
+			var selectedLabels = AllLabelsCollection.Where(x => x.IsSelected).Select(x => x.Id);
+
+			foreach (var label in preSelectedLabels)
+			{
+				if (selectedLabels.Contains(label))
+				{
+					// Alg
+					// https://stackoverflow.com/a/127227/7441041
+					
+					
+				}
+			}
+			
+			
 		}
 
 		private async Task LoadAllLabelsAsync()
