@@ -18,27 +18,23 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="coverlet.collector" Version="1.2.0"/>
+      <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj"/>
+        <ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Remove="bin\**"/>
+        <Compile Remove="bin\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Remove="bin\**"/>
+        <EmbeddedResource Remove="bin\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="bin\**"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Utilities"/>
+        <None Remove="bin\**" />
     </ItemGroup>
 
 </Project>

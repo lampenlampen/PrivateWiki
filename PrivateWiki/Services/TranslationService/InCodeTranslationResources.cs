@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using NLog;
+using PrivateWiki.Services.TranslationService.InCodeTranslations;
 
 namespace PrivateWiki.Services.TranslationService
 {
@@ -8,12 +11,27 @@ namespace PrivateWiki.Services.TranslationService
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-		private readonly Dictionary<CultureInfo, Dictionary<string, string>> _resources = new Dictionary<CultureInfo, Dictionary<string, string>>();
+		private readonly Dictionary<CultureInfo, Dictionary<string, string>> _resources = new();
+
+		public IReadOnlyDictionary<CultureInfo, ReadOnlyDictionary<string, string>> Resources
+		{
+			get
+			{
+				var dict = new Dictionary<CultureInfo, ReadOnlyDictionary<string, string>>();
+				
+				foreach (var resourcesKey in _resources.Keys)
+				{
+					dict[resourcesKey] = new ReadOnlyDictionary<string, string>(_resources[resourcesKey]);
+				}
+
+				return new ReadOnlyDictionary<CultureInfo, ReadOnlyDictionary<string, string>>(dict);
+			}
+		}
 
 		public InCodeTranslationResources()
 		{
-			AddDefaultTranslations(new Dictionary<string, string>());
-			AddGermanTranslation(new Dictionary<string, string>());
+			new DefaultTranslation().LoadResources(_resources);
+			new GermanTranslation().LoadResources(_resources);
 		}
 
 		public override string GetStringResource(string key)
@@ -22,9 +40,7 @@ namespace PrivateWiki.Services.TranslationService
 
 			var cultureCache = GetCultureCache(cultureInfo);
 
-			string resource;
-
-			cultureCache.TryGetValue(key, out resource);
+			cultureCache.TryGetValue(key, out string resource);
 
 			while (resource is null && !Equals(cultureInfo, CultureInfo.InvariantCulture))
 			{
@@ -53,31 +69,6 @@ namespace PrivateWiki.Services.TranslationService
 			}
 
 			return cultureCache;
-		}
-
-		private void AddDefaultTranslations(Dictionary<string, string> dict)
-		{
-			var culture = CultureInfo.InvariantCulture;
-
-			dict["test"] = "Lorem Ipsum";
-			dict["invariant_only_test"] = "Invariant Only Lorem Ipsum";
-			dict["table_of_contents"] = "Table of Contents";
-			dict["labels"] = "Labels";
-			dict["edit"] = "Edit";
-
-			_resources[culture] = dict;
-		}
-
-		private void AddGermanTranslation(Dictionary<string, string> dict)
-		{
-			var culture = new CultureInfo("de-de");
-
-			dict["test"] = "German Lorem Ipsum";
-			dict["table_of_contents"] = "Inhaltsverzeichnis";
-			dict["labels"] = "Labels";
-			dict["edit"] = "Bearbeiten";
-
-			_resources[culture] = dict;
 		}
 	}
 }
