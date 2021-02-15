@@ -15,12 +15,23 @@ using ReactiveUI;
 
 namespace PrivateWiki.UWP.UI.Controls
 {
-	public class LabelControlBase : ReactiveUserControl<LabelControlViewModel>
-	{
-	}
+	public class LabelControlBase : ReactiveUserControl<LabelControlViewModel> { }
 
 	public sealed partial class LabelControl : LabelControlBase, INotifyPropertyChanged
 	{
+		public static readonly DependencyProperty LabelIdProperty =
+			DependencyProperty.Register(
+				"Id",
+				typeof(LabelId),
+				typeof(LabelControl),
+				null);
+
+		public LabelId Id
+		{
+			get => (LabelId) GetValue(LabelIdProperty);
+			set => SetValue(LabelIdProperty, value);
+		}
+
 		public static readonly DependencyProperty LabelProperty =
 			DependencyProperty.Register(
 				"Label",
@@ -140,8 +151,7 @@ namespace PrivateWiki.UWP.UI.Controls
 					}
 				});
 
-			this.WhenAnyValue(x => x.Label, x => x.Value)
-				.Subscribe(x => ScopedLabelValue = $"{x.Item1}::{x.Item2}");
+			System.ObservableExtensions.Subscribe(this.WhenAnyValue(x => x.Label, x => x.Value), x => ScopedLabelValue = $"{x.Item1}::{x.Item2}");
 		}
 
 		private void Label_Tapped(object sender, TappedRoutedEventArgs e)

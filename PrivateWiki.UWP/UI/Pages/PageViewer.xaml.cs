@@ -2,13 +2,16 @@ using System;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using NLog;
 using PrivateWiki.DataModels.Pages;
+using PrivateWiki.UWP.UI.Controls;
 using PrivateWiki.UWP.UI.Controls.PageViewers;
 using PrivateWiki.ViewModels;
 using ReactiveUI;
@@ -43,6 +46,8 @@ namespace PrivateWiki.UWP.UI.Pages
 		#endregion
 
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+		private ISubject<LabelId> _onLabelClicked = new Subject<LabelId>();
 
 		public PageViewer()
 		{
@@ -138,6 +143,9 @@ namespace PrivateWiki.UWP.UI.Pages
 						AddLabelsToPageControl.ViewModel.SaveChanges.Execute(ViewModel.Page.PageId).Subscribe();
 						ViewModel.LoadLabels.Execute().Subscribe();
 					})
+					.DisposeWith(disposable);
+
+				_onLabelClicked.InvokeCommand(this, x => x.ViewModel.LabelClicked)
 					.DisposeWith(disposable);
 
 				SearchPopupContentName.ViewModel = ViewModel.SearchControlViewModel;
@@ -252,6 +260,13 @@ namespace PrivateWiki.UWP.UI.Pages
 				extraElement.Width = width;
 				extraElement.Height = height;
 			}
+		}
+
+		private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
+		{
+			var id = ((LabelControl) sender).Id;
+
+			_onLabelClicked.OnNext(id);
 		}
 	}
 }

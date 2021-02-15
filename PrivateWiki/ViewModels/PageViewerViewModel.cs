@@ -87,6 +87,8 @@ namespace PrivateWiki.ViewModels
 
 		public ReactiveCommand<Unit, Unit> LoadLabels { get; }
 
+		public ReactiveCommand<LabelId, Unit> LabelClicked { get; }
+
 		private readonly ISubject<Path> _onNavigateToExistingPage;
 		public IObservable<Path> OnNavigateToExistingPage => _onNavigateToExistingPage;
 
@@ -143,6 +145,7 @@ namespace PrivateWiki.ViewModels
 			ScrollToTop = ReactiveCommand.CreateFromTask(ScrollToTopAsync);
 			NavigateToPage = ReactiveCommand.CreateFromTask<Path>(NavigateToPageAsync);
 			LoadLabels = ReactiveCommand.CreateFromTask(LoadLabelsAsync);
+			LabelClicked = ReactiveCommand.CreateFromTask<LabelId>(LabelClickedAsync);
 
 			// Events
 			_onNavigateToExistingPage = new Subject<Path>();
@@ -323,6 +326,13 @@ namespace PrivateWiki.ViewModels
 				updater.Clear();
 				updater.AddOrUpdate(labels);
 			});
+		}
+
+		private Task LabelClickedAsync(LabelId id)
+		{
+			Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification();
+
+			return Task.CompletedTask;
 		}
 
 		private Task LoadLabelsAsync() => LoadPageLabelsAsync(Page.Id);

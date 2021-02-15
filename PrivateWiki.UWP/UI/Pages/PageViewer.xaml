@@ -136,6 +136,8 @@
                     <controls2:ItemsRepeater.ItemTemplate>
                         <DataTemplate x:DataType="pages:Label">
                             <controls:LabelControl
+                                Tapped="UIElement_OnTapped"
+                                Id="{x:Bind LabelId}"
                                 Label="{x:Bind Key}"
                                 Value="{x:Bind Value}"
                                 Color="{x:Bind Color}"

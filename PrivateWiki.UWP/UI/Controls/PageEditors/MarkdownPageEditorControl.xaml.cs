@@ -1,14 +1,8 @@
 using System;
-using System.Linq;
-using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using NLog;
-using PrivateWiki.DataModels.Pages;
 using PrivateWiki.ViewModels;
 using PrivateWiki.ViewModels.PageEditors;
 using ReactiveUI;
@@ -17,21 +11,9 @@ using ReactiveUI;
 
 namespace PrivateWiki.UWP.UI.Controls.PageEditors
 {
-	public class PageEditorControlBase<T> : ReactiveUserControl<T> where T : PageEditorControlViewModelBase
-	{
-		protected readonly ISubject<Label> OnDeleteLabel = new Subject<Label>();
+	public class PageEditorControlBase<T> : ReactiveUserControl<T> where T : PageEditorControlViewModelBase { }
 
-		protected void DeleteLabelBtn(object sender, RoutedEventArgs e)
-		{
-			var label = (Label) ((Button) sender).DataContext;
-
-			OnDeleteLabel.OnNext(label);
-		}
-	}
-
-	public abstract class MarkdownPageEditorControlBase : PageEditorControlBase<MarkdownPageEditorControlViewModel>
-	{
-	}
+	public abstract class MarkdownPageEditorControlBase : PageEditorControlBase<MarkdownPageEditorControlViewModel> { }
 
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
@@ -69,40 +51,6 @@ namespace PrivateWiki.UWP.UI.Controls.PageEditors
 				Preview_WebView.Events().NavigationStarting
 					.Select(x => x.args)
 					.Subscribe(ShowPreviewLinksAsNotifications)
-					.DisposeWith(disposable);
-
-				this.WhenAnyValue(x => x.ViewModel.PageLabels)
-					.WhereNotNull()
-					.BindTo(LabelsListView, x => x.ItemsSource)
-					.DisposeWith(disposable);
-
-				OnDeleteLabel
-					.InvokeCommand(ViewModel, vm => vm.RemoveLabel)
-					.DisposeWith(disposable);
-
-				this.WhenAnyValue(x => x.ViewModel.AddLabelsList)
-					.WhereNotNull()
-					.BindTo(AddLabelBox, x => x.ItemsSource)
-					.DisposeWith(disposable);
-
-				AddLabelFlyout.Events().Closing
-					.Select(_ => AddLabelBox.SelectedItems.Select(x => (Label) x))
-					.InvokeCommand(ViewModel, vm => vm.AddLabels)
-					.DisposeWith(disposable);
-
-				this.Bind(ViewModel,
-						vm => vm.AddLabelsQueryText,
-						view => view.FilterQueryTextBox.Text)
-					.DisposeWith(disposable);
-
-				CreateNewLabelBtn.Events().Click
-					.Select(_ => Unit.Default)
-					.InvokeCommand(ViewModel, vm => vm.CreateNewLabel)
-					.DisposeWith(disposable);
-
-				ManageLabelsBtn.Events().Click
-					.Select(_ => Unit.Default)
-					.InvokeCommand(ViewModel, vm => vm.ManageLabels)
 					.DisposeWith(disposable);
 			});
 		}
