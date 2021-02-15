@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
+using DynamicData;
+using DynamicData.Binding;
 using NLog;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.Backends;
 using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.StorageBackendService;
 using PrivateWiki.Services.TranslationService;
+using PrivateWiki.ViewModels.Controls;
 using ReactiveUI;
 
 namespace PrivateWiki.ViewModels
@@ -45,6 +49,14 @@ namespace PrivateWiki.ViewModels
 
 		public GlobalSearchControlViewModel SearchControlViewModel { get; }
 
+		private AddLabelsToPageControlViewModel _addLabelsToPageControlVM;
+
+		public AddLabelsToPageControlViewModel AddLabelsToPageControlVM
+		{
+			get => _addLabelsToPageControlVM;
+			private set => this.RaiseAndSetIfChanged(ref _addLabelsToPageControlVM, value);
+		}
+
 		public GenericPage Page
 		{
 			get => _page;
@@ -52,14 +64,6 @@ namespace PrivateWiki.ViewModels
 		}
 
 		private GenericPage _page;
-
-		private IList<Label>? _labels = null;
-
-		public IList<Label>? Labels
-		{
-			get => _labels;
-			set => this.RaiseAndSetIfChanged(ref _labels, value);
-		}
 
 		public ReactiveCommand<string, Unit> LoadPage { get; }
 
@@ -81,7 +85,7 @@ namespace PrivateWiki.ViewModels
 
 		public ReactiveCommand<Path, Unit> NavigateToPage { get; }
 
-		public ReactiveCommand<IEnumerable<Label>, Unit> AddLabels { get; }
+		public ReactiveCommand<Unit, Unit> LoadLabels { get; }
 
 		private readonly ISubject<Path> _onNavigateToExistingPage;
 		public IObservable<Path> OnNavigateToExistingPage => _onNavigateToExistingPage;
@@ -108,15 +112,22 @@ namespace PrivateWiki.ViewModels
 
 		public IObservable<Unit> OnCloseSearchPopup;
 
+		private readonly ISourceCache<Label, LabelId> _labels = new SourceCache<Label, LabelId>(label => label.LabelId);
+
+		public readonly ObservableCollection<Label> Labels = new ObservableCollectionExtended<Label>();
+
 		public PageViewerViewModel()
 		{
-			_backend = Application.Instance.Container.GetInstance<IPageBackendService>();
-			_pageLabelsBackend = Application.Instance.Container.GetInstance<IPageLabelsBackend>();
-			_labelBackend = Application.Instance.Container.GetInstance<ILabelBackend>();
-			_mostRecentlyVisitedPagesService = Application.Instance.Container.GetInstance<IMostRecentlyVisitedPagesService>();
-			_translation = Application.Instance.Container.GetInstance<TranslationResources>();
+			var container = Application.Instance.Container;
+
+			_backend = container.GetInstance<IPageBackendService>();
+			_pageLabelsBackend = container.GetInstance<IPageLabelsBackend>();
+			_labelBackend = container.GetInstance<ILabelBackend>();
+			_mostRecentlyVisitedPagesService = container.GetInstance<IMostRecentlyVisitedPagesService>();
+			_translation = container.GetInstance<TranslationResources>();
 			CommandBarViewModel = new PageViewerCommandBarViewModel();
 			SearchControlViewModel = new GlobalSearchControlViewModel();
+			AddLabelsToPageControlVM = container.GetInstance<AddLabelsToPageControlViewModel>();
 
 			Translations = new Translation(this);
 
@@ -131,6 +142,7 @@ namespace PrivateWiki.ViewModels
 			ToggleFullscreen = ReactiveCommand.CreateFromTask(ToggleFullscreenAsync);
 			ScrollToTop = ReactiveCommand.CreateFromTask(ScrollToTopAsync);
 			NavigateToPage = ReactiveCommand.CreateFromTask<Path>(NavigateToPageAsync);
+			LoadLabels = ReactiveCommand.CreateFromTask(LoadLabelsAsync);
 
 			// Events
 			_onNavigateToExistingPage = new Subject<Path>();
@@ -148,10 +160,14 @@ namespace PrivateWiki.ViewModels
 
 			this.WhenAnyValue(x => x.Page)
 				.WhereNotNull()
-				.Do(x => LoadPageLabels(x.Id))
+				.Do(x => LoadPageLabelsAsync(x.Id))
 				.Subscribe();
 
 			SearchControlViewModel.OnPageSelected.Subscribe(async page => await NavigateToPageAsync(page.Path));
+
+			_labels.Connect()
+				.Bind((IObservableCollection<Label>) Labels)
+				.Subscribe();
 		}
 
 		private async Task LoadPageAsync(string id)
@@ -284,7 +300,7 @@ namespace PrivateWiki.ViewModels
 			return Task.CompletedTask;
 		}
 
-		private async Task LoadPageLabels(Guid pageId)
+		private async Task LoadPageLabelsAsync(Guid pageId)
 		{
 			var labelIds = await _pageLabelsBackend.GetLabelIdsForPageId(pageId);
 
@@ -302,8 +318,14 @@ namespace PrivateWiki.ViewModels
 				// TODO Failed case, log
 			}
 
-			Labels = labels;
+			_labels.Edit(updater =>
+			{
+				updater.Clear();
+				updater.AddOrUpdate(labels);
+			});
 		}
+
+		private Task LoadLabelsAsync() => LoadPageLabelsAsync(Page.Id);
 
 		public class Translation
 		{

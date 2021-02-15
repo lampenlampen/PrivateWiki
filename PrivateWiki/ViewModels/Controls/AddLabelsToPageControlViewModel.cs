@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
@@ -8,8 +7,10 @@ using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using DynamicData;
 using DynamicData.Binding;
+using PrivateWiki.Core;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.Backends;
+using PrivateWiki.Services.ListDiff;
 using PrivateWiki.Utilities;
 using ReactiveUI;
 
@@ -19,6 +20,8 @@ namespace PrivateWiki.ViewModels.Controls
 	{
 		private readonly IPageLabelsBackend _pageLabelsBackend;
 		private readonly ILabelBackend _labelBackend;
+
+		private readonly IQueryHandler<ListDiffQuery<LabelId>, ListDiffResult<LabelId>> _diff;
 
 		/// <summary>
 		/// Cache with all labels
@@ -66,17 +69,18 @@ namespace PrivateWiki.ViewModels.Controls
 		public ReactiveCommand<Unit, Unit> ManageLabels { get; }
 
 		public ReactiveCommand<PageId, Unit> PopulateForPage { get; }
-		
+
 		public ReactiveCommand<SelectableLabel, Unit> LabelSelected { get; }
-		
+
 		public ReactiveCommand<PageId, Unit> SaveChanges { get; }
 
 
-		public AddLabelsToPageControlViewModel(IPageLabelsBackend pageLabelsBackend, ILabelBackend labelBackend)
+		public AddLabelsToPageControlViewModel(IPageLabelsBackend pageLabelsBackend, ILabelBackend labelBackend, IQueryHandler<ListDiffQuery<LabelId>, ListDiffResult<LabelId>> diff)
 		{
 			_pageLabelsBackend = pageLabelsBackend;
 			_labelBackend = labelBackend;
-			
+			_diff = diff;
+
 			_onCreateNewLabel = new Subject<Unit>();
 			_onManageLabels = new Subject<Unit>();
 			_onLabelSelected = new Subject<Label>();
@@ -106,24 +110,20 @@ namespace PrivateWiki.ViewModels.Controls
 
 		private async Task SaveChangesForPage(PageId pageId)
 		{
-			var LabelsAddedToSelection = new List<LabelId>();
-			var LabelsRemovedToSelection = new List<LabelId>();
-			
 			var preSelectedLabels = _selectedLabelIds.Items;
 			var selectedLabels = AllLabelsCollection.Where(x => x.IsSelected).Select(x => x.Id);
 
-			foreach (var label in preSelectedLabels)
+			var result = _diff.Handle(new ListDiffQuery<LabelId>(preSelectedLabels, selectedLabels));
+
+			foreach (var labelId in result.AddedElements)
 			{
-				if (selectedLabels.Contains(label))
-				{
-					// Alg
-					// https://stackoverflow.com/a/127227/7441041
-					
-					
-				}
+				await _pageLabelsBackend.AddLabelToPage(pageId.Id, labelId.Id);
 			}
-			
-			
+
+			foreach (var labelId in result.RemovedElements)
+			{
+				await _pageLabelsBackend.RemoveLabelFromPage(pageId.Id, labelId.Id);
+			}
 		}
 
 		private async Task LoadAllLabelsAsync()

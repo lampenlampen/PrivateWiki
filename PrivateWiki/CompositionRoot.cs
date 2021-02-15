@@ -17,6 +17,7 @@ using PrivateWiki.Services.DefaultPagesService;
 using PrivateWiki.Services.FileExplorerService;
 using PrivateWiki.Services.KeyValueCaches;
 using PrivateWiki.Services.LFSBackupService;
+using PrivateWiki.Services.ListDiff;
 using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.PackageService;
 using PrivateWiki.Services.StartupTask;
@@ -73,6 +74,8 @@ namespace PrivateWiki
 			container.Collection.Register<IStartupTask>(new[] {typeof(InsertDefaultPagesStartupTask), typeof(FluentResultLoggerStartupTask)}, Lifestyle.Singleton);
 
 			container.RegisterSingleton<TranslationResources, InCodeTranslationResources>();
+
+			container.RegisterSingleton<IQueryHandler<ListDiffQuery<LabelId>, ListDiffResult<LabelId>>, ListDiff<LabelId>>();
 
 			// Bug see https://github.com/reactiveui/splat/issues/597
 			/*

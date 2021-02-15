@@ -46,7 +46,9 @@ namespace PrivateWiki.DataModels.Pages
 
 		[Obsolete] public string Link => Path.FullPath;
 
-		public Guid Id { get; [Obsolete] set; }
+		[Obsolete] public Guid Id { get; [Obsolete] set; }
+
+		public PageId PageId => new PageId(Id);
 
 		public string Content { get; [Obsolete] set; }
 

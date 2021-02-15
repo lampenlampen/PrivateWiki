@@ -9,11 +9,8 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Navigation;
 using NLog;
 using PrivateWiki.DataModels.Pages;
-using PrivateWiki.UWP.UI.Controls;
 using PrivateWiki.UWP.UI.Controls.PageViewers;
-using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 using PrivateWiki.ViewModels;
-using PrivateWiki.ViewModels.Controls;
 using ReactiveUI;
 using Page = Windows.UI.Xaml.Controls.Page;
 
@@ -122,36 +119,9 @@ namespace PrivateWiki.UWP.UI.Pages
 						ContentGrid.Children.Add(contentPresenter);
 					}).DisposeWith(disposable);
 
-				this.WhenAnyValue(x => x.ViewModel.Labels)
-					.WhereNotNull()
-					.Subscribe(labels =>
-					{
-						foreach (var label in labels)
-						{
-							var control = new LabelControl
-							{
-								ViewModel = new LabelControlViewModel(),
-								Label = label.Key,
-								Value = label.Value,
-								Color = label.Color,
-								Description = label.Description,
-								Margin = new Thickness(5)
-							};
+				LabelsView.ItemsSource = ViewModel.Labels;
 
-							control.OnClick.Subscribe(x => Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification())
-								.DisposeWith(disposable);
-
-							//TagsPanel.Children.Add(control);
-							TagsPanel2.Children.Add(control);
-						}
-					})
-					.DisposeWith(disposable);
-
-				AddLabelsToPageControl.ViewModel = Application.Instance.Container.GetInstance<AddLabelsToPageControlViewModel>();
-
-				AddLabelsToPageControl.ViewModel.OnManageLabels
-					.Subscribe()
-					.DisposeWith(disposable);
+				AddLabelsToPageControl.ViewModel = ViewModel.AddLabelsToPageControlVM;
 
 				AddLabelsToPageControl.ViewModel.OnCreateNewLabel
 					.Subscribe(_ => NavigateToCreateNewLabelPage())
@@ -162,19 +132,11 @@ namespace PrivateWiki.UWP.UI.Pages
 					.InvokeCommand(AddLabelsToPageControl.ViewModel.PopulateForPage)
 					.DisposeWith(disposable);
 
-				AddLabelsToPageControl.ViewModel.OnLabelSelected
-					.Subscribe(label =>
-					{
-
-					})
-					.DisposeWith(disposable);
-
 				AddLabelFlyout.Events().Closing
 					.Subscribe(_ =>
 					{
-						var labels = AddLabelsToPageControl.ViewModel.AllLabelsCollection;
-
-
+						AddLabelsToPageControl.ViewModel.SaveChanges.Execute(ViewModel.Page.PageId).Subscribe();
+						ViewModel.LoadLabels.Execute().Subscribe();
 					})
 					.DisposeWith(disposable);
 

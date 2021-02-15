@@ -101,7 +101,7 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    
+
                     <TextBlock
                         Grid.Column="0"
                         HorizontalAlignment="Left"
@@ -126,6 +126,25 @@
                 <controls1:WrapPanel
                     Grid.Row="1"
                     x:Name="TagsPanel2" />
+
+                <controls2:ItemsRepeater
+                    x:Name="LabelsView"
+                    Grid.Row="1">
+                    <controls2:ItemsRepeater.Layout>
+                        <controls1:WrapLayout VerticalSpacing="10" HorizontalSpacing="10" />
+                    </controls2:ItemsRepeater.Layout>
+                    <controls2:ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="pages:Label">
+                            <controls:LabelControl
+                                Label="{x:Bind Key}"
+                                Value="{x:Bind Value}"
+                                Color="{x:Bind Color}"
+                                Description="{x:Bind Description}"
+                                Margin="5" />
+                        </DataTemplate>
+                    </controls2:ItemsRepeater.ItemTemplate>
+                </controls2:ItemsRepeater>
+
             </Grid>
         </StackPanel>
     </Grid>
