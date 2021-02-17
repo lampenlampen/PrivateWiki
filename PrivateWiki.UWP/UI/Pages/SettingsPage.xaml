@@ -20,53 +20,53 @@
                              IsBackEnabled="True"
                              PaneDisplayMode="Auto">
             <muxc:NavigationView.MenuItems>
-                <muxc:NavigationViewItemHeader x:Uid="/Settings/Site" />
-                <muxc:NavigationViewItem x:Uid="/Settings/General" Tag="general" Icon="Home" />
-                <muxc:NavigationViewItem x:Uid="/Settings/Navigation" Tag="navigation">
+                <muxc:NavigationViewItemHeader Content="{x:Bind Translations.Site}" />
+                <muxc:NavigationViewItem Content="{x:Bind Translations.General}" Tag="general" Icon="Home" />
+                <muxc:NavigationViewItem Content="{x:Bind Translations.Navigation}" Tag="navigation">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE122;" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem x:Uid="/Settings/Pages" Tag="pages">
+                <muxc:NavigationViewItem Content="{x:Bind Translations.Pages}" Tag="pages">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8C8;" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem Tag="labels" Content="Labels">
+                <muxc:NavigationViewItem Tag="labels" Content="{x:Bind Translations.Labels}">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1CB;" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem x:Uid="/Settings/Assets" Tag="assets">
+                <muxc:NavigationViewItem Content="{x:Bind Translations.Assets}" Tag="assets">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE158;" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem x:Uid="/Settings/Theme" Tag="theme">
+                <muxc:NavigationViewItem Content="{x:Bind Translations.Theme}" Tag="theme">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE2B1;" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
                 <muxc:NavigationViewItemSeparator />
-                <muxc:NavigationViewItemHeader x:Uid="/Settings/Modules" />
-                <muxc:NavigationViewItem x:Uid="/Settings/Rendering" Tag="rendering">
+                <muxc:NavigationViewItemHeader Content="{x:Bind Translations.Modules}" />
+                <muxc:NavigationViewItem Content="{x:Bind Translations.Rendering}" Tag="rendering">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE116;" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem x:Uid="/Settings/Storage" Tag="storage">
+                <muxc:NavigationViewItem Content="{x:Bind Translations.Storage}" Tag="storage">
                     <muxc:NavigationViewItem.Icon>
                         <uwp:FontAwesome Icon="Database" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem x:Uid="/Settings/Sync" Tag="sync">
+                <muxc:NavigationViewItem Content="{x:Bind Translations.Sync}" Tag="sync">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE96A;" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
                 <muxc:NavigationViewItemSeparator />
-                <muxc:NavigationViewItemHeader x:Uid="/Settings/System" />
-                <muxc:NavigationViewItem x:Uid="/Settings/DeveloperTools" Tag="developertools">
+                <muxc:NavigationViewItemHeader Content="{x:Bind Translations.System}" />
+                <muxc:NavigationViewItem Content="{x:Bind Translations.DeveloperTools}" Tag="developertools">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC7A;" />
                     </muxc:NavigationViewItem.Icon>

@@ -247,16 +247,16 @@
       <DependentUpon>LabelsSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Pages\SettingsPages\PagesSettingsPage.xaml.cs">
-      <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
+        <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\SearchPopupContent.xaml.cs">
-      <DependentUpon>SearchPopupContent.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\TemplateSelector\MediaManagerTreeViewItemTemplateSelector.cs" />
-    <Compile Include="UI\TemplateSelector\PageHistoryTemplateSelector.cs" />
-    <Compile Include="UI\TemplateSelector\SettingNavigationTemplateSelector.cs" />
-    <Compile Include="UI\XamlConverter\NegateBoolConverter.cs" />
-    <Compile Include="UI\XamlConverter\NegateBoolToVisibilityConverter.cs" />
+      <Compile Include="UI\SearchPopupContent.xaml.cs">
+          <DependentUpon>SearchPopupContent.xaml</DependentUpon>
+      </Compile>
+      <Compile Include="UI\TemplateSelector\MediaManagerTreeViewItemTemplateSelector.cs"/>
+      <Compile Include="UI\TemplateSelector\PageHistoryTemplateSelector.cs"/>
+      <Compile Include="UI\TemplateSelector\SettingNavigationTemplateSelector.cs"/>
+      <Compile Include="UI\XamlConverter\NegateBoolConverter.cs"/>
+      <Compile Include="UI\XamlConverter\NegateBoolToVisibilityConverter.cs"/>
       <Compile Include="UI\XamlConverter\SystemDrawingColorToBrushConverter.cs"/>
       <Compile Include="UI\XamlConverter\SystemDrawingColorToWindowsUiColorConverter.cs"/>
       <Compile Include="UI\XamlConverter\TextColorBasedOnAccentColorConverter.cs"/>
@@ -296,13 +296,6 @@
     <None Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <PRIResource Include="Strings\en-US\Settings.resw" />
-    <PRIResource Include="Strings\fr-FR\PageViewer.resw" />
-    <PRIResource Include="Strings\de-DE\PageViewer.resw" />
-    <PRIResource Include="Strings\en-US\PageViewer.resw" />
-    <PRIResource Include="Strings\de-DE\Resources.resw" />
-    <PRIResource Include="Strings\fr-FR\Resources.resw" />
-    <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\DefaultPages\Syntax.md">

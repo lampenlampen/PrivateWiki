@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
 using NLog;
-using PrivateWiki.Services.TranslationService.InCodeTranslations;
+using PrivateWiki.Services.TranslationService.InCodeTranslationsFiles;
 
 namespace PrivateWiki.Services.TranslationService
 {
@@ -18,7 +17,7 @@ namespace PrivateWiki.Services.TranslationService
 			get
 			{
 				var dict = new Dictionary<CultureInfo, ReadOnlyDictionary<string, string>>();
-				
+
 				foreach (var resourcesKey in _resources.Keys)
 				{
 					dict[resourcesKey] = new ReadOnlyDictionary<string, string>(_resources[resourcesKey]);
@@ -32,6 +31,7 @@ namespace PrivateWiki.Services.TranslationService
 		{
 			new DefaultTranslation().LoadResources(_resources);
 			new GermanTranslation().LoadResources(_resources);
+			new FrenchTranslation().LoadResources(_resources);
 		}
 
 		public override string GetStringResource(string key)

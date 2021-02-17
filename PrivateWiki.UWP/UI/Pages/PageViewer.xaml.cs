@@ -207,14 +207,12 @@ namespace PrivateWiki.UWP.UI.Pages
 
 		private async Task ShowPrintPdfBrowserDialog(InteractionContext<Path, bool> context)
 		{
-			var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-
 			var dialog = new ContentDialog
 			{
-				Title = resourceLoader.GetString("PrintPDF/Dialog/Title"),
-				Content = resourceLoader.GetString("PrintPDF/Dialog/Content"),
-				PrimaryButtonText = resourceLoader.GetString("PrintPdf/Dialog/OpenInBrowser"),
-				CloseButtonText = resourceLoader.GetString("Close"),
+				Title = ViewModel.Translations.PrintPDFDialogTitle,
+				Content = ViewModel.Translations.PrintPDFDialogDescription,
+				PrimaryButtonText = ViewModel.Translations.PrintPDFDialogOpenInBrowser,
+				CloseButtonText = ViewModel.Translations.Close,
 				DefaultButton = ContentDialogButton.Primary
 			};
 

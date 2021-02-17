@@ -127,7 +127,7 @@ namespace PrivateWiki.ViewModels
 			_labelBackend = container.GetInstance<ILabelBackend>();
 			_mostRecentlyVisitedPagesService = container.GetInstance<IMostRecentlyVisitedPagesService>();
 			_translation = container.GetInstance<TranslationResources>();
-			CommandBarViewModel = new PageViewerCommandBarViewModel();
+			CommandBarViewModel = new PageViewerCommandBarViewModel(_translation);
 			SearchControlViewModel = new GlobalSearchControlViewModel();
 			AddLabelsToPageControlVM = container.GetInstance<AddLabelsToPageControlViewModel>();
 
@@ -349,6 +349,10 @@ namespace PrivateWiki.ViewModels
 			public string Labels => _translation.GetStringResource("labels");
 			public string TableOfContents => _translation.GetStringResource("table_of_contents");
 			public string Edit => _translation.GetStringResource("edit");
+			public string PrintPDFDialogDescription => _translation.GetStringResource("printPDFDialogDescription");
+			public string PrintPDFDialogTitle => _translation.GetStringResource("printPDFDialogTitle");
+			public string PrintPDFDialogOpenInBrowser => _translation.GetStringResource("printPDFDialogOpenInBrowser");
+			public string Close => _translation.GetStringResource("close");
 
 			public string Test => _translation.GetStringResource("invariant_only_test");
 		}

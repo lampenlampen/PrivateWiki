@@ -6,10 +6,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
+using PrivateWiki.Services.TranslationService;
 using PrivateWiki.UWP.UI.Pages.SettingsPages;
 using PrivateWiki.UWP.UI.Pages.SettingsPagesOld;
 using muxc = Microsoft.UI.Xaml.Controls;
-using PagesSettingsPage = PrivateWiki.UWP.UI.Pages.SettingsPages.PagesSettingsPage;
 
 #nullable enable
 
@@ -22,6 +22,8 @@ namespace PrivateWiki.UWP.UI.Pages
 	/// </summary>
 	public sealed partial class SettingsPage : Page
 	{
+		public Localization Translations { get; }
+
 		// List of ValueTuple holding the Navigation Tag and the relative Navigation Page
 		private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
 		{
@@ -38,6 +40,10 @@ namespace PrivateWiki.UWP.UI.Pages
 		public SettingsPage()
 		{
 			this.InitializeComponent();
+
+			TranslationResources translationResources = Application.Instance.Container.GetInstance<TranslationResources>();
+
+			Translations = new Localization(translationResources);
 		}
 
 		private void NavView_Loaded(object sender, RoutedEventArgs e)
@@ -63,24 +69,22 @@ namespace PrivateWiki.UWP.UI.Pages
 			args.Handled = true;
 		}
 
-		private bool On_BackRequested()
+		private void On_BackRequested()
 		{
-			if (!SettingsContentFrame.CanGoBack)
-				return false;
+			if (!SettingsContentFrame.CanGoBack) return;
 
 			// Don't go back if the nav pane is overlayed.
 			if (NavView.IsPaneOpen &&
 			    (NavView.DisplayMode == muxc.NavigationViewDisplayMode.Compact ||
 			     NavView.DisplayMode == muxc.NavigationViewDisplayMode.Minimal))
-				return false;
+				return;
 
 			SettingsContentFrame.GoBack();
-			return true;
 		}
 
 		private void NavView_ItemInvoked(muxc.NavigationView sender, muxc.NavigationViewItemInvokedEventArgs args)
 		{
-			if (args.IsSettingsInvoked == true)
+			if (args.IsSettingsInvoked)
 			{
 				NavView_Navigate("settings", args.RecommendedNavigationTransitionInfo);
 			}
@@ -93,15 +97,19 @@ namespace PrivateWiki.UWP.UI.Pages
 
 		private void NavView_Navigate(string navItemTag, NavigationTransitionInfo transitionInfo)
 		{
-			Type _page = null;
+			Type? page;
 			if (navItemTag == "settings")
 			{
-				_page = typeof(SettingsPage);
+				page = typeof(SettingsPage);
 			}
 			else
 			{
-				var item = _pages.FirstOrDefault(p => p.Tag.Equals(navItemTag));
-				_page = item.Page;
+				var item = _pages.FirstOrDefault(p =>
+				{
+					var (tag, _) = p;
+					return tag.Equals(navItemTag);
+				});
+				page = item.Page;
 			}
 
 			// Get the page type before navigation so you can prevent duplicate
@@ -109,15 +117,39 @@ namespace PrivateWiki.UWP.UI.Pages
 			var preNavPageType = SettingsContentFrame.CurrentSourcePageType;
 
 			// Only navigate if the selected page isn't currently loaded.
-			if (!(_page is null) && !Type.Equals(preNavPageType, _page))
+			if (!(page is null) && !Type.Equals(preNavPageType, page))
 			{
-				SettingsContentFrame.Navigate(_page, null, transitionInfo);
+				SettingsContentFrame.Navigate(page, null, transitionInfo);
 			}
 		}
 
 		private void NavView_BackRequested(muxc.NavigationView sender, muxc.NavigationViewBackRequestedEventArgs args)
 		{
 			if (Frame.CanGoBack) Frame.GoBack();
+		}
+
+		public class Localization
+		{
+			private readonly TranslationResources _translation2;
+
+			public Localization(TranslationResources resources)
+			{
+				_translation2 = resources;
+			}
+
+			public string Site => _translation2.GetStringResource("siteManager");
+			public string General => _translation2.GetStringResource("general");
+			public string Navigation => _translation2.GetStringResource("navigation");
+			public string Pages => _translation2.GetStringResource("pages");
+			public string Labels => _translation2.GetStringResource("labels");
+			public string Assets => _translation2.GetStringResource("assets");
+			public string Theme => _translation2.GetStringResource("theme");
+			public string Modules => _translation2.GetStringResource("modules");
+			public string Rendering => _translation2.GetStringResource("rendering");
+			public string Storage => _translation2.GetStringResource("storage");
+			public string Sync => _translation2.GetStringResource("sync");
+			public string System => _translation2.GetStringResource("system");
+			public string DeveloperTools => _translation2.GetStringResource("developerTools");
 		}
 	}
 }
