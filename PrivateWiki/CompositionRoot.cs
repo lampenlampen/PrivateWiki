@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using NodaTime;
 using PrivateWiki.Core;
+using PrivateWiki.Core.Events;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.AppSettingsService;
@@ -87,6 +88,10 @@ namespace PrivateWiki
 
 			// ViewModels
 			container.Register<AddLabelsToPageControlViewModel>();
+
+			// Events
+			container.RegisterSingleton<IObservable<CultureChangedEventArgs>, CultureChangedEvent>();
+			container.RegisterSingleton<IObserver<CultureChangedEventArgs>, CultureChangedEvent>();
 		}
 	}
 }

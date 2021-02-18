@@ -45,6 +45,7 @@ namespace PrivateWiki.Services.TranslationService.InCodeTranslationsFiles
 				["sync"] = "Synchronization",
 				["system"] = "System",
 				["developerTools"] = "Developer Tools",
+				["language"] = "Language",
 
 				// Import Page Dialog
 				["importPageDialogDescription"] = "If a page with the same id exists already, it will be overriden by the imported one!",

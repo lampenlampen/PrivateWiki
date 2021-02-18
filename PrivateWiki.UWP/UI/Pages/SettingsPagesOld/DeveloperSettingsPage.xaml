@@ -1,4 +1,4 @@
-﻿<Page
+<Page
     x:Class="PrivateWiki.UWP.UI.Pages.SettingsPagesOld.DeveloperSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -22,9 +22,9 @@
             Title="Developer Settings"
             Subtitle="Experimental or debugging settings"
             ApplyClick="SettingsHeader_OnApplyClick"
-            ResetClick="SettingsHeader_OnResetClick" >
+            ResetClick="SettingsHeader_OnResetClick">
             <controls:SettingsHeader.Icon>
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC7A;" FontSize="32"/>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC7A;" FontSize="32" />
             </controls:SettingsHeader.Icon>
         </controls:SettingsHeader>
 
@@ -43,22 +43,30 @@
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch">
 
-                <StackPanel x:Name="stackpanel" Background="White" Padding="8" Visibility="Collapsed">
+                <StackPanel x:Name="stackpanel" Background="White" Padding="8">
+                    <StackPanel>
+                        <ToggleSwitch
+                            OnContent="Acrylic background enabled"
+                            OffContent="Acrylic background disabled"
+                            IsOn="{x:Bind Model.IsAcrylicBackgroundEnabled, Mode=TwoWay}" />
 
-                    <ToggleSwitch
-                        OnContent="Acrylic background enabled"
-                        OffContent="Acrylic background disabled"
-                        IsOn="{x:Bind Model.IsAcrylicBackgroundEnabled, Mode=TwoWay}"/>
+                        <TextBlock
+                            TextWrapping="WrapWholeWords"
+                            Text="Renders the background of a page acrylic." />
 
-                    <TextBlock
-                        TextWrapping="WrapWholeWords"
-                        Text="Renders the background of a page acrylic."/>
+                        <Border
+                            Margin="0, 8, 0, 8"
+                            BorderBrush="LightGray"
+                            BorderThickness="1"
+                            Width="{x:Bind stackpanel.Width}" />
+                    </StackPanel>
 
-                    <Border
-                        Margin="0, 8, 0, 8"
-                        BorderBrush="LightGray"
-                        BorderThickness="1"
-                        Width="{x:Bind stackpanel.Width}" />
+                    <StackPanel>
+                        <TextBlock x:Name="LanguageText" Text="{x:Bind _translations.LanguageTextLoc, Mode=OneWay}"/>
+                        <Button x:Name="GermanBtn" Content="German"/>
+                        <Button x:Name="English" Content="English" />
+                    </StackPanel>
+
                 </StackPanel>
             </controls1:DropShadowPanel>
         </ScrollViewer>

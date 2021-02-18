@@ -30,6 +30,7 @@ namespace PrivateWiki.Services.TranslationService.InCodeTranslationsFiles
 				["toTop"] = "To Top",
 				["close"] = "Schließen",
 				["newPage"] = "Neue Seite",
+				["language"] = "Sprache",
 
 				// Import Page Dialog
 				["importPageDialogDescription"] = "Eine vorhandene Seite mit gleicher Id wird dabei überschrieben.",
