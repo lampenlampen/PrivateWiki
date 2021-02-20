@@ -127,7 +127,7 @@ namespace PrivateWiki.ViewModels
 			_labelBackend = container.GetInstance<ILabelBackend>();
 			_mostRecentlyVisitedPagesService = container.GetInstance<IMostRecentlyVisitedPagesService>();
 			_translation = container.GetInstance<TranslationResources>();
-			CommandBarViewModel = new PageViewerCommandBarViewModel(_translation);
+			CommandBarViewModel = container.GetInstance<PageViewerCommandBarViewModel>();
 			SearchControlViewModel = new GlobalSearchControlViewModel();
 			AddLabelsToPageControlVM = container.GetInstance<AddLabelsToPageControlViewModel>();
 

@@ -5,14 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
-    xmlns:xamlConverter="using:PrivateWiki.UWP.UI.XamlConverter"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
-    <controls:PageViewerCommandBarBase.Resources>
-        <xamlConverter:BoolVisibilityConverter x:Key="BoolToVisConverter"/>
-    </controls:PageViewerCommandBarBase.Resources>
 
     <CommandBar
         x:Name="commandBar"
@@ -20,55 +15,54 @@
         Height="Auto"
         Background="{ThemeResource SystemControlBackgroundAccentBrush}">
 
-        <AppBarButton x:Name="ToTopBtn" Label="{x:Bind ViewModel.Translations.ToTop}" Icon="Up" />
-        <AppBarButton x:Name="PdfBtn" Label="{x:Bind ViewModel.Translations.PDF}" Icon="Print">
+        <AppBarButton x:Name="ToTopBtn" Icon="Up" />
+        <AppBarButton x:Name="PdfBtn" Icon="Print">
             <AppBarButton.KeyboardAccelerators>
                 <KeyboardAccelerator
                     Modifiers="Control"
                     Key="P" />
             </AppBarButton.KeyboardAccelerators>
         </AppBarButton>
-        <AppBarButton x:Name="EditBtn" Label="{x:Bind ViewModel.Translations.Edit}" Icon="Edit">
+        <AppBarButton x:Name="EditBtn" Icon="Edit">
             <AppBarButton.KeyboardAccelerators>
                 <KeyboardAccelerator
                     Modifiers="Control"
                     Key="E" />
             </AppBarButton.KeyboardAccelerators>
         </AppBarButton>
-        <AppBarButton x:Name="SearchBtn" Label="{x:Bind ViewModel.Translations.Search}" Icon="Find">
+        <AppBarButton x:Name="SearchBtn" Label="{x:Bind ViewModel._resources.Search, Mode=OneWay}" Icon="Find">
             <AppBarButton.KeyboardAccelerators>
                 <KeyboardAccelerator
                     Modifiers="Control"
                     Key="F" />
             </AppBarButton.KeyboardAccelerators>
         </AppBarButton>
-        <AppBarButton x:Name="HistoryBtn" Label="{x:Bind ViewModel.Translations.History}" Icon="Clock" />
+        <AppBarButton x:Name="HistoryBtn" Label="{x:Bind ViewModel._resources.History, Mode=OneWay}" Icon="Clock" />
 
         <CommandBar.SecondaryCommands>
-
-            <AppBarButton x:Name="FullscreenBtn" Label="{x:Bind ViewModel.Translations.Fullscreen}" Icon="Fullscreen">
+            <AppBarButton x:Name="FullscreenBtn" Label="{x:Bind ViewModel._resources.Fullscreen, Mode=OneWay}" Icon="Fullscreen">
                 <AppBarButton.KeyboardAccelerators>
                     <KeyboardAccelerator Key="F11" />
                 </AppBarButton.KeyboardAccelerators>
             </AppBarButton>
 
-            <AppBarButton x:Name="ExportBtn" Label="{x:Bind ViewModel.Translations.Export}">
+            <AppBarButton x:Name="ExportBtn" Label="{x:Bind ViewModel._resources.Export, Mode=OneWay}">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1AD;" FontSize="32"/>
                 </AppBarButton.Icon>
             </AppBarButton>
 
-            <AppBarButton x:Name="ImportBtn" Label="{x:Bind ViewModel.Translations.Import}" Icon="Import" />
+            <AppBarButton x:Name="ImportBtn" Label="{x:Bind ViewModel._resources.Import, Mode=OneWay}" Icon="Import" />
 
-            <AppBarButton x:Name="SettingsBtn" Label="{x:Bind ViewModel.Translations.Settings}" Icon="Setting" />
+            <AppBarButton x:Name="SettingsBtn" Label="{x:Bind ViewModel._resources.Settings, Mode=OneWay}" Icon="Setting" />
 
-            <AppBarButton x:Name="NewPageBtn" Label="{x:Bind ViewModel.Translations.NewPage}" Icon="Add">
+            <AppBarButton x:Name="NewPageBtn" Label="{x:Bind ViewModel._resources.NewPage, Mode=OneWay}" Icon="Add">
                 <AppBarButton.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="Control" Key="N"/>
                 </AppBarButton.KeyboardAccelerators>
             </AppBarButton>
 
-            <AppBarButton x:Name="DevOptBtn" Label="{x:Bind ViewModel.Translations.DeveloperSettings}">
+            <AppBarButton x:Name="DevOptBtn" Label="{x:Bind ViewModel._resources.DeveloperSettings, Mode=OneWay}">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC7A;" FontSize="32"/>
                 </AppBarButton.Icon>
@@ -76,9 +70,7 @@
                     <MenuFlyout />
                 </AppBarButton.Flyout>
             </AppBarButton>
-
         </CommandBar.SecondaryCommands>
-
     </CommandBar>
 
 </controls:PageViewerCommandBarBase>

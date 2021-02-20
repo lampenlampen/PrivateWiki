@@ -74,6 +74,18 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 
 					_cultureChangedObserver.OnNext(new CultureChangedEventArgs(englishCulture));
 				});
+
+			LightThemeBtn.Events().Click
+				.Subscribe(x =>
+				{
+					this.RequestedTheme = ElementTheme.Light;
+				});
+
+			DarkThemeBtn.Events().Click
+				.Subscribe(x =>
+				{
+					RequestedTheme = ElementTheme.Dark;
+				});
 		}
 
 		private void UpdateUiTest()

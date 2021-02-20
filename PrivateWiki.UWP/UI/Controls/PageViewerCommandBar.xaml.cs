@@ -26,12 +26,6 @@ namespace PrivateWiki.UWP.UI.Controls
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-		public new object Content
-		{
-			get => commandBar.Content;
-			set => commandBar.Content = value;
-		}
-
 		public IObservable<Unit> ShowSettings => _showSettings;
 		private readonly ISubject<Unit> _showSettings;
 
@@ -129,9 +123,29 @@ namespace PrivateWiki.UWP.UI.Controls
 					.Select(_ => Unit.Default)
 					.InvokeCommand(ViewModel.DevOptionsClick)
 					.DisposeWith(disposable);
+				
+				BindTextResources(disposable);
 
 				ShowLastVisitedPages();
 			});
+		}
+
+		private void BindTextResources(CompositeDisposable disposable)
+		{
+			this.OneWayBind(ViewModel,
+					x => x._resources.ToTop,
+					view => view.ToTopBtn.Label)
+				.DisposeWith(disposable);
+			
+			this.OneWayBind(ViewModel,
+					x => x._resources.PDF,
+					view => view.PdfBtn.Label)
+				.DisposeWith(disposable);
+			
+			this.OneWayBind(ViewModel,
+					x => x._resources.Edit,
+					view => view.EditBtn.Label)
+				.DisposeWith(disposable);
 		}
 
 		private void ShowLastVisitedPages()
@@ -157,7 +171,6 @@ namespace PrivateWiki.UWP.UI.Controls
 					var id = (string) ((Button) sender).Content;
 
 					_navigateToPage.OnNext(id);
-					NavigateToPage?.Invoke(sender, id);
 				};
 
 				return button;
@@ -196,10 +209,5 @@ namespace PrivateWiki.UWP.UI.Controls
 
 			commandBar.Content = root;
 		}
-
-		[Obsolete]
-		public delegate void NavigateToPageHandler(object sender, string id);
-
-		[Obsolete] public event NavigateToPageHandler NavigateToPage;
 	}
 }

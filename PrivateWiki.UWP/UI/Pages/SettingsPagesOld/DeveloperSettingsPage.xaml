@@ -43,7 +43,7 @@
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch">
 
-                <StackPanel x:Name="stackpanel" Background="White" Padding="8">
+                <StackPanel x:Name="stackpanel" Padding="8">
                     <StackPanel>
                         <ToggleSwitch
                             OnContent="Acrylic background enabled"
@@ -65,6 +65,22 @@
                         <TextBlock x:Name="LanguageText" Text="{x:Bind _translations.LanguageTextLoc, Mode=OneWay}"/>
                         <Button x:Name="GermanBtn" Content="German"/>
                         <Button x:Name="English" Content="English" />
+                        <Border
+                            Margin="0, 8, 0, 8"
+                            BorderBrush="LightGray"
+                            BorderThickness="1"
+                            Width="{x:Bind stackpanel.Width}" />
+                    </StackPanel>
+                    
+                    <StackPanel>
+                        <TextBlock x:Name="ThemeHeaderText" Text="Theme"/>
+                        <Button x:Name="LightThemeBtn" Content="Light"/>
+                        <Button x:Name="DarkThemeBtn" Content="Dark" />
+                        <Border
+                            Margin="0, 8, 0, 8"
+                            BorderBrush="LightGray"
+                            BorderThickness="1"
+                            Width="{x:Bind stackpanel.Width}" />
                     </StackPanel>
 
                 </StackPanel>

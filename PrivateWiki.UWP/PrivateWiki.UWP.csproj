@@ -93,28 +93,28 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-      <Compile Include="App.xaml.cs">
-          <DependentUpon>App.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="AppConfig.cs"/>
-      <Compile Include="Data\FileSystemAccess.cs"/>
-      <Compile Include="Data\PageExporter.cs"/>
-      <Compile Include="Services\ApplicationLauncherService\ApplicationLauncherService.cs"/>
-      <Compile Include="Services\FilesystemService\ApplicationDataService.cs"/>
-      <Compile Include="Services\FilesystemService\UWPFullTrustFilesystemService.cs"/>
-      <Compile Include="UI\Controls\AddLabelsToPageControl.xaml.cs">
-          <DependentUpon>AddLabelsToPageControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\CreateNewLabelControl.xaml.cs">
-          <DependentUpon>CreateNewLabelControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\DiffControl.xaml.cs">
-          <DependentUpon>DiffControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\GlobalSearchControl.xaml.cs">
-          <DependentUpon>GlobalSearchControl.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\Controls\IPageViewerCommandBar.cs"/>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppConfig.cs" />
+    <Compile Include="Data\FileSystemAccess.cs" />
+    <Compile Include="Data\PageExporter.cs" />
+    <Compile Include="Services\ApplicationLauncherService\ApplicationLauncherService.cs" />
+    <Compile Include="Services\FilesystemService\ApplicationDataService.cs" />
+    <Compile Include="Services\FilesystemService\UWPFullTrustFilesystemService.cs" />
+    <Compile Include="UI\Controls\AddLabelsToPageControl.xaml.cs">
+      <DependentUpon>AddLabelsToPageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\CreateNewLabelControl.xaml.cs">
+      <DependentUpon>CreateNewLabelControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\DiffControl.xaml.cs">
+      <DependentUpon>DiffControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\GlobalSearchControl.xaml.cs">
+      <DependentUpon>GlobalSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\IPageViewerCommandBar.cs" />
     <Compile Include="UI\Controls\LabelControl.xaml.cs">
       <DependentUpon>LabelControl.xaml</DependentUpon>
     </Compile>
@@ -148,6 +148,9 @@
     </Compile>
     <Compile Include="UI\Controls\SettingsHeader.xaml.cs">
       <DependentUpon>SettingsHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Settings\PersonalizationCtrl.xaml.cs">
+      <DependentUpon>PersonalizationCtrl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Controls\Settings\Rendering\CoreControl.xaml.cs">
       <DependentUpon>CoreControl.xaml</DependentUpon>
@@ -247,38 +250,42 @@
       <DependentUpon>LabelsSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Pages\SettingsPages\PagesSettingsPage.xaml.cs">
-        <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
+      <DependentUpon>PagesSettingsPage.xaml</DependentUpon>
     </Compile>
-      <Compile Include="UI\SearchPopupContent.xaml.cs">
-          <DependentUpon>SearchPopupContent.xaml</DependentUpon>
-      </Compile>
-      <Compile Include="UI\TemplateSelector\MediaManagerTreeViewItemTemplateSelector.cs"/>
-      <Compile Include="UI\TemplateSelector\PageHistoryTemplateSelector.cs"/>
-      <Compile Include="UI\TemplateSelector\SettingNavigationTemplateSelector.cs"/>
-      <Compile Include="UI\XamlConverter\NegateBoolConverter.cs"/>
-      <Compile Include="UI\XamlConverter\NegateBoolToVisibilityConverter.cs"/>
-      <Compile Include="UI\XamlConverter\SystemDrawingColorToBrushConverter.cs"/>
-      <Compile Include="UI\XamlConverter\SystemDrawingColorToWindowsUiColorConverter.cs"/>
-      <Compile Include="UI\XamlConverter\TextColorBasedOnAccentColorConverter.cs"/>
-      <Compile Include="UI\XamlConverter\ThumbnailToImageConverter.cs"/>
-      <Compile Include="UI\XamlConverter\BoolToColorConverter.cs"/>
-      <Compile Include="UI\XamlConverter\BoolVisibilityConverter.cs"/>
-      <Compile Include="UI\XamlConverter\InstantToReadableDateTimeConverter.cs"/>
-      <Compile Include="UI\XamlConverter\SyncFrequencyToRadioButtonConverter.cs"/>
-      <Compile Include="Utilities\DiffMatchPatchAlg.cs"/>
-      <Compile Include="Models\DeveloperSettingsModel.cs"/>
-      <Compile Include="Models\NavigationItem.cs"/>
-      <Compile Include="MyUriToStreamResolver.cs"/>
-      <Compile Include="NavigationHandler.cs"/>
-      <Compile Include="Properties\AssemblyInfo.cs"/>
-      <Compile Include="Settings\DeveloperSettingsModelHandler.cs"/>
-      <Compile Include="Utilities\ExtensionFunctions\ColorExtension.cs"/>
-      <Compile Include="Utilities\ExtensionFunctions\DependencyObjectExtension.cs"/>
-      <Compile Include="Utilities\ExtensionFunctions\LinqExtensions.cs"/>
-      <Compile Include="Utilities\ExtensionFunctions\UIElementExtensions.cs"/>
-      <Compile Include="Utilities\FullyObservableCollection.cs"/>
-      <Compile Include="Utilities\SelectableItemsSource.cs"/>
-      <Compile Include="UWPCompositionRoot.cs"/>
+    <Compile Include="UI\Pages\SettingsPages\PersonalizationPage.xaml.cs">
+      <DependentUpon>PersonalizationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SearchPopupContent.xaml.cs">
+      <DependentUpon>SearchPopupContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\TemplateSelector\MediaManagerTreeViewItemTemplateSelector.cs" />
+    <Compile Include="UI\TemplateSelector\PageHistoryTemplateSelector.cs" />
+    <Compile Include="UI\TemplateSelector\SettingNavigationTemplateSelector.cs" />
+    <Compile Include="UI\XamlConverter\NegateBoolConverter.cs" />
+    <Compile Include="UI\XamlConverter\NegateBoolToVisibilityConverter.cs" />
+    <Compile Include="UI\XamlConverter\SystemDrawingColorToBrushConverter.cs" />
+    <Compile Include="UI\XamlConverter\SystemDrawingColorToWindowsUiColorConverter.cs" />
+    <Compile Include="UI\XamlConverter\TextColorBasedOnAccentColorConverter.cs" />
+    <Compile Include="UI\XamlConverter\ThumbnailToImageConverter.cs" />
+    <Compile Include="UI\XamlConverter\BoolToColorConverter.cs" />
+    <Compile Include="UI\XamlConverter\BoolVisibilityConverter.cs" />
+    <Compile Include="UI\XamlConverter\InstantToReadableDateTimeConverter.cs" />
+    <Compile Include="UI\XamlConverter\SyncFrequencyToRadioButtonConverter.cs" />
+    <Compile Include="Utilities\DiffMatchPatchAlg.cs" />
+    <Compile Include="Models\DeveloperSettingsModel.cs" />
+    <Compile Include="Models\NavigationItem.cs" />
+    <Compile Include="MyUriToStreamResolver.cs" />
+    <Compile Include="NavigationHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\DeveloperSettingsModelHandler.cs" />
+    <Compile Include="Utilities\ExtensionFunctions\AppThemeExtensions.cs" />
+    <Compile Include="Utilities\ExtensionFunctions\ColorExtension.cs" />
+    <Compile Include="Utilities\ExtensionFunctions\DependencyObjectExtension.cs" />
+    <Compile Include="Utilities\ExtensionFunctions\LinqExtensions.cs" />
+    <Compile Include="Utilities\ExtensionFunctions\UIElementExtensions.cs" />
+    <Compile Include="Utilities\FullyObservableCollection.cs" />
+    <Compile Include="Utilities\SelectableItemsSource.cs" />
+    <Compile Include="UWPCompositionRoot.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -324,25 +331,25 @@
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
-    <ItemGroup>
-        <ApplicationDefinition Include="App.xaml">
-            <Generator>MSBuild:Compile</Generator>
-            <SubType>Designer</SubType>
-        </ApplicationDefinition>
-        <Page Include="UI\Controls\AddLabelsToPageControl.xaml">
-            <SubType>Designer</SubType>
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
-        <Page Include="UI\Controls\CreateNewLabelControl.xaml">
-            <SubType>Designer</SubType>
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
-        <Page Include="UI\Controls\DiffControl.xaml">
-            <SubType>Designer</SubType>
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
-        <Page Include="UI\Controls\GlobalSearchControl.xaml">
-            <SubType>Designer</SubType>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="UI\Controls\AddLabelsToPageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\CreateNewLabelControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\DiffControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\GlobalSearchControl.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Controls\LabelControl.xaml">
@@ -385,6 +392,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Controls\SettingsHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\Settings\PersonalizationCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -498,6 +509,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Pages\SettingsPages\PersonalizationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\SearchPopupContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -527,30 +542,30 @@
     <PackageReference Include="Microsoft.Data.Sqlite.Core">
       <Version>2.2.6</Version>
     </PackageReference>
-      <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-          <Version>6.2.12</Version>
-      </PackageReference>
-      <PackageReference Include="Microsoft.Toolkit">
-          <Version>6.1.1</Version>
-      </PackageReference>
-      <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-          <Version>6.1.1</Version>
-      </PackageReference>
-      <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
-          <Version>6.1.1</Version>
-      </PackageReference>
-      <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.Layout">
-          <Version>6.1.1</Version>
-      </PackageReference>
-      <PackageReference Include="Microsoft.UI.Xaml">
-          <Version>2.5.0</Version>
-      </PackageReference>
-      <PackageReference Include="Newtonsoft.Json">
-          <Version>12.0.3</Version>
-      </PackageReference>
-      <PackageReference Include="NLog">
-          <Version>4.7.0</Version>
-      </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.12</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit">
+      <Version>6.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>6.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
+      <Version>6.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.Layout">
+      <Version>6.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.5.0</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="NLog">
+      <Version>4.7.0</Version>
+    </PackageReference>
     <PackageReference Include="NLog.Schema">
       <Version>4.7.0</Version>
     </PackageReference>
@@ -579,29 +594,29 @@
       <Version>8.1.0</Version>
     </PackageReference>
   </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj">
-            <Project>{e2799e21-da92-4fa1-8df2-0c08006fffaa}</Project>
-            <Name>PrivateWiki</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\RuntimeComponent\RuntimeComponent.csproj">
-            <Project>{a58a6b6d-679f-42e3-b415-eb310c14907a}</Project>
-            <Name>RuntimeComponent</Name>
-        </ProjectReference>
-    </ItemGroup>
-    <ItemGroup>
-        <SDKReference Include="WindowsDesktop, Version=10.0.19041.0">
-            <Name>Windows Desktop Extensions for the UWP</Name>
-        </SDKReference>
-    </ItemGroup>
-    <ItemGroup>
-        <Folder Include="UI\Pages\ContentPages\"/>
-    </ItemGroup>
-    <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
-        <VisualStudioVersion>14.0</VisualStudioVersion>
-    </PropertyGroup>
-    <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets"/>
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <ItemGroup>
+    <ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj">
+      <Project>{e2799e21-da92-4fa1-8df2-0c08006fffaa}</Project>
+      <Name>PrivateWiki</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RuntimeComponent\RuntimeComponent.csproj">
+      <Project>{a58a6b6d-679f-42e3-b415-eb310c14907a}</Project>
+      <Name>RuntimeComponent</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsDesktop, Version=10.0.19041.0">
+      <Name>Windows Desktop Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI\Pages\ContentPages\" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
                Other similar extension points exist, see Microsoft.Common.targets.
           <Target Name="BeforeBuild">
           </Target>

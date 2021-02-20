@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PrivateWiki.Services.StartupTask
@@ -14,10 +15,9 @@ namespace PrivateWiki.Services.StartupTask
 
 		public async Task<bool> Execute()
 		{
-			foreach (var task in _tasks)
-			{
-				await task.Execute();
-			}
+			var tasks = _tasks.Select(task => task.Execute()).ToList();
+
+			await Task.WhenAll(tasks);
 
 			return true;
 		}

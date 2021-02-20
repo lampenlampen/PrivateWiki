@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reactive.Linq;
+using System.Runtime.CompilerServices;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
+using JetBrains.Annotations;
+using PrivateWiki.Core.Events;
 using PrivateWiki.Services.TranslationService;
 using PrivateWiki.UWP.UI.Pages.SettingsPages;
 using PrivateWiki.UWP.UI.Pages.SettingsPagesOld;
+using PrivateWiki.UWP.Utilities.ExtensionFunctions;
+using Container = SimpleInjector.Container;
 using muxc = Microsoft.UI.Xaml.Controls;
 
 #nullable enable
@@ -20,9 +27,13 @@ namespace PrivateWiki.UWP.UI.Pages
 	/// <summary>
 	/// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
 	/// </summary>
-	public sealed partial class SettingsPage : Page
+	public sealed partial class SettingsPage : Page, INotifyPropertyChanged
 	{
-		public Localization Translations { get; }
+		private readonly IObservable<CultureChangedEventArgs> _cultureChangedEvent;
+
+		private readonly IObservable<ThemeChangedEventArgs> _themeChangedEvent;
+
+		public SettingsPageResources Translations { get; }
 
 		// List of ValueTuple holding the Navigation Tag and the relative Navigation Page
 		private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
@@ -34,16 +45,24 @@ namespace PrivateWiki.UWP.UI.Pages
 			("storage", typeof(StorageSettingsPage)),
 			("developertools", typeof(DeveloperSettingsPage)),
 			("sync", typeof(BackupSyncSettingsPage)),
-			("labels", typeof(LabelsSettingsPage))
+			("labels", typeof(LabelsSettingsPage)),
+			("personalization", typeof(PersonalizationPage)),
 		};
 
 		public SettingsPage()
 		{
 			this.InitializeComponent();
 
-			TranslationResources translationResources = Application.Instance.Container.GetInstance<TranslationResources>();
+			var container = Application.Instance.Container;
+			TranslationResources translationResources = container.GetInstance<TranslationResources>();
+			_cultureChangedEvent = container.GetInstance<IObservable<CultureChangedEventArgs>>();
+			_themeChangedEvent = container.GetInstance<IObservable<ThemeChangedEventArgs>>();
 
-			Translations = new Localization(translationResources);
+			Translations = new SettingsPageResources(translationResources);
+
+			_cultureChangedEvent.Subscribe(x => OnPropertyChanged(nameof(Translations)));
+
+			_themeChangedEvent.Subscribe(x => RequestedTheme = x.NewTheme.ToPlatformTheme());
 		}
 
 		private void NavView_Loaded(object sender, RoutedEventArgs e)
@@ -128,28 +147,37 @@ namespace PrivateWiki.UWP.UI.Pages
 			if (Frame.CanGoBack) Frame.GoBack();
 		}
 
-		public class Localization
+		public event PropertyChangedEventHandler? PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		private void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			private readonly TranslationResources _translation2;
-
-			public Localization(TranslationResources resources)
-			{
-				_translation2 = resources;
-			}
-
-			public string Site => _translation2.GetStringResource("siteManager");
-			public string General => _translation2.GetStringResource("general");
-			public string Navigation => _translation2.GetStringResource("navigation");
-			public string Pages => _translation2.GetStringResource("pages");
-			public string Labels => _translation2.GetStringResource("labels");
-			public string Assets => _translation2.GetStringResource("assets");
-			public string Theme => _translation2.GetStringResource("theme");
-			public string Modules => _translation2.GetStringResource("modules");
-			public string Rendering => _translation2.GetStringResource("rendering");
-			public string Storage => _translation2.GetStringResource("storage");
-			public string Sync => _translation2.GetStringResource("sync");
-			public string System => _translation2.GetStringResource("system");
-			public string DeveloperTools => _translation2.GetStringResource("developerTools");
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
+	}
+
+	public class SettingsPageResources
+	{
+		private readonly TranslationResources _translation;
+
+		public SettingsPageResources(TranslationResources resources)
+		{
+			_translation = resources;
+		}
+
+		public string Site => _translation.GetStringResource("siteManager");
+		public string General => _translation.GetStringResource("general");
+		public string Navigation => _translation.GetStringResource("navigation");
+		public string Pages => _translation.GetStringResource("pages");
+		public string Labels => _translation.GetStringResource("labels");
+		public string Assets => _translation.GetStringResource("assets");
+		public string Theme => _translation.GetStringResource("theme");
+		public string Modules => _translation.GetStringResource("modules");
+		public string Rendering => _translation.GetStringResource("rendering");
+		public string Storage => _translation.GetStringResource("storage");
+		public string Sync => _translation.GetStringResource("sync");
+		public string System => _translation.GetStringResource("system");
+		public string DeveloperTools => _translation.GetStringResource("developerTools");
+		public string Personalization => _translation.GetStringResource("personalization");
 	}
 }
