@@ -272,12 +272,10 @@
     <Compile Include="UI\XamlConverter\InstantToReadableDateTimeConverter.cs" />
     <Compile Include="UI\XamlConverter\SyncFrequencyToRadioButtonConverter.cs" />
     <Compile Include="Utilities\DiffMatchPatchAlg.cs" />
-    <Compile Include="Models\DeveloperSettingsModel.cs" />
     <Compile Include="Models\NavigationItem.cs" />
     <Compile Include="MyUriToStreamResolver.cs" />
     <Compile Include="NavigationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\DeveloperSettingsModelHandler.cs" />
     <Compile Include="Utilities\ExtensionFunctions\AppThemeExtensions.cs" />
     <Compile Include="Utilities\ExtensionFunctions\ColorExtension.cs" />
     <Compile Include="Utilities\ExtensionFunctions\DependencyObjectExtension.cs" />
@@ -613,6 +611,7 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Settings"/>
     <Folder Include="UI\Pages\ContentPages\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
