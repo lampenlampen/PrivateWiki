@@ -47,6 +47,7 @@ namespace PrivateWiki.Services.TranslationService.InCodeTranslationsFiles
 				["developerTools"] = "Developer Tools",
 				["language"] = "Language",
 				["personalization"] = "Personalization",
+				["personalization_subheader"] = "Customize this app.",
 
 				// Import Page Dialog
 				["importPageDialogDescription"] = "If a page with the same id exists already, it will be overriden by the imported one!",

@@ -44,25 +44,9 @@
                 VerticalContentAlignment="Stretch">
 
                 <StackPanel x:Name="stackpanel" Padding="8">
-                    <StackPanel>
-                        <ToggleSwitch
-                            OnContent="Acrylic background enabled"
-                            OffContent="Acrylic background disabled"
-                            IsOn="{x:Bind Model.IsAcrylicBackgroundEnabled, Mode=TwoWay}" />
 
-                        <TextBlock
-                            TextWrapping="WrapWholeWords"
-                            Text="Renders the background of a page acrylic." />
-
-                        <Border
-                            Margin="0, 8, 0, 8"
-                            BorderBrush="LightGray"
-                            BorderThickness="1"
-                            Width="{x:Bind stackpanel.Width}" />
-                    </StackPanel>
-
-                    <StackPanel>
-                        <TextBlock x:Name="LanguageText" Text="{x:Bind _translations.LanguageTextLoc, Mode=OneWay}"/>
+	                <StackPanel>
+                        <TextBlock x:Name="LanguageText" Text="{x:Bind _translations.Language, Mode=OneWay}"/>
                         <Button x:Name="GermanBtn" Content="German"/>
                         <Button x:Name="English" Content="English" />
                         <Border
