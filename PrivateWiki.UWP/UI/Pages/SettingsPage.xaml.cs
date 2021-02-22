@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using Windows.System;
 using Windows.UI.Xaml;
@@ -14,8 +13,6 @@ using PrivateWiki.Core.Events;
 using PrivateWiki.Services.TranslationService;
 using PrivateWiki.UWP.UI.Pages.SettingsPages;
 using PrivateWiki.UWP.UI.Pages.SettingsPagesOld;
-using PrivateWiki.UWP.Utilities.ExtensionFunctions;
-using Container = SimpleInjector.Container;
 using muxc = Microsoft.UI.Xaml.Controls;
 
 #nullable enable
@@ -30,8 +27,6 @@ namespace PrivateWiki.UWP.UI.Pages
 	public sealed partial class SettingsPage : Page, INotifyPropertyChanged
 	{
 		private readonly IObservable<CultureChangedEventArgs> _cultureChangedEvent;
-
-		private readonly IObservable<ThemeChangedEventArgs> _themeChangedEvent;
 
 		public SettingsPageResources Translations { get; }
 
@@ -56,13 +51,10 @@ namespace PrivateWiki.UWP.UI.Pages
 			var container = Application.Instance.Container;
 			TranslationResources translationResources = container.GetInstance<TranslationResources>();
 			_cultureChangedEvent = container.GetInstance<IObservable<CultureChangedEventArgs>>();
-			_themeChangedEvent = container.GetInstance<IObservable<ThemeChangedEventArgs>>();
 
 			Translations = new SettingsPageResources(translationResources);
 
 			_cultureChangedEvent.Subscribe(x => OnPropertyChanged(nameof(Translations)));
-
-			_themeChangedEvent.Subscribe(x => RequestedTheme = x.NewTheme.ToPlatformTheme());
 		}
 
 		private void NavView_Loaded(object sender, RoutedEventArgs e)

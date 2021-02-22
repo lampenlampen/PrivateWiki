@@ -1,8 +1,10 @@
-﻿using Windows.ApplicationModel.Core;
+﻿using System;
+using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
-using PrivateWiki.ViewModels;
+using PrivateWiki.Core.Events;
+using PrivateWiki.UWP.Utilities.ExtensionFunctions;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x407 dokumentiert.
 
@@ -13,6 +15,8 @@ namespace PrivateWiki.UWP.UI.Pages
 	/// </summary>
 	public sealed partial class MainPage : Page
 	{
+		private readonly IObservable<ThemeChangedEventArgs> _themeChangedEvent;
+
 		public MainPage()
 		{
 			InitializeComponent();
@@ -27,6 +31,10 @@ namespace PrivateWiki.UWP.UI.Pages
 				new UISettings().GetColorValue(UIColorType.Accent);
 
 			EditorFrame.Navigate(typeof(PageViewer), "start");
+
+			_themeChangedEvent = Application.Instance.Container.GetInstance<IObservable<ThemeChangedEventArgs>>();
+
+			_themeChangedEvent.Subscribe(x => RequestedTheme = x.NewTheme.ToPlatformTheme());
 		}
 
 		/// Extend acrylic into the title bar.
