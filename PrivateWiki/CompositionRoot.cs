@@ -28,6 +28,7 @@ using PrivateWiki.Services.StorageServices.Sql.Sqlite;
 using PrivateWiki.Services.TranslationService;
 using PrivateWiki.ViewModels;
 using PrivateWiki.ViewModels.Controls;
+using PrivateWiki.ViewModels.Settings;
 using SimpleInjector;
 
 namespace PrivateWiki
@@ -90,6 +91,7 @@ namespace PrivateWiki
 			// ViewModels
 			container.Register<AddLabelsToPageControlViewModel>();
 			container.Register<PageViewerCommandBarViewModel>();
+			container.Register<PersonalizationCtrlVM>();
 
 			// Events
 			container.RegisterSingleton<IObservable<CultureChangedEventArgs>, CultureChangedEvent>();

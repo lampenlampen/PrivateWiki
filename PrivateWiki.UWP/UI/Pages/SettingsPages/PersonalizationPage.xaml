@@ -5,10 +5,9 @@
     xmlns:local="using:PrivateWiki.UWP.UI.Pages.SettingsPages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:settings="using:PrivateWiki.UWP.UI.Controls.Settings"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-
-    </Grid>
+    <settings:PersonalizationCtrl x:Name="PersonalizationCtrl"/>
 </Page>
