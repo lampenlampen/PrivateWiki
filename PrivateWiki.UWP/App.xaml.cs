@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -11,6 +11,7 @@ using PrivateWiki.UWP.UI;
 using PrivateWiki.UWP.UI.Pages;
 using RavinduL.LocalNotifications;
 using ReactiveUI;
+using Sentry;
 
 namespace PrivateWiki.UWP
 {
@@ -43,6 +44,9 @@ namespace PrivateWiki.UWP
 			InitializeComponent();
 			Suspending += OnSuspending;
 
+			SentrySdk.Init("https://538de75fb6dc4fd6819753186e6b3ecf@o528820.ingest.sentry.io/5646411");
+			// App code
+
 			var uwpCompRoot = new UWPCompositionRoot();
 			uwpCompRoot.Init(Application.Container);
 
@@ -58,6 +62,17 @@ namespace PrivateWiki.UWP
 			{
 				Logger.Error(args.Exception);
 				Logger.Error(args.Message);
+
+				using (SentrySdk.PushScope())
+				{
+					SentrySdk.ConfigureScope(s => s.SetTag("UnhandledException", "true"));
+					SentrySdk.CaptureException(args.Exception);
+					if (!args.Handled) // Not handled yet
+					{
+						// App might crash so make sure we flush this event.
+						SentrySdk.FlushAsync(TimeSpan.FromSeconds(2)).Wait();
+					}
+				}
 			};
 
 			RxApp.DefaultExceptionHandler = new RxExceptionHandler();
