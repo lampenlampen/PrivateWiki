@@ -42,11 +42,6 @@
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE158;" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem Content="{x:Bind Translations.Theme, Mode=OneWay}" Tag="theme">
-                    <muxc:NavigationViewItem.Icon>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE2B1;" />
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
                 <muxc:NavigationViewItem Content="{x:Bind Translations.Personalization, Mode=OneWay}" Tag="personalization">
 	                <muxc:NavigationViewItem.Icon>
 		                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE2B1;" />

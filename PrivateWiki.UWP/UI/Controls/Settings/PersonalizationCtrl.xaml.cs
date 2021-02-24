@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -27,7 +28,13 @@ namespace PrivateWiki.UWP.UI.Controls.Settings
 		{
 			this.InitializeComponent();
 
-			this.WhenActivated(disposable => { });
+			this.WhenActivated(disposable =>
+			{
+				this.OneWayBind(ViewModel,
+						vm => vm.Languages,
+						view => view.LanguageComboBox.ItemsSource)
+					.DisposeWith(disposable);
+			});
 		}
 	}
 }

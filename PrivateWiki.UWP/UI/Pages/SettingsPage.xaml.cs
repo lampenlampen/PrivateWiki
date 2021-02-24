@@ -163,7 +163,6 @@ namespace PrivateWiki.UWP.UI.Pages
 		public string Pages => _translation.GetStringResource("pages");
 		public string Labels => _translation.GetStringResource("labels");
 		public string Assets => _translation.GetStringResource("assets");
-		public string Theme => _translation.GetStringResource("theme");
 		public string Modules => _translation.GetStringResource("modules");
 		public string Rendering => _translation.GetStringResource("rendering");
 		public string Storage => _translation.GetStringResource("storage");

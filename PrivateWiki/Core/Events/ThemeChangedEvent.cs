@@ -18,6 +18,7 @@ namespace PrivateWiki.Core.Events
 	public enum AppTheme
 	{
 		Light,
-		Dark
+		Dark,
+		System
 	}
 }

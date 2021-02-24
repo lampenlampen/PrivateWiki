@@ -28,8 +28,6 @@
 		<StackPanel Grid.Row="1">
 			<Grid>
 				<ComboBox x:Name="LanguageComboBox" Header="{x:Bind ViewModel.Resources.Language, Mode=OneWay}">
-					<x:String>English</x:String>
-					<x:String>German</x:String>
 				</ComboBox>
 			</Grid>
 
