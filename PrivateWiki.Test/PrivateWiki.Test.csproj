@@ -30,11 +30,15 @@
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Remove="bin\**" />
+        <EmbeddedResource Remove="bin\**"/>
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="bin\**" />
+        <None Remove="bin\**"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="RxEvents"/>
     </ItemGroup>
 
 </Project>

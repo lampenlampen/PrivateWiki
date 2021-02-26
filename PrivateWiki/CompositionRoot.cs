@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using NodaTime;
 using PrivateWiki.Core;
+using PrivateWiki.Core.ApplicationLanguage;
 using PrivateWiki.Core.Events;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.ApplicationLauncherService;
@@ -78,7 +79,10 @@ namespace PrivateWiki
 
 			container.RegisterSingleton<TranslationResources, InCodeTranslationResources>();
 
+			// Queries
 			container.RegisterSingleton<IQueryHandler<ListDiffQuery<LabelId>, ListDiffResult<LabelId>>, ListDiff<LabelId>>();
+			container.RegisterSingleton<IQueryHandler<GetSupportedCultures, SupportedCultures>, SupportedCulturesQueryHandler>();
+			container.RegisterSingleton<IQueryHandler<GetCurrentAppUICulture, CurrentAppUICulture>, CurrentAppUICultureQueryHandler>();
 
 			// Bug see https://github.com/reactiveui/splat/issues/597
 			/*
