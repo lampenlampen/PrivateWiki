@@ -99,9 +99,9 @@ namespace PrivateWiki
 
 			// Events
 			container.RegisterSingleton<IObservable<CultureChangedEventArgs>, CultureChangedEvent>();
-			container.RegisterSingleton<IObserver<CultureChangedEventArgs>, CultureChangedEvent>();
+			container.RegisterSingleton<ICommandHandler<CultureChangedEventArgs>, CultureChangedEvent>();
 			container.RegisterSingleton<IObservable<ThemeChangedEventArgs>, ThemeChangedEvent>();
-			container.RegisterSingleton<IObserver<ThemeChangedEventArgs>, ThemeChangedEvent>();
+			container.RegisterSingleton<ICommandHandler<ThemeChangedEventArgs>, ThemeChangedEvent>();
 		}
 	}
 }

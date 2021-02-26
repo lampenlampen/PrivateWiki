@@ -2,7 +2,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Reactive;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using PrivateWiki.Core;
 using PrivateWiki.Core.ApplicationLanguage;
 using PrivateWiki.Core.Events;
@@ -11,13 +12,17 @@ using ReactiveUI;
 
 namespace PrivateWiki.ViewModels.Settings
 {
-	public class PersonalizationCtrlVM : ReactiveObject
+	public class PersonalizationCtrlVM : ReactiveObject, IActivatableViewModel
 	{
 		private readonly IQueryHandler<GetSupportedCultures, SupportedCultures> _supportedCulturesQuery;
 		private readonly IQueryHandler<GetCurrentAppUICulture, CurrentAppUICulture> _currentAppUiCulture;
-		private readonly IObserver<CultureChangedEventArgs> _cultureChangedEvent;
+		private readonly ICommandHandler<CultureChangedEventArgs> _cultureChangedCmd;
+		private readonly ICommandHandler<ThemeChangedEventArgs> _themeChangedEvent;
+
+		public ViewModelActivator Activator { get; }
 
 		private AppTheme _appTheme;
+
 
 		public AppTheme AppTheme
 		{
@@ -27,20 +32,31 @@ namespace PrivateWiki.ViewModels.Settings
 
 		public ReadOnlyCollection<AppLangVm> Languages { get; }
 
-		public PersonalizationCtrlResources Resources { get; }
+		private AppLangVm _currentAppLang;
 
-		public ReactiveCommand<AppLangVm, Unit> ChangeCurrentUICulture { get; }
+		public AppLangVm CurrentAppLangVm
+		{
+			get => _currentAppLang;
+			set => this.RaiseAndSetIfChanged(ref _currentAppLang, value);
+		}
+
+		public PersonalizationCtrlResources Resources { get; }
 
 		public PersonalizationCtrlVM(
 			TranslationResources resources,
 			IQueryHandler<GetSupportedCultures, SupportedCultures> supportedCulturesQuery,
 			IQueryHandler<GetCurrentAppUICulture, CurrentAppUICulture> currentAppUiCulture,
-			IObserver<CultureChangedEventArgs> cultureChangedEvent)
+			ICommandHandler<CultureChangedEventArgs> cultureChangedEvent,
+			ICommandHandler<ThemeChangedEventArgs> themeChangedEvent)
 		{
+			Activator = new ViewModelActivator();
+
 			_supportedCulturesQuery = supportedCulturesQuery;
 			_currentAppUiCulture = currentAppUiCulture;
-			_cultureChangedEvent = cultureChangedEvent;
+			_cultureChangedCmd = cultureChangedEvent;
+			_themeChangedEvent = themeChangedEvent;
 			Resources = new PersonalizationCtrlResources(resources);
+
 			Languages =
 				new ReadOnlyCollection<AppLangVm>(
 					_supportedCulturesQuery.Handle(
@@ -48,8 +64,23 @@ namespace PrivateWiki.ViewModels.Settings
 						.SupportedAppCultures
 						.Select(x => new AppLangVm(x)).ToList());
 
-			ChangeCurrentUICulture = ReactiveCommand.Create<AppLangVm>(x => _cultureChangedEvent.OnNext(new CultureChangedEventArgs(x.UICultureInfo)));
+			CurrentAppLangVm = new AppLangVm(_currentAppUiCulture.Handle(new GetCurrentAppUICulture()).CurrentCulture);
+
+			this.WhenAnyValue(x => x.CurrentAppLangVm)
+				.WhereNotNull()
+				.Do(x =>
+				{
+					var newCulture = x.UICultureInfo;
+					CultureInfo.CurrentUICulture = newCulture;
+
+					_cultureChangedCmd.Handle(new CultureChangedEventArgs(newCulture));
+				})
+				.Subscribe();
+
+			this.WhenActivated((CompositeDisposable disposable) => { });
 		}
+
+		private void OnActivated() { }
 	}
 
 	public class PersonalizationCtrlResources

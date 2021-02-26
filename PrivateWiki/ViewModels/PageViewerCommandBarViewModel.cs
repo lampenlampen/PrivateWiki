@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
 using System.Reactive;
 using System.Reactive.Subjects;
 using PrivateWiki.Core.Events;
@@ -36,12 +34,9 @@ namespace PrivateWiki.ViewModels
 		private readonly ISubject<Unit> _onNewPage;
 		public IObservable<Unit> OnNewPage => _onNewPage;
 
-		private readonly IObserver<CultureChangedEventArgs> _changeCultureEvent;
-
-		public PageViewerCommandBarViewModel(TranslationResources translationResources, IObservable<CultureChangedEventArgs> cultureChangedEvent, IObserver<CultureChangedEventArgs> changeCultureEvent)
+		public PageViewerCommandBarViewModel(TranslationResources translationResources, IObservable<CultureChangedEventArgs> cultureChangedEvent)
 		{
 			_cultureChangedEvent = cultureChangedEvent;
-			_changeCultureEvent = changeCultureEvent;
 
 			var container = Application.Instance.Container;
 

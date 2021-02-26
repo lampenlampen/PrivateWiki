@@ -45,6 +45,7 @@
 					<x:String>System</x:String>
 				</ComboBox>
 			</Grid>
+			<TextBlock x:Name="Test" Margin="0, 16, 0, 0"/>
 		</StackPanel>
 
 	</Grid>

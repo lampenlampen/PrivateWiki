@@ -1,18 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reactive.Disposables;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using System.Reactive.Linq;
 using PrivateWiki.ViewModels.Settings;
 using ReactiveUI;
 
@@ -30,9 +17,18 @@ namespace PrivateWiki.UWP.UI.Controls.Settings
 
 			this.WhenActivated(disposable =>
 			{
-				this.OneWayBind(ViewModel,
-						vm => vm.Languages,
-						view => view.LanguageComboBox.ItemsSource)
+				LanguageComboBox.ItemsSource = ViewModel.Languages;
+
+				this.Bind(ViewModel,
+						vm => vm.CurrentAppLangVm,
+						view => view.LanguageComboBox.SelectedItem)
+					.DisposeWith(disposable);
+
+				// Testing
+				this.WhenAnyValue(x => x.ViewModel.CurrentAppLangVm)
+					.WhereNotNull()
+					.Select(x => x.Name)
+					.BindTo(Test, x => x.Text)
 					.DisposeWith(disposable);
 			});
 		}

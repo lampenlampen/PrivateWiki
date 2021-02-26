@@ -7,7 +7,7 @@ namespace PrivateWiki.Core.ApplicationLanguage
 	{
 		private readonly SupportedCultures _supportedAppCultures = new(new List<CultureInfo>
 		{
-			CultureInfo.InvariantCulture,
+			new("en"),
 			new("de-DE"),
 			new("fr-FR")
 		});

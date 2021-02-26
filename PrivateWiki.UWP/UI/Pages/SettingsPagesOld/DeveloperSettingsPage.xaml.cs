@@ -2,11 +2,11 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using JetBrains.Annotations;
+using PrivateWiki.Core;
 using PrivateWiki.Core.Events;
 using PrivateWiki.Services.TranslationService;
 
@@ -22,21 +22,20 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 		private readonly TranslationResources _translationResources;
 
 		private readonly IObservable<CultureChangedEventArgs> _cultureChangedEvent;
-		private readonly IObserver<CultureChangedEventArgs> _cultureChangedObserver;
-		private readonly IObserver<ThemeChangedEventArgs> _themeChangedObserver;
+		private readonly ICommandHandler<CultureChangedEventArgs> _cultureChangedObserver;
+		private readonly ICommandHandler<ThemeChangedEventArgs> _themeChangedObserver;
 
 		private readonly DevSettingsPageStrings _translations;
 
 		public DeveloperSettingsPage()
 		{
 			this.InitializeComponent();
-			ApplicationData.Current.DataChanged += RoamingDataChanged;
 
 			var container = Application.Instance.Container;
 
 			_cultureChangedEvent = container.GetInstance<IObservable<CultureChangedEventArgs>>();
-			_cultureChangedObserver = container.GetInstance<IObserver<CultureChangedEventArgs>>();
-			_themeChangedObserver = container.GetInstance<IObserver<ThemeChangedEventArgs>>();
+			_cultureChangedObserver = container.GetInstance<ICommandHandler<CultureChangedEventArgs>>();
+			_themeChangedObserver = container.GetInstance<ICommandHandler<ThemeChangedEventArgs>>();
 			_translationResources = container.GetInstance<TranslationResources>();
 
 			_translations = new DevSettingsPageStrings(_translationResources);
@@ -52,7 +51,7 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 					CultureInfo.CurrentCulture = germanCulture;
 					CultureInfo.CurrentUICulture = germanCulture;
 
-					_cultureChangedObserver.OnNext(new CultureChangedEventArgs(germanCulture));
+					_cultureChangedObserver.Handle(new CultureChangedEventArgs(germanCulture));
 				});
 
 			English.Events().Click
@@ -62,14 +61,14 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 					CultureInfo.CurrentCulture = englishCulture;
 					CultureInfo.CurrentUICulture = englishCulture;
 
-					_cultureChangedObserver.OnNext(new CultureChangedEventArgs(englishCulture));
+					_cultureChangedObserver.Handle(new CultureChangedEventArgs(englishCulture));
 				});
 
 			LightThemeBtn.Events().Click
-				.Subscribe(_ => { _themeChangedObserver.OnNext(new ThemeChangedEventArgs(AppTheme.Light)); });
+				.Subscribe(_ => { _themeChangedObserver.Handle(new ThemeChangedEventArgs(AppTheme.Light)); });
 
 			DarkThemeBtn.Events().Click
-				.Subscribe(_ => { _themeChangedObserver.OnNext(new ThemeChangedEventArgs(AppTheme.Dark)); });
+				.Subscribe(_ => { _themeChangedObserver.Handle(new ThemeChangedEventArgs(AppTheme.Dark)); });
 		}
 
 		private void UpdateUiTest()
@@ -77,8 +76,6 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 			OnPropertyChanged(nameof(_translations));
 			//this.Bindings.Update();
 		}
-
-		private void RoamingDataChanged(ApplicationData sender, object args) { }
 
 
 		private void SettingsHeader_OnApplyClick(object sender, RoutedEventArgs e) { }

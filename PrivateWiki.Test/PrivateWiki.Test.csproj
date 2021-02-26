@@ -37,8 +37,4 @@
         <None Remove="bin\**"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="RxEvents"/>
-    </ItemGroup>
-
 </Project>

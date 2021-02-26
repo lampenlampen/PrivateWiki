@@ -29,7 +29,7 @@ namespace PrivateWiki.Services.TranslationService
 
 		public InCodeTranslationResources()
 		{
-			new DefaultTranslation().LoadResources(_resources);
+			new EnglishTranslation().LoadResources(_resources);
 			new GermanTranslation().LoadResources(_resources);
 			new FrenchTranslation().LoadResources(_resources);
 		}

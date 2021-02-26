@@ -3,11 +3,10 @@ using System.Globalization;
 
 namespace PrivateWiki.Services.TranslationService.InCodeTranslationsFiles
 {
-	public class DefaultTranslation : IInCodeTranslationResources
+	public class EnglishTranslation : IInCodeTranslationResources
 	{
 		public void LoadResources(IDictionary<CultureInfo, Dictionary<string, string>> res)
 		{
-			var culture = CultureInfo.InvariantCulture;
 			var dict = new Dictionary<string, string>
 			{
 				["test"] = "Lorem Ipsum",
@@ -60,7 +59,8 @@ namespace PrivateWiki.Services.TranslationService.InCodeTranslationsFiles
 				["printPDFDialogTitle"] = "Print Dialog"
 			};
 
-			res[culture] = dict;
+			res[CultureInfo.InvariantCulture] = dict;
+			res[new CultureInfo("en")] = dict;
 		}
 	}
 }

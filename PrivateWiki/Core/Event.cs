@@ -3,33 +3,23 @@ using System.Reactive.Subjects;
 
 namespace PrivateWiki.Core
 {
-	public abstract class Event<T> : IObserver<T>, IObservable<T>
+	public abstract class Event<TEventArgs> : IObservable<TEventArgs>, ICommandHandler<TEventArgs>
 	{
-		private readonly ISubject<T> _subject;
+		private readonly ISubject<TEventArgs> _subject;
 
 		public Event()
 		{
-			_subject = new Subject<T>();
+			_subject = new Subject<TEventArgs>();
 		}
 
-		public void OnCompleted()
-		{
-			_subject.OnCompleted();
-		}
-
-		public void OnError(Exception error)
-		{
-			_subject.OnError(error);
-		}
-
-		public void OnNext(T value)
-		{
-			_subject.OnNext(value);
-		}
-
-		public IDisposable Subscribe(IObserver<T> observer)
+		public IDisposable Subscribe(IObserver<TEventArgs> observer)
 		{
 			return _subject.Subscribe(observer);
+		}
+
+		public void Handle(TEventArgs command)
+		{
+			_subject.OnNext(command);
 		}
 	}
 }
