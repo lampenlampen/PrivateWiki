@@ -1,16 +1,15 @@
 using Windows.UI.Xaml;
-using PrivateWiki.Core.Events;
+using PrivateWiki.DataModels;
 
 namespace PrivateWiki.UWP.Utilities.ExtensionFunctions
 {
 	public static class AppThemeExtensions
 	{
 		public static ElementTheme ToPlatformTheme(this AppTheme theme) =>
-			theme switch
+			theme.DarkMode switch
 			{
-				AppTheme.Light => ElementTheme.Light,
-				AppTheme.Dark => ElementTheme.Dark,
-				_ => ElementTheme.Default
+				false => ElementTheme.Light,
+				true => ElementTheme.Dark
 			};
 	}
 }

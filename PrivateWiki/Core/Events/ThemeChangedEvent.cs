@@ -1,24 +1,14 @@
 namespace PrivateWiki.Core.Events
 {
-	public class ThemeChangedEvent : Event<ThemeChangedEventArgs>
-	{
-		
-	}
+	public class ThemeChangedEvent : Event<ThemeChangedEventArgs> { }
 
 	public class ThemeChangedEventArgs
 	{
-		public AppTheme NewTheme { get; }
+		public DataModels.AppTheme NewTheme { get; }
 
-		public ThemeChangedEventArgs(AppTheme newTheme)
+		public ThemeChangedEventArgs(DataModels.AppTheme newTheme)
 		{
 			NewTheme = newTheme;
 		}
-	}
-
-	public enum AppTheme
-	{
-		Light,
-		Dark,
-		System
 	}
 }

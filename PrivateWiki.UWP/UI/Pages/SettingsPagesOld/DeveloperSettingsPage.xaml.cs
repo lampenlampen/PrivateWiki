@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using JetBrains.Annotations;
 using PrivateWiki.Core;
 using PrivateWiki.Core.Events;
+using PrivateWiki.DataModels;
 using PrivateWiki.Services.TranslationService;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -65,10 +66,10 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 				});
 
 			LightThemeBtn.Events().Click
-				.Subscribe(_ => { _themeChangedObserver.Handle(new ThemeChangedEventArgs(AppTheme.Light)); });
+				.Subscribe(_ => { _themeChangedObserver.Handle(new ThemeChangedEventArgs(AppTheme.DefaultLightModeTheme)); });
 
 			DarkThemeBtn.Events().Click
-				.Subscribe(_ => { _themeChangedObserver.Handle(new ThemeChangedEventArgs(AppTheme.Dark)); });
+				.Subscribe(_ => { _themeChangedObserver.Handle(new ThemeChangedEventArgs(AppTheme.DefaultDarkModeTheme)); });
 		}
 
 		private void UpdateUiTest()

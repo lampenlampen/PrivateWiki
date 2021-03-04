@@ -7,6 +7,7 @@ using System.Reactive.Linq;
 using PrivateWiki.Core;
 using PrivateWiki.Core.ApplicationLanguage;
 using PrivateWiki.Core.Events;
+using PrivateWiki.DataModels;
 using PrivateWiki.Services.TranslationService;
 using ReactiveUI;
 
@@ -17,12 +18,11 @@ namespace PrivateWiki.ViewModels.Settings
 		private readonly IQueryHandler<GetSupportedCultures, SupportedCultures> _supportedCulturesQuery;
 		private readonly IQueryHandler<GetCurrentAppUICulture, CurrentAppUICulture> _currentAppUiCulture;
 		private readonly ICommandHandler<CultureChangedEventArgs> _cultureChangedCmd;
-		private readonly ICommandHandler<ThemeChangedEventArgs> _themeChangedEvent;
+		private readonly ICommandHandler<ThemeChangedEventArgs> _themeChangedCmd;
 
 		public ViewModelActivator Activator { get; }
 
 		private AppTheme _appTheme;
-
 
 		public AppTheme AppTheme
 		{
@@ -54,7 +54,7 @@ namespace PrivateWiki.ViewModels.Settings
 			_supportedCulturesQuery = supportedCulturesQuery;
 			_currentAppUiCulture = currentAppUiCulture;
 			_cultureChangedCmd = cultureChangedEvent;
-			_themeChangedEvent = themeChangedEvent;
+			_themeChangedCmd = themeChangedEvent;
 			Resources = new PersonalizationCtrlResources(resources);
 
 			Languages =
@@ -108,5 +108,20 @@ namespace PrivateWiki.ViewModels.Settings
 		}
 
 		public string Name => UICultureInfo.DisplayName;
+	}
+
+	public class AppThemeVm
+	{
+		private readonly TranslationResources _translationResources;
+
+		public AppTheme AppTheme { get; }
+
+		public AppThemeVm(AppTheme appTheme, TranslationResources translationResources)
+		{
+			_translationResources = translationResources;
+			AppTheme = appTheme;
+		}
+
+		public string DisplayName => AppTheme.ToString().ToLowerInvariant();
 	}
 }

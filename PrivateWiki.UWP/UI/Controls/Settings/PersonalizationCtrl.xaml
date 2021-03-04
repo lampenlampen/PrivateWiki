@@ -8,6 +8,7 @@
 	xmlns:controls="using:PrivateWiki.UWP.UI.Controls"
 	xmlns:dataModels="using:PrivateWiki.DataModels"
 	xmlns:settings="using:PrivateWiki.ViewModels.Settings"
+	xmlns:events="using:PrivateWiki.Core.Events"
 	mc:Ignorable="d"
 	d:DesignHeight="300"
 	d:DesignWidth="400">
@@ -40,9 +41,11 @@
 
 			<Grid>
 				<ComboBox x:Name="ThemeComboBox" Header="{x:Bind ViewModel.Resources.Theme, Mode=OneWay}">
-					<x:String>Light</x:String>
-					<x:String>Dark</x:String>
-					<x:String>System</x:String>
+					<ComboBox.ItemTemplate>
+						<DataTemplate x:DataType="settings:AppThemeVm">
+							<TextBlock Text="{x:Bind DisplayName}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
 				</ComboBox>
 			</Grid>
 			<TextBlock x:Name="Test" Margin="0, 16, 0, 0"/>
