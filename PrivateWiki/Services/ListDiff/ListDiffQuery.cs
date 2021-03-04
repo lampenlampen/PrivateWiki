@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Dawn;
+using Microsoft.Toolkit.Diagnostics;
 using PrivateWiki.Core;
 
 namespace PrivateWiki.Services.ListDiff
@@ -14,8 +14,8 @@ namespace PrivateWiki.Services.ListDiff
 
 		public ListDiffQuery(IEnumerable<T> list1, IEnumerable<T> list2, IEqualityComparer<T>? comparer = null)
 		{
-			Guard.Argument(list1, nameof(list1)).NotNull();
-			Guard.Argument(list2, nameof(list2)).NotNull();
+			Guard.IsNotNull(list1, nameof(list1));
+			Guard.IsNotNull(list2, nameof(list2));
 
 			List1 = list1;
 			List2 = list2;

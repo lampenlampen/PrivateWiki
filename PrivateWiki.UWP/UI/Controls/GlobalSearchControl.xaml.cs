@@ -8,7 +8,6 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Dawn;
 using NLog;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.UWP.Utilities.ExtensionFunctions;
@@ -19,9 +18,7 @@ using ReactiveUI;
 
 namespace PrivateWiki.UWP.UI.Controls
 {
-	public class GlobalSearchControlBase : ReactiveUserControl<GlobalSearchControlViewModel>
-	{
-	}
+	public class GlobalSearchControlBase : ReactiveUserControl<GlobalSearchControlViewModel> { }
 
 	public sealed partial class GlobalSearchControl : GlobalSearchControlBase
 	{
@@ -40,8 +37,6 @@ namespace PrivateWiki.UWP.UI.Controls
 			this.WhenActivated(disposable =>
 			{
 				Logger.Debug("Search activated");
-
-				Guard.Argument(ViewModel, nameof(ViewModel)).NotNull();
 
 				SearchBox.Events().TextChanged
 					.Where(x => x.args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)

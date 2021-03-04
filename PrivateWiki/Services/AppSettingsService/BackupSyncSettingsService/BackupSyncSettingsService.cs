@@ -1,17 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
-using Dawn;
 using DynamicData;
-using PrivateWiki.DataModels;
+using Microsoft.Toolkit.Diagnostics;
 using PrivateWiki.DataModels.Settings;
 using PrivateWiki.Services.KeyValueCaches;
 using PrivateWiki.Services.SerializationService;
-using ReactiveUI;
 
 namespace PrivateWiki.Services.AppSettingsService.BackupSyncSettingsService
 {
@@ -49,7 +44,7 @@ namespace PrivateWiki.Services.AppSettingsService.BackupSyncSettingsService
 
 		public async Task RemoveTargetAsync(IBackupSyncTarget target)
 		{
-			Guard.Argument(target, nameof(target)).NotNull();
+			Guard.IsNotNull(target, nameof(target));
 
 			_targets.Remove(target);
 

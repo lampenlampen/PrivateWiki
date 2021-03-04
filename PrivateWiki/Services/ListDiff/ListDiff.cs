@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Dawn;
+using Microsoft.Toolkit.Diagnostics;
 using PrivateWiki.Core;
 
 namespace PrivateWiki.Services.ListDiff
@@ -9,7 +9,7 @@ namespace PrivateWiki.Services.ListDiff
 	{
 		public ListDiffResult<T> Handle(ListDiffQuery<T> query)
 		{
-			Guard.Argument(query, nameof(query)).NotNull();
+			Guard.IsNotNull(query, nameof(query));
 
 			return DiffLists(query.List1.ToList(), query.List2.ToList(), query.EqualityComparer);
 		}
