@@ -1,10 +1,7 @@
-using System;
 using System.IO;
 using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NodaTime;
-using PrivateWiki.DataModels.Pages;
-using PrivateWiki.Services.StorageBackendService;
 using PrivateWiki.Services.StorageBackendService.SQLite;
 
 namespace StorageBackend.Test.SqLite
@@ -75,39 +72,6 @@ namespace StorageBackend.Test.SqLite
 			task.Wait();
 
 			Assert.IsFalse(task.Result);
-		}
-
-		[TestMethod]
-		public void InsertPageTest()
-		{
-			var page = new MarkdownPage(Guid.NewGuid(), "testlink", "test", clock.GetCurrentInstant(), clock.GetCurrentInstant(), false);
-			var task = sqliteBackend.InsertMarkdownPageAsync(page);
-			task.Wait();
-
-			var result = task.Result;
-		}
-
-		[TestMethod]
-		public void ContainsPageTest()
-		{
-			var page = new MarkdownPage(Guid.NewGuid(), "testlink5", "test", clock.GetCurrentInstant(), clock.GetCurrentInstant(), false);
-			var task = sqliteBackend.InsertMarkdownPageAsync(page);
-			task.Wait();
-
-			page.Content = "test2";
-
-			var task2 = sqliteBackend.UpdateMarkdownPage(page, PageAction.Edited);
-			task2.Wait();
-
-			page.Content = "test3";
-
-			var task3 = sqliteBackend.UpdateMarkdownPage(page, PageAction.Edited);
-			task3.Wait();
-
-			Assert.IsTrue(task2.Result);
-
-			var task4 = sqliteBackend.DeleteMarkdownPageAsync(page);
-			task4.Wait();
 		}
 	}
 }

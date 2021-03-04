@@ -19,8 +19,8 @@ namespace PrivateWiki.UWP.UI
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-		private IEnumerable<MarkdownPage> _pages;
-		private ObservableCollection<MarkdownPage> Pages = new ObservableCollection<MarkdownPage>();
+		private IEnumerable<GenericPage> _pages;
+		private ObservableCollection<GenericPage> Pages = new();
 
 		public string SelectedPageLink { get; private set; }
 
@@ -38,7 +38,7 @@ namespace PrivateWiki.UWP.UI
 		private async void Init()
 		{
 			var backend = new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance);
-			_pages = await backend.GetAllMarkdownPagesAsync();
+			_pages = await backend.GetAllPagesAsync();
 		}
 
 		private void FilterPages(string text)

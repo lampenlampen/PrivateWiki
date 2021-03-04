@@ -36,7 +36,7 @@ namespace PrivateWiki
 {
 	public class CompositionRoot
 	{
-		public void Init(Container container)
+		public static void Bootstrap(Container container)
 		{
 			container.Register<IClock>(() => SystemClock.Instance, Lifestyle.Singleton);
 			container.Register<IPageBackendService, PageBackendService>(Lifestyle.Singleton);
@@ -102,6 +102,12 @@ namespace PrivateWiki
 			container.RegisterSingleton<ICommandHandler<CultureChangedEventArgs>, CultureChangedEvent>();
 			container.RegisterSingleton<IObservable<ThemeChangedEventArgs>, ThemeChangedEvent>();
 			container.RegisterSingleton<ICommandHandler<ThemeChangedEventArgs>, ThemeChangedEvent>();
+		}
+
+		[Obsolete]
+		public void Init(Container container)
+		{
+			Bootstrap(container);
 		}
 	}
 }

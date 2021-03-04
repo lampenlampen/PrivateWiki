@@ -6,7 +6,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using NodaTime;
 using PrivateWiki.DataModels.Pages;
-using PrivateWiki.Services.StorageBackendService;
 using PrivateWiki.Services.StorageBackendService.SQLite;
 using Page = PrivateWiki.DataModels.Pages.Page;
 
@@ -18,7 +17,7 @@ namespace PrivateWiki.UWP.UI.Controls
 {
 	public sealed partial class NavigationSettingsLinkItemControl : UserControl
 	{
-		public ObservableCollection<MarkdownPage> Pages { get; private set; }
+		public ObservableCollection<GenericPage> Pages { get; private set; }
 
 		public string Label => Text.Text;
 
@@ -40,11 +39,11 @@ namespace PrivateWiki.UWP.UI.Controls
 			}
 		}
 
-		private async void LoadPages(IMarkdownPageStorage storage)
+		private async void LoadPages(SqLiteBackend storage)
 		{
-			var pages = await storage.GetAllMarkdownPagesAsync();
+			var pages = await storage.GetAllPagesAsync();
 
-			Pages = new ObservableCollection<MarkdownPage>(pages);
+			Pages = new ObservableCollection<GenericPage>(pages);
 		}
 
 		public event TextChangedEventHandler LabelChanged;

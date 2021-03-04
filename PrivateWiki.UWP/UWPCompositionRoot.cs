@@ -8,9 +8,9 @@ using ApplicationLauncherService = PrivateWiki.UWP.Services.ApplicationLauncherS
 
 namespace PrivateWiki.UWP
 {
-	public class UWPCompositionRoot
+	public static class UwpCompositionRoot
 	{
-		public void Init(Container container)
+		public static void Bootstrap(Container container)
 		{
 			Guard.IsNotNull(container, nameof(container));
 

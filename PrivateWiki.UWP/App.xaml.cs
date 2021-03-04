@@ -12,6 +12,7 @@ using PrivateWiki.UWP.UI.Pages;
 using RavinduL.LocalNotifications;
 using ReactiveUI;
 using Sentry;
+using SimpleInjector;
 
 namespace PrivateWiki.UWP
 {
@@ -47,8 +48,10 @@ namespace PrivateWiki.UWP
 			SentrySdk.Init("https://538de75fb6dc4fd6819753186e6b3ecf@o528820.ingest.sentry.io/5646411");
 			// App code
 
-			var uwpCompRoot = new UWPCompositionRoot();
-			uwpCompRoot.Init(Application.Container);
+			var container = new Container();
+			CompositionRoot.CompositionRoot.Bootstrap(container);
+			UwpCompositionRoot.Bootstrap(container);
+			Application.Container = container;
 
 			Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 			NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;

@@ -596,14 +596,18 @@
 	  </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj">
-      <Project>{e2799e21-da92-4fa1-8df2-0c08006fffaa}</Project>
-      <Name>PrivateWiki</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RuntimeComponent\RuntimeComponent.csproj">
-      <Project>{a58a6b6d-679f-42e3-b415-eb310c14907a}</Project>
-      <Name>RuntimeComponent</Name>
-    </ProjectReference>
+	  <ProjectReference Include="..\PrivateWiki.UWP.CompositionRoot\PrivateWiki.UWP.CompositionRoot.csproj">
+		  <Project>{25ac590b-d986-4f78-99c7-0d2e49f02523}</Project>
+		  <Name>PrivateWiki.UWP.CompositionRoot</Name>
+	  </ProjectReference>
+	  <ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj">
+		  <Project>{e2799e21-da92-4fa1-8df2-0c08006fffaa}</Project>
+		  <Name>PrivateWiki</Name>
+	  </ProjectReference>
+	  <ProjectReference Include="..\RuntimeComponent\RuntimeComponent.csproj">
+		  <Project>{a58a6b6d-679f-42e3-b415-eb310c14907a}</Project>
+		  <Name>RuntimeComponent</Name>
+	  </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="WindowsDesktop, Version=10.0.19041.0">
@@ -611,7 +615,7 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Settings"/>
+	  <Folder Include="Settings"/>
     <Folder Include="UI\Pages\ContentPages\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

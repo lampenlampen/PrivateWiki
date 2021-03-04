@@ -26,10 +26,10 @@ namespace PrivateWiki.UWP.UI.Pages
 	{
 		private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-		private MarkdownPage Page;
+		private GenericPage Page;
 		private readonly string TMP_FILE_FUTURE_ACCESS_LIST = "tmp_file_future_access_list";
 
-		private IMarkdownPageStorage _storage;
+		private SqLiteBackend _storage;
 
 		public ExternalEditor()
 		{
@@ -44,7 +44,7 @@ namespace PrivateWiki.UWP.UI.Pages
 
 			var path = (string) e.Parameter;
 
-			Page = await _storage.GetMarkdownPageAsync(path);
+			Page = await _storage.GetPageAsync(path);
 
 			LaunchExternalEditor();
 		}
@@ -103,7 +103,7 @@ namespace PrivateWiki.UWP.UI.Pages
 
 				Page.Content = content;
 
-				_storage.UpdateMarkdownPage(Page, PageAction.Edited);
+				await _storage.UpdatePage(Page, PageAction.Edited);
 
 				file.DeleteAsync();
 			}
@@ -131,8 +131,6 @@ namespace PrivateWiki.UWP.UI.Pages
 			Frame.Navigate(typeof(ImportDiffPage), Tuple.Create(diff, Page.Id));
 		}
 
-		private void ShowDiffView()
-		{
-		}
+		private void ShowDiffView() { }
 	}
 }

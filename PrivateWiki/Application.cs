@@ -16,7 +16,7 @@ namespace PrivateWiki
 
 		public IGlobalNotificationManager GlobalNotificationManager { get; set; }
 
-		public Container Container { get; }
+		public Container Container { get; set; }
 
 		private Application()
 		{
