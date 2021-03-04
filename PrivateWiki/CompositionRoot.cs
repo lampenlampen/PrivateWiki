@@ -4,6 +4,7 @@ using System.Data.Common;
 using NodaTime;
 using PrivateWiki.Core;
 using PrivateWiki.Core.ApplicationLanguage;
+using PrivateWiki.Core.DebugMode;
 using PrivateWiki.Core.Events;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.ApplicationLauncherService;
@@ -14,7 +15,6 @@ using PrivateWiki.Services.AppSettingsService.FeatureFlagsService;
 using PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService;
 using PrivateWiki.Services.Backends;
 using PrivateWiki.Services.Backends.Sqlite;
-using PrivateWiki.Services.DebugModeService;
 using PrivateWiki.Services.DefaultPagesService;
 using PrivateWiki.Services.FileExplorerService;
 using PrivateWiki.Services.KeyValueCaches;
@@ -41,7 +41,6 @@ namespace PrivateWiki
 			container.Register<IClock>(() => SystemClock.Instance, Lifestyle.Singleton);
 			container.Register<IPageBackendService, PageBackendService>(Lifestyle.Singleton);
 			container.Register<IPageStorageBackendServiceImpl>(() => new SqLiteBackend(DefaultStorageBackends.GetSqliteStorage(), SystemClock.Instance), Lifestyle.Singleton);
-			container.Register<IDebugModeService, DebugModeService>(Lifestyle.Singleton);
 			container.Register<IApplicationLauncherService, ApplicationLauncherService>(Lifestyle.Singleton);
 			container.Register<IDefaultPagesService, DefaultPagesService>(Lifestyle.Transient);
 			container.Register<IAssetsService, AssetsService>(Lifestyle.Singleton);
@@ -83,6 +82,7 @@ namespace PrivateWiki
 			container.RegisterSingleton<IQueryHandler<ListDiffQuery<LabelId>, ListDiffResult<LabelId>>, ListDiff<LabelId>>();
 			container.RegisterSingleton<IQueryHandler<GetSupportedCultures, SupportedCultures>, SupportedCulturesQueryHandler>();
 			container.RegisterSingleton<IQueryHandler<GetCurrentAppUICulture, CurrentAppUICulture>, CurrentAppUICultureQueryHandler>();
+			container.RegisterSingleton<IQueryHandler<GetDebugMode, DebugMode>, DebugModeQueryHandler>();
 
 			// Bug see https://github.com/reactiveui/splat/issues/597
 			/*
