@@ -8,4 +8,10 @@
 		<ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj"/>
 	</ItemGroup>
 
+	<ItemGroup>
+		<PackageReference Include="NLog">
+			<Version>4.7.0</Version>
+		</PackageReference>
+	</ItemGroup>
+
 </Project>
