@@ -1,5 +1,4 @@
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using PrivateWiki.ViewModels.Settings;
 using ReactiveUI;
 
@@ -18,17 +17,16 @@ namespace PrivateWiki.UWP.UI.Controls.Settings
 			this.WhenActivated(disposable =>
 			{
 				LanguageComboBox.ItemsSource = ViewModel.Languages;
+				ThemeComboBox.ItemsSource = ViewModel.AppThemes;
 
 				this.Bind(ViewModel,
 						vm => vm.CurrentAppLangVm,
 						view => view.LanguageComboBox.SelectedItem)
 					.DisposeWith(disposable);
 
-				// Testing
-				this.WhenAnyValue(x => x.ViewModel.CurrentAppLangVm)
-					.WhereNotNull()
-					.Select(x => x.Name)
-					.BindTo(Test, x => x.Text)
+				this.Bind(ViewModel,
+						vm => vm.SelectedAppTheme,
+						view => view.ThemeComboBox.SelectedItem)
 					.DisposeWith(disposable);
 			});
 		}

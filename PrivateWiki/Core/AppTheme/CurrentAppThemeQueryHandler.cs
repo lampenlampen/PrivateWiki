@@ -1,10 +1,9 @@
 namespace PrivateWiki.Core.AppTheme
 {
-	public class CurrentAppThemeQueryHandler : IQueryHandler<GetCurrentAppTheme, CurrentAppTheme>
+	public class CurrentAppThemeQueryHandler : IQueryHandler<GetCurrentAppTheme, DataModels.AppTheme>
 	{
-		public CurrentAppTheme Handle(GetCurrentAppTheme query)
-		{
-			throw new System.NotImplementedException();
-		}
+		private readonly DataModels.AppTheme _defaultAppTheme = DataModels.AppTheme.DefaultLightModeTheme;
+
+		public DataModels.AppTheme Handle(GetCurrentAppTheme query) => _defaultAppTheme;
 	}
 }

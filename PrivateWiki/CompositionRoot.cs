@@ -4,9 +4,11 @@ using System.Data.Common;
 using NodaTime;
 using PrivateWiki.Core;
 using PrivateWiki.Core.ApplicationLanguage;
+using PrivateWiki.Core.AppTheme;
 using PrivateWiki.Core.DebugMode;
 using PrivateWiki.Core.Events;
 using PrivateWiki.Core.Logging;
+using PrivateWiki.DataModels;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.AppSettingsService;
@@ -86,6 +88,9 @@ namespace PrivateWiki
 			container.RegisterSingleton<IQueryHandler<GetSupportedCultures, SupportedCultures>, SupportedCulturesQueryHandler>();
 			container.RegisterSingleton<IQueryHandler<GetCurrentAppUICulture, CurrentAppUICulture>, CurrentAppUICultureQueryHandler>();
 			container.RegisterSingleton<IQueryHandler<GetDebugMode, DebugMode>, DebugModeQueryHandler>();
+			container.RegisterSingleton<IQueryHandler<GetCurrentAppTheme, AppTheme>, CurrentAppThemeQueryHandler>();
+			container.RegisterSingleton<IQueryHandler<GetAppThemes, AppThemes>, AppThemesQueryHandler>();
+
 
 			// Commands
 			container.RegisterSingleton<ICommandHandler<LogEntry>, LogCmdHandler>();

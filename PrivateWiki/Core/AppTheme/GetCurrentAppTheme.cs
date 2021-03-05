@@ -1,4 +1,4 @@
 namespace PrivateWiki.Core.AppTheme
 {
-	public class GetCurrentAppTheme : IQuery<CurrentAppTheme> { }
+	public class GetCurrentAppTheme : IQuery<DataModels.AppTheme> { }
 }
