@@ -11,7 +11,7 @@ namespace PrivateWiki.Services.KeyValueCaches
 {
 	public class InMemoryCache : IInMemoryKeyValueCache
 	{
-		private static Logger Logger = LogManager.GetCurrentClassLogger();
+		private static NLog.Logger Logger = LogManager.GetCurrentClassLogger();
 
 		private Dictionary<string, byte[]> _dict;
 

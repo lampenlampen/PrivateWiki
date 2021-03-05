@@ -8,7 +8,7 @@ namespace PrivateWiki.Services.TranslationService
 {
 	public class InCodeTranslationResources : TranslationResources
 	{
-		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+		private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
 
 		private readonly Dictionary<CultureInfo, Dictionary<string, string>> _resources = new();
 

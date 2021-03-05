@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using PrivateWiki.Services.AppSettingsService;
 using PrivateWiki.Services.GlobalNotificationService;
@@ -12,7 +13,7 @@ namespace PrivateWiki
 	{
 		public static readonly Application Instance = new Application();
 
-		public IAppSettingsService AppSettings { get; }
+		[Obsolete] public IAppSettingsService AppSettings { get; }
 
 		public IGlobalNotificationManager GlobalNotificationManager { get; set; }
 

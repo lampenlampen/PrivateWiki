@@ -69,4 +69,8 @@
         </EmbeddedResource>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="Services\DebugModeService"/>
+    </ItemGroup>
+
 </Project>

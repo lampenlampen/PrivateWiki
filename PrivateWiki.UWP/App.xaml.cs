@@ -52,6 +52,7 @@ namespace PrivateWiki.UWP
 			CompositionRoot.CompositionRoot.Bootstrap(container);
 			UwpCompositionRoot.Bootstrap(container);
 			Application.Container = container;
+			Application.AppSettings.Container = container;
 
 			Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 			NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;

@@ -1,21 +1,23 @@
+using System;
 using PrivateWiki.Services.AppSettingsService.FeatureFlagsService;
 using PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService;
 using SimpleInjector;
 
 namespace PrivateWiki.Services.AppSettingsService
 {
+	[Obsolete]
 	public class AppSettings : IAppSettingsService
 	{
-		private readonly Container _container;
-		
-		public IRenderingMarkdownSettingsService RenderingMarkdownSettings => _container.GetInstance<IRenderingMarkdownSettingsService>();
+		public Container Container { get; set; }
 
-		public IFeatureFlagsService FeatureFlags => _container.GetInstance<IFeatureFlagsService>();
+		public IRenderingMarkdownSettingsService RenderingMarkdownSettings => Container.GetInstance<IRenderingMarkdownSettingsService>();
+
+		public IFeatureFlagsService FeatureFlags => Container.GetInstance<IFeatureFlagsService>();
 
 
 		public AppSettings(Container container)
 		{
-			_container = container;
+			Container = container;
 		}
 	}
 }

@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Subjects;
+using PrivateWiki.Core;
+using PrivateWiki.Core.DebugMode;
 using PrivateWiki.Core.Events;
-using PrivateWiki.Services.DebugModeService;
 using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.TranslationService;
 using ReactiveUI;
@@ -12,7 +13,7 @@ namespace PrivateWiki.ViewModels
 {
 	public class PageViewerCommandBarViewModel : ReactiveObject
 	{
-		private readonly IDebugModeService _debugModeService;
+		private readonly IQueryHandler<GetDebugMode, DebugMode> _debugModeQueryHandler;
 
 		private readonly IMostRecentlyVisitedPagesService _mostRecentlyVisitedPagesService;
 
@@ -22,7 +23,7 @@ namespace PrivateWiki.ViewModels
 
 		public IEnumerable<MostRecentlyViewedPagesItem> MostRecentlyViewedPages => _mostRecentlyVisitedPagesService.ToList();
 
-		public bool DevOptsEnabled => _debugModeService.RunningInDebugMode();
+		public bool DevOptsEnabled => _debugModeQueryHandler.Handle(new GetDebugMode()).DebugModeEnabled;
 
 		public ReactiveCommand<Unit, Unit> DevOptionsClick { get; }
 
@@ -34,14 +35,12 @@ namespace PrivateWiki.ViewModels
 		private readonly ISubject<Unit> _onNewPage;
 		public IObservable<Unit> OnNewPage => _onNewPage;
 
-		public PageViewerCommandBarViewModel(TranslationResources translationResources, IObservable<CultureChangedEventArgs> cultureChangedEvent)
+		public PageViewerCommandBarViewModel(TranslationResources translationResources, IObservable<CultureChangedEventArgs> cultureChangedEvent,
+			IQueryHandler<GetDebugMode, DebugMode> debugModeQueryHandler, IMostRecentlyVisitedPagesService mostRecentlyVisitedPagesService)
 		{
 			_cultureChangedEvent = cultureChangedEvent;
-
-			var container = Application.Instance.Container;
-
-			_debugModeService = container.GetInstance<IDebugModeService>();
-			_mostRecentlyVisitedPagesService = container.GetInstance<IMostRecentlyVisitedPagesService>();
+			_debugModeQueryHandler = debugModeQueryHandler;
+			_mostRecentlyVisitedPagesService = mostRecentlyVisitedPagesService;
 
 			DevOptionsClick = ReactiveCommand.Create<Unit>(x => _onDevOptionsClick.OnNext(x));
 			NewPageClick = ReactiveCommand.Create<Unit>(x => _onNewPage.OnNext(x));
