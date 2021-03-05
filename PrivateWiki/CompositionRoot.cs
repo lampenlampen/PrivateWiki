@@ -6,6 +6,7 @@ using PrivateWiki.Core;
 using PrivateWiki.Core.ApplicationLanguage;
 using PrivateWiki.Core.DebugMode;
 using PrivateWiki.Core.Events;
+using PrivateWiki.Core.Logging;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.AppSettingsService;
@@ -16,10 +17,12 @@ using PrivateWiki.Services.AppSettingsService.MarkdownRenderingSettingsService;
 using PrivateWiki.Services.Backends;
 using PrivateWiki.Services.Backends.Sqlite;
 using PrivateWiki.Services.DefaultPagesService;
+using PrivateWiki.Services.ExceptionHandler;
 using PrivateWiki.Services.FileExplorerService;
 using PrivateWiki.Services.KeyValueCaches;
 using PrivateWiki.Services.LFSBackupService;
 using PrivateWiki.Services.ListDiff;
+using PrivateWiki.Services.Logger;
 using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.PackageService;
 using PrivateWiki.Services.StartupTask;
@@ -74,15 +77,18 @@ namespace PrivateWiki
 
 			// Startup Tasks
 			container.RegisterSingleton<IStartupTask, CompositeStartupTask>();
-			container.Collection.Register<IStartupTask>(new[] {typeof(InsertDefaultPagesStartupTask), typeof(FluentResultLoggerStartupTask)}, Lifestyle.Singleton);
+			container.Collection.Register<IStartupTask>(new[] {typeof(InsertDefaultPagesStartupTask), typeof(RegisterRxExceptionHandler)}, Lifestyle.Singleton);
 
-			container.RegisterSingleton<TranslationResources, InCodeTranslationResources>();
+			container.RegisterSingleton<TranslationManager, InCodeTranslationManager>();
 
 			// Queries
 			container.RegisterSingleton<IQueryHandler<ListDiffQuery<LabelId>, ListDiffResult<LabelId>>, ListDiff<LabelId>>();
 			container.RegisterSingleton<IQueryHandler<GetSupportedCultures, SupportedCultures>, SupportedCulturesQueryHandler>();
 			container.RegisterSingleton<IQueryHandler<GetCurrentAppUICulture, CurrentAppUICulture>, CurrentAppUICultureQueryHandler>();
 			container.RegisterSingleton<IQueryHandler<GetDebugMode, DebugMode>, DebugModeQueryHandler>();
+
+			// Commands
+			container.RegisterSingleton<ICommandHandler<LogEntry>, LogCmdHandler>();
 
 			// Bug see https://github.com/reactiveui/splat/issues/597
 			/*

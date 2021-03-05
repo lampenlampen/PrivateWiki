@@ -1,18 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using NLog;
 using PrivateWiki.ViewModels;
 
@@ -26,7 +13,7 @@ namespace PrivateWiki.UWP.UI.Pages
 	public sealed partial class CreateNewLabelPage : Page
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-		
+
 		public CreateNewLabelPage()
 		{
 			this.InitializeComponent();

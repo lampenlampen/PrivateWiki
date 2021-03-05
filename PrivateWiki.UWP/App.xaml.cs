@@ -10,8 +10,6 @@ using NLog;
 using PrivateWiki.UWP.UI;
 using PrivateWiki.UWP.UI.Pages;
 using RavinduL.LocalNotifications;
-using ReactiveUI;
-using Sentry;
 using SimpleInjector;
 
 namespace PrivateWiki.UWP
@@ -45,9 +43,6 @@ namespace PrivateWiki.UWP
 			InitializeComponent();
 			Suspending += OnSuspending;
 
-			SentrySdk.Init("https://538de75fb6dc4fd6819753186e6b3ecf@o528820.ingest.sentry.io/5646411");
-			// App code
-
 			var container = new Container();
 			CompositionRoot.CompositionRoot.Bootstrap(container);
 			UwpCompositionRoot.Bootstrap(container);
@@ -66,20 +61,7 @@ namespace PrivateWiki.UWP
 			{
 				Logger.Error(args.Exception);
 				Logger.Error(args.Message);
-
-				using (SentrySdk.PushScope())
-				{
-					SentrySdk.ConfigureScope(s => s.SetTag("UnhandledException", "true"));
-					SentrySdk.CaptureException(args.Exception);
-					if (!args.Handled) // Not handled yet
-					{
-						// App might crash so make sure we flush this event.
-						SentrySdk.FlushAsync(TimeSpan.FromSeconds(2)).Wait();
-					}
-				}
 			};
-
-			RxApp.DefaultExceptionHandler = new RxExceptionHandler();
 		}
 
 		/// <summary>
@@ -87,11 +69,11 @@ namespace PrivateWiki.UWP
 		///     werden z. B. verwendet, wenn die Anwendung gestartet wird, um eine bestimmte Datei zu öffnen.
 		/// </summary>
 		/// <param name="e">Details über Startanforderung und -prozess.</param>
-		protected override async void OnLaunched(LaunchActivatedEventArgs e)
+		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
 			Logger.Info("App Launched");
 
-			await Application.Initialize();
+			Application.Initialize();
 
 			Grid? rootGrid = Window.Current.Content as Grid;
 			Frame rootFrame = rootGrid?.Children.Where((c) => c is Frame).Cast<Frame>().FirstOrDefault();
@@ -124,11 +106,11 @@ namespace PrivateWiki.UWP
 			}
 		}
 
-		protected override async void OnActivated(IActivatedEventArgs args)
+		protected override void OnActivated(IActivatedEventArgs args)
 		{
 			Logger.Info("App Activated");
 
-			await Application.Initialize();
+			Application.Initialize();
 
 			// Window management
 			if (!(Window.Current.Content is Frame rootFrame))

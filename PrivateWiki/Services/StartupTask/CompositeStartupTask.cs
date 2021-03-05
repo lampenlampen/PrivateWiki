@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using PrivateWiki.Core;
 
 namespace PrivateWiki.Services.StartupTask
 {
@@ -13,13 +12,12 @@ namespace PrivateWiki.Services.StartupTask
 			_tasks = tasks;
 		}
 
-		public async Task<bool> Execute()
+		public void Handle(Null _)
 		{
-			var tasks = _tasks.Select(task => task.Execute()).ToList();
-
-			await Task.WhenAll(tasks);
-
-			return true;
+			foreach (var startupTask in _tasks)
+			{
+				startupTask.Handle(_);
+			}
 		}
 	}
 }

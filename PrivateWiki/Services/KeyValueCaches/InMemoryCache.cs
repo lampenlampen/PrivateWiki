@@ -4,15 +4,12 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using FluentResults;
-using NLog;
 using PrivateWiki.Services.SerializationService;
 
 namespace PrivateWiki.Services.KeyValueCaches
 {
 	public class InMemoryCache : IInMemoryKeyValueCache
 	{
-		private static NLog.Logger Logger = LogManager.GetCurrentClassLogger();
-
 		private Dictionary<string, byte[]> _dict;
 
 		public InMemoryCache()

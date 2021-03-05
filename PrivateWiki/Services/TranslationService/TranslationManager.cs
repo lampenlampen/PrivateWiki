@@ -1,6 +1,6 @@
 namespace PrivateWiki.Services.TranslationService
 {
-	public abstract class TranslationResources
+	public abstract class TranslationManager
 	{
 		public string TestTranslationString => GetStringResource("test");
 

@@ -1,6 +1,8 @@
 using System.Globalization;
 using System.Threading;
 using FluentAssertions;
+using PrivateWiki.Core.Logging;
+using PrivateWiki.Services.Logger;
 using PrivateWiki.Services.TranslationService;
 using Xunit;
 
@@ -11,9 +13,9 @@ namespace PrivateWiki.Test.Services.TranslationService
 		[Fact]
 		public void Test()
 		{
-			TranslationResources resources = new InCodeTranslationResources();
+			TranslationManager manager = new InCodeTranslationManager(new LogCmdHandler(new NullLogger()));
 
-			var actual = resources.TestTranslationString;
+			var actual = manager.TestTranslationString;
 
 			actual.Should().BeSameAs("German Lorem Ipsum");
 		}
@@ -21,9 +23,9 @@ namespace PrivateWiki.Test.Services.TranslationService
 		[Fact]
 		public void Test2()
 		{
-			TranslationResources resources = new InCodeTranslationResources();
+			TranslationManager manager = new InCodeTranslationManager(new LogCmdHandler(new NullLogger()));
 
-			var actual = resources.GetStringResource("test");
+			var actual = manager.GetStringResource("test");
 
 			actual.Should().BeSameAs("German Lorem Ipsum");
 		}
@@ -33,9 +35,9 @@ namespace PrivateWiki.Test.Services.TranslationService
 		{
 			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
-			TranslationResources resources = new InCodeTranslationResources();
+			TranslationManager manager = new InCodeTranslationManager(new LogCmdHandler(new NullLogger()));
 
-			var actual = resources.GetStringResource("test");
+			var actual = manager.GetStringResource("test");
 
 			actual.Should().BeSameAs("Lorem Ipsum");
 		}

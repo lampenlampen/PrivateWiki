@@ -7,12 +7,7 @@ namespace PrivateWiki.Dependencies.Components.NLog
 {
 	public class NLogAdapter : ILogger
 	{
-		private readonly Logger _logger;
-
-		public NLogAdapter(Logger logger)
-		{
-			_logger = logger;
-		}
+		private readonly Logger _logger = LogManager.GetLogger("PrivateWiki");
 
 		public void Log(LogEntry entry)
 		{

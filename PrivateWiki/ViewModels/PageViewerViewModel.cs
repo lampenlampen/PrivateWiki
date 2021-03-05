@@ -7,7 +7,6 @@ using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using DynamicData;
 using DynamicData.Binding;
-using NLog;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.Backends;
 using PrivateWiki.Services.MostRecentlyVisitedPageService;
@@ -20,12 +19,10 @@ namespace PrivateWiki.ViewModels
 {
 	public class PageViewerViewModel : ReactiveObject
 	{
-		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
 		private readonly IMostRecentlyVisitedPagesService _mostRecentlyVisitedPagesService;
 		private readonly IPageLabelsBackend _pageLabelsBackend;
 		private readonly ILabelBackend _labelBackend;
-		private readonly TranslationResources _translation;
+		private readonly TranslationManager _translation;
 
 		private readonly IPageBackendService _backend;
 
@@ -126,7 +123,7 @@ namespace PrivateWiki.ViewModels
 			_pageLabelsBackend = container.GetInstance<IPageLabelsBackend>();
 			_labelBackend = container.GetInstance<ILabelBackend>();
 			_mostRecentlyVisitedPagesService = container.GetInstance<IMostRecentlyVisitedPagesService>();
-			_translation = container.GetInstance<TranslationResources>();
+			_translation = container.GetInstance<TranslationManager>();
 			CommandBarViewModel = container.GetInstance<PageViewerCommandBarViewModel>();
 			SearchControlViewModel = new GlobalSearchControlViewModel();
 			AddLabelsToPageControlVM = container.GetInstance<AddLabelsToPageControlViewModel>();
@@ -221,10 +218,6 @@ namespace PrivateWiki.ViewModels
 
 		private Task ShowHistoryAsync(Path link)
 		{
-			Logger.Info("Show History");
-			Logger.ConditionalDebug($"Show History of {link.FullPath}");
-
-			//App.Current.Manager.ShowNotImplementedNotification();
 			_onShowHistoryPage.OnNext(link);
 
 			return Task.CompletedTask;
@@ -235,14 +228,9 @@ namespace PrivateWiki.ViewModels
 			if (Page.IsLocked)
 			{
 				await _showPageLockedNotification.Handle(link);
-
-				Logger.Info("Page is locked and cannot be edited!");
-				Logger.ConditionalDebug($"Page ({link.FullPath}) is locked!");
 			}
 			else
 			{
-				Logger.Info("Page edit.");
-				Logger.ConditionalDebug($"Page ({link.FullPath}) edit.");
 				_onEditPage.OnNext(link);
 			}
 		}
@@ -272,8 +260,6 @@ namespace PrivateWiki.ViewModels
 
 		private async Task PrintPdfAsync(Path link)
 		{
-			Logger.Info("Print PDF");
-
 			var confirmation = await _showPrintBrowserDialog.Handle(link);
 
 			if (confirmation)
@@ -339,7 +325,7 @@ namespace PrivateWiki.ViewModels
 
 		public class Translation
 		{
-			private readonly TranslationResources _translation;
+			private readonly TranslationManager _translation;
 
 			public Translation(PageViewerViewModel parent)
 			{

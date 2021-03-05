@@ -1,16 +1,19 @@
-using NLog;
 using PrivateWiki.Dependencies.Components.NLog;
+using PrivateWiki.Dependencies.FluentResult;
+using PrivateWiki.Dependencies.Sentry;
+using PrivateWiki.Services.Logger;
+using PrivateWiki.Services.StartupTask;
 using SimpleInjector;
-using ILogger = PrivateWiki.Services.Logger.ILogger;
 
 namespace PrivateWiki.Dependencies
 {
-	public class CompositionRoot
+	public static class CompositionRoot
 	{
 		public static void Bootstrap(Container container)
 		{
 			container.RegisterSingleton<ILogger, NLogAdapter>();
-			container.RegisterSingleton<Logger>();
+			container.Collection.Append<IStartupTask, FluentResultLoggerStartupTask>(Lifestyle.Singleton);
+			container.Collection.Append<IStartupTask, RegisterSentryCmdHandler>();
 		}
 	}
 }

@@ -1,17 +1,13 @@
 ﻿using Markdig.Helpers;
 using Markdig.Parsers;
 using Markdig.Syntax.Inlines;
-using NLog;
 
 namespace PrivateWiki.Rendering.Markdown.Markdig.Extensions.WikiLinkExtension
 {
 	public class WikiLinkParser : InlineParser
 	{
-		private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-
 		public WikiLinkParser()
 		{
-			Logger.Debug("WikiLinkParser");
 			OpeningCharacters = new[]
 			{
 				'['

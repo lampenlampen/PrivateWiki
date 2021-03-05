@@ -35,7 +35,7 @@ namespace PrivateWiki.ViewModels
 		private readonly ISubject<Unit> _onNewPage;
 		public IObservable<Unit> OnNewPage => _onNewPage;
 
-		public PageViewerCommandBarViewModel(TranslationResources translationResources, IObservable<CultureChangedEventArgs> cultureChangedEvent,
+		public PageViewerCommandBarViewModel(TranslationManager translationManager, IObservable<CultureChangedEventArgs> cultureChangedEvent,
 			IQueryHandler<GetDebugMode, DebugMode> debugModeQueryHandler, IMostRecentlyVisitedPagesService mostRecentlyVisitedPagesService)
 		{
 			_cultureChangedEvent = cultureChangedEvent;
@@ -48,7 +48,7 @@ namespace PrivateWiki.ViewModels
 			_onDevOptionsClick = new Subject<Unit>();
 			_onNewPage = new Subject<Unit>();
 
-			_resources = new PageViewerCommandBarResources(translationResources);
+			_resources = new PageViewerCommandBarResources(translationManager);
 
 			_cultureChangedEvent.Subscribe(x => { this.RaisePropertyChanged(nameof(_resources)); });
 		}
@@ -56,11 +56,11 @@ namespace PrivateWiki.ViewModels
 
 	public class PageViewerCommandBarResources
 	{
-		private readonly TranslationResources _translation;
+		private readonly TranslationManager _translation;
 
-		public PageViewerCommandBarResources(TranslationResources resources)
+		public PageViewerCommandBarResources(TranslationManager manager)
 		{
-			_translation = resources;
+			_translation = manager;
 		}
 
 		public string ToTop => _translation.GetStringResource("toTop");

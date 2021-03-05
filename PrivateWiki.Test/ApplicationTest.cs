@@ -9,7 +9,7 @@ namespace PrivateWiki.Test
 		public async void Test()
 		{
 			var application = Application.Instance;
-			await application.Initialize();
+			application.Initialize();
 
 			var clock = application.Container.GetInstance<IClock>();
 		}

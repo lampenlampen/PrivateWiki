@@ -43,7 +43,7 @@ namespace PrivateWiki.ViewModels.Settings
 		public PersonalizationCtrlResources Resources { get; }
 
 		public PersonalizationCtrlVM(
-			TranslationResources resources,
+			TranslationManager manager,
 			IQueryHandler<GetSupportedCultures, SupportedCultures> supportedCulturesQuery,
 			IQueryHandler<GetCurrentAppUICulture, CurrentAppUICulture> currentAppUiCulture,
 			ICommandHandler<CultureChangedEventArgs> cultureChangedEvent,
@@ -55,7 +55,7 @@ namespace PrivateWiki.ViewModels.Settings
 			_currentAppUiCulture = currentAppUiCulture;
 			_cultureChangedCmd = cultureChangedEvent;
 			_themeChangedCmd = themeChangedEvent;
-			Resources = new PersonalizationCtrlResources(resources);
+			Resources = new PersonalizationCtrlResources(manager);
 
 			Languages =
 				new ReadOnlyCollection<AppLangVm>(
@@ -85,17 +85,17 @@ namespace PrivateWiki.ViewModels.Settings
 
 	public class PersonalizationCtrlResources
 	{
-		private readonly TranslationResources _resources;
+		private readonly TranslationManager _manager;
 
-		public PersonalizationCtrlResources(TranslationResources resources)
+		public PersonalizationCtrlResources(TranslationManager manager)
 		{
-			_resources = resources;
+			_manager = manager;
 		}
 
-		public string Personalization => _resources.GetStringResource("personalization");
-		public string PersonalizationSubHeader => _resources.GetStringResource("personalization_subheader");
-		public string Language => _resources.GetStringResource("language");
-		public string Theme => _resources.GetStringResource("theme");
+		public string Personalization => _manager.GetStringResource("personalization");
+		public string PersonalizationSubHeader => _manager.GetStringResource("personalization_subheader");
+		public string Language => _manager.GetStringResource("language");
+		public string Theme => _manager.GetStringResource("theme");
 	}
 
 	public class AppLangVm
@@ -112,13 +112,13 @@ namespace PrivateWiki.ViewModels.Settings
 
 	public class AppThemeVm
 	{
-		private readonly TranslationResources _translationResources;
+		private readonly TranslationManager _translationManager;
 
 		public AppTheme AppTheme { get; }
 
-		public AppThemeVm(AppTheme appTheme, TranslationResources translationResources)
+		public AppThemeVm(AppTheme appTheme, TranslationManager translationManager)
 		{
-			_translationResources = translationResources;
+			_translationManager = translationManager;
 			AppTheme = appTheme;
 		}
 

@@ -1,9 +1,6 @@
-using System.Threading.Tasks;
+using PrivateWiki.Core;
 
 namespace PrivateWiki.Services.StartupTask
 {
-	public interface IStartupTask
-	{
-		public Task<bool> Execute();
-	}
+	public interface IStartupTask : ICommandHandler<Null> { }
 }

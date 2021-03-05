@@ -7,7 +7,6 @@ using JetBrains.Annotations;
 using NodaTime;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.RenderingService;
-using PrivateWiki.Services.StorageBackendService;
 using PrivateWiki.Services.StorageBackendService.SQLite;
 using PrivateWiki.UWP.Data;
 

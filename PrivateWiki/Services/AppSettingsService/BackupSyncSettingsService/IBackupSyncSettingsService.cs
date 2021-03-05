@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Reactive;
 using System.Threading.Tasks;
 using DynamicData;
 using PrivateWiki.DataModels.Settings;
-using ReactiveUI;
 
 namespace PrivateWiki.Services.AppSettingsService.BackupSyncSettingsService
 {

@@ -3,7 +3,6 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using NLog;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.StorageBackendService;
 using PrivateWiki.ViewModels.PageEditors;
@@ -13,8 +12,6 @@ namespace PrivateWiki.ViewModels
 {
 	public class PageEditorViewModel : ReactiveObject
 	{
-		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
 		private readonly IPageBackendService _backend;
 
 		private GenericPage Page = null!;
@@ -36,9 +33,9 @@ namespace PrivateWiki.ViewModels
 		public ReactiveCommand<Unit, Unit> OpenInExternalEditor { get; }
 
 		public ReactiveCommand<Unit, Unit> DeletePage { get; }
-		
+
 		public ReactiveCommand<Unit, Unit> NavigateToCreateNewLabelPage { get; }
-		
+
 		public ReactiveCommand<Unit, Unit> NavigateToManageLabelsPage { get; }
 
 		private readonly Interaction<Path, bool> _confirmDelete;
@@ -118,9 +115,6 @@ namespace PrivateWiki.ViewModels
 
 			if (isDeleteAllowed)
 			{
-				Logger.Info("Delete page");
-				Logger.ConditionalDebug($"Delete Page ({Page.Path.FullPath})");
-
 				_backend.DeletePageAsync(Page);
 
 				_onDelete.OnNext(Unit.Default);

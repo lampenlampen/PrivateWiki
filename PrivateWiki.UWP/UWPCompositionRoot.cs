@@ -14,6 +14,7 @@ namespace PrivateWiki.UWP
 		{
 			Guard.IsNotNull(container, nameof(container));
 
+			container.Register(() => Windows.UI.Xaml.Application.Current, Lifestyle.Singleton);
 			container.Register<IFilesystemService, UWPFullTrustFilesystemService>(Lifestyle.Singleton);
 			container.Register<IApplicationLauncherServiceImpl, ApplicationLauncherService>(Lifestyle.Singleton);
 			container.Register<IApplicationDataService, ApplicationDataService>(Lifestyle.Singleton);

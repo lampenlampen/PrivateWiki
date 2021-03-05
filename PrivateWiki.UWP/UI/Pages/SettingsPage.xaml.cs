@@ -49,10 +49,10 @@ namespace PrivateWiki.UWP.UI.Pages
 			this.InitializeComponent();
 
 			var container = Application.Instance.Container;
-			TranslationResources translationResources = container.GetInstance<TranslationResources>();
+			TranslationManager translationManager = container.GetInstance<TranslationManager>();
 			_cultureChangedEvent = container.GetInstance<IObservable<CultureChangedEventArgs>>();
 
-			Translations = new SettingsPageResources(translationResources);
+			Translations = new SettingsPageResources(translationManager);
 
 			_cultureChangedEvent.Subscribe(x => OnPropertyChanged(nameof(Translations)));
 		}
@@ -150,11 +150,11 @@ namespace PrivateWiki.UWP.UI.Pages
 
 	public class SettingsPageResources
 	{
-		private readonly TranslationResources _translation;
+		private readonly TranslationManager _translation;
 
-		public SettingsPageResources(TranslationResources resources)
+		public SettingsPageResources(TranslationManager manager)
 		{
-			_translation = resources;
+			_translation = manager;
 		}
 
 		public string Site => _translation.GetStringResource("siteManager");

@@ -1,5 +1,5 @@
 using System;
-using System.Threading.Tasks;
+using PrivateWiki.Core;
 using PrivateWiki.Services.AppSettingsService;
 using PrivateWiki.Services.GlobalNotificationService;
 using PrivateWiki.Services.StartupTask;
@@ -32,12 +32,12 @@ namespace PrivateWiki
 			Locator.CurrentMutable.InitializeReactiveUI();
 		}
 
-		public async Task Initialize()
+		public void Initialize()
 		{
 			Container.Verify();
 
 			var startupTasks = Container.GetInstance<IStartupTask>();
-			await startupTasks.Execute();
+			startupTasks.Handle(Null.Instance);
 		}
 	}
 }

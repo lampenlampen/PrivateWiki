@@ -6,7 +6,6 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using DynamicData;
-using NLog;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.Backends;
 using PrivateWiki.Utilities;
@@ -16,8 +15,6 @@ namespace PrivateWiki.ViewModels.PageEditors
 {
 	public abstract class PageEditorControlViewModelBase : ReactiveObject, IPageEditorControlViewModel
 	{
-		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
 		private readonly IPageLabelsBackend _pageLabelsBackend;
 		private readonly ILabelBackend _labelBackend;
 

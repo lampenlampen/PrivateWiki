@@ -1,25 +1,20 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using FluentResults;
 using PrivateWiki.DataModels;
 using PrivateWiki.DataModels.Errors;
-using PrivateWiki.DataModels.Pages;
 using PrivateWiki.DataModels.Settings;
 using PrivateWiki.Services.SerializationService;
 using PrivateWiki.ViewModels.Settings;
-using Path = System.IO.Path;
 
 namespace PrivateWiki.Services.AppSettingsService.BackupSyncSettingsService
 {
-	public interface IBackupSyncTargetsJsonSerializer : IJsonSerializationService<IEnumerable<IBackupSyncTarget>> {}
-	
+	public interface IBackupSyncTargetsJsonSerializer : IJsonSerializationService<IEnumerable<IBackupSyncTarget>> { }
+
 	public class BackupSyncTargetsJsonSerializer : IBackupSyncTargetsJsonSerializer
 	{
 		public Type Input { get; } = typeof(IList<IBackupSyncTarget>);
@@ -83,15 +78,11 @@ namespace PrivateWiki.Services.AppSettingsService.BackupSyncSettingsService
 					var root = doc.RootElement;
 					var targets = root.GetProperty("targets");
 
-					foreach (var jsonTarget in targets.EnumerateArray())
-					{
-					}
+					foreach (var jsonTarget in targets.EnumerateArray()) { }
 
 					foreach (var jsonTarget in targets.EnumerateArray())
 					{
-						foreach (var property in jsonTarget.EnumerateObject())
-						{
-						}
+						foreach (var property in jsonTarget.EnumerateObject()) { }
 
 						var prop = jsonTarget.GetProperty("type");
 

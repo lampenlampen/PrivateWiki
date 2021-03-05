@@ -2,7 +2,6 @@ using System;
 using System.Reactive;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using NLog;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.RenderingService;
@@ -12,8 +11,6 @@ namespace PrivateWiki.ViewModels
 {
 	public class HtmlPageViewerControlViewModel : ReactiveObject, IContentPageViewerViewModel
 	{
-		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
 		private ISubject<Path> _onWikiLinkClicked { get; }
 		public IObservable<Path> OnWikiLinkClicked => _onWikiLinkClicked;
 

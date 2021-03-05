@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using NodaTime;
+using PrivateWiki.Core;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.PackageService;
 using PrivateWiki.Services.StorageBackendService;
@@ -21,7 +22,7 @@ namespace PrivateWiki.Services.StartupTask
 			_clock = clock;
 		}
 
-		public Task<bool> Execute() => InsertDefaultPages();
+		public void Handle(Null _) => InsertDefaultPages();
 
 		private async Task<bool> InsertStartPage()
 		{

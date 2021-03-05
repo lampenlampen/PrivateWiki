@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using NLog;
 using NodaTime;
 using PrivateWiki.DataModels;
 using PrivateWiki.Services.ApplicationDataService;
@@ -11,8 +10,6 @@ namespace PrivateWiki.Services.LFSBackupService
 {
 	public class LFSBackupService : ILFSBackupService
 	{
-		private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
-
 		private readonly IFilesystemService _filesystem;
 		private readonly IPageBackendService _pageBackend;
 		private readonly IApplicationDataService _applicationData;

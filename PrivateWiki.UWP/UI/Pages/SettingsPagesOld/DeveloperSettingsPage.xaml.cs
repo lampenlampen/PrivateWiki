@@ -20,7 +20,7 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 	/// </summary>
 	public sealed partial class DeveloperSettingsPage : Page, INotifyPropertyChanged
 	{
-		private readonly TranslationResources _translationResources;
+		private readonly TranslationManager _translationManager;
 
 		private readonly IObservable<CultureChangedEventArgs> _cultureChangedEvent;
 		private readonly ICommandHandler<CultureChangedEventArgs> _cultureChangedObserver;
@@ -37,9 +37,9 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 			_cultureChangedEvent = container.GetInstance<IObservable<CultureChangedEventArgs>>();
 			_cultureChangedObserver = container.GetInstance<ICommandHandler<CultureChangedEventArgs>>();
 			_themeChangedObserver = container.GetInstance<ICommandHandler<ThemeChangedEventArgs>>();
-			_translationResources = container.GetInstance<TranslationResources>();
+			_translationManager = container.GetInstance<TranslationManager>();
 
-			_translations = new DevSettingsPageStrings(_translationResources);
+			_translations = new DevSettingsPageStrings(_translationManager);
 
 			UpdateUiTest();
 
@@ -94,13 +94,13 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 
 	public class DevSettingsPageStrings
 	{
-		private readonly TranslationResources _resources;
+		private readonly TranslationManager _manager;
 
-		public DevSettingsPageStrings(TranslationResources resources)
+		public DevSettingsPageStrings(TranslationManager manager)
 		{
-			_resources = resources;
+			_manager = manager;
 		}
 
-		public string Language => _resources.GetStringResource("language");
+		public string Language => _manager.GetStringResource("language");
 	}
 }

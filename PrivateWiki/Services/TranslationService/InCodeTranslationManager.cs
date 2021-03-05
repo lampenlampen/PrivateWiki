@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using NLog;
+using PrivateWiki.Core;
+using PrivateWiki.Services.Logger;
 using PrivateWiki.Services.TranslationService.InCodeTranslationsFiles;
 
 namespace PrivateWiki.Services.TranslationService
 {
-	public class InCodeTranslationResources : TranslationResources
+	public class InCodeTranslationManager : TranslationManager
 	{
-		private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
+		private readonly ICommandHandler<LogEntry> _logger;
 
 		private readonly Dictionary<CultureInfo, Dictionary<string, string>> _resources = new();
 
@@ -27,8 +28,10 @@ namespace PrivateWiki.Services.TranslationService
 			}
 		}
 
-		public InCodeTranslationResources()
+		public InCodeTranslationManager(ICommandHandler<LogEntry> logger)
 		{
+			_logger = logger;
+
 			new EnglishTranslation().LoadResources(_resources);
 			new GermanTranslation().LoadResources(_resources);
 			new FrenchTranslation().LoadResources(_resources);
@@ -44,7 +47,7 @@ namespace PrivateWiki.Services.TranslationService
 
 			while (resource is null && !Equals(cultureInfo, CultureInfo.InvariantCulture))
 			{
-				Logger.Info($"Translation missing: Key{key}; Culture={cultureInfo.Name}");
+				_logger.Handle(new LogEntry(LoggingEventType.Information, $"Translation missing: Key{key}; Culture={cultureInfo.Name}"));
 
 				cultureInfo = cultureInfo.Parent;
 
@@ -63,7 +66,7 @@ namespace PrivateWiki.Services.TranslationService
 
 			while (!_resources.TryGetValue(culture, out cultureCache))
 			{
-				Logger.Info($"Culture missing: Culture={culture.Name}");
+				_logger.Handle(new LogEntry(LoggingEventType.Information, $"Culture missing: Culture={culture.Name}"));
 
 				culture = culture.Parent;
 			}

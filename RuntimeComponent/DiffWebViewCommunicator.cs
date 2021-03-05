@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Foundation.Metadata;
+﻿using Windows.Foundation.Metadata;
 
 namespace RuntimeComponent
 {
 	[AllowForWeb]
-    public sealed class DiffWebViewCommunicator
-    {
-	    public string Old { get; set; } = "old";
+	public sealed class DiffWebViewCommunicator
+	{
+		public string Old { get; set; } = "old";
 
-	    public string New { get; set; } = "New";
+		public string New { get; set; } = "New";
 
 
 		// Html2Diff library options
@@ -46,7 +41,7 @@ namespace RuntimeComponent
 		/// </summary>
 		public string InputFormat { get; set; } = "diff";
 
-		
+
 		// JsDiff library options
 
 		/// <summary>
@@ -73,5 +68,5 @@ namespace RuntimeComponent
 		/// Describes how many lines of context should be included.
 		/// </summary>
 		public int Context { get; set; } = 5;
-    }
+	}
 }
