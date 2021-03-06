@@ -8,6 +8,19 @@ namespace PrivateWiki.Services.RenderingService
 {
 	public class ContentRenderer
 	{
+		private readonly Rendering.Markdown.Markdig.Markdig _markdig;
+
+		public ContentRenderer(Rendering.Markdown.Markdig.Markdig markdig)
+		{
+			_markdig = markdig;
+		}
+
+		[Obsolete]
+		public ContentRenderer()
+		{
+			_markdig = Application.Instance.Container.GetInstance<Rendering.Markdown.Markdig.Markdig>();
+		}
+
 		public Task<string> RenderPageAsync(GenericPage page)
 		{
 			return Task.Run(async () =>
@@ -17,7 +30,7 @@ namespace PrivateWiki.Services.RenderingService
 				switch (page.ContentType.MimeType)
 				{
 					case "text/markdown":
-						var renderer = new MarkdownRenderer();
+						var renderer = new MarkdownRenderer(_markdig);
 						return await renderer.RenderToHtml(page.Content);
 					case "text/html":
 						return page.Content;
@@ -37,7 +50,7 @@ namespace PrivateWiki.Services.RenderingService
 				switch (contentType.ToLower())
 				{
 					case "markdown":
-						var renderer = new MarkdownRenderer();
+						var renderer = new MarkdownRenderer(_markdig);
 						return await renderer.RenderToHtml(content);
 					case "html":
 						return content;
@@ -56,7 +69,7 @@ namespace PrivateWiki.Services.RenderingService
 				switch (contentType.MimeType)
 				{
 					case "text/markdown":
-						var renderer = new MarkdownRenderer();
+						var renderer = new MarkdownRenderer(_markdig);
 						return await renderer.RenderToHtml(content);
 					case "text/html":
 						return content;

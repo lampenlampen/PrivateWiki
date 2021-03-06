@@ -5,7 +5,12 @@ namespace PrivateWiki.Rendering.Markdown
 {
 	public class MarkdownRenderer : IPageRenderer
 	{
-		private readonly Markdig.Markdig _renderer = new Markdig.Markdig();
+		private readonly Markdig.Markdig _renderer;
+
+		public MarkdownRenderer(Markdig.Markdig renderer)
+		{
+			_renderer = renderer;
+		}
 
 		public Task<string> RenderToHtml(string content)
 		{

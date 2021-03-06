@@ -116,7 +116,7 @@ namespace PrivateWiki.ViewModels.Settings
 
 		public LFSBackupSyncTargetViewModel()
 		{
-			_featureFlags = Application.Instance.AppSettings.FeatureFlags;
+			_featureFlags = Application.Instance.Container.GetInstance<IFeatureFlagsService>();
 			_lfsBackup = Application.Instance.Container.GetInstance<ILFSBackupService>();
 
 			ExportContent = ReactiveCommand.CreateFromTask(ExportContentAsync);

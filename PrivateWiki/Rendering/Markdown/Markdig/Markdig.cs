@@ -5,20 +5,20 @@ using Markdig.Renderers;
 
 namespace PrivateWiki.Rendering.Markdown.Markdig
 {
-	internal class Markdig
+	public class Markdig
 	{
 		private readonly HtmlRenderer _renderer;
 		private readonly HtmlBuilder _htmlBuilder;
 
 		private readonly Task<MarkdownPipeline> _pipelineTask;
 
-		public Markdig()
+		public Markdig(MarkdigPipelineBuilder pipelineBuilder)
 		{
 			_htmlBuilder = new HtmlBuilder(new StringWriter());
 			_htmlBuilder.WriteHtmlStartTag();
 			_htmlBuilder.WriteHeadStartTag();
 
-			_pipelineTask = MarkdigPipelineBuilder.GetMarkdownPipeline(_htmlBuilder);
+			_pipelineTask = pipelineBuilder.GetMarkdownPipeline(_htmlBuilder);
 
 			_htmlBuilder.WriteHeadEndTag();
 
@@ -31,7 +31,7 @@ namespace PrivateWiki.Rendering.Markdown.Markdig
 			var renderer = new HtmlRenderer(stringWriter);
 
 			var pipeline = await _pipelineTask;
-			
+
 			pipeline.Setup(renderer);
 
 			var dom2 = global::Markdig.Markdown.ToHtml(content, stringWriter, pipeline);

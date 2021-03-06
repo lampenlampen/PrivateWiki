@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -115,18 +116,24 @@ namespace PrivateWiki.ViewModels
 
 		public readonly ObservableCollection<Label> Labels = new ObservableCollectionExtended<Label>();
 
-		public PageViewerViewModel()
+		public PageViewerViewModel(
+			IPageBackendService pageBackendService,
+			IPageLabelsBackend pageLabelsBackend,
+			ILabelBackend labelBackend,
+			IMostRecentlyVisitedPagesService mostRecentlyVisitedPagesService,
+			TranslationManager translationManager,
+			PageViewerCommandBarViewModel pageViewerCommandBarViewModel,
+			GlobalSearchControlViewModel globalSearchControlViewModel,
+			AddLabelsToPageControlViewModel addLabelsToPageControlVm)
 		{
-			var container = Application.Instance.Container;
-
-			_backend = container.GetInstance<IPageBackendService>();
-			_pageLabelsBackend = container.GetInstance<IPageLabelsBackend>();
-			_labelBackend = container.GetInstance<ILabelBackend>();
-			_mostRecentlyVisitedPagesService = container.GetInstance<IMostRecentlyVisitedPagesService>();
-			_translation = container.GetInstance<TranslationManager>();
-			CommandBarViewModel = container.GetInstance<PageViewerCommandBarViewModel>();
-			SearchControlViewModel = new GlobalSearchControlViewModel();
-			AddLabelsToPageControlVM = container.GetInstance<AddLabelsToPageControlViewModel>();
+			_backend = pageBackendService;
+			_pageLabelsBackend = pageLabelsBackend;
+			_labelBackend = labelBackend;
+			_mostRecentlyVisitedPagesService = mostRecentlyVisitedPagesService;
+			_translation = translationManager;
+			CommandBarViewModel = pageViewerCommandBarViewModel;
+			SearchControlViewModel = globalSearchControlViewModel;
+			AddLabelsToPageControlVM = addLabelsToPageControlVm;
 
 			Translations = new Translation(this);
 
@@ -172,7 +179,12 @@ namespace PrivateWiki.ViewModels
 
 		private async Task LoadPageAsync(string id)
 		{
+			var stopwatch = Stopwatch.StartNew();
+
 			Page = await _backend.GetPageAsync(id);
+
+			stopwatch.Stop();
+
 
 			PageContentViewer = new HtmlPageViewerControlViewModel {Page = Page};
 			PageContentViewer.OnWikiLinkClicked.Subscribe(async x => await NavigateToPageAsync(x));

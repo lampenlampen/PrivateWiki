@@ -5,6 +5,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using PrivateWiki.Core.Events;
 using PrivateWiki.UWP.Utilities.ExtensionFunctions;
+using PrivateWiki.ViewModels;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x407 dokumentiert.
 
@@ -30,11 +31,21 @@ namespace PrivateWiki.UWP.UI.Pages
 			ApplicationView.GetForCurrentView().TitleBar.ButtonBackgroundColor =
 				new UISettings().GetColorValue(UIColorType.Accent);
 
-			EditorFrame.Navigate(typeof(PageViewer), "start");
+			//EditorFrame.Navigate(typeof(PageViewer), "start");
+			NavigateToPageViewer();
 
 			_themeChangedEvent = Application.Instance.Container.GetInstance<IObservable<ThemeChangedEventArgs>>();
 
 			_themeChangedEvent.Subscribe(x => RequestedTheme = x.NewTheme.ToPlatformTheme());
+		}
+
+		private void NavigateToPageViewer()
+		{
+			var vm = Application.Instance.Container.GetInstance<PageViewerViewModel>();
+			var page = new PageViewer(vm);
+
+			EditorFrame.Content = page;
+			vm.LoadPage.Execute("start");
 		}
 
 		/// Extend acrylic into the title bar.

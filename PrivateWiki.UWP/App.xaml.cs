@@ -47,7 +47,6 @@ namespace PrivateWiki.UWP
 			CompositionRoot.CompositionRoot.Bootstrap(container);
 			UwpCompositionRoot.Bootstrap(container);
 			Application.Container = container;
-			Application.AppSettings.Container = container;
 
 			Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 			NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
@@ -125,7 +124,7 @@ namespace PrivateWiki.UWP
 
 		private void ShowPage(Frame rootFrame)
 		{
-			rootFrame.Navigate(typeof(MainPage), "start");
+			rootFrame.Content = new MainPage();
 		}
 
 		/// <summary>
@@ -150,14 +149,6 @@ namespace PrivateWiki.UWP
 			var deferral = e.SuspendingOperation.GetDeferral();
 			//TODO: Anwendungszustand speichern und alle Hintergrundaktivitäten beenden
 			deferral.Complete();
-		}
-
-		private void ChangeTheme()
-		{
-			if (Window.Current.Content is FrameworkElement a)
-			{
-				a.RequestedTheme = ElementTheme.Dark;
-			}
 		}
 	}
 }

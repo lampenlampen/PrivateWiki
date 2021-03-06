@@ -1,3 +1,8 @@
+using System;
+using System.Threading.Tasks;
+using PrivateWiki.Core;
+using PrivateWiki.Dependencies.Sentry;
+using Sentry;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -13,6 +18,29 @@ namespace PrivateWiki.Test
 		}
 
 		[Fact]
-		public void Main() { }
+		public async void Main()
+		{
+			new RegisterSentryCmdHandler().Handle(Null.Instance);
+
+			await CallThrow();
+		}
+
+		private async Task CallThrow()
+		{
+			try
+			{
+				ThrowEx();
+			}
+			catch (Exception e)
+			{
+				SentrySdk.CaptureException(e);
+				await SentrySdk.FlushAsync(TimeSpan.FromSeconds(2));
+			}
+		}
+
+		private void ThrowEx()
+		{
+			throw new ArithmeticException("blubtest");
+		}
 	}
 }

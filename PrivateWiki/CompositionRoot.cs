@@ -10,6 +10,7 @@ using PrivateWiki.Core.Events;
 using PrivateWiki.Core.Logging;
 using PrivateWiki.DataModels;
 using PrivateWiki.DataModels.Pages;
+using PrivateWiki.Rendering.Markdown.Markdig;
 using PrivateWiki.Services.ApplicationLauncherService;
 using PrivateWiki.Services.AppSettingsService;
 using PrivateWiki.Services.AppSettingsService.BackendSettings;
@@ -61,6 +62,8 @@ namespace PrivateWiki
 			container.RegisterSingleton<IPageLabelsBackend, PageLabelsSqliteBackend>();
 			// container.RegisterSingleton<IPageLabelsBackend, TestBackend>();
 			// TODO Lifestyle
+			container.RegisterSingleton<MarkdigPipelineBuilder>();
+			container.RegisterSingleton<Rendering.Markdown.Markdig.Markdig>();
 
 			// Converter
 			container.RegisterSingleton<IConverter<DbDataReader, Label>, DbReaderToLabelConverter>();
@@ -107,6 +110,8 @@ namespace PrivateWiki
 			container.Register<AddLabelsToPageControlViewModel>();
 			container.Register<PageViewerCommandBarViewModel>();
 			container.Register<PersonalizationCtrlVM>();
+			container.Register<PageViewerViewModel>();
+			container.Register<GlobalSearchControlViewModel>();
 
 			// Events
 			container.RegisterSingleton<IObservable<CultureChangedEventArgs>, CultureChangedEvent>();
