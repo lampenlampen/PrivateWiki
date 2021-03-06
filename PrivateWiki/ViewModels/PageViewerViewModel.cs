@@ -10,6 +10,7 @@ using DynamicData;
 using DynamicData.Binding;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.Backends;
+using PrivateWiki.Services.GlobalNotificationService;
 using PrivateWiki.Services.MostRecentlyVisitedPageService;
 using PrivateWiki.Services.StorageBackendService;
 using PrivateWiki.Services.TranslationService;
@@ -24,6 +25,7 @@ namespace PrivateWiki.ViewModels
 		private readonly IPageLabelsBackend _pageLabelsBackend;
 		private readonly ILabelBackend _labelBackend;
 		private readonly TranslationManager _translation;
+		private readonly IGlobalNotificationManager _globalNotificationManager;
 
 		private readonly IPageBackendService _backend;
 
@@ -124,7 +126,8 @@ namespace PrivateWiki.ViewModels
 			TranslationManager translationManager,
 			PageViewerCommandBarViewModel pageViewerCommandBarViewModel,
 			GlobalSearchControlViewModel globalSearchControlViewModel,
-			AddLabelsToPageControlViewModel addLabelsToPageControlVm)
+			AddLabelsToPageControlViewModel addLabelsToPageControlVm,
+			IGlobalNotificationManager globalNotificationManager)
 		{
 			_backend = pageBackendService;
 			_pageLabelsBackend = pageLabelsBackend;
@@ -134,6 +137,7 @@ namespace PrivateWiki.ViewModels
 			CommandBarViewModel = pageViewerCommandBarViewModel;
 			SearchControlViewModel = globalSearchControlViewModel;
 			AddLabelsToPageControlVM = addLabelsToPageControlVm;
+			_globalNotificationManager = globalNotificationManager;
 
 			Translations = new Translation(this);
 
@@ -257,7 +261,7 @@ namespace PrivateWiki.ViewModels
 		private Task ExportAsync(Path link)
 		{
 			// TODO Export
-			Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification();
+			_globalNotificationManager.ShowNotImplementedNotification();
 
 			return Task.CompletedTask;
 		}
@@ -265,7 +269,7 @@ namespace PrivateWiki.ViewModels
 		private Task ImportAsync()
 		{
 			//TODO Import
-			Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification();
+			_globalNotificationManager.ShowNotImplementedNotification();
 
 			return Task.CompletedTask;
 		}
@@ -290,7 +294,7 @@ namespace PrivateWiki.ViewModels
 		private Task ToggleFullscreenAsync()
 		{
 			// TODO Toggle Fullscreen
-			Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification();
+			_globalNotificationManager.ShowNotImplementedNotification();
 			return Task.CompletedTask;
 		}
 
@@ -328,7 +332,7 @@ namespace PrivateWiki.ViewModels
 
 		private Task LabelClickedAsync(LabelId id)
 		{
-			Application.Instance.GlobalNotificationManager.ShowNotImplementedNotification();
+			_globalNotificationManager.ShowNotImplementedNotification();
 
 			return Task.CompletedTask;
 		}

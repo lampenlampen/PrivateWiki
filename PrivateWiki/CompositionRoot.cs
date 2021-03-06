@@ -112,6 +112,7 @@ namespace PrivateWiki
 			container.Register<PersonalizationCtrlVM>();
 			container.Register<PageViewerViewModel>();
 			container.Register<GlobalSearchControlViewModel>();
+			container.Register<NewPageViewModel>();
 
 			// Events
 			container.RegisterSingleton<IObservable<CultureChangedEventArgs>, CultureChangedEvent>();

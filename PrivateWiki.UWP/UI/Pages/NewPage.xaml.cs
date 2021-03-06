@@ -44,7 +44,7 @@ namespace PrivateWiki.UWP.UI.Pages
 		{
 			InitializeComponent();
 
-			ViewModel = new NewPageViewModel();
+			ViewModel = Application.Instance.Container.GetInstance<NewPageViewModel>();
 
 			KeyboardAccelerator GoBack = new KeyboardAccelerator();
 			GoBack.Key = VirtualKey.GoBack;

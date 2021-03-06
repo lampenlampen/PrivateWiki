@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using NodaTime;
 using PrivateWiki.DataModels.Pages;
 using PrivateWiki.Services.FilesystemService;
+using PrivateWiki.Services.GlobalNotificationService;
 using PrivateWiki.Services.StorageBackendService;
 using ReactiveUI;
 using ReactiveUI.Validation.Abstractions;
@@ -21,6 +22,8 @@ namespace PrivateWiki.ViewModels
 {
 	public class NewPageViewModel : ReactiveObject, IValidatableViewModel
 	{
+		private readonly IGlobalNotificationManager _globalNotificationManager;
+
 		public ValidationContext ValidationContext { get; } = new ValidationContext();
 
 		private readonly IClock _clock;
@@ -65,8 +68,10 @@ namespace PrivateWiki.ViewModels
 		public IObservable<Unit> OnGoBack => _onGoBack;
 		private readonly ISubject<Unit> _onGoBack;
 
-		public NewPageViewModel()
+		public NewPageViewModel(IGlobalNotificationManager globalNotificationManager)
 		{
+			_globalNotificationManager = globalNotificationManager;
+
 			_clock = SystemClock.Instance;
 
 			LinkValidationRule = this.ValidationRule(
@@ -127,7 +132,7 @@ namespace PrivateWiki.ViewModels
 			// Pages cannot be created in the system namespace
 			if (Link.IsSystemNamespace())
 			{
-				Application.Instance.GlobalNotificationManager.ShowCreatePageInSystemNamespaceNotAllowedNotification();
+				_globalNotificationManager.ShowCreatePageInSystemNamespaceNotAllowedNotification();
 
 				return Task.CompletedTask;
 			}
@@ -140,7 +145,7 @@ namespace PrivateWiki.ViewModels
 
 				if (a)
 				{
-					Application.Instance.GlobalNotificationManager.ShowPageExistsNotificationOnUIThread();
+					_globalNotificationManager.ShowPageExistsNotificationOnUIThread();
 				}
 				else
 				{

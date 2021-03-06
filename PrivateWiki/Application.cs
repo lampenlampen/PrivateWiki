@@ -1,5 +1,4 @@
 using PrivateWiki.Core;
-using PrivateWiki.Services.GlobalNotificationService;
 using PrivateWiki.Services.StartupTask;
 using ReactiveUI;
 using SimpleInjector;
@@ -9,9 +8,7 @@ namespace PrivateWiki
 {
 	public class Application
 	{
-		public static readonly Application Instance = new Application();
-
-		public IGlobalNotificationManager GlobalNotificationManager { get; set; }
+		public static readonly Application Instance = new();
 
 		public Container Container { get; set; }
 

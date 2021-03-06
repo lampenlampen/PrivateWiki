@@ -32,6 +32,8 @@ namespace PrivateWiki.UWP
 
 		public InAppNotification Notification { get; private set; }
 
+		public Grid NotificationGrid { get; } = new Grid();
+
 
 		/// <summary>
 		///     Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code
@@ -82,10 +84,9 @@ namespace PrivateWiki.UWP
 				rootGrid = new Grid();
 				rootFrame = new Frame();
 
-				var notificationGrid = new Grid();
+				var notificationGrid = NotificationGrid;
 
 				GlobalNotificationManager = new GlobalNotificationManager(new LocalNotificationManager(notificationGrid));
-				Application.GlobalNotificationManager = GlobalNotificationManager;
 				Notification = new InAppNotification();
 
 				rootGrid.Children.Add(rootFrame);
