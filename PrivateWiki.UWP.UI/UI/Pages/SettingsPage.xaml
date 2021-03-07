@@ -1,0 +1,87 @@
+﻿<Page
+    x:Class="PrivateWiki.UWP.UI.UI.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:uwp="using:FontAwesome.UWP"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+
+        <muxc:NavigationView x:Name="NavView"
+                             Loaded="NavView_Loaded"
+                             ItemInvoked="NavView_ItemInvoked"
+                             BackRequested="NavView_BackRequested"
+                             PaneTitle="Settings"
+                             IsSettingsVisible="False"
+                             IsBackEnabled="True"
+                             PaneDisplayMode="Auto">
+            <muxc:NavigationView.MenuItems>
+                <muxc:NavigationViewItemHeader Content="{x:Bind Translations.Site, Mode=OneWay}" />
+                <muxc:NavigationViewItem Content="{x:Bind Translations.General, Mode=OneWay}" Tag="general" Icon="Home" />
+                <muxc:NavigationViewItem Content="{x:Bind Translations.Navigation, Mode=OneWay}" Tag="navigation">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE122;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="{x:Bind Translations.Pages, Mode=OneWay}" Tag="pages">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8C8;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Tag="labels" Content="{x:Bind Translations.Labels, Mode=OneWay}">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1CB;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="{x:Bind Translations.Assets, Mode=OneWay}" Tag="assets">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE158;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="{x:Bind Translations.Personalization, Mode=OneWay}" Tag="personalization">
+	                <muxc:NavigationViewItem.Icon>
+		                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE2B1;" />
+	                </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItemSeparator />
+                <muxc:NavigationViewItemHeader Content="{x:Bind Translations.Modules, Mode=OneWay}" />
+                <muxc:NavigationViewItem Content="{x:Bind Translations.Rendering, Mode=OneWay}" Tag="rendering">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE116;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="{x:Bind Translations.Storage, Mode=OneWay}" Tag="storage">
+                    <muxc:NavigationViewItem.Icon>
+                        <uwp:FontAwesome Icon="Database" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="{x:Bind Translations.Sync, Mode=OneWay}" Tag="sync">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE96A;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItemSeparator />
+                <muxc:NavigationViewItemHeader Content="{x:Bind Translations.System, Mode=OneWay}" />
+                <muxc:NavigationViewItem Content="{x:Bind Translations.DeveloperTools, Mode=OneWay}" Tag="developertools">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC7A;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+            </muxc:NavigationView.MenuItems>
+
+            <muxc:NavigationView.AutoSuggestBox>
+                <!-- See AutoSuggestBox documentation for
+                 more info about how to implement search. -->
+                <AutoSuggestBox x:Name="NavViewSearchBox" QueryIcon="Find" />
+            </muxc:NavigationView.AutoSuggestBox>
+
+            <Frame
+                Name="SettingsContentFrame"
+                Background="#EEEEEE" />
+        </muxc:NavigationView>
+    </Grid>
+</Page>

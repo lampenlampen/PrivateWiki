@@ -1,0 +1,160 @@
+﻿<Page
+    x:Class="PrivateWiki.UWP.UI.UI.Pages.SettingsPages.AssetsSettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls2="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:PrivateWiki.UWP.UI.UI.Controls"
+    xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:xamlConverter="using:PrivateWiki.UWP.UI.UI.XamlConverter"
+    xmlns:settingsPages="using:PrivateWiki.UWP.UI.UI.Pages.SettingsPages"
+    mc:Ignorable="d"
+    Background="{ThemeResource AppPageBackgroundBrush}">
+
+    <Page.Resources>
+        <xamlConverter:ThumbnailToImageConverter x:Key="ThumbnailToImageConverter" />
+
+        <DataTemplate x:Key="TreeViewItemFolderTemplate">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon
+                        FontFamily="Segoe MDL2 Assets"
+                        Glyph="&#xE838;"
+                        Margin="0,0,10,0" />
+
+                    <TextBlock
+                        Text="{Binding Content.DisplayName}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Style="{ThemeResource BodyTextBlockStyle}" />
+                </StackPanel>
+
+                <Grid.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem
+                            Text="Open in Explorer"
+                            Click="OpenInExplorerClick"/>
+                        <MenuFlyoutItem
+                            Text="Create Folder"
+                            Icon="Add" />
+                        <MenuFlyoutItem
+                            Text="Delete Folder"
+                            Icon="Delete" />
+                        <MenuFlyoutItem
+                            Text="Rename Folder"
+                            Icon="Rename" />
+                    </MenuFlyout>
+                </Grid.ContextFlyout>
+            </Grid>
+
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid
+        Padding="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <controls:SettingsHeader
+            Grid.Row="0"
+            Title="Assets"
+            Subtitle="Manage your assets">
+
+            <controls:SettingsHeader.Icon>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE158;" FontSize="32" />
+            </controls:SettingsHeader.Icon>
+        </controls:SettingsHeader>
+
+        <HyperlinkButton
+            Grid.Row="1"
+            x:Name="OpenInExplorerText"
+            Content="Click here to open the &quot;data&quot;-folder in explorer" />
+
+        <ScrollViewer
+            Grid.Row="2">
+
+            <Grid
+                Height="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="256" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Grid x:Name="grid" Grid.Row="0" Grid.Column="0" Margin="0, 0, 32, 0" Height="Auto">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel x:Name="stackpanel" Padding="8">
+
+                        <controls2:TreeView
+                            x:Name="TreeViewMedia"
+                            SelectionMode="Single"
+                            CanReorderItems="False"
+                            ItemTemplate="{StaticResource TreeViewItemFolderTemplate}"
+                            CanDragItems="True"
+                            IsTabStop="False">
+                            <controls2:TreeView.ItemContainerTransitions>
+                                <TransitionCollection>
+                                    <ContentThemeTransition />
+                                    <ReorderThemeTransition />
+                                    <EntranceThemeTransition IsStaggeringEnabled="False" />
+                                </TransitionCollection>
+                            </controls2:TreeView.ItemContainerTransitions>
+                        </controls2:TreeView>
+                    </StackPanel>
+                </Grid>
+
+                <Rectangle
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Fill="Black"
+                    Width="1" />
+
+                <controls1:DataGrid
+                    x:Name="FilesGridView"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    ItemsSource="{x:Bind Files2}"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True">
+
+                    <controls1:DataGrid.Columns>
+                        <controls1:DataGridTemplateColumn Header="Icon">
+                            <controls1:DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding Thumbnail, Converter={StaticResource ThumbnailToImageConverter}}" Stretch="None" Margin="3" />
+                                </DataTemplate>
+                            </controls1:DataGridTemplateColumn.CellTemplate>
+                        </controls1:DataGridTemplateColumn>
+
+                        <controls1:DataGridTextColumn
+                            Header="Name"
+                            Width="SizeToHeader"
+                            Binding="{Binding Name}" />
+
+                        <controls1:DataGridTextColumn
+                            Header="Type"
+                            Width="SizeToCells"
+                            Binding="{Binding Type}" />
+
+                    </controls1:DataGrid.Columns>
+                </controls1:DataGrid>
+            </Grid>
+        </ScrollViewer>
+
+        <TextBlock
+            Grid.Row="3"
+            Name="ClickedItemPath" />
+    </Grid>
+</Page>

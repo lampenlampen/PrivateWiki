@@ -1,0 +1,188 @@
+﻿<sync:LFSControlBase
+    x:Class="PrivateWiki.UWP.UI.UI.Controls.Settings.Sync.LFSControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:xamlConverter="using:PrivateWiki.UWP.UI.UI.XamlConverter"
+    xmlns:sync="using:PrivateWiki.UWP.UI.UI.Controls.Settings.Sync"
+    mc:Ignorable="d"
+    d:DesignHeight="1000"
+    d:DesignWidth="1000">
+
+    <UserControl.Resources>
+        <xamlConverter:SyncFrequencyToRadioButtonConverter x:Key="SyncFrequencyToRadioButtonConverter" />
+        <xamlConverter:BoolVisibilityConverter x:Key="BoolVisibilityConverter" />
+
+        <Style x:Key="SettingsGroupStyle" TargetType="Grid">
+            <Setter Property="Margin" Value="0, 0, 0, 20" />
+        </Style>
+
+        <Style x:Key="SettingsGroupHeaderStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0, 0, 0, 6" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Padding="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Margin="0, 0, 0, 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <FontIcon
+                x:Name="LfsIcon"
+                Grid.Column="0"
+                VerticalAlignment="Stretch"
+                FontFamily="Segoe MDL2 Assets"
+                Glyph="{x:Bind ViewModel.FontGlyph}"
+                Margin="0, 0, 12, 0" />
+
+            <TextBox
+                x:Name="NameTextBox"
+                Grid.Column="1"
+                FontSize="18"
+                Margin="0, 0, 14, 0"
+                Text="{x:Bind ViewModel.Name, Mode=TwoWay}">
+
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+
+            <ToggleSwitch
+                Grid.Column="2"
+                OnContent="Enabled"
+                OffContent="Disabled"
+                IsOn="{x:Bind ViewModel.IsEnabled, Mode=TwoWay}" />
+        </Grid>
+
+        <StackPanel Grid.Row="1">
+
+            <Grid Style="{ThemeResource SettingsGroupStyle}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Text="Target Configuration"
+                    Style="{ThemeResource SettingsGroupHeaderStyle}" />
+
+                <Grid Grid.Row="1" Padding="8,0,0,0" BorderThickness="1" BorderBrush="Gray">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        x:Name="TargetPath"
+                        VerticalAlignment="Center"
+                        IsTextSelectionEnabled="True"
+                        Text="Target" />
+                    <Button
+                        x:Name="PickTargetFolderBtn"
+                        Margin="12,0,0,0"
+                        Grid.Column="1"
+                        Content="Select Target" />
+
+                </Grid>
+            </Grid>
+
+            <Grid Style="{ThemeResource SettingsGroupStyle}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Text="Sync Frequency"
+                    Style="{ThemeResource SettingsGroupHeaderStyle}" />
+
+                <StackPanel Grid.Row="1">
+                    <RadioButton Content="Never"
+                                 IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Never}" />
+                    <RadioButton IsEnabled="False" Content="Hourly"
+                                 IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Hourly}" />
+                    <RadioButton IsEnabled="False" Content="Daily"
+                                 IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Daily}" />
+                    <RadioButton IsEnabled="False" Content="Weekly"
+                                 IsChecked="{x:Bind ViewModel.Frequency, Converter={StaticResource SyncFrequencyToRadioButtonConverter}, ConverterParameter=Weekly}" />
+                </StackPanel>
+            </Grid>
+
+            <!-- Feature Flag IsAssetsSyncEnabled -->
+            <Grid Style="{ThemeResource SettingsGroupStyle}"
+                  Visibility="{x:Bind ViewModel.FeatureFlags.IsAssetsSyncEnabled, Converter={StaticResource BoolVisibilityConverter},Mode=OneTime}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Text="Sync Options" Style="{ThemeResource SettingsGroupHeaderStyle}" />
+
+                <ToggleSwitch
+                    x:Name="IsAssetsSyncEnabledToogleSwitch"
+                    Grid.Row="1"
+                    OnContent="Asset files are synced"
+                    OffContent="Asset files are not synced" />
+
+            </Grid>
+
+            <Grid Style="{ThemeResource SettingsGroupStyle}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Text="Actions"
+                    Style="{ThemeResource SettingsGroupHeaderStyle}" />
+
+                <GridView
+                    Grid.Row="1"
+                    IsItemClickEnabled="False"
+                    SelectionMode="None">
+
+                    <Button
+                        x:Name="ExportContentBtn"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
+                        <StackPanel>
+                            <TextBlock Text="Export" Style="{ThemeResource BaseTextBlockStyle}" />
+                            <TextBlock
+                                Text="Export content."
+                                TextWrapping="WrapWholeWords" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button
+                        x:Name="CreateBackupBtn"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <StackPanel>
+                            <TextBlock Text="Create Backup" Style="{ThemeResource BaseTextBlockStyle}" />
+                            <TextBlock
+                                Text="Creates a backup in a separate folder"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Button>
+                </GridView>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</sync:LFSControlBase>

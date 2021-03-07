@@ -1,0 +1,303 @@
+﻿<UserControl
+    x:Class="PrivateWiki.UWP.UI.UI.Controls.Settings.Rendering.CoreControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <controls:DropShadowPanel
+            Grid.Row="0"
+            Color="Black"
+            OffsetX="3"
+            OffsetY="3"
+            BlurRadius="5"
+            ShadowOpacity=".3"
+            Height="Auto"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch">
+
+            <Grid Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <RelativePanel
+                    Background="Gray"
+                    Grid.Row="0"
+                    Padding="16, 8, 0, 8">
+
+                    <FontIcon 
+                        x:Name="CoreIcon"
+                        RelativePanel.AlignLeftWithPanel="True" 
+                        RelativePanel.AlignVerticalCenterWithPanel="True"
+                        VerticalAlignment="Center"
+                        Margin="0,0,12,0"
+                        Foreground="White"
+                        FontFamily="Segoe MDL2 Assets" Glyph="&#xF589;" />
+                    <TextBlock
+                        RelativePanel.RightOf="CoreIcon"
+                        Text="{x:Bind Model.Title}"
+                        Style="{StaticResource TitleTextBlockStyle}"
+                        Foreground="White" />
+
+                    <ToggleSwitch
+                        RelativePanel.AlignRightWithPanel="True"
+                        OnContent="Enabled"
+                        OffContent="Disabled"
+                        IsEnabled="False"
+                        Foreground="White"
+                        IsOn="{x:Bind Model.IsEnabled, Mode=TwoWay}"/>
+
+                </RelativePanel>
+
+                <StackPanel
+                    x:Name="stackpanel"
+                    Grid.Row="1"
+                    Background="White"
+                    Padding="16,8,16,8">
+
+                    <ToggleSwitch
+                        OnContent="Allow Html Tags"
+                        OffContent="Allow Html Tags"
+                        IsOn="{x:Bind Model.IsHtmlTagEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Enable rendering of html tags in content"/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
+                        OnContent="Allow abbreviations"
+                        OffContent="Allow abbreviations"
+                        IsOn="{x:Bind Model.IsAbbreviationEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Enable rendering of html tags in content"/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
+                        OnContent="Allow auto identifier"
+                        OffContent="Disallow auto identifier"
+                        IsOn="{x:Bind Model.IsAutoIdentifierEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Automatically creates an identifier for headings. Required for the table of contents."/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
+                        OnContent="Allow auto link"
+                        OffContent="Allow auto link"
+                        IsOn="{x:Bind Model.IsAutoLinkEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Generates links if a text starts with 'http://', 'https://', 'ftp://', 'mailto:' or 'www.xxx.yyy'"/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
+                        OnContent="Bootstrap Enabled"
+                        OffContent="Bootstrap Enabled"
+                        IsOn="{x:Bind Model.IsBootstrapEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Adds support for bootstrap class tags."/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
+                        OnContent="Allow Citation"
+                        OffContent="Allow Citation"
+                        IsOn="{x:Bind Model.IsCitationEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Renders text enclosed by 2 double quotes as citation."/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
+                        OnContent="Allow Definition List"
+                        OffContent="Disallow Definition List"
+                        IsOn="{x:Bind Model.IsDefinitionListEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Enables definition lists."/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
+                        OnContent="Allow Emoji &amp; Smiley"
+                        OffContent="Disallow Emoji &amp; Smiley"
+                        IsOn="{x:Bind Model.IsEmojiSmileyEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Emojis and Smiles are converted to their unicode characters."/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
+                        OnContent="Allow Figure"
+                        OffContent="Disallow Figure"
+                        IsOn="{x:Bind Model.IsFigureEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Enables figures as a fenced code block but with the '^' character."/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
+                        OnContent="Allow Footer"
+                        OffContent="Disallow Footer"
+                        IsOn="{x:Bind Model.IsFooterEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Enables footers as a Quoteblock but with double '^^'."/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
+                        OnContent="Allow Footnote"
+                        OffContent="Disallow Footnote"
+                        IsOn="{x:Bind Model.IsFootnoteEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Enables footnotes."/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
+                        OnContent="Allow Media Links"
+                        OffContent="Disallow Media Links"
+                        IsOn="{x:Bind Model.IsMediaLinkEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Render media links as inline media."/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
+                        OnContent="Render softline as hardline"
+                        OffContent="Don't render softline as hardline"
+                        IsOn="{x:Bind Model.IsSoftLineAsHardlineBreakEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="A newline in a paragraph will result in a new paragraph."/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
+                        OnContent="Allow Smarty Pants"
+                        OffContent="Disallow Smarty Pants"
+                        IsOn="{x:Bind Model.IsSmartyPantEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Converts some characters to smarty pants."/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                    <ToggleSwitch
+                        OnContent="Allow Generic Attributes"
+                        OffContent="Disallow Generic Attributes"
+                        IsOn="{x:Bind Model.IsGenericAttributeEnabled, Mode=TwoWay}"/>
+
+                    <TextBlock
+                        TextWrapping="WrapWholeWords"
+                        Text="Attaches attributes to the html."/>
+
+                    <Border
+                        Margin="0, 8, 0, 8"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Width="{x:Bind stackpanel.Width}" />
+
+                </StackPanel>
+
+            </Grid>
+
+
+        </controls:DropShadowPanel>
+
+    </Grid>
+</UserControl>

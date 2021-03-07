@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28606.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrivateWiki.UWP", "PrivateWiki.UWP\PrivateWiki.UWP.csproj", "{E1B1092A-EEE8-4C60-BD47-86BBDE74B775}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrivateWiki.UWP.UI", "PrivateWiki.UWP.UI\PrivateWiki.UWP.UI.csproj", "{E1B1092A-EEE8-4C60-BD47-86BBDE74B775}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuntimeComponent", "RuntimeComponent\RuntimeComponent.csproj", "{A58A6B6D-679F-42E3-B415-EB310C14907A}"
 EndProject

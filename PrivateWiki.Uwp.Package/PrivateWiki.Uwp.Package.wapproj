@@ -55,7 +55,7 @@
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
     <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
-    <EntryPointProjectUniqueName>..\PrivateWiki.UWP\PrivateWiki.UWP.csproj</EntryPointProjectUniqueName>
+    <EntryPointProjectUniqueName>..\PrivateWiki.UWP.UI\PrivateWiki.UWP.UI.csproj</EntryPointProjectUniqueName>
   </PropertyGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -72,7 +72,10 @@
     <Content Include="Images\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PrivateWiki.UWP\PrivateWiki.UWP.csproj" />
+    <ProjectReference Include="..\PrivateWiki.UWP.UI\PrivateWiki.UWP.UI.csproj">
+      <Project>{e1b1092a-eee8-4c60-bd47-86bbde74b775}</Project>
+      <Name>PrivateWiki.UWP.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
 </Project>

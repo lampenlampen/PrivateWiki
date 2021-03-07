@@ -1,0 +1,65 @@
+﻿<pageEditors:TextPageEditorControlBase
+    x:Class="PrivateWiki.UWP.UI.UI.Controls.PageEditors.TextPageEditorControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pageEditors="using:PrivateWiki.UWP.UI.UI.Controls.PageEditors"
+    xmlns:controls="using:PrivateWiki.UWP.UI.UI.Controls"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Pivot
+            x:Name="Pivot"
+            Title="Text Page Editor">
+
+            <PivotItem
+                x:Name="EditorPivotItem"
+                Header="Editor">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBox
+                        Name="PageEditorTextBox"
+                        Text="Lorem Ipsum"
+                        AcceptsReturn="True"
+                        TextWrapping="Wrap" />
+
+                </Grid>
+            </PivotItem>
+
+            <PivotItem
+                x:Name="MetadataPivotItem"
+                Header="Metadaten">
+
+                <StackPanel>
+                    <TextBlock Text="Tags"
+                               HorizontalAlignment="Left"
+                               FontSize="30"
+                               TextDecorations="Underline"
+                               Padding="20, 0, 0, 20" />
+
+                    <TextBox
+                        Name="AddTagBox" />
+
+                    <Button
+                        Name="AddTagButton"
+                        Content="Add Tag" />
+
+                    <ListView
+                        Name="ListView"
+                        SelectionMode="None" />
+
+                </StackPanel>
+            </PivotItem>
+
+            <Pivot.RightHeader>
+                <controls:PageEditorCommandBar x:Name="commandBar" />
+            </Pivot.RightHeader>
+        </Pivot>
+    </Grid>
+</pageEditors:TextPageEditorControlBase>
