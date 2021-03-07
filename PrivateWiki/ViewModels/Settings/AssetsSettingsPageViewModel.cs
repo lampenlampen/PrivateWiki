@@ -34,8 +34,8 @@ namespace PrivateWiki.ViewModels.Settings
 
 		public AssetsSettingsPageViewModel()
 		{
-			_fileExplorerService = Application.Instance.Container.GetInstance<IFileExplorerService>();
-			_applicationData = Application.Instance.Container.GetInstance<IApplicationDataService>();
+			_fileExplorerService = ServiceLocator.Container.GetInstance<IFileExplorerService>();
+			_applicationData = ServiceLocator.Container.GetInstance<IApplicationDataService>();
 
 			OpenFolderInFileExplorer = ReactiveCommand.CreateFromTask<Folder?>(OpenFolderInFileExplorerAsync);
 			LoadDataFolder = ReactiveCommand.CreateFromTask(LoadTreeViewAsync);

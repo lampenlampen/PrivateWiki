@@ -45,7 +45,7 @@ namespace PrivateWiki.ViewModels
 
 		public GlobalSearchControlViewModel()
 		{
-			_backend = Application.Instance.Container.GetInstance<IPageBackendService>();
+			_backend = ServiceLocator.Container.GetInstance<IPageBackendService>();
 			_pages = new SourceCache<GenericPage, Guid>(x => x.Id);
 
 			KeyPressed = ReactiveCommand.CreateFromTask<KeyboardShortcut>(KeyPressedAsync);

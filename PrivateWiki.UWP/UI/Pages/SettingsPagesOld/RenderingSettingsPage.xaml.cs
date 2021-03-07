@@ -28,7 +28,7 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 		{
 			this.InitializeComponent();
 
-			_markdown = Application.Instance.Container.GetInstance<IRenderingMarkdownSettingsService>();
+			_markdown = ServiceLocator.Container.GetInstance<IRenderingMarkdownSettingsService>();
 
 			LoadMarkdownToHtmlListItems();
 

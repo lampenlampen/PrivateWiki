@@ -32,7 +32,7 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPagesOld
 		{
 			this.InitializeComponent();
 
-			var container = Application.Instance.Container;
+			var container = ServiceLocator.Container;
 
 			_cultureChangedEvent = container.GetInstance<IObservable<CultureChangedEventArgs>>();
 			_cultureChangedObserver = container.GetInstance<ICommandHandler<CultureChangedEventArgs>>();

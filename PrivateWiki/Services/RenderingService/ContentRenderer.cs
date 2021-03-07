@@ -18,7 +18,7 @@ namespace PrivateWiki.Services.RenderingService
 		[Obsolete]
 		public ContentRenderer()
 		{
-			_markdig = Application.Instance.Container.GetInstance<Rendering.Markdown.Markdig.Markdig>();
+			_markdig = ServiceLocator.Container.GetInstance<Rendering.Markdown.Markdig.Markdig>();
 		}
 
 		public Task<string> RenderPageAsync(GenericPage page)

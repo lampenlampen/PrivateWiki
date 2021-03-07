@@ -34,14 +34,14 @@ namespace PrivateWiki.UWP.UI.Pages
 			//EditorFrame.Navigate(typeof(PageViewer), "start");
 			NavigateToPageViewer();
 
-			_themeChangedEvent = Application.Instance.Container.GetInstance<IObservable<ThemeChangedEventArgs>>();
+			_themeChangedEvent = ServiceLocator.Container.GetInstance<IObservable<ThemeChangedEventArgs>>();
 
 			_themeChangedEvent.Subscribe(x => RequestedTheme = x.NewTheme.ToPlatformTheme());
 		}
 
 		private void NavigateToPageViewer()
 		{
-			var vm = Application.Instance.Container.GetInstance<PageViewerViewModel>();
+			var vm = ServiceLocator.Container.GetInstance<PageViewerViewModel>();
 			var page = new PageViewer(vm);
 
 			EditorFrame.Content = page;

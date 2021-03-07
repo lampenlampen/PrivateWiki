@@ -17,7 +17,7 @@ namespace PrivateWiki.ViewModels.Settings
 
 		public PagesSettingsPageViewModel()
 		{
-			_pageBackend = Application.Instance.Container.GetInstance<IPageBackendService>();
+			_pageBackend = ServiceLocator.Container.GetInstance<IPageBackendService>();
 
 			LoadPages = ReactiveCommand.CreateFromTask(LoadPagesAsync);
 		}

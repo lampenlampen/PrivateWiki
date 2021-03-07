@@ -99,12 +99,12 @@ namespace PrivateWiki.ViewModels
 		{
 			async Task<Unit> Action()
 			{
-				var backend = Application.Instance.Container.GetInstance<IPageBackendService>();
+				var backend = ServiceLocator.Container.GetInstance<IPageBackendService>();
 				;
 
 				//var file = await FileSystemAccess.PickFileAsync(ContentType.FileExtension);
 
-				var filesystemProvider = Application.Instance.Container.GetInstance<IFilesystemService>();
+				var filesystemProvider = ServiceLocator.Container.GetInstance<IFilesystemService>();
 				var file = await filesystemProvider.PickFile(ContentType.FileExtension);
 
 				if (file == null) return Unit.Default;
@@ -139,7 +139,7 @@ namespace PrivateWiki.ViewModels
 
 			return Task.Run(async () =>
 			{
-				var backend = Application.Instance.Container.GetInstance<IPageBackendService>();
+				var backend = ServiceLocator.Container.GetInstance<IPageBackendService>();
 				;
 				var a = await backend.ContainsPageAsync(LinkString);
 

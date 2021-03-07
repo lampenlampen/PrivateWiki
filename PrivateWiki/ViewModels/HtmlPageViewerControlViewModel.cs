@@ -72,7 +72,7 @@ namespace PrivateWiki.ViewModels
 
 		private Task<Unit> LinkClickedAsync(Uri uri)
 		{
-			var launcher = Application.Instance.Container.GetInstance<IApplicationLauncherService>();
+			var launcher = ServiceLocator.Container.GetInstance<IApplicationLauncherService>();
 
 			launcher.LaunchUriAsync(uri);
 

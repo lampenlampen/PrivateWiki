@@ -43,7 +43,7 @@ namespace PrivateWiki.ViewModels.Settings
 
 		public BackupSyncSettingsPageViewModel()
 		{
-			_backupSyncSettings = Application.Instance.Container.GetInstance<IBackupSyncSettingsService>();
+			_backupSyncSettings = ServiceLocator.Container.GetInstance<IBackupSyncSettingsService>();
 
 			AddTarget = ReactiveCommand.CreateFromTask<BackupSyncTargetType>(AddTargetAsync);
 			RemoveTarget = ReactiveCommand.CreateFromTask<Guid>(RemoveTargetAsync);

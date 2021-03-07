@@ -63,7 +63,7 @@ namespace PrivateWiki.ViewModels
 
 		public PageEditorViewModel()
 		{
-			_backend = Application.Instance.Container.GetInstance<IPageBackendService>();
+			_backend = ServiceLocator.Container.GetInstance<IPageBackendService>();
 			;
 
 			ShowPage = ReactiveCommand.CreateFromTask<Path>(ShowPageAsync);

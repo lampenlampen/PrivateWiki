@@ -48,7 +48,7 @@ namespace PrivateWiki.UWP.UI.Pages
 		{
 			this.InitializeComponent();
 
-			var container = Application.Instance.Container;
+			var container = ServiceLocator.Container;
 			TranslationManager translationManager = container.GetInstance<TranslationManager>();
 			_cultureChangedEvent = container.GetInstance<IObservable<CultureChangedEventArgs>>();
 

@@ -5,7 +5,6 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 using NLog;
 using PrivateWiki.UWP.UI;
 using PrivateWiki.UWP.UI.Pages;
@@ -24,15 +23,11 @@ namespace PrivateWiki.UWP
 		// By default, current is an instance of the Application class, which needs to be changed to be an instance of the App class.
 		public new static App Current { get; private set; }
 
-		public AppConfig Config { get; } = new AppConfig();
+		[Obsolete] public AppConfig Config { get; } = new AppConfig();
 
-		public Application Application { get; } = Application.Instance;
+		[Obsolete] public GlobalNotificationManager GlobalNotificationManager { get; private set; }
 
-		public GlobalNotificationManager GlobalNotificationManager { get; private set; }
-
-		public InAppNotification Notification { get; private set; }
-
-		public Grid NotificationGrid { get; } = new Grid();
+		[Obsolete] internal Grid NotificationGrid { get; } = new();
 
 
 		/// <summary>
@@ -46,24 +41,16 @@ namespace PrivateWiki.UWP
 			Suspending += OnSuspending;
 
 			var container = new Container();
+			InitDIContainer(container);
+			ServiceLocator.Container = container;
+		}
+
+		private void InitDIContainer(Container container)
+		{
 			CompositionRoot.CompositionRoot.Bootstrap(container);
 			UwpCompositionRoot.Bootstrap(container);
-			Application.Container = container;
-
-			Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-			NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
-
-			RegisterUncaughtExceptionLogger();
 		}
 
-		private void RegisterUncaughtExceptionLogger()
-		{
-			UnhandledException += (sender, args) =>
-			{
-				Logger.Error(args.Exception);
-				Logger.Error(args.Message);
-			};
-		}
 
 		/// <summary>
 		///     Wird aufgerufen, wenn die Anwendung durch den Endbenutzer normal gestartet wird. Weitere Einstiegspunkte
@@ -74,7 +61,7 @@ namespace PrivateWiki.UWP
 		{
 			Logger.Info("App Launched");
 
-			Application.Initialize();
+			ServiceLocator.Initialize();
 
 			Grid? rootGrid = Window.Current.Content as Grid;
 			Frame rootFrame = rootGrid?.Children.Where((c) => c is Frame).Cast<Frame>().FirstOrDefault();
@@ -87,10 +74,8 @@ namespace PrivateWiki.UWP
 				var notificationGrid = NotificationGrid;
 
 				GlobalNotificationManager = new GlobalNotificationManager(new LocalNotificationManager(notificationGrid));
-				Notification = new InAppNotification();
 
 				rootGrid.Children.Add(rootFrame);
-				//rootGrid.Children.Add(Notification);
 				rootGrid.Children.Add(notificationGrid);
 
 				Window.Current.Content = rootGrid;
@@ -110,7 +95,7 @@ namespace PrivateWiki.UWP
 		{
 			Logger.Info("App Activated");
 
-			Application.Initialize();
+			ServiceLocator.Initialize();
 
 			// Window management
 			if (!(Window.Current.Content is Frame rootFrame))

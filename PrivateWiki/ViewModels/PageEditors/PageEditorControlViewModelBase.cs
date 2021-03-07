@@ -88,8 +88,8 @@ namespace PrivateWiki.ViewModels.PageEditors
 
 		protected PageEditorControlViewModelBase()
 		{
-			_pageLabelsBackend = Application.Instance.Container.GetInstance<IPageLabelsBackend>();
-			_labelBackend = Application.Instance.Container.GetInstance<ILabelBackend>();
+			_pageLabelsBackend = ServiceLocator.Container.GetInstance<IPageLabelsBackend>();
+			_labelBackend = ServiceLocator.Container.GetInstance<ILabelBackend>();
 
 			CommandBarViewModel = new PageEditorCommandBarViewModel();
 

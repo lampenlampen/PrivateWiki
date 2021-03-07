@@ -59,7 +59,7 @@ namespace PrivateWiki.ViewModels
 
 		public CreateNewLabelControlViewModel()
 		{
-			_labelBackend = Application.Instance.Container.GetInstance<ILabelBackend>();
+			_labelBackend = ServiceLocator.Container.GetInstance<ILabelBackend>();
 
 			CreateLabel = ReactiveCommand.CreateFromTask(x => CreateLabelAsync(), this.IsValid());
 			Cancel = ReactiveCommand.CreateFromTask(CancelAsync);

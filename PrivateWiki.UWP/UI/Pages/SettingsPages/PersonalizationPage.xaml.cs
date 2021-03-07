@@ -14,7 +14,7 @@ namespace PrivateWiki.UWP.UI.Pages.SettingsPages
 		{
 			this.InitializeComponent();
 
-			PersonalizationCtrl.ViewModel = Application.Instance.Container.GetInstance<PersonalizationCtrlVM>();
+			PersonalizationCtrl.ViewModel = ServiceLocator.Container.GetInstance<PersonalizationCtrlVM>();
 		}
 	}
 }
