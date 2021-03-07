@@ -31,8 +31,8 @@ namespace PrivateWiki.UWP.UI.UI.Pages
 			ApplicationView.GetForCurrentView().TitleBar.ButtonBackgroundColor =
 				new UISettings().GetColorValue(UIColorType.Accent);
 
-			//EditorFrame.Navigate(typeof(PageViewer), "start");
-			NavigateToPageViewer();
+			EditorFrame.Navigate(typeof(PageViewer), "start");
+			//NavigateToPageViewer();
 
 			_themeChangedEvent = ServiceLocator.Container.GetInstance<IObservable<ThemeChangedEventArgs>>();
 
@@ -42,9 +42,10 @@ namespace PrivateWiki.UWP.UI.UI.Pages
 		private void NavigateToPageViewer()
 		{
 			var vm = ServiceLocator.Container.GetInstance<PageViewerViewModel>();
-			var page = new PageViewer(vm);
+			var page = new PageViewer();
 
 			EditorFrame.Content = page;
+
 			vm.LoadPage.Execute("start");
 		}
 

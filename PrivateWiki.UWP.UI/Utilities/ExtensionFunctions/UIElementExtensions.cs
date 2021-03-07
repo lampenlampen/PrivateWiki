@@ -1,4 +1,5 @@
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using NLog;
 
 namespace PrivateWiki.UWP.UI.Utilities.ExtensionFunctions
@@ -29,5 +30,7 @@ namespace PrivateWiki.UWP.UI.Utilities.ExtensionFunctions
 				Logger.Debug(MyFocus);
 			};
 		}
+
+		public static Frame GetFrame(this UIElement element) => element.FindParent<Frame>();
 	}
 }

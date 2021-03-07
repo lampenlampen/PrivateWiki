@@ -49,11 +49,11 @@ namespace PrivateWiki.UWP.UI.UI.Pages
 
 		private ISubject<LabelId> _onLabelClicked = new Subject<LabelId>();
 
-		public PageViewer(PageViewerViewModel vm)
+		public PageViewer()
 		{
 			this.InitializeComponent();
 
-			ViewModel = vm;
+			ViewModel = ServiceLocator.Container.GetInstance<PageViewerViewModel>();
 
 			this.WhenActivated(disposable =>
 			{
@@ -152,7 +152,7 @@ namespace PrivateWiki.UWP.UI.UI.Pages
 			});
 		}
 
-		protected void OnNavigatedTo2(NavigationEventArgs e)
+		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			string id;
 
