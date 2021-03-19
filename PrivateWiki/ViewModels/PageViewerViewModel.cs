@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reactive;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
@@ -152,7 +153,7 @@ namespace PrivateWiki.ViewModels
 			ToggleFullscreen = ReactiveCommand.CreateFromTask(ToggleFullscreenAsync);
 			ScrollToTop = ReactiveCommand.CreateFromTask(ScrollToTopAsync);
 			NavigateToPage = ReactiveCommand.CreateFromTask<Path>(NavigateToPageAsync);
-			LoadLabels = ReactiveCommand.CreateFromTask(LoadLabelsAsync);
+			LoadLabels = ReactiveCommand.CreateFromTask(LoadLabelsAsync, outputScheduler: RxApp.TaskpoolScheduler);
 			LabelClicked = ReactiveCommand.CreateFromTask<LabelId>(LabelClickedAsync);
 
 			// Events
@@ -177,22 +178,23 @@ namespace PrivateWiki.ViewModels
 			SearchControlViewModel.OnPageSelected.Subscribe(async page => await NavigateToPageAsync(page.Path));
 
 			_labels.Connect()
+				.ObserveOn(RxApp.MainThreadScheduler)
 				.Bind((IObservableCollection<Label>) Labels)
 				.Subscribe();
 		}
 
 		private async Task LoadPageAsync(string id)
 		{
-			var stopwatch = Stopwatch.StartNew();
-
 			Page = await _backend.GetPageAsync(id);
-
-			stopwatch.Stop();
-
 
 			PageContentViewer = new HtmlPageViewerControlViewModel {Page = Page};
 			PageContentViewer.OnWikiLinkClicked.Subscribe(async x => await NavigateToPageAsync(x));
 			PageContentViewer.OnKeyPressed.Subscribe(KeyPressed);
+		}
+
+		private async Task RenderPageAsync(GenericPage page)
+		{
+			PageContentViewer = new HtmlPageViewerControlViewModel {Page = page};
 		}
 
 		private async void KeyPressed(KeyboardShortcut key)
@@ -219,7 +221,6 @@ namespace PrivateWiki.ViewModels
 		private async Task NavigateToPageAsync(Path link)
 		{
 			// TODO NavigationHandler
-			//NavigationHandler.AddPage(Page);
 			_mostRecentlyVisitedPagesService.AddPage(Page);
 
 			if (await _backend.ContainsPageAsync(link.FullPath))

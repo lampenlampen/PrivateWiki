@@ -42,7 +42,7 @@ namespace PrivateWiki.UWP.UI.UI.Controls.PageViewers
 					.DisposeWith(disposable);
 
 				ViewModel.RenderContent.Execute(Unit.Default)
-					.Subscribe(x => DisplayPage(x))
+					.Subscribe(DisplayPage)
 					.DisposeWith(disposable);
 
 				Webview.Events().NavigationStarting

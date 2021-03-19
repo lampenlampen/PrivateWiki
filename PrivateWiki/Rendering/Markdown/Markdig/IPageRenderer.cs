@@ -4,6 +4,8 @@ namespace PrivateWiki.Rendering.Markdown.Markdig
 {
 	internal interface IPageRenderer
 	{
-		Task<string> RenderToHtml(string content);
+		Task<string> RenderToHtmlAsync(string content);
+
+		public string RenderToHtml(string content);
 	}
 }

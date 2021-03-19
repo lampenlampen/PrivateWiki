@@ -12,9 +12,14 @@ namespace PrivateWiki.Rendering.Markdown
 			_renderer = renderer;
 		}
 
-		public Task<string> RenderToHtml(string content)
+		public Task<string> RenderToHtmlAsync(string content)
 		{
-			return _renderer.ToHtml(content);
+			return _renderer.ToHtmlAsync(content);
+		}
+
+		public string RenderToHtml(string content)
+		{
+			
 		}
 	}
 }

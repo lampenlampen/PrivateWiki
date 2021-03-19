@@ -1,5 +1,6 @@
 using System;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using PrivateWiki.DataModels.Pages;
@@ -21,6 +22,10 @@ namespace PrivateWiki.ViewModels
 			get => _page;
 			set => this.RaiseAndSetIfChanged(ref _page, value);
 		}
+
+		private readonly ObservableAsPropertyHelper<string> _htmlContent;
+
+		public string HtmlContent => _htmlContent.Value;
 
 		public ReactiveCommand<Unit, string> RenderContent { get; }
 
@@ -55,6 +60,13 @@ namespace PrivateWiki.ViewModels
 			WikilinkClicked = ReactiveCommand.CreateFromTask<Path>(WikiLinkClickedAsync);
 			LinkClicked = ReactiveCommand.CreateFromTask<Uri>(LinkClickedAsync);
 			KeyPressed = ReactiveCommand.Create<KeyboardShortcut>(x => _onKeyPressed.OnNext(x));
+
+			_htmlContent = this
+				.WhenAnyValue(x => Page)
+				.SelectMany(async x => await Render())
+				.ToProperty(this, x => x.HtmlContent);
+			
+			
 		}
 
 		private Task<string> Render()

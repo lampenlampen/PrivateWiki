@@ -25,7 +25,32 @@ namespace PrivateWiki.Rendering.Markdown.Markdig
 			_renderer = new HtmlRenderer(new StringWriter());
 		}
 
-		public async Task<string> ToHtml(string content)
+		public async Task<string> ToHtmlAsync(string content)
+		{
+			var stringWriter = new StringWriter();
+			var renderer = new HtmlRenderer(stringWriter);
+
+			var pipeline = await _pipelineTask;
+
+			pipeline.Setup(renderer);
+
+			var dom2 = global::Markdig.Markdown.ToHtml(content, stringWriter, pipeline);
+
+			stringWriter.Flush();
+
+			_htmlBuilder.WriteBodyStartTag();
+
+			_htmlBuilder.WriteHtmlSnippet(stringWriter.ToString());
+
+			_htmlBuilder.WriteBodyEndTag();
+			_htmlBuilder.WriteHtmlEndTag();
+
+			_htmlBuilder.Flush();
+
+			return _htmlBuilder.ToString();
+		}
+
+		public string ToHtml(string content)
 		{
 			var stringWriter = new StringWriter();
 			var renderer = new HtmlRenderer(stringWriter);
