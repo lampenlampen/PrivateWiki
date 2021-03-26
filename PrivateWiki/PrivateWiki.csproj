@@ -61,7 +61,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Services\DebugModeService"/>
+        <Folder Include="Services\DebugModeService" />
     </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj"/>
+		<ProjectReference Include="..\PrivateWiki\PrivateWiki.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
