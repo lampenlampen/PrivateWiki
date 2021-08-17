@@ -54,21 +54,6 @@ namespace PrivateWiki.Services.ContentRenderer
 			Html = html;
 		}
 	}
-	
-	public class MarkdownRenderer : IPageRenderer
-	{
-		private IMarkdownRenderer _renderer;
-
-		public MarkdownRenderer(IMarkdownRenderer renderer)
-		{
-			_renderer = renderer;
-		}
-		public ContentType ContentType => ContentType.Markdown;
-		public string Render(string page)
-		{
-			return _renderer.Render(page);
-		}
-	}
 
 	public interface IMarkdownRenderer : IPageRenderer
 	{
@@ -78,6 +63,7 @@ namespace PrivateWiki.Services.ContentRenderer
 	public class DefaultRenderer : IPageRenderer, IMarkdownRenderer
 	{
 		public ContentType ContentType => ContentType.Text;
+		
 		public string Render(string page)
 		{
 			return $"<pre>{page}</pre>";
